@@ -1,9 +1,0 @@
-{
-  "active_platforms": ["LinkedIn"],
-  "platform_mode": "exclusive",
-  "daily_limit": 1,
-  "auto_post": true,
-  "campaign_start": "2025-05-08",
-  "campaign_end": "2025-05-31"
-}
-// Controls global behavior of your automation system.

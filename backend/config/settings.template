@@ -1,0 +1,21 @@
+// settings.template.json
+{
+  "active_platforms": ["LinkedIn", "Pinterest", "X"],
+  "platform_mode": "exclusive", // or "multi"
+  "daily_limit": 3,
+  "auto_post": true,
+  "campaign_start": "2025-05-08",
+  "campaign_end": "2025-05-31",
+
+  // Optional fields
+  "timezone": "America/Chicago", // IANA time zone string
+  "posting_window": {
+    "start": "09:00", // 24h format
+    "end": "17:00"
+  },
+  "retry_on_fail": true,
+  "recycle_enabled": true,
+  "fallback_image": "default-cover.png"
+}
+
+// 🔧 Copy this as settings.dev.json or settings.prod.json for specific environments.

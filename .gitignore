@@ -1,0 +1,49 @@
+# 🔒 Sensitive files
+.env
+.env.local
+.env.*.local
+
+# 📦 Node modules
+node_modules/
+
+# 🧪 Test/coverage artifacts
+coverage/
+*.log
+logs/
+*.tsbuildinfo
+
+# 🖼️ OS / Editor clutter
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# 📦 Package managers
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 🧙‍♂️ Playwright cache + binaries
+playwright-report/
+test-results/
+*.zip
+*.tmp
+*.log
+**/playwright/.cache/
+**/playwright/**/browsers/
+
+# ⚙️ System folders
+dist/
+build/
+.cache/
+out/
+
+# ⏱ Cron output or exports
+*.cron
+*.out
+*.pid
+
+# 🧼 Optional: ignore auto-generated screenshots or post output
+screenshots/
+exported-posts/
+temp/

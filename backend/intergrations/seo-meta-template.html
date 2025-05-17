@@ -1,0 +1,42 @@
+<!-- ✅ Open Graph + Twitter Card + Schema.org Template -->
+<!-- Customize per product drop -->
+<head>
+  <!-- ✅ Open Graph Meta Tags for Social Sharing -->
+  <meta property="og:title" content="{{PRODUCT_TITLE}}">
+  <meta property="og:description" content="{{PRODUCT_DESCRIPTION}}">
+  <meta property="og:image" content="{{PRODUCT_IMAGE_URL}}">
+  <meta property="og:url" content="{{PRODUCT_URL}}">
+  <meta property="og:type" content="website">
+  
+  <!-- ✅ Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@{{TWITTER_HANDLE}}">
+  <meta name="twitter:title" content="{{PRODUCT_TITLE}}">
+  <meta name="twitter:description" content="{{PRODUCT_DESCRIPTION}}">
+  <meta name="twitter:image" content="{{PRODUCT_IMAGE_URL}}">
+
+  <!-- ✅ Schema.org JSON-LD for Rich Results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "{{PRODUCT_TITLE}}",
+    "description": "{{PRODUCT_DESCRIPTION}}",
+    "applicationCategory": "DeveloperTool",
+    "operatingSystem": "{{OS}}",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "price": "{{PRICE}}",
+      "url": "{{PRODUCT_URL}}"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Ashley Broussard"
+    }
+  }
+  </script>
+</head>
+
+<!-- Example usage -->
+<!-- Replace {{}} values manually or with PostPunk automation -->

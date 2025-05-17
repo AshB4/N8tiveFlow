@@ -1,0 +1,1 @@
+	Guide for using ChatGPT to auto-generate post batches (template input + output guide)

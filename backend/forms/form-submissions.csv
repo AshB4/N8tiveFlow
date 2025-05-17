@@ -1,0 +1,7 @@
+Stores input submissions
+from a form (likely used 
+to generate posts or for marketing tracking
+
+Stores submitted post content from your
+ frontend form (React/Vite UI),
+maybe parsed later into JSON queue

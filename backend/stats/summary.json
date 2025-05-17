@@ -1,0 +1,19 @@
+{
+  "total_posts_attempted": 38,
+  "total_posts_successful": 33,
+  "success_rate": 86.8,
+  "total_rejected": 5,
+  "top_performing_post": {
+    "title": "Terminal Tarot Teaser",
+    "platform": "Pinterest",
+    "clicks": 110,
+    "signups": 8
+  },
+  "top_platform": {
+    "name": "LinkedIn",
+    "posts_sent": 14,
+    "signups": 12
+  },
+  "most_active_day": "Friday",
+  "last_updated": "2025-05-10T21:12:00Z"
+}

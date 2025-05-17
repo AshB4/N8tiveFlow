@@ -1,0 +1,57 @@
+{
+  "product_name": "",
+  "slug": "",
+  "platforms": ["Twitter", "LinkedIn", "Medium", "Dev.to", "Pinterest", "Instagram"],
+  "desperate_search_queries": [
+    ""
+  ],
+  "unaware_search_questions": [
+    ""
+  ],
+  "seo_human_pitch": "",
+  "keywords": [
+    ""
+  ],
+  "hashtags": {
+    "Twitter": [""],
+    "Instagram": [""],
+    "LinkedIn": [""],
+    "Pinterest": [""],
+    "Dev.to": [""],
+    "Medium": [""],
+    "All": ["#YourBrand"]
+  },
+  "meta_description": "",
+  "alt_text_examples": [
+    ""
+  ],
+  "image_requirements": {
+    "Twitter": "1200x675",
+    "Instagram": "1080x1080 or 1080x1350",
+    "Pinterest": "1000x1500",
+    "LinkedIn": "1200x627",
+    "Default": "1200x630"
+  },
+  "preferred_post_times": {
+    "Twitter": "9–11 AM (Weekdays)",
+    "LinkedIn": "10 AM–12 PM (Tues–Thu)",
+    "Instagram": "11 AM or 7–9 PM (Weekdays)",
+    "Pinterest": "1 PM Friday, Evenings + Weekends",
+    "Medium": "8–11 AM (Midweek)",
+    "Dev.to": "9–10 AM (Mon–Wed)"
+  },
+  "link": {
+    "gumroad": "",
+    "amazon": "",
+    "utm_base": "?utm_source=__PLATFORM__&utm_medium=social&utm_campaign=__CAMPAIGN__"
+  },
+  "campaigns": [
+    {
+      "name": "",
+      "description": "",
+      "tags": [""],
+      "start_date": "",
+      "end_date": ""
+    }
+  ]
+}

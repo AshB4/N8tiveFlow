@@ -1,0 +1,15 @@
+{
+  "active_platforms": ["LinkedIn", "Pinterest", "X"],
+  "platform_mode": "exclusive",
+  "daily_limit": 3,
+  "auto_post": true,
+  "campaign_start": "2025-05-08",
+  "campaign_end": "2025-05-31",
+
+  // Optional extras:
+  "timezone": "America/Chicago",
+  "posting_window": { "start": "09:00", "end": "17:00" },
+  "retry_on_fail": true,
+  "recycle_enabled": true,
+  "fallback_image": "default-cover.png"
+}

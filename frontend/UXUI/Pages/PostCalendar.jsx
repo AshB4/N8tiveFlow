@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import PostModal from "../../Components/CalendarPage/PostModal.jsx";
+import PostModal from "../Components/CalendarPage/PostModal.jsx";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import postQueue from "../../../../backend/queue/postQueue.js";
-import GuiltDaemon from "../../Components/CalendarPage/GuiltDaemon.jsx";
+import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
 import "@fullcalendar/common/main.css";
 import "@fullcalendar/daygrid/main.css";
 

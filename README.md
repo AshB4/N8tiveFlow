@@ -1,32 +1,126 @@
-# Poster Monster Queue Rules
+# 🧃 PostPunk aka N8tiveFlow
 
-- Only posts with `"status": "approved"` will publish
-- Posts must match platforms listed in `active_platforms`
-- After posting, update `"status": "posted"` and log it
+*This project’s been renamed a few times — a bunch of things, really. PostPunk stuck. Chaos refined.*  
+_Automated chaos. Tracked. Styled. Queued._
 
-🧠 settings.json = Global System Controls
-"How Poster Monster behaves."
+<pre>
+🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
+🪚 Work in Progress — Chaos is still under construction.
+🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
+</pre>
 
-Field	Meaning
-active_platforms	Platforms allowed to post right now (e.g., LinkedIn, Pinterest, X)
-platform_mode	"exclusive" means only post to one per post, "multi" could mean all matched platforms
-daily_limit	Maximum number of posts per day system-wide
-auto_post	Whether automation runs without manual approval
-campaign_start/end	When to begin or stop queue checking/posting
+## PostPunk is not open source. 
+It is licensed under BSD 2-Clause for private, non-commercial use only. Commercial use requires a paid license.
 
-🔁 recycle.js = Creative Post Templates
-"What kind of messages we reuse and remix."
+PostPunk is your feral-but-focused automation system for scheduling, remixing, and tracking content posts across multiple platforms — complete with UTM insights, drag-and-drop frontend tools, optional notification systems, and a killer local dev setup.
 
-Use Case	Purpose
-Store platform-tailored body text	Helps you prep copy per audience
-Keep assets & templates evergreen	So you can clone or remix for future drops
-Pre-load common post combos	Reuse what already works (like magic macros)
+---
 
-✅ They Work Together Like This:
-File	Example Use
-settings.json	“Post 1 item per day only to LinkedIn during campaign window”
-postQueue.js	“These are the active posts we want to send out”
-recycle.js	“Here are my favorite past posts, ready to be reused or tweaked”
-posted-log.js	“This is what actually got sent”
-rejected-log.js	“Here’s what failed and why”
+## 🚀 What It Does
+| Feature                     | Purpose                                                |
+|----------------------------|--------------------------------------------------------|
+| ✅ Post Queue              | Schedule and track content across platforms           |
+| 🔁 Creative Recycling       | Remix past posts, keep evergreen content alive         |
+| 📊 UTM Chart Tracking       | Visualize post performance and campaign ROI            |
+| 🔌 Optional Integrations    | Alerts (Apprise) and flow automation (Node-RED)        |
+| 🧠 Local First Design       | Runs from terminal or via cron without cloud lock-in   |
+| 🧾 BSD Licensing            | Safe for personal use, commercial use via license      |
 
+---
+
+## 📦 Tech Stack
+| Tech                | Purpose                          | License  |
+|---------------------|----------------------------------|----------|
+| React + Zustand     | Frontend UI + lightweight state  | MIT      |
+| Tailwind + Vite     | Fast, styled build system        | MIT      |
+| Playwright + Bree   | Automation / job runner          | Apache / MIT |
+| Chart.js            | UTM analytics                    | MIT      |
+| AdminJS             | Admin dashboard UI (optional)    | MIT      |
+| React Hook Form     | Dynamic form builder             | MIT      |
+| Yup                 | Form validation (optional)       | MIT      |
+| Node-RED            | Local automation flows           | Apache 2.0 |
+| Apprise             | Alerts to Slack, Discord, etc.   | BSD      |
+
+---
+
+## 🧠 Core Concepts
+### Poster Monster Queue Rules
+Only posts with `"status": "approved"` in the `postQueue.json` are eligible for publishing.
+- Platforms must match `active_platforms` in `settings.json`
+- After posting, system updates `status` to `"posted"`
+- Posts can be rejected or recycled via logs
+
+📄 See [Queue Rules](./Docs/queue-rules.md) for full logic.
+
+---
+
+## ⚙️ System Settings
+Control how PostPunk behaves globally:
+```json
+{
+  "active_platforms": ["LinkedIn", "Pinterest"],
+  "platform_mode": "exclusive",
+  "daily_limit": 3,
+  "auto_post": true,
+  "campaign_start": "2025-06-01",
+  "campaign_end": "2025-07-01"
+}
+```
+📄 See [System Settings](./Docs/settings.md)
+
+---
+
+## 🧠 Creative Recycling
+Use `recycle.js` to store evergreen templates, asset combos, and platform-tailored content.
+📄 See [Recycling Templates](./Docs/recycle-templates.md)
+
+---
+
+## 🛰️ Optional: Notifications (Apprise)
+Trigger alerts on success/failure or large queues:
+- Supports Discord, Slack, Email, etc.
+- Configured via `.apprise.yml`
+📄 [Apprise Setup](./Docs/apprise.md)
+
+---
+
+## 🔁 Optional: Node-RED
+Build flows that push data into PostPunk or trigger scripts based on external triggers.
+📄 [Node-RED Integration](./Docs/nodered.md)
+
+---
+
+## 🧾 Licensing
+This system is licensed under **BSD 2-Clause** for **personal use only**. 
+
+You **may not**:
+- Resell this system
+- Sublicense or publicly post modified versions
+
+To obtain a commercial license or team edition:
+📬 Contact: `ash@fleurdevie.com`
+
+Includes third-party libraries under MIT, BSD, and Apache 2.0 — see [Licenses.txt](./Docs/Licenses.txt)
+
+---
+
+## 🧃 Run It Like a Ghost
+```bash
+npm install
+npm run start-scheduler     # bree kicks off
+node backend/scripts/post-to-devto.js    # or run a script manually
+```
+---
+
+## 🛠 Roadmap Highlights
+- [ ] AdminJS UI for logs & queue
+- [ ] Drag/drop image + asset manager
+- [ ] Chart dashboard for campaign insights
+- [ ] GPT prompt loader (for auto post gen)
+
+---
+
+🧃 _Post like a ghost. Track like a boss. Remix like a misfit._
+
+🛒 Want to license PostPunk for your team or product?
+Email fleurdeviefarmsllc@gmail.com to get early access + pricing.

@@ -43,7 +43,10 @@ out/
 *.out
 *.pid
 
-# 🧼 Optional: ignore auto-generated screenshots or post output
+# 🧼 ignore auto-generated screenshots or post output
 screenshots/
 exported-posts/
 temp/
+
+# My Docs
+Docs/

@@ -76,3 +76,14 @@ const GuiltDaemon = () => {
 };
 
 export default GuiltDaemon;
+
+// Future idea: make GuiltDaemon aware of inactivity over time and add to BE
+// Log lastPostedAt in posted-log.json
+// Show evolving guilt messages based on:
+// ⏳ Time since last post
+// 📅 Missed scheduled posts
+// 🗃️ Empty or bloated queues
+// 💬 Example:
+// “It’s been 4 days. The algorithm forgot your name.”
+// “That draft is molding. Publish it or let it die.
+// 🧪 Adds a subtle psychological poke to the UI — because pain is a feature.

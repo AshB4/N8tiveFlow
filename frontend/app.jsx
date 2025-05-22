@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Pages
 import CalendarPage from "./UXUI/Pages/PostCalendar";
-import PostComposer from "./Pages/PostComposer";
-import NotFound from "./Pages/NotFound"; 
+import PostComposer from "./UXUI/Pages/PostComposer";
+import NotFound from "./UXUI/Pages/NotFound";
 
 export default function App() {
   return (

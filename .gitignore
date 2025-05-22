@@ -3,8 +3,10 @@
 .env.local
 .env.*.local
 
-# 📦 Node modules
+# 📦 Node modules (ignore everywhere)
 node_modules/
+frontend/node_modules/
+backend/node_modules/
 
 # 🧪 Test/coverage artifacts
 coverage/
@@ -20,6 +22,8 @@ logs/
 
 # 📦 Package managers
 package-lock.json
+frontend/package-lock.json
+backend/package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
@@ -37,6 +41,10 @@ dist/
 build/
 .cache/
 out/
+frontend/dist/
+backend/dist/
+frontend/build/
+backend/build/
 
 # ⏱ Cron output or exports
 *.cron

@@ -1,15 +1,20 @@
-import React, { useState } from "react";
-import PostModal from "../Components/CalendarPage/PostModal.jsx";
+import React, { useState , useEffect} from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import postQueue from "../../../../backend/queue/postQueue.js";
 import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
-import "@fullcalendar/common/main.css";
-import "@fullcalendar/daygrid/main.css";
+import PostModal from "../Components/CalendarPage/PostModal.jsx";
 
 
-const eventz = postQueue
+
+
+export default function PostCalendar() {
+  const [postQueue, setPostQueue] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPost, setSelectedPost] = useState(null);
+
+
+  const eventz = postQueue
   .filter((post) => post.status === "approved")
   .map((post) => ({
     title: post.title,
@@ -17,10 +22,22 @@ const eventz = postQueue
     color: "#67e8f9",
   }));
 
-  const [selectedPost, setSelectedPost] = useState(null);
+  useEffect(() => {
+    fetch("http://localhost:3001/api/posts")
+      .then((res) => res.json())
+      .then((data) => {
+        setPostQueue(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
+  if (loading) return <div>Loading posts…</div>;
 
-export default function CalendarPage() {
+  const earliest = eventz.length
+  ? eventz.reduce((a, b) => (a.date < b.date ? a : b)).date
+  : undefined;
+
   return (
     <div className="min-h-screen bg-black text-pink-500 font-mono p-4">
       <h1 className="text-4xl text-center text-pink-500 mb-4 tracking-widest">
@@ -49,7 +66,7 @@ export default function CalendarPage() {
           <FullCalendar
   plugins={[dayGridPlugin, interactionPlugin]}
   initialView="dayGridMonth"
-  initialDate="2024-05-01"
+  initialDate={earliest}
   events={eventz}
   eventClick={(info) => {
     const foundPost = postQueue.find(

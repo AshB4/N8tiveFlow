@@ -1,11 +1,8 @@
-/**
- * @format
- * @type {import('tailwindcss').Config}
- */
+/** @format */
 
 module.exports = {
 	content: [
-		"./src/**/*.{js,jsx,ts,tsx}",
+		"./frontend/**/*.{js,jsx,ts,tsx}",
 		"./UXUI/**/*.{js,jsx,ts,tsx}",
 		"./public/index.html",
 	],

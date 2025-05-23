@@ -10,9 +10,10 @@ export default function App() {
   return (
     <Router>
       <Routes>
+      
         <Route path="/" element={<CalendarPage />} />
         <Route path="/compose" element={<PostComposer />} />
-        <Route path="*" element={<NotFound />} errorElement={<ErrorPage />}
+        <Route path="*" element={<NotFound />} 
 />
       </Routes>
     </Router>

@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      opacity: 1;
+    }
+    20%, 22%, 24%, 55% {
+      opacity: 0.5;
+    }
+  }
+  
+  .glitchy {
+    animation: flicker 1.2s infinite, pulse 5s ease-in-out infinite;
+    filter: brightness(1.2) contrast(1.1);
+  }
+  
+  

@@ -4,6 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
 import PostModal from "../Components/CalendarPage/PostModal.jsx";
+import logo from "../../assets/PostPunkTransparentLogo.png";
 
 
 
@@ -40,9 +41,17 @@ export default function PostCalendar() {
 
   return (
     <div className="min-h-screen bg-black text-pink-500 font-mono p-4">
-      <h1 className="text-4xl text-center text-pink-500 mb-4 tracking-widest">
-        POSTPUNK
-      </h1>
+      <div className="flex items-center justify-center mb-4">
+      <div className="text-center pb-2 border-b border-pink-400 relative">
+      <img
+  src={logo}
+  alt="PostPunk Logo"
+  className="h-24 w-auto mx-auto drop-shadow-[0_0_12px_#] glitchy"
+/>
+
+
+</div>
+</div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
        <aside className="bg-black text-teal-300 font-mono p-4 border-2 border-pink-600 shadow-lg w-full md:w-64 rounded">
@@ -61,6 +70,7 @@ export default function PostCalendar() {
       </div>
     ))}
 </aside>
+
 
         <main className="col-span-2">
           <FullCalendar
@@ -82,15 +92,18 @@ export default function PostCalendar() {
   height="auto"
   dayMaxEventRows={3}
   eventDisplay="block"
+  
 />
+
 <PostModal post={selectedPost} onClose={() => setSelectedPost(null)} />
 
         </main>
+        <div className="w-64">
+    <GuiltDaemon />
+  </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-start sm:gap-4 p-4">
-  <GuiltDaemon />
-</div>
+    
     </div>
   );
 }

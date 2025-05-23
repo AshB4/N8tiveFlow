@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import './index.css';
 
 // Pages
-import CalendarPage from "./ui/Pages/PostCalendar";
-import PostComposer from "./ui/Pages/postComposer";
-import NotFound from "./ui/Pages/notFound";
+import CalendarPage from "./UXUI/Pages/PostCalendar";
+import PostComposer from "./UXUI/Pages/postComposer";
+import NotFound from "./UXUI/Pages/notFound";
 
 export default function App() {
   return (

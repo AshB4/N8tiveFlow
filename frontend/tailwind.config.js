@@ -3,7 +3,7 @@
 module.exports = {
 	content: [
 		"./frontend/**/*.{js,jsx,ts,tsx}",
-		"./ui/**/*.{js,jsx,ts,tsx}",
+		"./UXUI/**/*.{js,jsx,ts,tsx}",
 		"./public/index.html",
 	],
 	theme: {

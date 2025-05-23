@@ -65,10 +65,11 @@ const GuiltDaemon = () => {
   }, []);
 
   return (
-    <div className="bg-black text-pink-500 border-2 border-teal-300 p-4 w-64 shadow-xl text-center font-mono">
+    <div className="bg-black text-pink-500 border-2 border-teal-300 p-4 w-64 shadow-xl text-center font-mono 
+  mx-auto sm:mx-0 sm:ml-4">
       <h2 className="text-xl mb-2">GUILT<br />DAEMON</h2>
       <div className="text-sm text-teal-400">
-        <div className="mt-2">💀</div>
+      <div className="mt-2 text-3xl sm:text-xl">💀</div>
         <p className="mt-2">{message}</p>
       </div>
     </div>

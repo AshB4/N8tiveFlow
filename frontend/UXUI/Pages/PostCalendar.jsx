@@ -88,9 +88,9 @@ export default function PostCalendar() {
         </main>
       </div>
 
-      <footer className="mt-4 text-center text-pink-500 text-sm">
-        <GuiltDaemon />
-      </footer>
+      <div className="flex flex-col sm:flex-row sm:items-start sm:gap-4 p-4">
+  <GuiltDaemon />
+</div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-// Refactored PostCalendar with better layout, fat queue, lined header, bigger logo, improved calendar theme
+// Refactored PostCalendar with widgets added to right panel and fixed ordering of variables
 
 import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
@@ -7,13 +7,62 @@ import interactionPlugin from "@fullcalendar/interaction";
 import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
 import PostModal from "../Components/CalendarPage/PostModal.jsx";
 import logo from "../../assets/PostPunkTransparentLogo.png";
-import { PrimaryButton } from "@/Components/Global/Buttons/PrimaryButton";
-import { DangerButton } from "@/Components/Global/Buttons/DangerButton";
 
 export default function PostCalendar() {
   const [postQueue, setPostQueue] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState(null);
+
+  const DUMMY_POSTS = [
+    {
+      title: "🌕 Full Moon Engagement Ritual",
+      scheduled_at: "2025-06-01",
+      platform: "Instagram",
+      engagement: 49,
+      created_at: "2025-05-01",
+      status: "approved",
+    },
+    {
+      title: "🌌 Glitch Dump",
+      scheduled_at: null,
+      platform: "Twitter",
+      engagement: 0,
+      created_at: "2025-04-10",
+      status: "draft",
+    },
+    {
+      title: "🔥 Viral Spiral Memory Dump",
+      scheduled_at: "2025-06-10",
+      platform: "TikTok",
+      engagement: 120,
+      created_at: "2025-05-03",
+      status: "approved",
+    }
+  ];
+
+  useEffect(() => {
+    setPostQueue(DUMMY_POSTS);
+    setLoading(false);
+  }, []);
+
+  const scheduledPosts = postQueue.filter((post) => post.status === "approved");
+
+  const percentScheduled = postQueue.length > 0
+    ? Math.round((scheduledPosts.length / postQueue.length) * 100)
+    : 0;
+
+  const platformCounts = postQueue.reduce((acc, post) => {
+    acc[post.platform] = (acc[post.platform] || 0) + 1;
+    return acc;
+  }, {});
+
+  const oldestUnscheduled = postQueue
+    .filter((post) => post.status !== "approved")
+    .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))[0];
+
+  const mostEngaged = [...postQueue]
+    .filter((p) => typeof p.engagement === "number")
+    .sort((a, b) => b.engagement - a.engagement)[0];
 
   const handleSave = () => {
     console.log("Saving post... (not implemented)");
@@ -32,16 +81,6 @@ export default function PostCalendar() {
       textColor: "#000000",
     }));
 
-  useEffect(() => {
-    fetch("http://localhost:3001/api/posts")
-      .then((res) => res.json())
-      .then((data) => {
-        setPostQueue(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
   if (loading) return <div>Loading posts…</div>;
 
   const earliest = eventz.length
@@ -58,22 +97,20 @@ export default function PostCalendar() {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[320px_1fr_200px] gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-[320px_1fr_260px] gap-4">
         <aside className="bg-black text-teal-300 p-4 border-2 border-pink-600 shadow-lg rounded">
           <h2 className="text-pink-500 text-2xl mb-4 border-b border-pink-500 pb-1">QUEUE</h2>
-          {postQueue
-            .filter((post) => post.status === "approved")
-            .map((post, index) => (
-              <div key={index} className="mb-3">
-                <div className="uppercase">
-                  {new Date(post.scheduled_at).toLocaleDateString("en-US", {
-                    weekday: "short",
-                  })}
-                </div>
-                <div className="pl-2 text-pink-300 font-bold">"{post.title}"</div>
-                <div className="pl-2 text-sm text-teal-400">={post.platform}</div>
+          {scheduledPosts.map((post, index) => (
+            <div key={index} className="mb-3">
+              <div className="uppercase">
+                {new Date(post.scheduled_at).toLocaleDateString("en-US", {
+                  weekday: "short",
+                })}
               </div>
-            ))}
+              <div className="pl-2 text-pink-300 font-bold">"{post.title}"</div>
+              <div className="pl-2 text-sm text-teal-400">={post.platform}</div>
+            </div>
+          ))}
           <div className="mt-6">
             <GuiltDaemon />
           </div>
@@ -106,10 +143,41 @@ export default function PostCalendar() {
           <PostModal post={selectedPost} onClose={() => setSelectedPost(null)} />
         </main>
 
-        <div className="hidden md:block w-full">
-          <div className="flex flex-col gap-2">
-            <PrimaryButton label="Save Post" onClick={handleSave} />
-            <DangerButton label="Delete Forever" onClick={handleDelete} />
+        <div className="w-full flex flex-col gap-4 text-teal-300 text-sm">
+          <div className="border border-teal-400 p-3 rounded bg-black">
+            <h3 className="text-pink-400 text-lg mb-1">📊 Mini Stats</h3>
+            <p>Total Posts: {postQueue.length}</p>
+            <p>Scheduled: {scheduledPosts.length} ({percentScheduled}%)</p>
+          </div>
+
+          <div className="border border-pink-600 p-3 rounded bg-black">
+            <h3 className="text-pink-400 text-lg mb-1">🎯 Platform Mix</h3>
+            <ul>
+              {Object.entries(platformCounts).map(([platform, count]) => (
+                <li key={platform}>{platform}: {count}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="border border-red-500 p-3 rounded bg-black">
+            <h3 className="text-pink-400 text-lg mb-1">💀 Engagement Alerts</h3>
+            {oldestUnscheduled && (
+              <p>Oldest unscheduled: “{oldestUnscheduled.title}”</p>
+            )}
+            {mostEngaged && mostEngaged.engagement > 0 && (
+              <p>Most engaged: “{mostEngaged.title}” ({mostEngaged.engagement} reactions)</p>
+            )}
+          </div>
+
+          <div className="border border-teal-500 p-3 rounded bg-black">
+            <h3 className="text-pink-400 text-lg mb-1">🔋 Content Fuel</h3>
+            <div className="bg-gray-800 h-4 w-full rounded overflow-hidden">
+              <div
+                className="bg-teal-400 h-4"
+                style={{ width: `${Math.min(percentScheduled, 100)}%` }}
+              ></div>
+            </div>
+            <p className="mt-1">{percentScheduled}% scheduled</p>
           </div>
         </div>
       </div>

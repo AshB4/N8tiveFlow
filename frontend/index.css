@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.fc .fc-col-header-cell {
+  background-color: #111827 !important; /* Tailwind gray-900 */
+  border-color: #374151 !important;     /* gray-700 for borders */
+}
+
 @keyframes flicker {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
       opacity: 1;

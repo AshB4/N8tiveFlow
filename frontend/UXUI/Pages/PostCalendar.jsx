@@ -184,3 +184,6 @@ export default function PostCalendar() {
     </div>
   );
 }
+
+// Future ideas: Pull in the Menubar from https://ui.shadcn.com/docs/components/navigation-menu
+// 

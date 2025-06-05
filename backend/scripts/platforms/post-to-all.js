@@ -6,19 +6,19 @@
  */
 
 // Import your platform posting functions
-import postToX from "./platforms/post-to-x.js";
-import postToFacebook from "./platforms/post-to-facebook.js";
-import postToLinkedin from "./platforms/post-to-linkedin.js";
-import postToPinterest from "./platforms/post-to-pinterest.js";
-import postToReddit from "./platforms/post-to-reddit.js";
-import postToTumblr from "./platforms/post-to-tumblr.js";
-import postToOnlyfans from "./platforms/post-to-onlyfans.js";
-import postToKofi from "./platforms/post-to-kofi.js";
-import postToDiscord from "./platforms/post-to-discord.js";
-import postToDevto from "./platforms/post-to-devto.js";
-import postToHashnode from "./platforms/post-to-hashnode.js";
-import postToProducthunt from "./platforms/post-to-producthunt.js";
-import postToAmazon from "./platforms/post-to-amazon.js";
+import postToX from "./social/post-to-x.js";
+import postToFacebook from "./social/post-to-facebook.js";
+import postToLinkedin from "./social/post-to-linkedin.js";
+import postToPinterest from "./social/post-to-pinterest.js";
+import postToReddit from "./social/post-to-reddit.js";
+import postToTumblr from "./social/post-to-tumblr.js";
+import postToOnlyfans from "./adult/post-to-onlyfans.js";
+import postToKofi from "./content/post-to-kofi.js";
+import postToDiscord from "./adult/post-to-discord.js";
+import postToDevto from "./dev/post-to-devto.js";
+import postToHashnode from "./dev/post-to-hashnode.js";
+import postToProducthunt from "./dev/post-to-producthunt.js";
+import postToAmazon from "./marketplace/post-to-amazon.js";
 
 // Map of platform name to function
 const platformMap = {

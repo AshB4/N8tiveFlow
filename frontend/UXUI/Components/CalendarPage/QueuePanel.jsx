@@ -1,6 +1,7 @@
 // UXUI/Components/CalendarPage/QueuePanel.jsx
 const QueuePanel = ({ schedule }) => {
   return (
+    
     <div className="bg-black text-teal-300 font-mono p-4 border-2 border-pink-600 shadow-lg w-64">
       <h2 className="text-pink-500 text-xl mb-4">QUEUE</h2>
       {Object.entries(schedule).map(([day, post]) => (

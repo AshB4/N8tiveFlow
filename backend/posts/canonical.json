@@ -1,0 +1,18 @@
+[
+  {
+    "title": "PostPunk Intro",
+    "originalUrl": "https://example.com/postpunk-intro",
+    "isCanonical": true,
+    "utmParams": "",
+    "funnelUrl": "https://gumroad.com/l/postpunk",
+    "platformVariants": [
+      {
+        "platform": "Dev.to",
+        "postUrl": "https://dev.to/ash/postpunk-intro",
+        "canonicalTarget": "https://example.com/postpunk-intro",
+        "utmParams": "?utm_source=devto&utm_medium=referral&utm_campaign=launch",
+        "postedAt": "2025-05-10T10:00:00Z"
+      }
+    ]
+  }
+]

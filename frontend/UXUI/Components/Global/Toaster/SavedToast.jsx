@@ -1,4 +1,10 @@
-import { showRandomToast } from "../lib/toastMessages";
+import { showRandomToast } from "@/lib/toastMessages";
 import { toast } from "react-hot-toast";
 
-<button onClick={() => showRandomToast(toast)}>Show Toast</button>
+export default function SavedToast() {
+  return (
+    <button onClick={() => showRandomToast(toast)}>
+      Show Toast
+    </button>
+  );
+}

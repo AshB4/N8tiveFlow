@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { runSeoCheck } from "../utils/seoCheckRunner";
+import { runSeoCheck } from "@/lib/seoCheckRunner";
 
 const Post = ({ post }) => {
 	const seo = runSeoCheck(post.id); // or title/slug

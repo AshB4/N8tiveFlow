@@ -110,6 +110,41 @@ npm install
 npm run start-scheduler     # bree kicks off
 node backend/scripts/post-to-devto.js    # or run a script manually
 ```
+
+## 🛠 Installation
+
+### Backend
+```bash
+cd backend
+npm install
+```
+
+### Frontend
+```bash
+cd frontend
+npm install
+```
+
+Copy `backend/config/settings.template` to `backend/config/settings.json` and adjust values for your environment.
+
+## 🚗 Running the Dev Server
+Start the backend API:
+```bash
+cd backend
+npm start
+```
+
+In another terminal, launch the React UI:
+```bash
+cd frontend
+npm run dev
+```
+
+## 🏗️ Building the React UI
+```bash
+cd frontend
+npm run build
+```
 ---
 
 ## 🛠 Roadmap Highlights

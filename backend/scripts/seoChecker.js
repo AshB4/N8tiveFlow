@@ -2,7 +2,8 @@
 
 // /scripts/seoChecker.js
 import chalk from "chalk";
-import { runSeoCheck } from "../utils/seoCheckRunner.js";
+// Import the SEO checker from this directory
+import { runSeoCheck } from "./seoCheckRunner.js";
 
 const productKey = process.argv[2];
 const result = runSeoCheck(productKey);

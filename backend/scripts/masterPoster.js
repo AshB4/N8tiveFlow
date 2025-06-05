@@ -1,6 +1,7 @@
 /** @format */
 
-const { runSeoCheck } = require("../utils/seoCheckRunner");
+// The SEO helper lives in this same folder, not ../utils
+const { runSeoCheck } = require("./seoCheckRunner.js");
 
 posts.forEach((post) => {
 	if (

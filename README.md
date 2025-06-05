@@ -88,6 +88,10 @@ Trigger alerts on success/failure or large queues:
 Build flows that push data into PostPunk or trigger scripts based on external triggers.
 📄 [Node-RED Integration](./Docs/nodered.md)
 
+## 🔍 X Visibility Strategy
+For guidance on maximizing reach on X (Twitter), see [X Visibility Strategy](./docs/x-visibility-strategy.md).
+
+
 ---
 
 ## 🧾 Licensing

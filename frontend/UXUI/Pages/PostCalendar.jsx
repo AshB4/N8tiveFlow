@@ -13,36 +13,21 @@ export default function PostCalendar() {
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState(null);
 
-  const DUMMY_POSTS = [
-    {
-      title: "🌕 Full Moon Engagement Ritual",
-      scheduled_at: "2025-06-01",
-      platform: "Instagram",
-      engagement: 49,
-      created_at: "2025-05-01",
-      status: "approved",
-    },
-    {
-      title: "🌌 Glitch Dump",
-      scheduled_at: null,
-      platform: "Twitter",
-      engagement: 0,
-      created_at: "2025-04-10",
-      status: "draft",
-    },
-    {
-      title: "🔥 Viral Spiral Memory Dump",
-      scheduled_at: "2025-06-10",
-      platform: "TikTok",
-      engagement: 120,
-      created_at: "2025-05-03",
-      status: "approved",
-    }
-  ];
-
+  // Fetch posts from the backend queue
   useEffect(() => {
-    setPostQueue(DUMMY_POSTS);
-    setLoading(false);
+    async function loadPosts() {
+      try {
+        const res = await fetch("http://localhost:3001/api/posts");
+        const data = await res.json();
+        setPostQueue(data);
+      } catch (err) {
+        console.error("Failed to load posts", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadPosts();
   }, []);
 
   const scheduledPosts = postQueue.filter((post) => post.status === "approved");
@@ -52,7 +37,14 @@ export default function PostCalendar() {
     : 0;
 
   const platformCounts = postQueue.reduce((acc, post) => {
-    acc[post.platform] = (acc[post.platform] || 0) + 1;
+    const list = post.platform
+      ? [post.platform]
+      : Array.isArray(post.platforms)
+      ? post.platforms
+      : [];
+    list.forEach((p) => {
+      acc[p] = (acc[p] || 0) + 1;
+    });
     return acc;
   }, {});
 
@@ -108,7 +100,14 @@ export default function PostCalendar() {
                 })}
               </div>
               <div className="pl-2 text-pink-300 font-bold">"{post.title}"</div>
-              <div className="pl-2 text-sm text-teal-400">={post.platform}</div>
+              <div className="pl-2 text-sm text-teal-400">
+                =
+                {post.platform
+                  ? post.platform
+                  : Array.isArray(post.platforms)
+                  ? post.platforms.join(", ")
+                  : ""}
+              </div>
             </div>
           ))}
           <div className="mt-6">

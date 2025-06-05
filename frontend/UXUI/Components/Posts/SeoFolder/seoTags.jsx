@@ -1,7 +1,7 @@
 /** @format */
 import { Helmet } from "react-helmet-async";
 import PropTypes from "prop-types";
-import { runSeoCheck } from "../utils/seoCheckRunner";
+import { runSeoCheck } from "@/lib/seoCheckRunner";
 
 const defaultSchema = (meta) => ({
   "@context": "https://schema.org",

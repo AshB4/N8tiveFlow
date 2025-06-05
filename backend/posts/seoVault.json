@@ -1,57 +1,66 @@
 {
-  "product_name": "",
-  "slug": "",
-  "platforms": ["Twitter", "LinkedIn", "Medium", "Dev.to", "Pinterest", "Instagram"],
-  "desperate_search_queries": [
-    ""
-  ],
-  "unaware_search_questions": [
-    ""
-  ],
-  "seo_human_pitch": "",
-  "keywords": [
-    ""
-  ],
-  "hashtags": {
-    "Twitter": [""],
-    "Instagram": [""],
-    "LinkedIn": [""],
-    "Pinterest": [""],
-    "Dev.to": [""],
-    "Medium": [""],
-    "All": ["#YourBrand"]
-  },
-  "meta_description": "",
-  "alt_text_examples": [
-    ""
-  ],
-  "image_requirements": {
-    "Twitter": "1200x675",
-    "Instagram": "1080x1080 or 1080x1350",
-    "Pinterest": "1000x1500",
-    "LinkedIn": "1200x627",
-    "Default": "1200x630"
-  },
-  "preferred_post_times": {
-    "Twitter": "9–11 AM (Weekdays)",
-    "LinkedIn": "10 AM–12 PM (Tues–Thu)",
-    "Instagram": "11 AM or 7–9 PM (Weekdays)",
-    "Pinterest": "1 PM Friday, Evenings + Weekends",
-    "Medium": "8–11 AM (Midweek)",
-    "Dev.to": "9–10 AM (Mon–Wed)"
-  },
-  "link": {
-    "gumroad": "",
-    "amazon": "",
-    "utm_base": "?utm_source=__PLATFORM__&utm_medium=social&utm_campaign=__CAMPAIGN__"
-  },
-  "campaigns": [
-    {
-      "name": "",
-      "description": "",
-      "tags": [""],
-      "start_date": "",
-      "end_date": ""
-    }
-  ]
+  "PostPunk": {
+    "product_name": "PostPunk",
+    "slug": "postpunk-automation",
+    "platforms": ["Twitter", "LinkedIn", "Medium", "Dev.to", "Pinterest", "Instagram"],
+    "desperate_search_queries": [
+      "schedule posts across multiple platforms",
+      "open source social media automation",
+      "local social media scheduler"
+    ],
+    "unaware_search_questions": [
+      "how do I queue content without a SaaS?",
+      "what tool helps track UTM links?"
+    ],
+    "seo_human_pitch": "PostPunk automates your chaotic content flow — queue it once and publish everywhere.",
+    "keywords": [
+      "social media scheduler",
+      "content automation",
+      "UTM tracking",
+      "local-first marketing"
+    ],
+    "hashtags": {
+      "Twitter": ["#PostPunk", "#DevTools", "#Automation"],
+      "Instagram": ["#PostPunk", "#CreatorTools", "#Workflow"],
+      "LinkedIn": ["#PostPunk", "#Productivity", "#MarketingAutomation"],
+      "Pinterest": ["#PostPunk", "#GrowthHacks", "#Scheduling"],
+      "Dev.to": ["#PostPunk", "#OpenSource", "#DevTools"],
+      "Medium": ["#PostPunk", "#Automation", "#ContentStrategy"],
+      "All": ["#PostPunk", "#Automation", "#IndieDev"]
+    },
+    "meta_description": "PostPunk is a BSD-licensed automation suite for scheduling, remixing and tracking posts across social platforms.",
+    "alt_text_examples": [
+      "Screenshot of the PostPunk queue showing scheduled posts",
+      "Graph from PostPunk analytics dashboard"
+    ],
+    "image_requirements": {
+      "Twitter": "1200x675",
+      "Instagram": "1080x1080 or 1080x1350",
+      "Pinterest": "1000x1500",
+      "LinkedIn": "1200x627",
+      "Default": "1200x630"
+    },
+    "preferred_post_times": {
+      "Twitter": "9–11 AM (Weekdays)",
+      "LinkedIn": "10 AM–12 PM (Tues–Thu)",
+      "Instagram": "11 AM or 7–9 PM (Weekdays)",
+      "Pinterest": "1 PM Friday, Evenings + Weekends",
+      "Medium": "8–11 AM (Midweek)",
+      "Dev.to": "9–10 AM (Mon–Wed)"
+    },
+    "link": {
+      "gumroad": "https://gumroad.com/l/postpunk",
+      "amazon": "https://www.amazon.com/dp/B0ABC12345",
+      "utm_base": "?utm_source=__PLATFORM__&utm_medium=social&utm_campaign=__CAMPAIGN__"
+    },
+    "campaigns": [
+      {
+        "name": "Launch2025",
+        "description": "Early access launch for PostPunk",
+        "tags": ["launch", "early-access"],
+        "start_date": "2025-05-01",
+        "end_date": "2025-06-01"
+      }
+    ]
+  }
 }

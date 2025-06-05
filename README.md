@@ -14,6 +14,8 @@ It is licensed under BSD 2-Clause for private, non-commercial use only. Commerci
 
 PostPunk is your feral-but-focused automation system for scheduling, remixing, and tracking content posts across multiple platforms — complete with UTM insights, drag-and-drop frontend tools, optional notification systems, and a killer local dev setup.
 
+For a deep dive into the guiding vision and the 4WD framework, see [PostPunk Core Vision](./Docs/PostPunk_Core_Vision.md).
+
 ---
 
 ## 🚀 What It Does

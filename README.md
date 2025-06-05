@@ -55,6 +55,7 @@ Only posts with `"status": "approved"` in the `postQueue.json` are eligible for 
 ---
 
 ## ⚙️ System Settings
+Copy `backend/config/settings.template` to `backend/config/settings.json` and remove any comments.
 Control how PostPunk behaves globally:
 ```json
 {

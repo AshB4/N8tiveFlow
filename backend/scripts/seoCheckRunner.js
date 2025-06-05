@@ -1,6 +1,6 @@
 /** @format */
 
-// /utils/seoCheckRunner.js
+// scripts/seoCheckRunner.js
 import { seoProducts } from "../utils/seoPresets.js";
 
 export function runSeoCheck(productKey) {

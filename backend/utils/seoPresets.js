@@ -1,11 +1,11 @@
 /** @format */
 
-export const seoDefaults = {
-	platform: "Cross-platform",
-	author: "Ashley Broussard",
+const seoDefaults = {
+        platform: "Cross-platform",
+        author: "Ashley Broussard",
 };
 
-export const seoProducts = {
+const seoProducts = {
 	"daily-square": {
 		title: "Daily Square Ritual – Auto GitHub Commits",
 		description:
@@ -22,6 +22,11 @@ export const seoProducts = {
 		image: "https://yourcdn.com/assets/promptstorm-banner.png",
 		price: "25.00",
 	},
+};
+
+module.exports = {
+        seoDefaults,
+        seoProducts,
 };
 
 

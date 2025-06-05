@@ -24,6 +24,7 @@ PostPunk is your feral-but-focused automation system for scheduling, remixing, a
 | 📊 UTM Chart Tracking       | Visualize post performance and campaign ROI            |
 | 🔌 Optional Integrations    | Alerts (Apprise) and flow automation (Node-RED)        |
 | 🧠 Local First Design       | Runs from terminal or via cron without cloud lock-in   |
+| 🗂 JSON Logs                | Saves run details to `backend/logs`                    |
 | 🧾 BSD Licensing            | Safe for personal use, commercial use via license      |
 
 ---
@@ -107,8 +108,9 @@ Includes third-party libraries under MIT, BSD, and Apache 2.0 — see [Licenses.
 ## 🧃 Run It Like a Ghost
 ```bash
 npm install
-npm run start-scheduler     # bree kicks off
-node backend/scripts/post-to-devto.js    # or run a script manually
+npm run cli                 # choose run or schedule
+# or run once directly
+node backend/jobs/processPosts.js
 ```
 ---
 

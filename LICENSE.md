@@ -43,7 +43,7 @@ You may NOT:
 - ❌ Resell it "as-is" or as a hosted service without permission
 - ❌ Remove credit without licensing
 
-To discuss commercial licensing or team editions, email: **ash@fleurdevie.com**
+To discuss commercial licensing or team editions, email: **fleurdeviefarmsllc@gmail.com**
 
 ## 📦 Third-Party Licenses
 This system includes libraries under MIT, BSD, and Apache-2.0 licenses.  

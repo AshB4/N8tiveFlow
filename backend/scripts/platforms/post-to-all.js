@@ -71,3 +71,5 @@ export const postToAllPlatforms = async (post, platforms) => {
 
 	return results;
 };
+export default postToAllPlatforms;
+//Maybe change to post to all boxes checked boxes in the post composer

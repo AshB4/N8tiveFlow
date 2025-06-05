@@ -13,37 +13,42 @@ export default function PostCalendar() {
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState(null);
 
-  const DUMMY_POSTS = [
-    {
-      title: "🌕 Full Moon Engagement Ritual",
-      scheduled_at: "2025-06-01",
-      platform: "Instagram",
-      engagement: 49,
-      created_at: "2025-05-01",
-      status: "approved",
-    },
-    {
-      title: "🌌 Glitch Dump",
-      scheduled_at: null,
-      platform: "Twitter",
-      engagement: 0,
-      created_at: "2025-04-10",
-      status: "draft",
-    },
-    {
-      title: "🔥 Viral Spiral Memory Dump",
-      scheduled_at: "2025-06-10",
-      platform: "TikTok",
-      engagement: 120,
-      created_at: "2025-05-03",
-      status: "approved",
-    }
-  ];
+  const res = await fetch('/api/posts');
+const posts = await res.json();
 
-  useEffect(() => {
-    setPostQueue(DUMMY_POSTS);
-    setLoading(false);
-  }, []);
+
+  // const DUMMY_POSTS = 
+  // [
+  //   {
+  //     title: "🌕 Full Moon Engagement Ritual",
+  //     scheduled_at: "2025-06-01",
+  //     platform: "Instagram",
+  //     engagement: 49,
+  //     created_at: "2025-05-01",
+  //     status: "approved",
+  //   },
+  //   {
+  //     title: "🌌 Glitch Dump",
+  //     scheduled_at: null,
+  //     platform: "Twitter",
+  //     engagement: 0,
+  //     created_at: "2025-04-10",
+  //     status: "draft",
+  //   },
+  //   {
+  //     title: "🔥 Viral Spiral Memory Dump",
+  //     scheduled_at: "2025-06-10",
+  //     platform: "TikTok",
+  //     engagement: 120,
+  //     created_at: "2025-05-03",
+  //     status: "approved",
+  //   }
+  // ];
+
+  // useEffect(() => {
+  //   setPostQueue(DUMMY_POSTS);
+  //   setLoading(false);
+  // }, []);
 
   const scheduledPosts = postQueue.filter((post) => post.status === "approved");
 
@@ -186,4 +191,3 @@ export default function PostCalendar() {
 }
 
 // Future ideas: Pull in the Menubar from https://ui.shadcn.com/docs/components/navigation-menu
-// 

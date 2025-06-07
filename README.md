@@ -52,8 +52,6 @@ Only posts with `"status": "approved"` in the `postQueue.json` are eligible for 
 - After posting, system updates `status` to `"posted"`
 - Posts can be rejected or recycled via logs
 
-📄 See [Queue Rules](./Docs/queue-rules.md) for full logic.
-
 ---
 
 ## ⚙️ System Settings
@@ -78,24 +76,6 @@ Use `recycle.js` to store evergreen templates, asset combos, and platform-tailor
 
 ---
 
-## 🛰️ Optional: Notifications (Apprise)
-Trigger alerts on success/failure or large queues:
-- Supports Discord, Slack, Email, etc.
-- Configured via `.apprise.yml`
-📄 [Apprise Setup](./Docs/apprise.md)
-
----
-
-## 🔁 Optional: Node-RED
-Build flows that push data into PostPunk or trigger scripts based on external triggers.
-📄 [Node-RED Integration](./Docs/nodered.md)
-
-## 🔍 X Visibility Strategy
-For guidance on maximizing reach on X (Twitter), see [X Visibility Strategy](./docs/x-visibility-strategy.md).
-
-
----
-
 ## 🧾 Licensing
 This system is licensed under **BSD 2-Clause** for **personal use only**. 
 
@@ -104,7 +84,7 @@ You **may not**:
 - Sublicense or publicly post modified versions
 
 To obtain a commercial license or team edition:
-📬 Contact: `ash@fleurdevie.com`
+📬 Contact: `fleurdeviefarmsllc@gmail.com`
 
 Includes third-party libraries under MIT, BSD, and Apache 2.0 — see [Licenses.txt](./Docs/Licenses.txt)
 

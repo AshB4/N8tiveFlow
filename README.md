@@ -126,7 +126,7 @@ node backend/scripts/post-to-devto.js    # or run a script manually
 
 ---
 
-🧃 _Post like a ghost. Track like a boss. Remix like a misfit._
+🧃 _Post like a ghost. Track like a boss.  Remix like an automation nerd with a thing for good buttons._
 
 🛒 Want to license PostPunk for your team or product?
 Email fleurdeviefarmsllc@gmail.com to get early access + pricing.

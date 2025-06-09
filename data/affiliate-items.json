@@ -1,0 +1,26 @@
+[
+  {
+    "id": "gear1",
+    "title": "Chaos Pens",
+    "asin": "B01CHAOS",
+    "description": "Vibrant pens for scribbling incantations.",
+    "tags": ["dev", "goblin"],
+    "image": "chaos_pens.jpg"
+  },
+  {
+    "id": "gear2",
+    "title": "Forest Diffuser",
+    "asin": "B02FOREST",
+    "description": "Bring calming woods to your desk.",
+    "tags": ["dev"],
+    "image": "forest_diffuser.jpg"
+  },
+  {
+    "id": "gear3",
+    "title": "Moleskine Notebook",
+    "asin": "B03MOLESKINE",
+    "description": "Classic pages for chaotic notes.",
+    "tags": ["dev", "NSFW"],
+    "image": "moleskine.jpg"
+  }
+]

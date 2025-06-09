@@ -1,0 +1,110 @@
+# 🧠 PostPunk / N8tiveFlow – Developer README (Internal Use Only)
+> This doc is for YOU — the architect of chaos. Not the job recruiter, not the curious GitHub visitor. You. 🪄
+
+This is your quick-jump mental map and dev guide for picking PostPunk back up without crying in 6 months.
+
+---
+
+## 🗺️ Overview
+PostPunk (aka N8tiveFlow) is a:
+- 🔁 **Cross-platform post scheduler**
+- 🧪 **CLI + React UI** hybrid
+- 🧠 **Fully automation-optional** system
+- 🧼 Designed to run **headless** or **full UX**
+- 🧰 Bundled with **Playwright, Axios, Bree, React, Tailwind**
+
+It handles:
+- API posts (Gumroad, Dev.to, etc)
+- Headless browser posting (Pinterest, etc)
+- Smart UTM tracking
+- Job scheduling
+- Post recycling and templating
+
+---
+
+## 🧩 Project Anatomy
+```
+/backend
+├── scripts/           → Post logic (API calls, Playwright runs)
+├── posts/             → Markdown posts (with metadata)
+├── config/            → Global settings (UTM rules, platform modes)
+├── utils/             → Helpers (date parser, platform formatters)
+├── logs/              → Success/fail logs per platform
+/frontend
+├── public/            → Static files (React root)
+├── UXUI/              → Components (admin panels, editors)
+├── assets/            → Post images, meme templates
+.env                   → Secrets (API keys)
+README.md              → Public version
+README-dev.md          → You’re here 🧠
+```
+
+---
+
+## 🚦 File Trigger Flow
+1. Bree runs from job config → executes script from `/scripts`
+2. Script loads target post from `/posts/` (must be approved)
+3. Metadata parsed → platform posting logic engaged
+4. Axios or Playwright handles the send
+5. Results logged (success or fail)
+6. Post status updated if successful
+
+---
+
+## ⚙️ Scheduler Notes
+- `bree` → primary engine
+- `node-cron` → fallback, lighter use
+- Each script is expected to be executable on its own
+
+---
+
+## 🧪 Dev Environment
+```bash
+# Start backend job runner
+npm run start-scheduler
+
+# Start frontend
+cd frontend
+npm run dev
+```
+
+---
+
+## 💥 Debug Workflow
+- Use `chalk` in all logs (color-coded success/fail)
+- Dump failed posts to `/logs/rejected-log.json`
+- Use `open()` to preview browser result during debugging
+
+---
+
+## 🧼 Docs You Have So Far
+| File                | Purpose                            |
+|---------------------|------------------------------------|
+| `README.md`         | Public-facing intro                |
+| `README-dev.md`     | You’re here. Internal dev cheat    |
+| `queue-rules.md`    | Post selection rules               |
+| `recycle-templates.md` | Evergreen post reuse patterns     |
+| `settings.md`       | System-level behavior              |
+| `admin-setup.md`    | AdminJS UI logic/setup             |
+| `utm-tracking.md`   | UTM + post-performance strategy    |
+| `scheduler.md`      | Bree and cron job management       |
+| `platform-notes.md` | Platform-specific posting quirks   |
+| `post-types.md`     | Content format types (meme, tip)   |
+| `dev-notes.md`      | Logic warnings, gotchas, helpers   |
+
+---
+
+## 🛡️ Licensing + Secrets
+- All libraries are MIT / BSD — ✅ resale-safe
+- PostPunk itself is BSD 2-Clause (personal use default)
+- Commercial license requires opt-in
+- `.env` keys never pushed to repo
+
+---
+
+## 🌀 Future You Notes
+- Create `api/` route folder to expose endpoint for frontend → backend triggers
+- Add `.md` parser that generates quick platform previews (e.g. dev.to vs LinkedIn vs Pinterest)
+- Add toggle to enable/disable full UI for low-resource installs
+
+Keep it weird. Keep it working. 💀

@@ -1,53 +1,135 @@
-export default function ContentDashboard() {
+/** @format */
+
+import { useState, useEffect } from "react";
+import { postToAllPlatforms } from "../scripts/postToAllPlatforms";
+import usePostComposerState from "../Global/PostComposer/usePostComposerState";
+import PlatformSelector from "../Global/PostComposer/PlatformSelector";
+import ImageUploader from "../Global/PostComposer/ImageUploader";
+import CustomPlatformText from "../Global/PostComposer/CustomPlatformText";
+import SeoProductSelector from "../Global/PostComposer/SeoProductSelector";
+
+export default function PostComposer() {
+  const {
+    title,
+    setTitle,
+    body,
+    setBody,
+    image,
+    setImage,
+    altText,
+    setAltText,
+    selectedPlatforms,
+    togglePlatform,
+    scheduledAt,
+    setScheduledAt,
+    saveAsDraft,
+    setSaveAsDraft,
+    selectedProduct,
+    setSelectedProduct,
+    useAutoHashtags,
+    setUseAutoHashtags,
+    manualHashtags,
+    setManualHashtags,
+    useAutoPlatformText,
+    setUseAutoPlatformText,
+    customText,
+    setCustomText,
+    handleSubmit,
+    seoVault,
+  } = usePostComposerState();
+
   return (
-    <div className="flex min-h-screen bg-[#181A1B]">
-      {/* Sidebar/Calendar */}
-      <aside className="w-72 bg-[#23272a] p-6 rounded-r-2xl shadow-xl flex flex-col gap-6">
-        <h2 className="text-xl text-white font-bold mb-4">Calendar</h2>
-        <div className="flex flex-col gap-3">
-          {/* Example platform event */}
-          <div className="flex items-center gap-3 bg-[#202225] rounded-xl p-3 shadow-lg">
-            <span className="w-7 h-7 rounded-full flex items-center justify-center bg-red-600 shadow-md">
-              {/* Pinterest Icon SVG */}
-            </span>
-            <span className="text-white font-medium">Llama Coloring Book Preview</span>
-          </div>
-          <div className="flex items-center gap-3 bg-[#202225] rounded-xl p-3">
-            <span className="w-7 h-7 rounded-full bg-black flex items-center justify-center">
-              {/* X Icon SVG */}
-            </span>
-            <span className="text-white font-medium">Why I Built PostPunk</span>
-          </div>
-        </div>
-      </aside>
-      {/* Main content area */}
-      <main className="flex-1 p-8">
-        <div className="flex gap-4 mb-6">
-          <button className="px-5 py-2 rounded-full bg-[#604AE6] text-white font-bold shadow-md">
-            Longform
-          </button>
-          <button className="px-5 py-2 rounded-full bg-[#2ea043] text-white font-bold shadow-md">
-            Shortform
-          </button>
-        </div>
-        <section className="grid grid-cols-2 gap-8">
-          {/* Longform card */}
-          <div className="bg-[#23272a] border-l-8 border-[#604AE6] rounded-xl p-6 shadow-lg">
-            <h3 className="text-white text-lg font-bold mb-2">How to Integrate the X API with Node.js</h3>
-            <span className="text-[#FFD600] text-xs font-semibold rounded px-2 py-1 bg-[#23272a]/80">Draft</span>
-            <p className="text-gray-300 mt-2">A step-by-step tutorial on working with the new API.</p>
-          </div>
-          {/* Shortform card */}
-          <div className="bg-[#23272a] border-l-8 border-[#2ea043] rounded-xl p-6 shadow-lg">
-            <h3 className="text-white text-lg font-bold mb-2">Why I Built PostPunk</h3>
-            <span className="text-[#6EE7B7] text-xs font-semibold rounded px-2 py-1 bg-[#23272a]/80">Scheduled</span>
-            <p className="text-gray-300 mt-2">Short post for X, LinkedIn, Reddit, etc.</p>
-          </div>
-        </section>
-      </main>
+    <div className="p-4 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Post Composer</h1>
+
+      <SeoProductSelector
+        selectedProduct={selectedProduct}
+        setSelectedProduct={setSelectedProduct}
+        seoVault={seoVault}
+      />
+
+      <input
+        type="text"
+        placeholder="Title"
+        className="w-full p-2 border mb-2"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+
+      <textarea
+        placeholder="Write your post here..."
+        className="w-full p-2 border mb-2 min-h-[100px]"
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
+      />
+
+      <ImageUploader
+        image={image}
+        setImage={setImage}
+        altText={altText}
+        setAltText={setAltText}
+        selectedPlatforms={selectedPlatforms}
+      />
+
+      <PlatformSelector
+        selectedPlatforms={selectedPlatforms}
+        togglePlatform={togglePlatform}
+      />
+
+      <div className="mb-4">
+        <label>
+          <input
+            type="checkbox"
+            checked={useAutoHashtags}
+            onChange={() => setUseAutoHashtags(!useAutoHashtags)}
+            className="mr-2"
+          />
+          Auto-generate hashtags
+        </label>
+        {!useAutoHashtags && (
+          <textarea
+            placeholder="#hashtag1 #hashtag2"
+            className="w-full p-2 border mt-2"
+            value={manualHashtags}
+            onChange={(e) => setManualHashtags(e.target.value)}
+          />
+        )}
+      </div>
+
+      <CustomPlatformText
+        useAutoPlatformText={useAutoPlatformText}
+        setUseAutoPlatformText={setUseAutoPlatformText}
+        selectedPlatforms={selectedPlatforms}
+        customText={customText}
+        setCustomText={setCustomText}
+      />
+
+      <label className="block mb-4">
+        Schedule Post:
+        <input
+          type="datetime-local"
+          value={scheduledAt || ""}
+          onChange={(e) => setScheduledAt(e.target.value)}
+          className="block p-2 border"
+        />
+      </label>
+
+      <label className="block mb-4">
+        <input
+          type="checkbox"
+          checked={saveAsDraft}
+          onChange={() => setSaveAsDraft(!saveAsDraft)}
+          className="mr-2"
+        />
+        Save as Draft
+      </label>
+
+      <button
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        onClick={handleSubmit}
+      >
+        Post It
+      </button>
     </div>
   );
 }
-
-{/* TODO: Remix this post via GPT to adjust tone per platform */}
-// Drag-and-drop, remix-ready editor for creating and scheduling posts

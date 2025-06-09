@@ -1,0 +1,16 @@
+{
+  "x": {
+    "maxLength": 280,
+    "tone": "chaotic"
+  },
+  "pinterest": {
+    "descLines": 2,
+    "imageRequired": true
+  },
+  "instagram": {
+    "useEmojis": true
+  },
+  "kofi": {
+    "layout": "blog"
+  }
+}

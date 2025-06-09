@@ -1,0 +1,20 @@
+[
+  {
+    "id": "post1",
+    "title": "Weekly Chaos Reset Kit",
+    "body": "Reset your workflow with these tools.",
+    "tags": ["dev", "goblin"],
+    "variants": {
+      "x": "Reset your dev brain with these wild tools!",
+      "pinterest": "Reset your workflow with style and aroma.",
+      "instagram": "Reset vibes! ✨🧰 #chaosreset",
+      "kofi": "In-depth on resetting your dev environment..."
+    }
+  },
+  {
+    "id": "post2",
+    "title": "Feral Debugging Tricks",
+    "body": "Debug like a goblin under a full moon.",
+    "tags": ["dev", "NSFW"]
+  }
+]

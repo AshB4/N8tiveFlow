@@ -1,3 +1,5 @@
+import PostComposer from "@/Components/PostEditor/PostComposer";
+
 export default function ContentDashboard() {
   return (
     <div className="flex min-h-screen bg-[#181A1B]">
@@ -30,7 +32,7 @@ export default function ContentDashboard() {
             Shortform
           </button>
         </div>
-        <section className="grid grid-cols-2 gap-8">
+        <section className="grid grid-cols-2 gap-8 mb-8">
           {/* Longform card */}
           <div className="bg-[#23272a] border-l-8 border-[#604AE6] rounded-xl p-6 shadow-lg">
             <h3 className="text-white text-lg font-bold mb-2">How to Integrate the X API with Node.js</h3>
@@ -44,10 +46,12 @@ export default function ContentDashboard() {
             <p className="text-gray-300 mt-2">Short post for X, LinkedIn, Reddit, etc.</p>
           </div>
         </section>
+        {/* Interactive composer */}
+        <PostComposer />
       </main>
     </div>
   );
 }
 
-{/* TODO: Remix this post via GPT to adjust tone per platform */}
+// TODO: Remix this post via GPT to adjust tone per platform
 // Drag-and-drop, remix-ready editor for creating and scheduling posts

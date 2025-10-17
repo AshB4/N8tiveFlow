@@ -1,8 +1,8 @@
 /** @format */
 
-require("dotenv/config");
-const axios = require("axios");
-const crypto = require("crypto");
+import "dotenv/config";
+import axios from "axios";
+import crypto from "crypto";
 
 // Required env vars: AMAZON_PAAPI_ACCESS_KEY, AMAZON_PAAPI_SECRET_KEY, AMAZON_PARTNER_TAG
 
@@ -173,7 +173,7 @@ async function callPaapi({
 	return response.data;
 }
 
-async function postToAmazon(post) {
+export default async function postToAmazon(post) {
 	const partnerTag = requiredEnv("AMAZON_PARTNER_TAG");
 	const accessKey = requiredEnv("AMAZON_PAAPI_ACCESS_KEY");
 	const secretKey = requiredEnv("AMAZON_PAAPI_SECRET_KEY");
@@ -250,5 +250,3 @@ async function postToAmazon(post) {
 		raw: data,
 	};
 }
-
-module.exports = postToAmazon;

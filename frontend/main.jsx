@@ -8,6 +8,7 @@ import { Toaster } from "@/Components/ui/toaster";
 // Pages
 import CalendarPage from "./UXUI/Pages/PostCalendar";
 import PostComposer from "./UXUI/Pages/postComposer";
+import PostLab from "./UXUI/Pages/PostLab";
 import ErrorPage from "./UXUI/Pages/notFound"; // This can now use useRouteError()
 
 const router = createBrowserRouter([
@@ -19,6 +20,11 @@ const router = createBrowserRouter([
   {
     path: "/compose",
     element: <PostComposer />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/lab",
+    element: <PostLab />,
     errorElement: <ErrorPage />,
   },
   {

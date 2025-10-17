@@ -1,9 +1,11 @@
-
 [
   {
     "id": "post-001",
     "title": "Cron Ritual Hacks",
-    "platforms": ["LinkedIn", "Twitter"],
+    "platforms": [
+      "LinkedIn",
+      "Twitter"
+    ],
     "status": "approved",
     "scheduled_at": "2025-05-25T10:00:00",
     "body": "Did you know CRON can summon demons at 3AM?",
@@ -39,5 +41,15 @@
     "status": "approved",
     "platform": "Dev.to",
     "scheduled_at": "2025-05-24T15:00:00"
+  },
+  {
+    "id": "p_1760677301030",
+    "title": "Cron Ritual Hacks",
+    "body": "asfasdfasdf",
+    "platforms": [
+      "linkedin"
+    ],
+    "scheduledAt": "2025-05-09T15:00:00.000Z",
+    "status": "draft"
   }
 ]

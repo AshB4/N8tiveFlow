@@ -1,55 +1,58 @@
 /**
  * postToAllPlatforms.js
- * This runs selected post-to-* scripts with shared post data.
+ * Runs selected post-to-* scripts with shared post data.
  *
  * @format
  */
 
-// Import your platform posting functions
-const postToX = require("./social/post-to-x.js");
-const postToFacebook = require("./social/post-to-facebook.js");
-const postToLinkedin = require("./social/post-to-linkedin.js");
-const postToPinterest = require("./social/post-to-pinterest.js");
-const postToReddit = require("./social/post-to-reddit.js");
-const postToTumblr = require("./social/post-to-tumblr.js");
-const postToOnlyfans = require("./adult/post-to-onlyfans.js");
-const postToKofi = require("./content/post-to-kofi.js");
-const postToDiscord = require("./adult/post-to-discord.js");
-const postToDevto = require("./dev/post-to-devto.js");
-const postToHashnode = require("./dev/post-to-hashnode.js");
-const postToProducthunt = require("./dev/post-to-producthunt.js");
-const postToAmazon = require("./marketplaces/post-to-amazon.js");
+const platformLoaders = {
+	x: () => import("./social/post-to-x.js"),
+	facebook: () => import("./social/post-to-facebook.js"),
+	linkedin: () => import("./social/post-to-linkedin.js"),
+	pinterest: () => import("./social/post-to-pinterest.js"),
+	reddit: () => import("./social/post-to-reddit.js"),
+	tumblr: () => import("./social/post-to-tumblr.js"),
+	onlyfans: () => import("./adult/post-to-onlyfans.js"),
+	kofi: () => import("./content/post-to-kofi.js"),
+	discord: () => import("./adult/post-to-discord.js"),
+	devto: () => import("./dev/post-to-devto.js"),
+	hashnode: () => import("./dev/post-to-hashnode.js"),
+	producthunt: () => import("./dev/post-to-producthunt.js"),
+	amazon: () => import("./marketplaces/post-to-amazon.js"),
+};
 
-// Map of platform name to function
-const platformMap = {
-	x: postToX,
-	facebook: postToFacebook,
-	linkedin: postToLinkedin,
-	pinterest: postToPinterest,
-	reddit: postToReddit,
-	tumblr: postToTumblr,
-	onlyfans: postToOnlyfans,
-	kofi: postToKofi,
-	discord: postToDiscord,
-	devto: postToDevto,
-	hashnode: postToHashnode,
-	producthunt: postToProducthunt,
-	amazon: postToAmazon,
+const resolveHandler = async (platform) => {
+	const loader = platformLoaders[platform];
+	if (!loader) {
+		return null;
+	}
+	const namespace = await loader();
+	if (typeof namespace.default === "function") {
+		return namespace.default;
+	}
+	const firstFn = Object.values(namespace).find(
+		(value) => typeof value === "function",
+	);
+	return typeof firstFn === "function" ? firstFn : null;
 };
 
 /**
  * Posts to selected platforms.
  * @param {Object} post - The post payload (title, body, hashtags, overrides, etc)
- * @param {Array} platforms - Array of selected platform strings
+ * @param {Array<string>} platforms - Array of selected platform strings
  * @returns {Promise<Array>} - Array of results by platform
  */
-const postToAllPlatforms = async (post, platforms) => {
+export const postToAllPlatforms = async (post, platforms) => {
 	const results = [];
 
 	for (const platform of platforms) {
-		const fn = platformMap[platform];
-		if (!fn) {
-			results.push({ platform, status: "skipped", reason: "Not implemented" });
+		const handler = await resolveHandler(platform);
+		if (typeof handler !== "function") {
+			results.push({
+				platform,
+				status: "skipped",
+				reason: "Not implemented",
+			});
 			continue;
 		}
 
@@ -62,18 +65,19 @@ const postToAllPlatforms = async (post, platforms) => {
 				hashtags: post.hashtags,
 			};
 
-			const result = await fn(payload);
+			const result = await handler(payload);
 			results.push({ platform, status: "success", result });
 		} catch (err) {
-			results.push({ platform, status: "error", error: err.message });
+			results.push({
+				platform,
+				status: "error",
+				error: err?.message || "Unknown posting error",
+			});
 		}
 	}
 
 	return results;
 };
 
-module.exports = {
-	postToAllPlatforms,
-	default: postToAllPlatforms,
-};
-//Maybe change to post to all boxes checked boxes in the post composer
+export default postToAllPlatforms;
+// Maybe change to post to all boxes checked boxes in the post composer

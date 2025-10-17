@@ -1,17 +1,20 @@
 // Refactored PostCalendar with widgets added to right panel and fixed ordering of variables
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
-import PostModal from "../Components/CalendarPage/PostModal.jsx";
+import DayPostsModal from "../Components/CalendarPage/DayPostsModal.jsx";
 import logo from "../../assets/PostPunkTransparentLogo.png";
 
 export default function PostCalendar() {
   const [postQueue, setPostQueue] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDayPosts, setSelectedDayPosts] = useState([]);
+  const navigate = useNavigate();
 
   // Fetch posts from the backend queue
   useEffect(() => {
@@ -29,6 +32,15 @@ export default function PostCalendar() {
 
     loadPosts();
   }, []);
+
+  const getPostDate = (post) => {
+    const raw =
+      post.scheduled_at || post.scheduledAt || post.intended_date || post.date;
+    if (!raw) return null;
+    const date = new Date(raw);
+    if (Number.isNaN(date.getTime())) return null;
+    return date.toISOString().slice(0, 10);
+  };
 
   const scheduledPosts = postQueue.filter((post) => post.status === "approved");
 
@@ -56,60 +68,160 @@ export default function PostCalendar() {
     .filter((p) => typeof p.engagement === "number")
     .sort((a, b) => b.engagement - a.engagement)[0];
 
-  const handleSave = () => {
-    console.log("Saving post... (not implemented)");
-  };
+  const eventz = useMemo(
+    () =>
+      postQueue
+        .filter((post) => post.status === "approved")
+        .map((post) => {
+          const dateIso = getPostDate(post);
+          return {
+            id: post.id || `${post.title}-${dateIso}`,
+            title: post.title,
+            date: dateIso,
+            color: "#67e8f9",
+            textColor: "#000000",
+          };
+        })
+        .filter((event) => Boolean(event.date)),
+    [postQueue]
+  );
 
-  const handleDelete = () => {
-    console.log("Deleting post... (not implemented)");
-  };
+  const now = new Date();
+  const todayIso = now.toISOString().slice(0, 10);
 
-  const eventz = postQueue
-    .filter((post) => post.status === "approved")
-    .map((post) => ({
-      title: post.title,
-      date: post.scheduled_at || post.intended_date,
-      color: "#67e8f9",
-      textColor: "#000000",
-    }));
+  const initialDate = useMemo(() => {
+    const upcomingDates = eventz
+      .map((event) => event.date)
+      .filter((date) => date && date >= todayIso)
+      .sort();
+    if (upcomingDates.length > 0) {
+      return upcomingDates[0];
+    }
+    return todayIso;
+  }, [eventz, todayIso]);
+
+  const upcomingScheduled = scheduledPosts
+    .map((post, idx) => ({
+      ...post,
+      __queueIndex: idx,
+      __date: getPostDate(post),
+    }))
+    .filter((post) => post.__date && post.__date >= todayIso)
+    .sort((a, b) => (a.__date < b.__date ? -1 : 1));
+
+  const pastScheduled = scheduledPosts
+    .map((post, idx) => ({
+      ...post,
+      __queueIndex: idx,
+      __date: getPostDate(post),
+    }))
+    .filter((post) => post.__date && post.__date < todayIso)
+    .sort((a, b) => (a.__date > b.__date ? -1 : 1));
 
   if (loading) return <div>Loading posts…</div>;
 
-  const earliest = eventz.length
-    ? eventz.reduce((a, b) => (a.date < b.date ? a : b)).date
-    : undefined;
+  const handleDaySelection = (isoDate) => {
+    setSelectedDate(isoDate);
+    const dayPosts = postQueue
+      .map((post, idx) => ({
+        ...post,
+        id: post.id || post._id || `queue-${idx}`,
+        __queueIndex: idx,
+        __hasRealId: Boolean(post.id || post._id),
+      }))
+      .filter((post) => getPostDate(post) === isoDate);
+    setSelectedDayPosts(dayPosts);
+  };
+
+  const handleEditPost = (post) => {
+    setSelectedDate(null);
+    setSelectedDayPosts([]);
+    navigate("/compose", { state: { draft: post } });
+  };
+
+  const handleRewriteAll = (postsForDay) => {
+    setSelectedDate(null);
+    setSelectedDayPosts([]);
+    navigate("/lab", { state: { date: selectedDate, posts: postsForDay } });
+  };
 
   return (
     <div className="min-h-screen bg-black text-pink-500 font-mono p-4">
-      <div className="flex items-center justify-center mb-6 border-b border-pink-500 pb-4">
+      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 border-b border-pink-500 pb-4">
         <img
           src={logo}
           alt="PostPunk Logo"
           className="h-32 w-auto drop-shadow-[0_0_12px_#ff00ff]"
         />
+        <div className="flex flex-wrap gap-3">
+          <Link
+            to="/compose"
+            className="px-4 py-2 border border-pink-500 text-pink-300 hover:bg-pink-500 hover:text-black transition-colors rounded"
+          >
+            Summon Composer
+          </Link>
+          <Link
+            to="/lab"
+            className="px-4 py-2 border border-teal-400 text-teal-300 hover:bg-teal-400 hover:text-black transition-colors rounded"
+          >
+            Open Scribble Sanctum
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-[320px_1fr_260px] gap-4">
         <aside className="bg-black text-teal-300 p-4 border-2 border-pink-600 shadow-lg rounded">
           <h2 className="text-pink-500 text-2xl mb-4 border-b border-pink-500 pb-1">QUEUE</h2>
-          {scheduledPosts.map((post, index) => (
-            <div key={index} className="mb-3">
-              <div className="uppercase">
-                {new Date(post.scheduled_at).toLocaleDateString("en-US", {
-                  weekday: "short",
-                })}
+          {upcomingScheduled.length === 0 ? (
+            <p className="text-sm text-teal-500 italic">
+              No upcoming posts. Summon one from the Lab or Composer.
+            </p>
+          ) : (
+            upcomingScheduled.map((post) => (
+              <div key={post.__queueIndex} className="mb-3">
+                <div className="uppercase">
+                  {new Date(post.__date).toLocaleDateString("en-US", {
+                    weekday: "short",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </div>
+                <div className="pl-2 text-pink-300 font-bold">"{post.title}"</div>
+                <div className="pl-2 text-sm text-teal-400">
+                  {Array.isArray(post.platforms)
+                    ? post.platforms.join(", ")
+                    : post.platform || "—"}
+                </div>
               </div>
-              <div className="pl-2 text-pink-300 font-bold">"{post.title}"</div>
-              <div className="pl-2 text-sm text-teal-400">
-                =
-                {post.platform
-                  ? post.platform
-                  : Array.isArray(post.platforms)
-                  ? post.platforms.join(", ")
-                  : ""}
-              </div>
+            ))
+          )}
+          {pastScheduled.length > 0 && (
+            <div className="mt-6 pt-4 border-t border-pink-600">
+              <h3 className="text-pink-400 text-lg mb-2 uppercase tracking-[0.2em]">
+                Past echoes
+              </h3>
+              <ul className="space-y-2 text-xs text-teal-500 max-h-40 overflow-y-auto pr-1">
+                {pastScheduled.map((post) => (
+                  <li key={`past-${post.__queueIndex}`} className="border border-teal-700 rounded p-2 bg-black/60">
+                    <div className="flex justify-between gap-2">
+                      <span className="text-pink-300 font-semibold">{post.title}</span>
+                      <span>
+                        {new Date(post.__date).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </span>
+                    </div>
+                    <p className="mt-1">
+                      {Array.isArray(post.platforms)
+                        ? post.platforms.join(", ")
+                        : post.platform || "—"}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </div>
-          ))}
+          )}
           <div className="mt-6">
             <GuiltDaemon />
           </div>
@@ -119,15 +231,13 @@ export default function PostCalendar() {
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
-            initialDate={earliest}
+            initialDate={initialDate}
             events={eventz}
             eventClick={(info) => {
-              const foundPost = postQueue.find(
-                (p) =>
-                  p.title === info.event.title &&
-                  (p.scheduled_at || p.intended_date) === info.event.startStr
-              );
-              setSelectedPost(foundPost || null);
+              handleDaySelection(info.event.startStr);
+            }}
+            dateClick={(info) => {
+              handleDaySelection(info.dateStr);
             }}
             headerToolbar={{
               left: "prev",
@@ -138,8 +248,28 @@ export default function PostCalendar() {
             height="auto"
             dayMaxEventRows={3}
             eventDisplay="block"
+            dayCellClassNames={(arg) => {
+              const dateStr = arg.date.toISOString().slice(0, 10);
+              const classes = [];
+              if (dateStr === todayIso) {
+                classes.push("bg-pink-900/20");
+              }
+              if (selectedDate && dateStr === selectedDate) {
+                classes.push("ring-2", "ring-pink-500");
+              }
+              return classes;
+            }}
           />
-          <PostModal post={selectedPost} onClose={() => setSelectedPost(null)} />
+          <DayPostsModal
+            date={selectedDate}
+            posts={selectedDayPosts}
+            onClose={() => {
+              setSelectedDate(null);
+              setSelectedDayPosts([]);
+            }}
+            onEditPost={handleEditPost}
+            onRewriteAll={handleRewriteAll}
+          />
         </main>
 
         <div className="w-full flex flex-col gap-4 text-teal-300 text-sm">

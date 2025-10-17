@@ -1,8 +1,8 @@
 /** @format */
 
-require("dotenv/config");
-const axios = require("axios");
-const crypto = require("crypto");
+import "dotenv/config";
+import axios from "axios";
+import crypto from "crypto";
 
 const POST_URL = "https://api.twitter.com/1.1/statuses/update.json";
 const MAX_TWEET_LENGTH = 280;
@@ -103,7 +103,7 @@ function buildOAuthHeader({
 	return header;
 }
 
-async function postToX(post) {
+export default async function postToX(post) {
 	const consumerKey = requiredEnv("TWITTER_API_KEY");
 	const consumerSecret = requiredEnv("TWITTER_API_SECRET");
 	const token = requiredEnv("TWITTER_ACCESS_TOKEN");
@@ -149,5 +149,3 @@ async function postToX(post) {
 		throw new Error(`Twitter post failed: ${reason}`);
 	}
 }
-
-module.exports = postToX;

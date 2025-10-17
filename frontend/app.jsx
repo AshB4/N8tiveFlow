@@ -7,6 +7,7 @@ import { Toaster } from "@/Components/ui/toaster";
 import CalendarPage from "./UXUI/Pages/PostCalendar";
 import PostComposer from "./UXUI/Pages/postComposer";
 import PostLab from "./UXUI/Pages/PostLab";
+import ChartsPage from "./UXUI/Pages/ChartsPage";
 import NotFound from "./UXUI/Pages/notFound";
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/" element={<CalendarPage />} />
         <Route path="/compose" element={<PostComposer />} />
         <Route path="/lab" element={<PostLab />} />
+        <Route path="/charts" element={<ChartsPage />} />
         <Route path="*" element={<NotFound />} 
 />
       </Routes>

@@ -9,30 +9,6 @@ import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
 import DayPostsModal from "../Components/CalendarPage/DayPostsModal.jsx";
 import logo from "../../assets/PostPunkTransparentLogo.png";
 
-export default function PostCalendar() {
-  const [postQueue, setPostQueue] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedDayPosts, setSelectedDayPosts] = useState([]);
-  const navigate = useNavigate();
-
-  // Fetch posts from the backend queue
-  useEffect(() => {
-    async function loadPosts() {
-      try {
-        const res = await fetch("http://localhost:3001/api/posts");
-        const data = await res.json();
-        setPostQueue(data);
-      } catch (err) {
-        console.error("Failed to load posts", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadPosts();
-  }, []);
-
 const getPostDate = (post) => {
   const raw =
     post.scheduled_at || post.scheduledAt || post.intended_date || post.date;
@@ -86,6 +62,30 @@ const formatTargetsLabel = (targets = [], fallbackPlatforms = []) => {
     )
     .join(", ");
 };
+
+export default function PostCalendar() {
+  const [postQueue, setPostQueue] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDayPosts, setSelectedDayPosts] = useState([]);
+  const navigate = useNavigate();
+
+  // Fetch posts from the backend queue
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        const res = await fetch("http://localhost:3001/api/posts");
+        const data = await res.json();
+        setPostQueue(data);
+      } catch (err) {
+        console.error("Failed to load posts", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadPosts();
+  }, []);
 
   const scheduledPosts = postQueue.filter((post) => post.status === "approved");
 
@@ -166,6 +166,25 @@ const formatTargetsLabel = (targets = [], fallbackPlatforms = []) => {
     .sort((a, b) => (a.__date > b.__date ? -1 : 1));
 
   if (loading) return <div>Loading posts…</div>;
+
+  const statsPayload = {
+    totalPosts: postQueue.length,
+    scheduledCount: scheduledPosts.length,
+    scheduledPercent: percentScheduled,
+    platformCounts,
+    oldestUnscheduled,
+    mostEngaged,
+    posts: postQueue,
+  };
+
+  const handleViewCharts = (focus = "overview") => {
+    navigate("/charts", {
+      state: {
+        stats: statsPayload,
+        focus,
+      },
+    });
+  };
 
   const handleDaySelection = (isoDate) => {
     setSelectedDate(isoDate);
@@ -317,22 +336,34 @@ const formatTargetsLabel = (targets = [], fallbackPlatforms = []) => {
         </main>
 
         <div className="w-full flex flex-col gap-4 text-teal-300 text-sm">
-          <div className="border border-teal-400 p-3 rounded bg-black">
+          <button
+            type="button"
+            onClick={() => handleViewCharts("overview")}
+            className="border border-teal-400 p-3 rounded bg-black text-left hover:border-pink-500 hover:shadow-[0_0_12px_rgba(255,0,255,0.35)] transition"
+          >
             <h3 className="text-pink-400 text-lg mb-1">📊 Mini Stats</h3>
             <p>Total Posts: {postQueue.length}</p>
             <p>Scheduled: {scheduledPosts.length} ({percentScheduled}%)</p>
-          </div>
+          </button>
 
-          <div className="border border-pink-600 p-3 rounded bg-black">
+          <button
+            type="button"
+            onClick={() => handleViewCharts("platforms")}
+            className="border border-pink-600 p-3 rounded bg-black text-left hover:border-teal-500 hover:shadow-[0_0_12px_rgba(13,148,136,0.35)] transition"
+          >
             <h3 className="text-pink-400 text-lg mb-1">🎯 Platform Mix</h3>
             <ul>
               {Object.entries(platformCounts).map(([platform, count]) => (
                 <li key={platform}>{platform}: {count}</li>
               ))}
             </ul>
-          </div>
+          </button>
 
-          <div className="border border-red-500 p-3 rounded bg-black">
+          <button
+            type="button"
+            onClick={() => handleViewCharts("engagement")}
+            className="border border-red-500 p-3 rounded bg-black text-left hover:border-teal-400 hover:shadow-[0_0_12px_rgba(239,68,68,0.35)] transition"
+          >
             <h3 className="text-pink-400 text-lg mb-1">💀 Engagement Alerts</h3>
             {oldestUnscheduled && (
               <p>Oldest unscheduled: “{oldestUnscheduled.title}”</p>
@@ -340,9 +371,13 @@ const formatTargetsLabel = (targets = [], fallbackPlatforms = []) => {
             {mostEngaged && mostEngaged.engagement > 0 && (
               <p>Most engaged: “{mostEngaged.title}” ({mostEngaged.engagement} reactions)</p>
             )}
-          </div>
+          </button>
 
-          <div className="border border-teal-500 p-3 rounded bg-black">
+          <button
+            type="button"
+            onClick={() => handleViewCharts("pipeline")}
+            className="border border-teal-500 p-3 rounded bg-black text-left hover:border-pink-400 hover:shadow-[0_0_12px_rgba(56,189,248,0.35)] transition"
+          >
             <h3 className="text-pink-400 text-lg mb-1">🔋 Content Fuel</h3>
             <div className="bg-gray-800 h-4 w-full rounded overflow-hidden">
               <div
@@ -351,7 +386,7 @@ const formatTargetsLabel = (targets = [], fallbackPlatforms = []) => {
               ></div>
             </div>
             <p className="mt-1">{percentScheduled}% scheduled</p>
-          </div>
+          </button>
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import { Toaster } from "@/Components/ui/toaster";
 import CalendarPage from "./UXUI/Pages/PostCalendar";
 import PostComposer from "./UXUI/Pages/postComposer";
 import PostLab from "./UXUI/Pages/PostLab";
+import ChartsPage from "./UXUI/Pages/ChartsPage";
 import ErrorPage from "./UXUI/Pages/notFound"; // This can now use useRouteError()
 
 const router = createBrowserRouter([
@@ -25,6 +26,11 @@ const router = createBrowserRouter([
   {
     path: "/lab",
     element: <PostLab />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/charts",
+    element: <ChartsPage />,
     errorElement: <ErrorPage />,
   },
   {

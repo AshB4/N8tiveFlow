@@ -24,6 +24,22 @@ const formatDateTime = (value) => {
 	}
 };
 
+const formatTargets = (targets = [], fallbackPlatforms = []) => {
+	const list = Array.isArray(targets) && targets.length
+		? targets
+		: Array.isArray(fallbackPlatforms)
+		? fallbackPlatforms.map((platform) => ({ platform, accountId: null }))
+		: [];
+	if (!list.length) return "—";
+	return list
+		.map((entry) =>
+			entry.accountId
+				? `${entry.platform} (${entry.accountId})`
+				: entry.platform,
+		)
+		.join(", ");
+};
+
 export default function DayPostsModal({
 	date,
 	posts,
@@ -66,6 +82,7 @@ export default function DayPostsModal({
 								post.scheduledAt || post.scheduled_at || post.intended_date
 							);
 							const status = post.status || "unknown";
+							const targetLabel = formatTargets(post.targets, post.platforms);
 							return (
 								<div
 									key={post.id || `${post.title}-${post.platform}`}
@@ -78,6 +95,9 @@ export default function DayPostsModal({
 											</p>
 											<p className="text-xs text-teal-500 uppercase tracking-[0.3em]">
 												{platforms}
+											</p>
+											<p className="text-xs text-teal-500">
+												Targets: {targetLabel}
 											</p>
 											<p className="text-xs text-teal-500">
 												Status: {status}

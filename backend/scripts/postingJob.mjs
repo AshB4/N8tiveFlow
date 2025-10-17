@@ -5,7 +5,7 @@ import { access, mkdir, readFile, writeFile } from "fs/promises";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { postToAllPlatforms } from "./platforms/post-to-all.js";
+import { normalizeTargets, postToAllPlatforms } from "./platforms/post-to-all.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -137,19 +137,25 @@ async function processQueue() {
 	const processed = [];
 
 	for (const post of readyPosts) {
-		const platforms = normalizePlatforms(post);
-		if (platforms.length === 0) {
+		const fallbackPlatforms = normalizePlatforms(post);
+		const targets = normalizeTargets(
+			Array.isArray(post.targets) && post.targets.length ? post.targets : fallbackPlatforms,
+		);
+		if (targets.length === 0) {
 			console.warn(
 				`Skipping "${post.title ?? post.id ?? "untitled"}" – no supported platforms.`,
 			);
 			continue;
 		}
+		const platforms = Array.from(
+			new Set(targets.map((target) => target.platform)),
+		);
 
 		const payload = buildPostPayload(post);
 		const timestamp = new Date().toISOString();
 
 		try {
-			const results = await postToAllPlatforms(payload, platforms);
+			const results = await postToAllPlatforms(payload, targets);
 			const successes = results.filter((r) => r.status === "success");
 			const failures = results.filter((r) => r.status !== "success");
 
@@ -157,7 +163,7 @@ async function processQueue() {
 				postedLog.push({
 					id: post.id ?? null,
 					title: post.title ?? null,
-					platforms,
+					targets,
 					results,
 					processedAt: timestamp,
 				});
@@ -170,7 +176,10 @@ async function processQueue() {
 				rejectedLog.push({
 					id: post.id ?? null,
 					title: post.title ?? null,
-					platforms: failures.map((f) => f.platform),
+					targets: failures.map((f) => ({
+						platform: f.platform,
+						accountId: f.accountId ?? null,
+					})),
 					results: failures,
 					processedAt: timestamp,
 				});
@@ -185,7 +194,7 @@ async function processQueue() {
 				id: post.id ?? null,
 				title: post.title ?? null,
 				error: error?.message ?? "Unknown worker error",
-				platforms,
+				targets,
 				processedAt: timestamp,
 			});
 			console.error(

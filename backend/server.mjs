@@ -6,14 +6,15 @@ import { readFile, writeFile, mkdir, access } from "fs/promises";
 import fs from "fs"; // only for constants like fs.constants.F_OK
 import path from "path";
 import { fileURLToPath } from "url";
-import { postToAllPlatforms } from "./scripts/platforms/post-to-all.js";
+import { postToAllPlatforms, normalizeTargets } from "./scripts/platforms/post-to-all.js";
+import { getPublicAccounts } from "./utils/accountStore.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());
-app.use(express.json({ limit: "1mb" }));
+app.use(express.json({ limit: "10mb" }));
 const PORT = process.env.PORT || 3001;
 
 // ---- data paths
@@ -38,6 +39,7 @@ async function ensureFiles() {
 			title: "Hello world",
 			body: "First draft",
 			platforms: ["reddit"],
+			targets: [{ platform: "reddit", accountId: null }],
 			scheduledAt: null,
 			status: "draft",
 		},
@@ -59,6 +61,15 @@ app.get("/api/posts", async (_req, res) => {
 	}
 });
 
+app.get("/api/accounts", async (_req, res) => {
+	try {
+		const accounts = await getPublicAccounts();
+		res.json(accounts);
+	} catch (error) {
+		res.status(500).json({ error: "Failed to load accounts", detail: error?.message });
+	}
+});
+
 app.post("/api/posts", async (req, res) => {
 	try {
 		const {
@@ -66,12 +77,29 @@ app.post("/api/posts", async (req, res) => {
 			body,
 			platforms = ["reddit"],
 			scheduledAt = null,
+			targets = [],
+			image = null,
+			altText = "",
+			metadata = {},
+			status = "draft",
 		} = req.body ?? {};
 		if (!title || !body)
 			return res.status(400).json({ error: "title and body required" });
 		const posts = await readJson(Q_POSTS);
 		const id = "p_" + Date.now();
-		const post = { id, title, body, platforms, scheduledAt, status: "draft" };
+		const normalizedTargets = normalizeTargets(targets.length ? targets : platforms);
+		const post = {
+			id,
+			title,
+			body,
+			image,
+			altText,
+			platforms: normalizedTargets.map((target) => target.platform),
+			targets: normalizedTargets,
+			scheduledAt,
+			status,
+			metadata,
+		};
 		posts.push(post);
 		await writeJson(Q_POSTS, posts);
 		res.status(201).json(post);
@@ -85,7 +113,13 @@ app.put("/api/posts/:id", async (req, res) => {
 		const posts = await readJson(Q_POSTS);
 		const i = posts.findIndex((p) => p.id === req.params.id);
 		if (i === -1) return res.status(404).json({ error: "not found" });
-		posts[i] = { ...posts[i], ...req.body, id: posts[i].id };
+		const updates = { ...req.body };
+		if (Array.isArray(updates.targets)) {
+			const normalizedTargets = normalizeTargets(updates.targets);
+			updates.targets = normalizedTargets;
+			updates.platforms = normalizedTargets.map((target) => target.platform);
+		}
+		posts[i] = { ...posts[i], ...updates, id: posts[i].id };
 		await writeJson(Q_POSTS, posts);
 		res.json(posts[i]);
 	} catch (e) {
@@ -108,14 +142,22 @@ app.delete("/api/posts/:id", async (req, res) => {
 
 // ---- API: Post to all platforms (keeps your route)
 app.post("/api/post-to-all", async (req, res) => {
-	const { post, platforms } = req.body || {};
-	if (!post || !Array.isArray(platforms) || platforms.length === 0) {
+	const { post, platforms = [], targets = [] } = req.body || {};
+	if (!post) {
 		return res.status(400).json({
-			error: "Payload must include post object and non-empty platforms array",
+			error: "Payload must include post object",
 		});
 	}
 	try {
-		const results = await postToAllPlatforms(post, platforms);
+		const normalizedTargets = normalizeTargets(
+			Array.isArray(targets) && targets.length ? targets : platforms,
+		);
+		if (normalizedTargets.length === 0) {
+			return res.status(400).json({
+				error: "At least one platform/account target is required",
+			});
+		}
+		const results = await postToAllPlatforms(post, normalizedTargets);
 		return res.json({ results });
 	} catch (error) {
 		console.error("Failed to post to platforms", error);

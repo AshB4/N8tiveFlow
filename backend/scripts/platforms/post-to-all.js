@@ -5,6 +5,8 @@
  * @format
  */
 
+import { getAccount } from "../../utils/accountStore.mjs";
+
 const platformLoaders = {
 	x: () => import("./social/post-to-x.js"),
 	facebook: () => import("./social/post-to-facebook.js"),
@@ -36,28 +38,72 @@ const resolveHandler = async (platform) => {
 	return typeof firstFn === "function" ? firstFn : null;
 };
 
+export const normalizeTargets = (input) => {
+	if (!Array.isArray(input)) return [];
+	return input
+		.map((entry) => {
+			if (!entry) return null;
+			if (typeof entry === "string") {
+				return { platform: entry, accountId: null };
+			}
+			if (typeof entry === "object") {
+				const platform = entry.platform || entry.name || entry.id;
+				if (!platform) return null;
+				const accountId =
+					entry.accountId ?? entry.account ?? entry.account_id ?? null;
+				return {
+					platform: String(platform).toLowerCase(),
+					accountId: accountId === undefined ? null : String(accountId),
+				};
+			}
+			return null;
+		})
+		.filter((entry) => entry && entry.platform);
+};
+
 /**
- * Posts to selected platforms.
+ * Posts to selected targets.
  * @param {Object} post - The post payload (title, body, hashtags, overrides, etc)
- * @param {Array<string>} platforms - Array of selected platform strings
- * @returns {Promise<Array>} - Array of results by platform
+ * @param {Array} targetsInput - Array of selected platform/account targets
+ * @returns {Promise<Array>} - Array of results by platform/account
  */
-export const postToAllPlatforms = async (post, platforms) => {
+export const postToAllPlatforms = async (post, targetsInput) => {
+	const targets = normalizeTargets(targetsInput);
 	const results = [];
 
-	for (const platform of platforms) {
+	for (const target of targets) {
+		const { platform, accountId } = target;
 		const handler = await resolveHandler(platform);
 		if (typeof handler !== "function") {
 			results.push({
 				platform,
+				accountId,
 				status: "skipped",
 				reason: "Not implemented",
 			});
 			continue;
 		}
 
+		let account = null;
+		if (accountId) {
+			account = await getAccount(platform, accountId);
+			if (!account) {
+				results.push({
+					platform,
+					accountId,
+					status: "error",
+					error: "Account configuration not found",
+				});
+				continue;
+			}
+		}
+
 		try {
-			const customText = post.platformOverrides?.[platform] || post.body;
+			const accountOverrideKey = accountId ? `${platform}:${accountId}` : null;
+			const customText =
+				(accountOverrideKey && post.platformOverrides?.[accountOverrideKey]) ??
+				post.platformOverrides?.[platform] ??
+				post.body;
 			const payload = {
 				title: post.title,
 				body: customText,
@@ -65,11 +111,12 @@ export const postToAllPlatforms = async (post, platforms) => {
 				hashtags: post.hashtags,
 			};
 
-			const result = await handler(payload);
-			results.push({ platform, status: "success", result });
+			const result = await handler(payload, { account, target });
+			results.push({ platform, accountId, status: "success", result });
 		} catch (err) {
 			results.push({
 				platform,
+				accountId,
 				status: "error",
 				error: err?.message || "Unknown posting error",
 			});

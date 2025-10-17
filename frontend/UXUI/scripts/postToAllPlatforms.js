@@ -15,10 +15,15 @@ async function postJson(url, payload) {
 	return res.json();
 }
 
-export async function postToAllPlatforms(post, platforms) {
+export async function postToAllPlatforms(post, targets) {
+	const normalizedTargets = Array.isArray(targets) ? targets : [];
+	const fallbackPlatforms = normalizedTargets
+		.filter((target) => target && target.platform)
+		.map((target) => target.platform);
 	const payload = {
 		post,
-		platforms,
+		targets: normalizedTargets,
+		platforms: fallbackPlatforms.length ? fallbackPlatforms : undefined,
 	};
 
 	try {

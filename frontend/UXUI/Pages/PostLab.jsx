@@ -1,15 +1,20 @@
 /** @format */
 
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import ImageUploader from "../Global/PostComposer/ImageUploader";
+import PlatformSelector from "../Global/PostComposer/PlatformSelector";
 
-const PLATFORM_OPTIONS = [
+const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
+
+const AVAILABLE_PLATFORMS = [
 	"x",
-	"linkedin",
 	"facebook",
+	"linkedin",
 	"pinterest",
 	"reddit",
 	"tumblr",
+	"onlyfans",
 	"kofi",
 	"discord",
 	"devto",
@@ -26,67 +31,173 @@ const VIBES = [
 	"🧠 Translate your last DM rant into value",
 ];
 
+const toDateTimeLocal = (value) => {
+	if (!value) return "";
+	const parsed = new Date(value);
+	if (Number.isNaN(parsed.getTime())) return "";
+	const offset = parsed.getTimezoneOffset() * 60000;
+	return new Date(parsed.getTime() - offset).toISOString().slice(0, 16);
+};
+
+const normalizeTargetsForPost = (post) => {
+	if (!post) return [];
+	if (Array.isArray(post.targets) && post.targets.length) {
+		return post.targets
+			.map((target) => {
+				if (!target) return null;
+				const platform = String(target.platform || "").toLowerCase();
+				if (!platform) return null;
+				const accountIdValue =
+					target.accountId ?? target.account ?? target.account_id ?? null;
+				const accountId =
+					accountIdValue === undefined || accountIdValue === null
+						? null
+						: String(accountIdValue);
+				return { platform, accountId };
+			})
+			.filter(Boolean);
+	}
+	const platforms = Array.isArray(post.platforms)
+		? post.platforms
+		: post.platform
+		? [post.platform]
+		: [];
+	return platforms
+		.map((platform) => {
+			if (!platform) return null;
+			return { platform: String(platform).toLowerCase(), accountId: null };
+		})
+		.filter(Boolean);
+};
+
+const formatTargetsLabel = (targets = []) => {
+	if (!Array.isArray(targets) || targets.length === 0) return "—";
+	return targets
+		.map((target) =>
+			target.accountId
+				? `${target.platform} (${target.accountId})`
+				: target.platform,
+		)
+		.join(", ");
+};
+
 export default function PostLab() {
 	const location = useLocation();
 	const [title, setTitle] = useState("");
 	const [body, setBody] = useState("");
 	const [scheduledAt, setScheduledAt] = useState("");
-	const [selectedPlatforms, setSelectedPlatforms] = useState(["x"]);
+	const [selectedTargets, setSelectedTargets] = useState([
+		{ platform: "x", accountId: null },
+	]);
 	const [localDrafts, setLocalDrafts] = useState([]);
 	const [statusMessage, setStatusMessage] = useState("");
 	const [isSaving, setIsSaving] = useState(false);
+	const [image, setImage] = useState(null);
+	const [altText, setAltText] = useState("");
+	const [accountsByPlatform, setAccountsByPlatform] = useState({});
+	const [accountsError, setAccountsError] = useState("");
 
-	const togglePlatform = (platform) => {
-		setSelectedPlatforms((prev) =>
-			prev.includes(platform)
-				? prev.filter((p) => p !== platform)
-				: [...prev, platform]
-		);
+	const selectedPlatforms = useMemo(
+		() => Array.from(new Set(selectedTargets.map((target) => target.platform))),
+		[selectedTargets],
+	);
+
+	const toggleTarget = (platform, accountId = null) => {
+		const normalizedPlatform = String(platform || "").toLowerCase();
+		const normalizedAccount =
+			accountId === undefined || accountId === null ? null : String(accountId);
+		if (!normalizedPlatform) return;
+		setSelectedTargets((prev = []) => {
+			const exists = prev.some(
+				(target) =>
+					target.platform === normalizedPlatform &&
+					(target.accountId ?? null) === (normalizedAccount ?? null),
+			);
+			if (exists) {
+				return prev.filter(
+					(target) =>
+						!(
+							target.platform === normalizedPlatform &&
+							(target.accountId ?? null) === (normalizedAccount ?? null)
+						),
+				);
+			}
+			return [
+				...prev,
+				{ platform: normalizedPlatform, accountId: normalizedAccount },
+			];
+		});
 	};
 
 	const resetForm = () => {
 		setTitle("");
 		setBody("");
 		setScheduledAt("");
-		setSelectedPlatforms(["x"]);
+		setSelectedTargets([{ platform: "x", accountId: null }]);
+		setImage(null);
+		setAltText("");
+		setStatusMessage("");
 	};
+
+	useEffect(() => {
+		let ignore = false;
+		async function loadAccounts() {
+			try {
+				const res = await fetch(`${API_BASE}/api/accounts`);
+				if (!res.ok) throw new Error(`HTTP ${res.status}`);
+				const data = await res.json();
+				if (ignore) return;
+				const grouped = data.reduce((acc, account) => {
+					const platform = String(account.platform || "").toLowerCase();
+					if (!platform) return acc;
+					if (!acc[platform]) acc[platform] = [];
+					acc[platform].push({
+						id: account.id,
+						label: account.label,
+						metadata: account.metadata || {},
+					});
+					return acc;
+				}, {});
+				setAccountsByPlatform(grouped);
+			} catch (error) {
+				console.error("Failed to load accounts", error);
+				if (!ignore) setAccountsError("Could not load linked accounts.");
+			}
+		}
+		loadAccounts();
+		return () => {
+			ignore = true;
+		};
+	}, []);
 
 	useEffect(() => {
 		const incomingPosts = location.state?.posts || [];
 		if (!incomingPosts.length) return;
 
 		const firstPost = incomingPosts[0];
-		const normalizePlatforms = Array.isArray(firstPost?.platforms)
-			? firstPost.platforms.map((p) => String(p).toLowerCase())
-			: firstPost?.platform
-			? [String(firstPost.platform).toLowerCase()]
-			: ["x"];
-
-		const toDateTimeLocal = (value) => {
-			if (!value) return "";
-			const parsed = new Date(value);
-			if (Number.isNaN(parsed.getTime())) return "";
-			const offset = parsed.getTimezoneOffset() * 60000;
-			return new Date(parsed.getTime() - offset).toISOString().slice(0, 16);
-		};
+		const normalizedTargets = normalizeTargetsForPost(firstPost);
 
 		setTitle(firstPost?.title || "");
 		setBody(firstPost?.body || firstPost?.content || "");
 		setScheduledAt(
-			toDateTimeLocal(firstPost?.scheduledAt || firstPost?.scheduled_at)
+			toDateTimeLocal(firstPost?.scheduledAt || firstPost?.scheduled_at),
 		);
-		setSelectedPlatforms(normalizePlatforms);
+		setImage(firstPost?.image || null);
+		setAltText(firstPost?.altText || "");
+		setSelectedTargets(
+			normalizedTargets.length
+				? normalizedTargets
+				: [{ platform: "x", accountId: null }],
+		);
 		setLocalDrafts(
 			incomingPosts.map((post) => ({
 				id: post.id || `import-${post.title}-${post.platform}`,
 				title: post.title,
-				platforms: Array.isArray(post.platforms)
-					? post.platforms
-					: post.platform
-					? [post.platform]
-					: [],
+				targets: normalizeTargetsForPost(post),
 				scheduledAt: post.scheduledAt || post.scheduled_at || null,
-			}))
+				image: post.image || null,
+				altText: post.altText || "",
+			})),
 		);
 		setStatusMessage("Loaded calendar posts. Remix freely.");
 	}, [location.state]);
@@ -96,21 +207,30 @@ export default function PostLab() {
 			setStatusMessage("⚠️ Gotta feed the lab at least a title AND a body.");
 			return;
 		}
+		if (selectedTargets.length === 0) {
+			setStatusMessage("⚠️ Choose at least one platform or account target.");
+			return;
+		}
 
 		setIsSaving(true);
 		setStatusMessage("Summoning scribes…");
 
 		try {
-			const scheduledIso = scheduledAt ? new Date(scheduledAt).toISOString() : null;
-			const response = await fetch("http://localhost:3001/api/posts", {
+			const scheduledIso = scheduledAt
+				? new Date(scheduledAt).toISOString()
+				: null;
+			const response = await fetch(`${API_BASE}/api/posts`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					title,
 					body,
 					platforms: selectedPlatforms,
+					targets: selectedTargets,
 					scheduledAt: scheduledIso,
 					status: "draft",
+					image,
+					altText,
 				}),
 			});
 
@@ -123,8 +243,10 @@ export default function PostLab() {
 				{
 					id: saved.id || `local-${Date.now()}`,
 					title: saved.title,
-					platforms: saved.platforms || selectedPlatforms,
+					targets: saved.targets || selectedTargets,
 					scheduledAt: saved.scheduledAt || scheduledIso,
+					image: saved.image || image,
+					altText: saved.altText || altText,
 				},
 				...prev,
 			]);
@@ -133,7 +255,7 @@ export default function PostLab() {
 		} catch (error) {
 			console.error("Failed to save post", error);
 			setStatusMessage(
-				`💥 Save fizzled: ${error.message || "unknown system gremlin"}`
+				`💥 Save fizzled: ${error.message || "unknown system gremlin"}`,
 			);
 		} finally {
 			setIsSaving(false);
@@ -222,28 +344,25 @@ export default function PostLab() {
 						</div>
 
 						<div className="mb-6">
-							<span className="text-sm text-pink-300 uppercase tracking-[0.2em]">
-								Platform rituals
-							</span>
-							<div className="mt-3 flex flex-wrap gap-2">
-								{PLATFORM_OPTIONS.map((platform) => {
-									const isActive = selectedPlatforms.includes(platform);
-									return (
-										<button
-											type="button"
-											key={platform}
-											onClick={() => togglePlatform(platform)}
-											className={`px-3 py-1 rounded border text-sm uppercase tracking-widest transition-colors ${
-												isActive
-													? "border-pink-500 bg-pink-500 text-black"
-													: "border-teal-500 text-teal-300 hover:bg-teal-500 hover:text-black"
-											}`}
-										>
-											{platform}
-										</button>
-									);
-								})}
-							</div>
+							<ImageUploader
+								image={image}
+								setImage={setImage}
+								altText={altText}
+								setAltText={setAltText}
+								selectedPlatforms={selectedPlatforms}
+							/>
+						</div>
+
+						<div className="mb-6">
+							<PlatformSelector
+								selectedTargets={selectedTargets}
+								toggleTarget={toggleTarget}
+								accountsByPlatform={accountsByPlatform}
+								platforms={AVAILABLE_PLATFORMS}
+							/>
+							{accountsError && (
+								<p className="text-xs text-red-400 mt-2">{accountsError}</p>
+							)}
 						</div>
 
 						<div className="flex flex-col sm:flex-row gap-3">
@@ -287,11 +406,19 @@ export default function PostLab() {
 										>
 											<p className="text-pink-300 font-semibold">{draft.title}</p>
 											<p className="text-xs text-teal-500">
-												Platforms: {draft.platforms.join(", ")}
+												Targets: {formatTargetsLabel(draft.targets)}
 											</p>
+											{draft.image && (
+												<img
+													src={draft.image}
+													alt={draft.altText || draft.title}
+													className="mt-2 max-h-24 rounded border border-teal-700"
+												/>
+											)}
 											{draft.scheduledAt && (
 												<p className="text-xs text-teal-500">
-													Scheduled: {new Date(draft.scheduledAt).toLocaleString()}
+													Scheduled:{" "}
+													{new Date(draft.scheduledAt).toLocaleString()}
 												</p>
 											)}
 										</li>
@@ -311,6 +438,7 @@ export default function PostLab() {
 						</div>
 					</aside>
 				</section>
+
 				<div className="mt-12 flex flex-wrap gap-3 justify-center">
 					<Link
 						to="/"

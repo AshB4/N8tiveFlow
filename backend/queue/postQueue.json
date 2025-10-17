@@ -51,5 +51,24 @@
     ],
     "scheduledAt": "2025-05-09T15:00:00.000Z",
     "status": "draft"
+  },
+  {
+    "id": "p_1760680382097",
+    "title": " Drop one surprise CTA the algorithm won't expect",
+    "body": " Drop one surprise CTA the algorithm won't expect",
+    "image": null,
+    "altText": "",
+    "platforms": [
+      "x"
+    ],
+    "targets": [
+      {
+        "platform": "x",
+        "accountId": "x-main"
+      }
+    ],
+    "scheduledAt": null,
+    "status": "draft",
+    "metadata": {}
   }
 ]

@@ -33,14 +33,59 @@ export default function PostCalendar() {
     loadPosts();
   }, []);
 
-  const getPostDate = (post) => {
-    const raw =
-      post.scheduled_at || post.scheduledAt || post.intended_date || post.date;
-    if (!raw) return null;
-    const date = new Date(raw);
-    if (Number.isNaN(date.getTime())) return null;
-    return date.toISOString().slice(0, 10);
-  };
+const getPostDate = (post) => {
+  const raw =
+    post.scheduled_at || post.scheduledAt || post.intended_date || post.date;
+  if (!raw) return null;
+  const date = new Date(raw);
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toISOString().slice(0, 10);
+};
+
+const normalizeTargetsForPost = (post) => {
+  if (!post) return [];
+  if (Array.isArray(post.targets) && post.targets.length) {
+    return post.targets
+      .map((target) => {
+        if (!target) return null;
+        const platform = String(target.platform || "").toLowerCase();
+        if (!platform) return null;
+        const accountValue =
+          target.accountId ?? target.account ?? target.account_id ?? null;
+        const accountId =
+          accountValue === undefined || accountValue === null
+            ? null
+            : String(accountValue);
+        return { platform, accountId };
+      })
+      .filter(Boolean);
+  }
+  const platforms = Array.isArray(post.platforms)
+    ? post.platforms
+    : post.platform
+    ? [post.platform]
+    : [];
+  return platforms
+    .map((platform) => {
+      if (!platform) return null;
+      return { platform: String(platform).toLowerCase(), accountId: null };
+    })
+    .filter(Boolean);
+};
+
+const formatTargetsLabel = (targets = [], fallbackPlatforms = []) => {
+  const list = Array.isArray(targets) && targets.length
+    ? targets
+    : Array.isArray(fallbackPlatforms)
+    ? fallbackPlatforms.map((platform) => ({ platform, accountId: null }))
+    : [];
+  if (!list.length) return "—";
+  return list
+    .map((entry) =>
+      entry.accountId ? `${entry.platform} (${entry.accountId})` : entry.platform
+    )
+    .join(", ");
+};
 
   const scheduledPosts = postQueue.filter((post) => post.status === "approved");
 
@@ -105,6 +150,7 @@ export default function PostCalendar() {
       ...post,
       __queueIndex: idx,
       __date: getPostDate(post),
+      __targets: normalizeTargetsForPost(post),
     }))
     .filter((post) => post.__date && post.__date >= todayIso)
     .sort((a, b) => (a.__date < b.__date ? -1 : 1));
@@ -114,6 +160,7 @@ export default function PostCalendar() {
       ...post,
       __queueIndex: idx,
       __date: getPostDate(post),
+      __targets: normalizeTargetsForPost(post),
     }))
     .filter((post) => post.__date && post.__date < todayIso)
     .sort((a, b) => (a.__date > b.__date ? -1 : 1));
@@ -128,6 +175,7 @@ export default function PostCalendar() {
         id: post.id || post._id || `queue-${idx}`,
         __queueIndex: idx,
         __hasRealId: Boolean(post.id || post._id),
+        targets: normalizeTargetsForPost(post),
       }))
       .filter((post) => getPostDate(post) === isoDate);
     setSelectedDayPosts(dayPosts);
@@ -188,9 +236,7 @@ export default function PostCalendar() {
                 </div>
                 <div className="pl-2 text-pink-300 font-bold">"{post.title}"</div>
                 <div className="pl-2 text-sm text-teal-400">
-                  {Array.isArray(post.platforms)
-                    ? post.platforms.join(", ")
-                    : post.platform || "—"}
+                  {formatTargetsLabel(post.__targets, post.platforms)}
                 </div>
               </div>
             ))
@@ -213,9 +259,7 @@ export default function PostCalendar() {
                       </span>
                     </div>
                     <p className="mt-1">
-                      {Array.isArray(post.platforms)
-                        ? post.platforms.join(", ")
-                        : post.platform || "—"}
+                      {formatTargetsLabel(post.__targets, post.platforms)}
                     </p>
                   </li>
                 ))}

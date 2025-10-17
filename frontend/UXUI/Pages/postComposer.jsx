@@ -1,12 +1,14 @@
 /** @format */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import usePostComposerState from "../Global/PostComposer/usePostComposerState";
 import PlatformSelector from "../Global/PostComposer/PlatformSelector";
 import ImageUploader from "../Global/PostComposer/ImageUploader";
 import CustomPlatformText from "../Global/PostComposer/CustomPlatformText";
 import SeoProductSelector from "../Global/PostComposer/SeoProductSelector";
+
+const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
 export default function PostComposer() {
   const location = useLocation();
@@ -22,8 +24,9 @@ export default function PostComposer() {
     setImage,
     altText,
     setAltText,
+    selectedTargets,
     selectedPlatforms,
-    togglePlatform,
+    toggleTarget,
     scheduledAt,
     setScheduledAt,
     saveAsDraft,
@@ -46,6 +49,39 @@ export default function PostComposer() {
 
   const [statusMessage, setStatusMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [accountsByPlatform, setAccountsByPlatform] = useState({});
+  const [accountsError, setAccountsError] = useState("");
+
+  useEffect(() => {
+    let ignore = false;
+    async function loadAccounts() {
+      try {
+        const res = await fetch(`${API_BASE}/api/accounts`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (ignore) return;
+        const grouped = data.reduce((acc, account) => {
+          const platform = String(account.platform || "").toLowerCase();
+          if (!platform) return acc;
+          if (!acc[platform]) acc[platform] = [];
+          acc[platform].push({
+            id: account.id,
+            label: account.label,
+            metadata: account.metadata || {},
+          });
+          return acc;
+        }, {});
+        setAccountsByPlatform(grouped);
+      } catch (error) {
+        console.error("Failed to load accounts", error);
+        if (!ignore) setAccountsError("Could not load linked accounts.");
+      }
+    }
+    loadAccounts();
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   const submitLabel = isEditing ? "Update Post" : "Post It";
 
@@ -118,10 +154,14 @@ export default function PostComposer() {
       />
 
       <PlatformSelector
-        selectedPlatforms={selectedPlatforms}
-        togglePlatform={togglePlatform}
+        selectedTargets={selectedTargets}
+        toggleTarget={toggleTarget}
+        accountsByPlatform={accountsByPlatform}
         platforms={availablePlatforms}
       />
+      {accountsError && (
+        <p className="text-xs text-red-400 mb-3">{accountsError}</p>
+      )}
 
       <div className="mb-4">
         <label>

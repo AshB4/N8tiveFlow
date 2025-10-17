@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import seoVault from "../../../posts/seoVault.json";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
@@ -41,21 +41,56 @@ const normalizeHashtags = (value) => {
 	return typeof value === "string" ? value : "";
 };
 
+const normalizeTargetEntry = (platform, accountId) => {
+	if (!platform) return null;
+	const normalizedPlatform = String(platform).toLowerCase();
+	const normalizedAccount =
+		accountId === undefined || accountId === null ? null : String(accountId);
+	return {
+		platform: normalizedPlatform,
+		accountId: normalizedAccount,
+	};
+};
+
+const sanitizeTargetsInput = (input, fallbackPlatforms = []) => {
+	if (Array.isArray(input) && input.length) {
+		return input
+			.map((entry) => {
+				if (!entry) return null;
+				if (typeof entry === "string") {
+					return normalizeTargetEntry(entry, null);
+				}
+				if (typeof entry === "object") {
+					const platform =
+						entry.platform ?? entry.name ?? entry.value ?? entry.id;
+					const accountId =
+						entry.accountId ?? entry.account ?? entry.account_id ?? entry.id;
+					return normalizeTargetEntry(platform, accountId ?? null);
+				}
+				return null;
+			})
+			.filter(Boolean);
+	}
+
+	return (Array.isArray(fallbackPlatforms) ? fallbackPlatforms : toArray(fallbackPlatforms))
+		.map((platform) => normalizeTargetEntry(platform, null))
+		.filter(Boolean);
+};
+
 const usePostComposerState = (initialDraft = null) => {
 	const hasPersistedId =
 		initialDraft?.__hasRealId !== false && Boolean(initialDraft?.id);
-
+	const initialTargets = sanitizeTargetsInput(
+		initialDraft?.targets,
+		toArray(initialDraft?.platforms || initialDraft?.platform),
+	);
 	const [title, setTitle] = useState(initialDraft?.title || "");
 	const [body, setBody] = useState(
 		initialDraft?.body || initialDraft?.content || ""
 	);
 	const [image, setImage] = useState(initialDraft?.image || null);
 	const [altText, setAltText] = useState(initialDraft?.altText || "");
-	const [selectedPlatforms, setSelectedPlatforms] = useState(
-		toArray(initialDraft?.platforms || initialDraft?.platform).map((p) =>
-			String(p).toLowerCase()
-		)
-	);
+	const [selectedTargets, setSelectedTargets] = useState(initialTargets);
 	const [scheduledAt, setScheduledAt] = useState(
 		toDateTimeLocal(initialDraft?.scheduledAt || initialDraft?.scheduled_at)
 	);
@@ -97,9 +132,10 @@ const usePostComposerState = (initialDraft = null) => {
 		setBody(initialDraft.body || initialDraft.content || "");
 		setImage(initialDraft.image || null);
 		setAltText(initialDraft.altText || "");
-		setSelectedPlatforms(
-			toArray(initialDraft.platforms || initialDraft.platform).map((p) =>
-				String(p).toLowerCase()
+		setSelectedTargets(
+			sanitizeTargetsInput(
+				initialDraft.targets,
+				toArray(initialDraft.platforms || initialDraft.platform)
 			)
 		);
 		setScheduledAt(
@@ -119,14 +155,37 @@ const usePostComposerState = (initialDraft = null) => {
 		setCustomText(initialDraft.platformOverrides || {});
 	}, [initialDraft]);
 
-	const togglePlatform = (platform) => {
-		const key = String(platform).toLowerCase();
-		setSelectedPlatforms((prev) =>
-			prev.includes(key) ? prev.filter((p) => p !== key) : [...prev, key]
-		);
+	const toggleTarget = (platform, accountId = null) => {
+		const normalized = normalizeTargetEntry(platform, accountId);
+		if (!normalized) return;
+		setSelectedTargets((prev = []) => {
+			const exists = prev.some(
+				(target) =>
+					target.platform === normalized.platform &&
+					(target.accountId ?? null) === (normalized.accountId ?? null)
+			);
+			if (exists) {
+				return prev.filter(
+					(target) =>
+						!(
+							target.platform === normalized.platform &&
+							(target.accountId ?? null) === (normalized.accountId ?? null)
+						)
+				);
+			}
+			return [...prev, normalized];
+		});
 	};
 
+	const selectedPlatforms = useMemo(
+		() => Array.from(new Set(selectedTargets.map((target) => target.platform))),
+		[selectedTargets]
+	);
+
 	const handleSubmit = async () => {
+		if (selectedTargets.length === 0) {
+			throw new Error("Select at least one platform or account target before posting");
+		}
 		const scheduledIso = scheduledAt
 			? new Date(scheduledAt).toISOString()
 			: null;
@@ -137,6 +196,7 @@ const usePostComposerState = (initialDraft = null) => {
 			image,
 			altText,
 			platforms: selectedPlatforms,
+			targets: selectedTargets,
 			scheduledAt: scheduledIso,
 			saveAsDraft,
 			hashtags: useAutoHashtags ? null : manualHashtags,
@@ -159,7 +219,7 @@ const usePostComposerState = (initialDraft = null) => {
 		const { postToAllPlatforms } = await import(
 			"../../scripts/postToAllPlatforms.js"
 		);
-		const results = await postToAllPlatforms(sharedPayload, selectedPlatforms);
+		const results = await postToAllPlatforms(sharedPayload, selectedTargets);
 		return { mode: "publish", data: results };
 	};
 
@@ -172,8 +232,9 @@ const usePostComposerState = (initialDraft = null) => {
 		setImage,
 		altText,
 		setAltText,
+		selectedTargets,
 		selectedPlatforms,
-		togglePlatform,
+		toggleTarget,
 		scheduledAt,
 		setScheduledAt,
 		saveAsDraft,

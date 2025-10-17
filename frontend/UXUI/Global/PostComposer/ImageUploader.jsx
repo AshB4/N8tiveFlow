@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function ImageUploader({
 	image,
@@ -10,6 +10,18 @@ export default function ImageUploader({
 	selectedPlatforms = [],
 }) {
 	const [previewUrl, setPreviewUrl] = useState(null);
+	const [isDragging, setIsDragging] = useState(false);
+
+	const readFileToDataUrl = useCallback(
+		(file) =>
+			new Promise((resolve, reject) => {
+				const reader = new FileReader();
+				reader.onload = (event) => resolve(event.target?.result || null);
+				reader.onerror = reject;
+				reader.readAsDataURL(file);
+			}),
+		[]
+	);
 
 	useEffect(() => {
 		if (!image) {
@@ -21,34 +33,103 @@ export default function ImageUploader({
 			return;
 		}
 		if (image instanceof File) {
-			const reader = new FileReader();
-			reader.onload = (event) => {
-				setPreviewUrl(event.target?.result || null);
-			};
-			reader.readAsDataURL(image);
+			readFileToDataUrl(image).then(setPreviewUrl).catch(() => {
+				setPreviewUrl(null);
+			});
+		} else {
+			setPreviewUrl(null);
 		}
-	}, [image]);
+	}, [image, readFileToDataUrl]);
 
-	const handleFileChange = (event) => {
+	const handleFileChange = async (event) => {
 		const file = event.target.files?.[0];
 		if (!file) {
 			setImage?.(null);
 			return;
 		}
-		setImage?.(file);
+		try {
+			const dataUrl = await readFileToDataUrl(file);
+			setPreviewUrl(dataUrl);
+			setImage?.(dataUrl);
+		} catch (error) {
+			console.error("Failed to read image file", error);
+			setPreviewUrl(null);
+			setImage?.(null);
+		}
+	};
+
+	const handleDrop = async (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+		setIsDragging(false);
+		const file = event.dataTransfer.files?.[0];
+		if (!file) return;
+		try {
+			const dataUrl = await readFileToDataUrl(file);
+			setPreviewUrl(dataUrl);
+			setImage?.(dataUrl);
+		} catch (error) {
+			console.error("Failed to read dropped image", error);
+			setPreviewUrl(null);
+			setImage?.(null);
+		}
+	};
+
+	const handleDragOver = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+		if (!isDragging) setIsDragging(true);
+	};
+
+	const handleDragLeave = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+		if (!event.currentTarget.contains(event.relatedTarget)) {
+			setIsDragging(false);
+		}
+	};
+
+	const handleClear = () => {
+		setPreviewUrl(null);
+		setImage?.(null);
 	};
 
 	return (
-		<div className="mb-4 border border-dashed border-gray-400 rounded p-4">
+		<div className="mb-4 border border-dashed border-gray-400 rounded p-4 bg-black/60">
 			<label className="block font-semibold mb-2">Upload Image</label>
-			<input type="file" accept="image/*" onChange={handleFileChange} />
+			<div
+				onDrop={handleDrop}
+				onDragOver={handleDragOver}
+				onDragLeave={handleDragLeave}
+				className={`relative flex flex-col items-center justify-center border-2 border-dashed rounded-md p-6 transition-colors ${
+					isDragging ? "border-pink-500 bg-pink-500/10" : "border-teal-500"
+				}`}
+			>
+				<input
+					type="file"
+					accept="image/*"
+					className="absolute inset-0 opacity-0 cursor-pointer"
+					onChange={handleFileChange}
+				/>
+				<p className="text-sm text-teal-300 text-center pointer-events-none">
+					Drag + drop an image here, or click to browse
+				</p>
+			</div>
+
 			{previewUrl && (
-				<div className="mt-3">
+				<div className="mt-3 space-y-2">
 					<img
 						src={previewUrl}
 						alt="Selected preview"
-						className="max-h-48 rounded border"
+						className="max-h-48 rounded border border-teal-600"
 					/>
+					<button
+						type="button"
+						onClick={handleClear}
+						className="px-3 py-1 text-sm border border-red-500 text-red-400 rounded hover:bg-red-500 hover:text-black transition-colors"
+					>
+						Remove image
+					</button>
 				</div>
 			)}
 			<div className="mt-3">

@@ -1,0 +1,35 @@
+[
+  {
+    "platform": "facebook",
+    "id": "fb-coloring-book",
+    "label": "Facebook • Coloring Book Page",
+    "credentials": {
+      "accessToken": "REPLACE_WITH_REAL_PAGE_TOKEN"
+    },
+    "metadata": {
+      "pageId": "1234567890"
+    }
+  },
+  {
+    "platform": "facebook",
+    "id": "fb-main-profile",
+    "label": "Facebook • Personal Profile",
+    "credentials": {
+      "accessToken": "REPLACE_WITH_REAL_PAGE_TOKEN"
+    },
+    "metadata": {
+      "pageId": "0987654321"
+    }
+  },
+  {
+    "platform": "x",
+    "id": "x-main",
+    "label": "X • Main Handle",
+    "credentials": {
+      "apiKey": "TODO",
+      "apiSecret": "TODO",
+      "accessToken": "TODO",
+      "accessSecret": "TODO"
+    }
+  }
+]

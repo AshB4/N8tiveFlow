@@ -36,6 +36,7 @@ export default function PostComposer() {
     setCustomText,
     handleSubmit,
     seoVault,
+    availablePlatforms,
   } = usePostComposerState();
 
   return (
@@ -74,6 +75,7 @@ export default function PostComposer() {
       <PlatformSelector
         selectedPlatforms={selectedPlatforms}
         togglePlatform={togglePlatform}
+        platforms={availablePlatforms}
       />
 
       <div className="mb-4">

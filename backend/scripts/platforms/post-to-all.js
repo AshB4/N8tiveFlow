@@ -6,19 +6,19 @@
  */
 
 // Import your platform posting functions
-import postToX from "./platforms/post-to-x.js";
-import postToFacebook from "./platforms/post-to-facebook.js";
-import postToLinkedin from "./platforms/post-to-linkedin.js";
-import postToPinterest from "./platforms/post-to-pinterest.js";
-import postToReddit from "./platforms/post-to-reddit.js";
-import postToTumblr from "./platforms/post-to-tumblr.js";
-import postToOnlyfans from "./platforms/post-to-onlyfans.js";
-import postToKofi from "./platforms/post-to-kofi.js";
-import postToDiscord from "./platforms/post-to-discord.js";
-import postToDevto from "./platforms/post-to-devto.js";
-import postToHashnode from "./platforms/post-to-hashnode.js";
-import postToProducthunt from "./platforms/post-to-producthunt.js";
-import postToAmazon from "./platforms/post-to-amazon.js";
+const postToX = require("./social/post-to-x.js");
+const postToFacebook = require("./social/post-to-facebook.js");
+const postToLinkedin = require("./social/post-to-linkedin.js");
+const postToPinterest = require("./social/post-to-pinterest.js");
+const postToReddit = require("./social/post-to-reddit.js");
+const postToTumblr = require("./social/post-to-tumblr.js");
+const postToOnlyfans = require("./adult/post-to-onlyfans.js");
+const postToKofi = require("./content/post-to-kofi.js");
+const postToDiscord = require("./adult/post-to-discord.js");
+const postToDevto = require("./dev/post-to-devto.js");
+const postToHashnode = require("./dev/post-to-hashnode.js");
+const postToProducthunt = require("./dev/post-to-producthunt.js");
+const postToAmazon = require("./marketplaces/post-to-amazon.js");
 
 // Map of platform name to function
 const platformMap = {
@@ -43,7 +43,7 @@ const platformMap = {
  * @param {Array} platforms - Array of selected platform strings
  * @returns {Promise<Array>} - Array of results by platform
  */
-export const postToAllPlatforms = async (post, platforms) => {
+const postToAllPlatforms = async (post, platforms) => {
 	const results = [];
 
 	for (const platform of platforms) {
@@ -71,5 +71,9 @@ export const postToAllPlatforms = async (post, platforms) => {
 
 	return results;
 };
-export default postToAllPlatforms;
+
+module.exports = {
+	postToAllPlatforms,
+	default: postToAllPlatforms,
+};
 //Maybe change to post to all boxes checked boxes in the post composer

@@ -6,6 +6,7 @@ const fs = require("fs");
 const path = require("path");
 
 const authRouter = require("./routes/auth");
+const contentRouter = require("./routes/content");
 
 const app = express(); // <-- Define app first!
 
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
+app.use("/api/content", contentRouter);
 const PORT = process.env.PORT || 3001;
 
 app.get("/api/posts", (req, res) => {

@@ -45,6 +45,7 @@ frontend/dist/
 backend/dist/
 frontend/build/
 backend/build/
+backend/prisma/dev.db
 
 # ⏱ Cron output or exports
 *.cron

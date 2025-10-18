@@ -5,9 +5,14 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 
+const authRouter = require("./routes/auth");
+
 const app = express(); // <-- Define app first!
 
 app.use(cors());
+app.use(express.json());
+
+app.use("/api/auth", authRouter);
 const PORT = process.env.PORT || 3001;
 
 app.get("/api/posts", (req, res) => {

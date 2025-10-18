@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "db:seed": "prisma db seed"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +29,10 @@
     "open": "^10.1.2",
     "p-limit": "^6.2.0",
     "playwright": "^1.52.0",
-    "shelljs": "^0.10.0"
+    "shelljs": "^0.10.0",
+    "@prisma/client": "^5.15.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.15.0"
   }
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useToast } from "@/Components/ui/use-toast";
 import usePostComposerState from "../Global/PostComposer/usePostComposerState";
 import PlatformSelector from "../Global/PostComposer/PlatformSelector";
 import ImageUploader from "../Global/PostComposer/ImageUploader";
@@ -14,6 +15,7 @@ export default function PostComposer() {
   const location = useLocation();
   const navigate = useNavigate();
   const incomingDraft = location.state?.draft || null;
+  const { toast } = useToast();
 
   const {
     title,
@@ -99,6 +101,17 @@ export default function PostComposer() {
     } catch (error) {
       console.error(error);
       setStatusMessage(error.message || "Something glitched during submit.");
+      if (error?.violations?.length) {
+        toast({
+          title: "Content needs a trim",
+          description: error.violations[0].message,
+        });
+      } else {
+        toast({
+          title: "Submit failed",
+          description: error.message || "Unexpected error while posting.",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }

@@ -1,1 +1,12 @@
-{ "name": "n8tiveflow", "private": true }
+{
+  "name": "n8tiveflow",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "codex": "codex",                       
+    "codex:exec": "codex exec"              
+  },
+  "dependencies": {
+    "@openai/codex": "^1.0.0"
+  }
+}

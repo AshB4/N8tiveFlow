@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import seoVault from "../../../posts/seoVault.json";
+import { validatePostAgainstRules } from "../../../utils/platformRules";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
@@ -189,6 +190,18 @@ const usePostComposerState = (initialDraft = null) => {
 		const scheduledIso = scheduledAt
 			? new Date(scheduledAt).toISOString()
 			: null;
+
+		const platformViolations = validatePostAgainstRules({
+			body,
+			customText,
+			useAutoPlatformText,
+			targets: selectedTargets,
+		});
+		if (platformViolations.length > 0) {
+			const error = new Error(platformViolations[0].message);
+			error.violations = platformViolations;
+			throw error;
+		}
 
 		const sharedPayload = {
 			title,

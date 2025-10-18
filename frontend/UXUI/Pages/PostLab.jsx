@@ -2,8 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useToast } from "@/Components/ui/use-toast";
 import ImageUploader from "../Global/PostComposer/ImageUploader";
 import PlatformSelector from "../Global/PostComposer/PlatformSelector";
+import { validatePostAgainstRules } from "../utils/platformRules";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
@@ -83,6 +85,7 @@ const formatTargetsLabel = (targets = []) => {
 
 export default function PostLab() {
 	const location = useLocation();
+	const { toast } = useToast();
 	const [title, setTitle] = useState("");
 	const [body, setBody] = useState("");
 	const [scheduledAt, setScheduledAt] = useState("");
@@ -216,6 +219,22 @@ export default function PostLab() {
 		setStatusMessage("Summoning scribes…");
 
 		try {
+			const violations = validatePostAgainstRules({
+				body,
+				targets: selectedTargets,
+				useAutoPlatformText: true,
+			});
+			if (violations.length > 0) {
+				const message = violations[0].message;
+				setStatusMessage(message);
+				toast({
+					title: "Content needs a trim",
+					description: message,
+				});
+				setIsSaving(false);
+				return;
+			}
+
 			const scheduledIso = scheduledAt
 				? new Date(scheduledAt).toISOString()
 				: null;

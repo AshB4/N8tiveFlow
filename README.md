@@ -104,6 +104,23 @@ Includes third-party libraries under MIT, BSD, and Apache 2.0 — see [Licenses.
 
 ---
 
+## 🔥 Enterprise Mode Features
+These modules expand PostPunk with additional tracking and scheduling tools.
+
+- **Memory-Driven Remix Engine** – stores platform performance per post.
+- **Post DNA Tracker** – logs hook, insight, CTA and tone for every draft.
+- **Evergreen Post Queue** – rotates content with cooldown logic.
+- **A/B Test Scheduler** – record engagement by post variant.
+- **Ritual Engine** – assign posts to recurring workflows.
+- **Platform Filter Checker** – warns if content is missing CTAs or alt text.
+- **Post Mood Selector** – save tone and overlay choices.
+- **Private Ritual Drafts** – hide WIP or NSFW content from normal queues.
+- **Signal Booster Tools** – resurface popular posts for new threads.
+
+All JSON data for these modules lives under `backend/enterprise/data/`.
+
+---
+
 ## 🧃 Run It Like a Ghost
 ```bash
 npm install

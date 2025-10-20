@@ -1,6 +1,27 @@
 /** @format */
 
-const { runSeoCheck } = require("../utils/seoCheckRunner");
+const { runSeoCheck } = require("./seoCheckRunner.js");
+const fs = require("fs");
+const path = require("path");
+
+// Helper to load JSON files that may contain comments
+function loadJSON(relativePath) {
+        const file = path.resolve(__dirname, relativePath);
+        const raw = fs.readFileSync(file, "utf-8");
+        const cleaned = raw.replace(/(^\s*\/\/.*$)/gm, "");
+        return JSON.parse(cleaned);
+}
+
+// Load configuration and queue data
+const config = loadJSON("../config/settings.json");
+const posts = loadJSON("../queue/postQueue.json");
+
+// Determine today's platform in a simple rotating manner
+const dayIndex = new Date().getDay() % config.active_platforms.length;
+const todayPlatform = config.active_platforms[dayIndex];
+
+// Track how many posts we've sent out today
+let postedCount = 0;
 
 posts.forEach((post) => {
 	if (

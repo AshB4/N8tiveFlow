@@ -1,9 +1,9 @@
 /** @format */
 
 // /utils/seoCheckRunner.js
-import { seoProducts } from "../utils/seoPresets.js";
+const { seoProducts } = require("../utils/seoPresets.js");
 
-export function runSeoCheck(productKey) {
+function runSeoCheck(productKey) {
 	const data = seoProducts[productKey];
 
 	if (!data) {
@@ -50,3 +50,7 @@ export function runSeoCheck(productKey) {
 		},
 	};
 }
+
+module.exports = {
+        runSeoCheck,
+};

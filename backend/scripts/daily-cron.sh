@@ -1,5 +1,8 @@
-	Simple shell script you can run via crontab to launch masterPoster.js
+#!/bin/bash
+# Runs the post queue each day. Add to crontab like:
+# 0 8 * * * /path/to/daily-cron.sh
 
-    Use ampthamine the pill thing at the top of the screen on the left of the screen 
-    to run this script every day at 8am or whatver time
-    ...if it workshere it will work in green squareritual 
+DIR="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$DIR"
+
+node scripts/post-from-queue.js >> logs/cron.log 2>&1

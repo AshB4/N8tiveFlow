@@ -204,8 +204,8 @@ export default function PostComposer() {
         setCustomText={setCustomText}
       />
 
-      <label className="block mb-4 text-green-400">
-        Schedule Post:
+        <label className="block mb-4 text-green-400">
+          📅 Schedule Post:
           <input
             type="datetime-local"
             value={scheduledAt || ""}

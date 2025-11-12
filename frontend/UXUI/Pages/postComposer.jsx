@@ -124,13 +124,13 @@ export default function PostComposer() {
         <div className="flex gap-3">
           <Link
             to="/"
-            className="px-3 py-2 border border-green-400 text-green-400 rounded hover:bg-green-400 hover:text-black transition-colors"
+            className="px-3 py-2 border border-pink-500 text-pink-400 rounded hover:bg-pink-500 hover:text-black transition-colors"
           >
             ⬅ Home
           </Link>
           <Link
             to="/lab"
-            className="px-3 py-2 border border-green-400 text-green-400 rounded hover:bg-green-400 hover:text-black transition-colors"
+            className="px-3 py-2 border border-teal-500 text-teal-300 rounded hover:bg-teal-500 hover:text-black transition-colors"
           >
             ⚗️ Lab
           </Link>
@@ -210,7 +210,7 @@ export default function PostComposer() {
             type="datetime-local"
             value={scheduledAt || ""}
             onChange={(e) => setScheduledAt(e.target.value)}
-            className="block p-2 bg-gray-800 text-green-400 border border-gray-600 focus:border-green-400 focus:shadow-lg focus:shadow-green-500/50"
+            className="block p-2 bg-black text-green-400 border border-lime-400 focus:border-lime-400 focus:shadow-lg focus:shadow-lime-500/50"
           />
       </label>
 

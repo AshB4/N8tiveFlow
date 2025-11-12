@@ -49,7 +49,7 @@
      "id": "threads-main",
      "label": "Threads • Main Account",
      "credentials": {
-       "accessToken": "TODO_USER_ACCESS_TOKEN",
+       "accessToken": "EAASMQ79OOJUBP4ZBDoTuz9GrhWOfhMAa4KSzAIDpPcqhYlxa8wEU6xZBl8U9XTPV35rufTfxm4RWBhC788rdHqmldg1utU8g5wQnqFod2jjZBSsSFykkwqE9cl0sxrlpWoZAiZCLcjyLI1YQYIiOhpiRTZAMzegNsMLFg6VOgEDtWtAIMjavbPD1OAmaUOhMtjdPDFjHGT0TSPN0ZCgVYlaxfKcIIyGZCzMQ46BKnUO6DK3rtt5S8Mid7edogSpC7LtZCwRSqyuG13pNdaNaJuz7d9xa0",
        "appId": "2977089702493576",
        "appSecret": "a4adc6bbec1ba479ef526a6dbd76a662"
      }
@@ -59,9 +59,10 @@
      "id": "ig-main",
      "label": "Instagram • Main Account",
      "credentials": {
-       "accessToken": "TODO_USER_ACCESS_TOKEN",
+       "accessToken": "EAASMQ79OOJUBP4ZBDoTuz9GrhWOfhMAa4KSzAIDpPcqhYlxa8wEU6xZBl8U9XTPV35rufTfxm4RWBhC788rdHqmldg1utU8g5wQnqFod2jjZBSsSFykkwqE9cl0sxrlpWoZAiZCLcjyLI1YQYIiOhpiRTZAMzegNsMLFg6VOgEDtWtAIMjavbPD1OAmaUOhMtjdPDFjHGT0TSPN0ZCgVYlaxfKcIIyGZCzMQ46BKnUO6DK3rtt5S8Mid7edogSpC7LtZCwRSqyuG13pNdaNaJuz7d9xa0",
        "appId": "1181317770620532",
-       "appSecret": "1db0290689c1fc2a2b71ff3733734f37be0"
+       "appSecret": "1db0290689c1fc2a2b71ff3734f37be0"
      }
+   }
    }
  ]

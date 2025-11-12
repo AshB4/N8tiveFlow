@@ -146,14 +146,14 @@ export default function PostComposer() {
       <input
         type="text"
         placeholder="Title"
-        className="w-full p-2 border mb-2"
+        className="w-full p-2 bg-black text-green-400 border border-gray-600 mb-2 focus:border-green-400 focus:shadow-lg focus:shadow-green-500/50"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
 
       <textarea
         placeholder="Write your post here..."
-        className="w-full p-2 border mb-2 min-h-[100px]"
+        className="w-full p-2 bg-black text-green-400 border border-gray-600 mb-2 min-h-[100px] focus:border-green-400 focus:shadow-lg focus:shadow-green-500/50"
         value={body}
         onChange={(e) => setBody(e.target.value)}
       />
@@ -178,18 +178,18 @@ export default function PostComposer() {
 
       <div className="mb-4">
         <label>
+          Schedule Post:
           <input
-            type="checkbox"
-            checked={useAutoHashtags}
-            onChange={() => setUseAutoHashtags(!useAutoHashtags)}
-            className="mr-2"
+            type="datetime-local"
+            value={scheduledAt || ""}
+            onChange={(e) => setScheduledAt(e.target.value)}
+            className="block p-2 bg-black text-green-400 border border-gray-600 focus:border-green-400 focus:shadow-lg focus:shadow-green-500/50"
           />
-          Auto-generate hashtags
         </label>
         {!useAutoHashtags && (
           <textarea
             placeholder="#hashtag1 #hashtag2"
-            className="w-full p-2 border mt-2"
+            className="w-full p-2 bg-black text-green-400 border border-gray-600 mt-2 focus:border-green-400 focus:shadow-lg focus:shadow-green-500/50"
             value={manualHashtags}
             onChange={(e) => setManualHashtags(e.target.value)}
           />

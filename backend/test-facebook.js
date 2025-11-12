@@ -14,7 +14,7 @@ async function testFacebook() {
       accessToken: process.env.FACEBOOK_PAGE_ACCESS_TOKEN || 'REPLACE_WITH_REAL_PAGE_TOKEN',
     },
     metadata: {
-      pageId: '17841402157642090',
+      pageId: '351363231403853',
     },
   };
 

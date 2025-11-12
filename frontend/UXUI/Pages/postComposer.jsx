@@ -177,14 +177,14 @@ export default function PostComposer() {
       )}
 
       <div className="mb-4">
-        <label>
-          Schedule Post:
+        <label className="text-green-400">
           <input
-            type="datetime-local"
-            value={scheduledAt || ""}
-            onChange={(e) => setScheduledAt(e.target.value)}
-            className="block p-2 bg-black text-green-400 border border-gray-600 focus:border-green-400 focus:shadow-lg focus:shadow-green-500/50"
+            type="checkbox"
+            checked={useAutoHashtags}
+            onChange={() => setUseAutoHashtags(!useAutoHashtags)}
+            className="mr-2"
           />
+          Auto-generate hashtags
         </label>
         {!useAutoHashtags && (
           <textarea
@@ -204,17 +204,17 @@ export default function PostComposer() {
         setCustomText={setCustomText}
       />
 
-      <label className="block mb-4">
+      <label className="block mb-4 text-green-400">
         Schedule Post:
         <input
           type="datetime-local"
           value={scheduledAt || ""}
           onChange={(e) => setScheduledAt(e.target.value)}
-          className="block p-2 border"
+          className="block p-2 bg-black text-green-400 border border-gray-600 focus:border-green-400 focus:shadow-lg focus:shadow-green-500/50"
         />
       </label>
 
-      <label className="block mb-4">
+      <label className="block mb-4 text-green-400">
         <input
           type="checkbox"
           checked={saveAsDraft}

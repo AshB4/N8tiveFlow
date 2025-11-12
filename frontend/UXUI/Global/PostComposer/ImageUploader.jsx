@@ -133,11 +133,11 @@ export default function ImageUploader({
 				</div>
 			)}
 			<div className="mt-3">
-				<label className="block text-sm font-medium mb-1">Alt Text</label>
+				<label className="block text-sm text-pink-300 uppercase tracking-[0.2em] mb-1">Alt Text</label>
 				<textarea
 					value={altText}
 					onChange={(e) => setAltText?.(e.target.value)}
-					className="w-full p-2 border rounded"
+					className="w-full bg-black border border-teal-500 text-teal-200 p-3 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
 					placeholder="Describe the image for accessibility"
 				/>
 			</div>

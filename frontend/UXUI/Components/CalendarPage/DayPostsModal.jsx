@@ -140,9 +140,8 @@ export default function DayPostsModal({
 
 				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-6">
 					<button
-						onClick={() => hasPosts && onRewriteAll?.(posts)}
-						disabled={!hasPosts}
-						className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-pink-500 text-pink-200 uppercase tracking-[0.3em] rounded hover:bg-pink-500 hover:text-black disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+						onClick={() => onRewriteAll?.(posts || [])}
+						className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-pink-500 text-pink-200 uppercase tracking-[0.3em] rounded hover:bg-pink-500 hover:text-black transition-colors"
 					>
 						<span role="img" aria-hidden="true">
 							🧪

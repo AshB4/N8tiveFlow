@@ -237,7 +237,10 @@ export default function PostCalendar() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-[320px_1fr_260px] gap-4">
-        <aside className="bg-black text-teal-300 p-4 border-2 border-pink-600 shadow-lg rounded">
+        <aside
+          className="bg-black text-teal-300 p-4 border-2 border-pink-600 shadow-lg rounded cursor-pointer hover:border-teal-400 transition-colors"
+          onClick={() => navigate('/lib')}
+        >
           <h2 className="text-pink-500 text-2xl mb-4 border-b border-pink-500 pb-1">QUEUE</h2>
           {upcomingScheduled.length === 0 ? (
             <p className="text-sm text-teal-500 italic">
@@ -373,20 +376,20 @@ export default function PostCalendar() {
             )}
           </button>
 
-          <button
-            type="button"
-            onClick={() => handleViewCharts("pipeline")}
-            className="border border-teal-500 p-3 rounded bg-black text-left hover:border-pink-400 hover:shadow-[0_0_12px_rgba(56,189,248,0.35)] transition"
-          >
-            <h3 className="text-pink-400 text-lg mb-1">🔋 Content Fuel</h3>
-            <div className="bg-gray-800 h-4 w-full rounded overflow-hidden">
-              <div
-                className="bg-teal-400 h-4"
-                style={{ width: `${Math.min(percentScheduled, 100)}%` }}
-              ></div>
-            </div>
-            <p className="mt-1">{percentScheduled}% scheduled</p>
-          </button>
+           <button
+             type="button"
+             onClick={() => handleViewCharts("pipeline")}
+             className="border border-teal-500 p-3 rounded bg-black text-left hover:border-pink-400 hover:shadow-[0_0_12px_rgba(56,189,248,0.35)] transition"
+           >
+             <h3 className="text-pink-400 text-lg mb-1">🔋 Content Fuel</h3>
+             <div className="bg-gray-800 h-4 w-full rounded overflow-hidden">
+               <div
+                 className="bg-teal-400 h-4"
+                 style={{ width: `${Math.min(percentScheduled, 100)}%` }}
+               ></div>
+             </div>
+             <p className="mt-1">{percentScheduled}% scheduled</p>
+           </button>
         </div>
       </div>
     </div>

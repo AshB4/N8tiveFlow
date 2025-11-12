@@ -205,12 +205,12 @@ export default function PostComposer() {
       />
 
         <label className="block mb-4 text-green-400">
-          📅 Schedule Post:
+          Schedule Post:
           <input
             type="datetime-local"
             value={scheduledAt || ""}
             onChange={(e) => setScheduledAt(e.target.value)}
-            className="block p-2 bg-black text-green-400 border border-lime-400 focus:border-lime-400 focus:shadow-lg focus:shadow-lime-500/50"
+            className="block p-2 bg-gray-800 text-green-400 border border-lime-400 focus:border-lime-400 focus:shadow-lg focus:shadow-lime-500/50"
           />
       </label>
 

@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 async function postToDevto(post, account) {
   const apiKey = account?.credentials?.apiKey || process.env.DEVTO_API_KEY;
@@ -34,4 +34,4 @@ async function postToDevto(post, account) {
   }
 }
 
-module.exports = postToDevto;
+export default postToDevto;

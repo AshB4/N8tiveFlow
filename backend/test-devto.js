@@ -1,16 +1,16 @@
-const postToDevto = require('./scripts/platforms/dev/post-to-devto.js');
+import postToDevto from './scripts/platforms/dev/post-to-devto.js';
 
 async function testDevto() {
   const post = {
-    title: 'Test Post',
-    body: 'This is a test post from PostPunk.',
-    hashtags: ['test', 'postpunk'],
+    title: 'Test Post from PostPunk',
+    body: 'This is a test post from PostPunk automation system.',
+    hashtags: ['test', 'postpunk', 'automation'],
     image: null,
   };
 
   const account = {
     credentials: {
-      apiKey: process.env.DEVTO_API_KEY || 'YOUR_API_KEY_HERE',
+      apiKey: 'g2m9eyqc5YfoYbMPT91PKvcv',
     },
   };
 

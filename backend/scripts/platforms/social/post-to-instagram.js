@@ -1,13 +1,16 @@
-const axios = require('axios');
+import axios from 'axios';
 
 async function postToInstagram(post, account) {
   const { accessToken } = account.credentials;
-  if (!accessToken || accessToken === 'TODO') {
+  const { accountId } = account.metadata || {};
+  if (!accessToken || accessToken === 'TODO_USER_ACCESS_TOKEN') {
     throw new Error('Instagram access token not configured');
   }
+  if (!accountId) {
+    throw new Error('Instagram account ID not configured in metadata');
+  }
 
-  // First, create the media container
-  const url = `https://graph.instagram.com/me/media`;
+  const url = `https://graph.instagram.com/${accountId}/media`;
   const payload = {
     image_url: post.image, // Assuming image is a URL
     caption: post.body,
@@ -19,7 +22,7 @@ async function postToInstagram(post, account) {
     const mediaId = response.data.id;
 
     // Publish the media
-    const publishUrl = `https://graph.instagram.com/me/media_publish`;
+    const publishUrl = `https://graph.instagram.com/${accountId}/media_publish`;
     const publishPayload = {
       creation_id: mediaId,
       access_token: accessToken,
@@ -33,4 +36,4 @@ async function postToInstagram(post, account) {
   }
 }
 
-module.exports = postToInstagram;
+export default postToInstagram;

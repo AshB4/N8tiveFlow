@@ -26,10 +26,18 @@
      "id": "x-main",
      "label": "X • Main Handle",
      "credentials": {
-       "apiKey": "TODO",
-       "apiSecret": "TODO",
-       "accessToken": "TODO",
-       "accessSecret": "TODO"
+       "apiKey": "j7Cjcv9BgY9OwS56sqmvTOcz9",
+       "apiSecret": "N6vCluOMEIpUA8f9Z288ySpgzjh19E86CCEQxTsldpYJ7QHxBd",
+       "accessToken": "972575433695232-6HtSozKAyNhXyEiAMDrEQdUUBTVflb",
+       "accessSecret": "u26GfoGtrNpLGmc8RlarY4OQNs6Zrr2hx9vSWQtfMhyyX"
+     }
+   },
+   {
+     "platform": "devto",
+     "id": "devto-main",
+     "label": "Dev.to • Main Account",
+     "credentials": {
+       "apiKey": "g2m9eyqc5YfoYbMPT91PKvcv"
      }
    },
    {
@@ -37,7 +45,7 @@
      "id": "threads-main",
      "label": "Threads • Main Account",
      "credentials": {
-       "accessToken": "TODO"
+       "accessToken": "TODO_USER_ACCESS_TOKEN"
      }
    },
    {
@@ -45,7 +53,9 @@
      "id": "ig-main",
      "label": "Instagram • Main Account",
      "credentials": {
-       "accessToken": "TODO"
+       "accessToken": "TODO_USER_ACCESS_TOKEN",
+       "appId": "1181317770620532",
+       "appSecret": "1db0290689c1fc2a2b71ff3733734f37be0"
      }
    }
  ]

@@ -49,7 +49,9 @@
      "id": "threads-main",
      "label": "Threads • Main Account",
      "credentials": {
-       "accessToken": "TODO_USER_ACCESS_TOKEN"
+       "accessToken": "TODO_USER_ACCESS_TOKEN",
+       "appId": "2977089702493576",
+       "appSecret": "a4adc6bbec1ba479ef526a6dbd76a662"
      }
    },
    {

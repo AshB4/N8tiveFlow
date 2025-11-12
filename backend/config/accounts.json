@@ -21,15 +21,31 @@
       "pageId": "0987654321"
     }
   },
-  {
-    "platform": "x",
-    "id": "x-main",
-    "label": "X • Main Handle",
-    "credentials": {
-      "apiKey": "TODO",
-      "apiSecret": "TODO",
-      "accessToken": "TODO",
-      "accessSecret": "TODO"
-    }
-  }
-]
+   {
+     "platform": "x",
+     "id": "x-main",
+     "label": "X • Main Handle",
+     "credentials": {
+       "apiKey": "TODO",
+       "apiSecret": "TODO",
+       "accessToken": "TODO",
+       "accessSecret": "TODO"
+     }
+   },
+   {
+     "platform": "threads",
+     "id": "threads-main",
+     "label": "Threads • Main Account",
+     "credentials": {
+       "accessToken": "TODO"
+     }
+   },
+   {
+     "platform": "instagram",
+     "id": "ig-main",
+     "label": "Instagram • Main Account",
+     "credentials": {
+       "accessToken": "TODO"
+     }
+   }
+ ]

@@ -74,11 +74,12 @@ export default function PlatformSelector({
 							<div className="flex flex-wrap gap-2">
 								<label
 									key={makeKey(platform, null)}
-									className={`px-3 py-1 rounded border text-sm cursor-pointer transition ${
+									className={`px-3 py-1 rounded border text-sm cursor-pointer transition flex items-center ${
 										defaultChecked
-											? "border-teal-500 bg-teal-500/20 text-teal-200"
+											? "border-teal-500 bg-teal-500/20 text-teal-200 shadow-lg shadow-teal-500/50"
 											: "border-gray-600 text-gray-300 hover:border-teal-400"
 									}`}
+									onClick={() => toggleTarget?.(platform, null)}
 								>
 									<input
 										type="checkbox"
@@ -86,7 +87,7 @@ export default function PlatformSelector({
 										onChange={() => toggleTarget?.(platform, null)}
 										className="hidden"
 									/>
-					Default ({formatPlatformName(platform)})
+									{defaultChecked ? '✅ ' : ''}Post to {formatPlatformName(platform)}
 								</label>
 
 								{accounts.map((account) => {
@@ -98,11 +99,12 @@ export default function PlatformSelector({
 									return (
 										<label
 											key={makeKey(platform, account.id)}
-											className={`px-3 py-1 rounded border text-sm cursor-pointer transition ${
+											className={`px-3 py-1 rounded border text-sm cursor-pointer transition flex items-center ${
 												checked
-													? "border-pink-500 bg-pink-500/20 text-pink-200"
+													? "border-pink-500 bg-pink-500/20 text-pink-200 shadow-lg shadow-pink-500/50"
 													: "border-gray-600 text-gray-300 hover:border-pink-400"
 											}`}
+											onClick={() => toggleTarget?.(platform, account.id)}
 										>
 											<input
 												type="checkbox"
@@ -110,7 +112,7 @@ export default function PlatformSelector({
 												onChange={() => toggleTarget?.(platform, account.id)}
 												className="hidden"
 											/>
-											{account.label || account.id}
+											{checked ? '✅ ' : ''}{account.label || account.id}
 										</label>
 									);
 								})}

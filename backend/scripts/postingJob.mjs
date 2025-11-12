@@ -22,13 +22,14 @@ const SUPPORTED_PLATFORMS = new Set([
 	"pinterest",
 	"reddit",
 	"tumblr",
-	"onlyfans",
 	"kofi",
 	"discord",
 	"devto",
 	"hashnode",
 	"producthunt",
 	"amazon",
+	"threads",
+	"instagram",
 ]);
 
 const PLATFORM_ALIASES = {
@@ -39,7 +40,6 @@ const PLATFORM_ALIASES = {
 	pinterest: "pinterest",
 	reddit: "reddit",
 	tumblr: "tumblr",
-	onlyfans: "onlyfans",
 	kofi: "kofi",
 	discord: "discord",
 	devto: "devto",
@@ -47,6 +47,9 @@ const PLATFORM_ALIASES = {
 	hashnode: "hashnode",
 	producthunt: "producthunt",
 	amazon: "amazon",
+	threads: "threads",
+	instagram: "instagram",
+	ig: "instagram",
 };
 
 async function ensureQueueFiles() {

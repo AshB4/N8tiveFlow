@@ -19,19 +19,20 @@ const availablePlatforms = [
 	"amazon",
 ];
 
-const usePostComposerState = () => {
-	const [title, setTitle] = useState("");
-	const [body, setBody] = useState("");
-	const [image, setImage] = useState(null);
-	const [altText, setAltText] = useState("");
-	const [selectedPlatforms, setSelectedPlatforms] = useState([]);
-	const [scheduledAt, setScheduledAt] = useState(null);
-	const [saveAsDraft, setSaveAsDraft] = useState(false);
-	const [selectedProduct, setSelectedProduct] = useState("");
-	const [useAutoHashtags, setUseAutoHashtags] = useState(true);
-	const [manualHashtags, setManualHashtags] = useState("");
-	const [useAutoPlatformText, setUseAutoPlatformText] = useState(true);
-	const [customText, setCustomText] = useState({});
+const usePostComposerState = (incomingDraft = null) => {
+	const isEditing = !!incomingDraft;
+	const [title, setTitle] = useState(incomingDraft?.title || "");
+	const [body, setBody] = useState(incomingDraft?.body || "");
+	const [image, setImage] = useState(incomingDraft?.image || null);
+	const [altText, setAltText] = useState(incomingDraft?.altText || "");
+	const [selectedTargets, setSelectedTargets] = useState(incomingDraft?.targets || []);
+	const [scheduledAt, setScheduledAt] = useState(incomingDraft?.scheduledAt || null);
+	const [saveAsDraft, setSaveAsDraft] = useState(incomingDraft?.saveAsDraft || false);
+	const [selectedProduct, setSelectedProduct] = useState(incomingDraft?.selectedProduct || "");
+	const [useAutoHashtags, setUseAutoHashtags] = useState(incomingDraft?.useAutoHashtags ?? true);
+	const [manualHashtags, setManualHashtags] = useState(incomingDraft?.manualHashtags || "");
+	const [useAutoPlatformText, setUseAutoPlatformText] = useState(incomingDraft?.useAutoPlatformText ?? true);
+	const [customText, setCustomText] = useState(incomingDraft?.customText || {});
 
 	useEffect(() => {
 		if (selectedProduct) {
@@ -47,12 +48,23 @@ const usePostComposerState = () => {
 		}
 	}, [selectedProduct, useAutoHashtags]);
 
-	const togglePlatform = (platform) => {
-		setSelectedPlatforms((prev) =>
-			prev.includes(platform)
-				? prev.filter((p) => p !== platform)
-				: [...prev, platform],
-		);
+	const toggleTarget = (platform, accountId = null) => {
+		setSelectedTargets((prev) => {
+			const exists = prev.some(
+				(target) =>
+					target.platform === platform &&
+					(target.accountId ?? null) === (accountId ?? null),
+			);
+			if (exists) {
+				return prev.filter(
+					(target) =>
+						!(target.platform === platform &&
+							(target.accountId ?? null) === (accountId ?? null)),
+				);
+			} else {
+				return [...prev, { platform, accountId }];
+			}
+		});
 	};
 
 	const handleSubmit = async () => {
@@ -60,7 +72,6 @@ const usePostComposerState = () => {
 			title,
 			body,
 			image,
-			platforms: selectedPlatforms,
 			scheduledAt,
 			saveAsDraft,
 			hashtags: useAutoHashtags ? null : manualHashtags,
@@ -71,7 +82,7 @@ const usePostComposerState = () => {
 		const { postToAllPlatforms } = await import(
 			"../../scripts/postToAllPlatforms.js"
 		);
-		const results = await postToAllPlatforms(postPayload, selectedPlatforms);
+		const results = await postToAllPlatforms(postPayload, selectedTargets);
 		console.log("Posted to:", results);
 	};
 
@@ -84,8 +95,9 @@ const usePostComposerState = () => {
 		setImage,
 		altText,
 		setAltText,
-		selectedPlatforms,
-		togglePlatform,
+		selectedTargets,
+		selectedPlatforms: selectedTargets.map(t => t.platform),
+		toggleTarget,
 		scheduledAt,
 		setScheduledAt,
 		saveAsDraft,
@@ -103,6 +115,7 @@ const usePostComposerState = () => {
 		handleSubmit,
 		seoVault,
 		availablePlatforms,
+		isEditing,
 	};
 };
 

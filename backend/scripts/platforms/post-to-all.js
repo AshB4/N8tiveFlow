@@ -14,13 +14,14 @@ const platformLoaders = {
 	pinterest: () => import("./social/post-to-pinterest.js"),
 	reddit: () => import("./social/post-to-reddit.js"),
 	tumblr: () => import("./social/post-to-tumblr.js"),
-	onlyfans: () => import("./adult/post-to-onlyfans.js"),
 	kofi: () => import("./content/post-to-kofi.js"),
 	discord: () => import("./adult/post-to-discord.js"),
 	devto: () => import("./dev/post-to-devto.js"),
 	hashnode: () => import("./dev/post-to-hashnode.js"),
 	producthunt: () => import("./dev/post-to-producthunt.js"),
 	amazon: () => import("./marketplaces/post-to-amazon.js"),
+	threads: () => import("./social/post-to-threads.js"),
+	instagram: () => import("./social/post-to-instagram.js"),
 };
 
 const resolveHandler = async (platform) => {

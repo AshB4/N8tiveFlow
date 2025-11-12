@@ -85,7 +85,7 @@ export default function PostComposer() {
     };
   }, []);
 
-  const submitLabel = isEditing ? "Update Post" : "Post It";
+  const submitLabel = isEditing ? "Update Post" : "Post It Now";
 
   const onSubmit = async () => {
     setIsSubmitting(true);
@@ -225,7 +225,7 @@ export default function PostComposer() {
       </label>
 
       <button
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="bg-black text-green-400 border border-green-400 px-4 py-2 rounded hover:bg-green-400 hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:shadow-lg focus:shadow-green-500/50"
         onClick={onSubmit}
         disabled={isSubmitting}
       >

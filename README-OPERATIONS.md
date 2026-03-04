@@ -40,6 +40,13 @@ cd ../frontend && npm install
   - `AMAZON_CREATORS_MAX_RETRIES=3`
   - `POSTPUNK_MAX_ATTEMPTS=2`
   - `POSTPUNK_RETRY_DELAY_MINUTES=30`
+  - Pinterest Playwright:
+    - `PINTEREST_USERNAME=...`
+    - `PINTEREST_PASSWORD=...`
+    - `PINTEREST_LOGIN_EMAIL=...` (optional)
+    - `PINTEREST_BOARD_NAME=...`
+    - `PINTEREST_SESSION_STATE_PATH=backend/config/pinterest-state.json`
+    - `PINTEREST_HEADLESS=true`
 
 3. Keep `backend/config/accounts.json` as placeholder-based config and let env resolve credentials.
 
@@ -177,3 +184,11 @@ tail -f /opt/postpunk/backend/backup.log
   - API responses are cached (offers resources ~1h, other resources ~1d)
   - request limiting/backoff is enforced via `AMAZON_CREATORS_MAX_TPS`, `AMAZON_CREATORS_MAX_TPD`, and retry env vars
   - auto-affiliate tagging skips likely vended Amazon URLs (to preserve Creators URL parameters)
+
+## Pinterest via Playwright (no Pinterest API)
+- Script: `backend/scripts/platforms/social/post-to-pinterest.js`
+- First run recommendation:
+  - set `PINTEREST_HEADLESS=false`
+  - run a Pinterest post flow once so session state file is created
+  - then set `PINTEREST_HEADLESS=true` for normal automation
+- Session is stored at `PINTEREST_SESSION_STATE_PATH`.

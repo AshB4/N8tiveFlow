@@ -1,14 +1,5 @@
 # 🧃 PostPunk aka N8tiveFlow
 
-*This project’s been renamed a few times — a bunch of things, really. PostPunk stuck. Chaos refined.*  
-_Automated chaos. Tracked. Styled. Queued._
-
-<pre>
-🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
-🪚 Work in Progress — Chaos is still under construction.
-🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
-</pre>
-
 ## PostPunk is not open source. 
 It is licensed under BSD 2-Clause for private, non-commercial use only. Commercial use requires a paid license.
 
@@ -24,8 +15,11 @@ For a deep dive into the guiding vision and the 4WD framework, see [PostPunk Cor
 | ✅ Post Queue              | Schedule and track content across platforms           |
 | 🔁 Creative Recycling       | Remix past posts, keep evergreen content alive         |
 | 📊 UTM Chart Tracking       | Visualize post performance and campaign ROI            |
-| 🔌 Optional Integrations    | Alerts (Apprise) and flow automation (Node-RED)        |
-| 🧠 Local First Design       | Runs from terminal or via cron without cloud lock-in   |
+| 📲 Telegram Alerts          | Success/failure/crash notifications from worker       |
+| 🖼️ Media Library            | Local image/GIF/video uploads stored per post         |
+| 💸 Affiliate Tagging        | Optional auto-tagging of Amazon links                |
+| 🤖 Product Finder           | Scored product candidate generation (seed/Creators source) |
+| 🧠 Local First Design       | Runs from terminal or always-on service (launchd/systemd) |
 | 🧾 BSD Licensing            | Safe for personal use, commercial use via license      |
 
 ---
@@ -75,6 +69,11 @@ Keep platform credentials in environment variables, not in tracked JSON.
 2. Set the referenced env vars in your local `.env`
 3. Start backend normally; account placeholders like `${X_API_KEY}` are resolved at runtime
 
+## 📘 Operations Guide
+For full runbooks (macOS launchd, Linux systemd, queue/worker ops, backups, health checks), see:
+
+- [`README-OPERATIONS.md`](./README-OPERATIONS.md)
+
 ---
 
 ## 🧠 Creative Recycling
@@ -99,9 +98,17 @@ Includes third-party libraries under MIT, BSD, and Apache 2.0 — see [Licenses.
 
 ## 🧃 Run It Like a Ghost
 ```bash
-npm install
-npm run start-scheduler     # bree kicks off
-node backend/scripts/post-to-devto.js    # or run a script manually
+cd backend && npm install
+cd ../frontend && npm install
+
+# terminal 1
+cd backend && npm run start
+
+# terminal 2
+cd frontend && npm run dev
+
+# run worker manually (or via launchd/systemd timer)
+cd backend && npm run worker
 ```
 ---
 

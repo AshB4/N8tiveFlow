@@ -1,0 +1,12 @@
+[Unit]
+Description=Run PostPunk Queue Worker on the hour and half hour
+
+[Timer]
+OnCalendar=*-*-* *:00:00
+OnCalendar=*-*-* *:30:00
+Persistent=true
+Unit=postpunk-worker.service
+
+[Install]
+WantedBy=timers.target
+

@@ -1,0 +1,15 @@
+[Unit]
+Description=PostPunk Queue Worker (One Shot)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/postpunk/backend
+EnvironmentFile=/opt/postpunk/.env
+ExecStart=/usr/bin/env node scripts/postingJob.mjs
+User=postpunk
+Group=postpunk
+StandardOutput=append:/opt/postpunk/backend/worker.log
+StandardError=append:/opt/postpunk/backend/worker.err.log
+

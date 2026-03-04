@@ -67,6 +67,22 @@ const withAffiliateTag = (rawText, partnerTag) => {
 	});
 };
 
+const isConfiguredValue = (value) => {
+	if (value === null || value === undefined) return false;
+	if (typeof value !== "string") return Boolean(value);
+	const trimmed = value.trim();
+	if (!trimmed) return false;
+	return !/^(replace|todo|changeme)/i.test(trimmed);
+};
+
+const isThreadsConfigured = (account) => {
+	const token =
+		account?.credentials?.accessToken || process.env.THREADS_ACCESS_TOKEN || "";
+	const accountId =
+		account?.metadata?.accountId || process.env.THREADS_ACCOUNT_ID || "";
+	return isConfiguredValue(token) && isConfiguredValue(accountId);
+};
+
 export const normalizeTargets = (input) => {
 	if (!Array.isArray(input)) return [];
 	return input
@@ -129,6 +145,15 @@ export const postToAllPlatforms = async (post, targetsInput) => {
 				});
 				continue;
 			}
+		}
+		if (platform === "threads" && !isThreadsConfigured(account)) {
+			results.push({
+				platform,
+				accountId,
+				status: "skipped",
+				reason: "Threads not configured",
+			});
+			continue;
 		}
 
 		try {

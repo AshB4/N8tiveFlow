@@ -61,5 +61,6 @@ backend/media/gifs/*
 backend/media/videos/*
 backend/media/other/*
 !backend/media/**/.gitkeep
+backend/debug/
 
 # My Docs

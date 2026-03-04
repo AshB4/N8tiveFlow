@@ -3,6 +3,7 @@
 import { config as loadEnv } from "dotenv";
 import axios from "axios";
 import crypto from "crypto";
+import { readFile } from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -12,14 +13,21 @@ const __dirname = path.dirname(__filename);
 loadEnv({ path: path.join(__dirname, "../../../.env"), override: false });
 loadEnv({ path: path.join(__dirname, "../../../../.env"), override: false });
 
-const POST_URL = "https://api.twitter.com/1.1/statuses/update.json";
+const CREATE_TWEET_URL = "https://api.x.com/2/tweets";
+const MEDIA_UPLOAD_URL = "https://upload.twitter.com/1.1/media/upload.json";
 const MAX_TWEET_LENGTH = 280;
 
-function requiredEnvAny(...names) {
+function envAny(...names) {
 	for (const name of names) {
 		const value = process.env[name];
 		if (value) return value;
 	}
+	return null;
+}
+
+function requiredEnvAny(...names) {
+	const value = envAny(...names);
+	if (value) return value;
 	throw new Error(`Missing required X config: ${names.join(" or ")}`);
 }
 
@@ -54,7 +62,7 @@ function buildStatus({ title, body, hashtags }) {
 function buildOAuthHeader({
 	method,
 	url,
-	params,
+	params = {},
 	consumerKey,
 	consumerSecret,
 	token,
@@ -111,22 +119,133 @@ function buildOAuthHeader({
 	return header;
 }
 
-export default async function postToX(post) {
-	const consumerKey = requiredEnvAny("X_API_KEY");
-	const consumerSecret = requiredEnvAny("X_API_SECRET");
-	const token = requiredEnvAny("X_ACCESS_TOKEN");
-	const tokenSecret = requiredEnvAny("X_ACCESS_SECRET");
+function formatAxiosError(error, endpointLabel) {
+	const status = error?.response?.status ?? null;
+	const data = error?.response?.data ?? null;
+	const detail =
+		(typeof data === "object" && data !== null
+			? data.detail || data.title || JSON.stringify(data)
+			: data) || error?.message || "Unknown error";
+	return `${endpointLabel} failed${status ? ` (status ${status})` : ""}: ${detail}`;
+}
+
+function resolveLocalMediaPath(mediaPath) {
+	if (!mediaPath) return null;
+	if (path.isAbsolute(mediaPath)) return mediaPath;
+	if (mediaPath.startsWith("/media/")) {
+		return path.join(__dirname, "../../..", mediaPath.slice(1));
+	}
+	return path.join(__dirname, "../../..", mediaPath);
+}
+
+function inferMimeType(filePath, mediaType) {
+	if (mediaType === "video") return "video/mp4";
+	if (mediaType === "gif") return "image/gif";
+	const ext = path.extname(filePath || "").toLowerCase();
+	if (ext === ".gif") return "image/gif";
+	if (ext === ".png") return "image/png";
+	if (ext === ".webp") return "image/webp";
+	return "image/jpeg";
+}
+
+async function uploadMedia({
+	consumerKey,
+	consumerSecret,
+	token,
+	tokenSecret,
+	mediaPath,
+	mediaType,
+}) {
+	try {
+		const fileBuffer = await readFile(mediaPath);
+		const mimeType = inferMimeType(mediaPath, mediaType);
+		if (mimeType.startsWith("video/")) {
+			throw new Error(
+				"X video upload requires chunked upload flow (not enabled yet). Use image/gif for now.",
+			);
+		}
+
+		const form = new FormData();
+		form.append(
+			"media",
+			new Blob([fileBuffer], { type: mimeType }),
+			path.basename(mediaPath),
+		);
+
+		const authorization = buildOAuthHeader({
+			method: "POST",
+			url: MEDIA_UPLOAD_URL,
+			params: {},
+			consumerKey,
+			consumerSecret,
+			token,
+			tokenSecret,
+		});
+
+		const response = await axios.post(MEDIA_UPLOAD_URL, form, {
+			headers: {
+				Authorization: authorization,
+				"User-Agent": "PostPunkBot",
+			},
+			timeout: 20000,
+		});
+		const mediaId = response.data?.media_id_string || null;
+		if (!mediaId) {
+			throw new Error(
+				`X media upload returned no media_id_string: ${JSON.stringify(
+					response.data || {},
+				)}`,
+			);
+		}
+		return mediaId;
+	} catch (error) {
+		throw new Error(formatAxiosError(error, "X media upload"));
+	}
+}
+
+export default async function postToX(post, context = {}) {
+	const accountCreds = context?.account?.credentials || {};
+	const consumerKey =
+		accountCreds.apiKey ||
+		requiredEnvAny("X_API_KEY", "TWITTER_API_KEY");
+	const consumerSecret =
+		accountCreds.apiSecret ||
+		requiredEnvAny("X_API_SECRET", "TWITTER_API_SECRET");
+	const token =
+		accountCreds.accessToken ||
+		requiredEnvAny("X_ACCESS_TOKEN", "TWITTER_ACCESS_TOKEN");
+	const tokenSecret =
+		accountCreds.accessSecret ||
+		requiredEnvAny("X_ACCESS_SECRET", "TWITTER_ACCESS_SECRET");
 
 	const status = buildStatus(post);
 	if (!status) {
-		throw new Error("Twitter post requires text content");
+		throw new Error("X post requires text content");
 	}
 
-	const bodyParams = { status };
+	const mediaPath = resolveLocalMediaPath(post?.mediaPath);
+	let mediaId = null;
+	if (mediaPath) {
+		mediaId = await uploadMedia({
+			consumerKey,
+			consumerSecret,
+			token,
+			tokenSecret,
+			mediaPath,
+			mediaType: post?.mediaType || null,
+		});
+	}
+
+	const bodyPayload = mediaId
+		? {
+				text: status,
+				media: { media_ids: [mediaId] },
+			}
+		: { text: status };
 	const authorization = buildOAuthHeader({
 		method: "POST",
-		url: POST_URL,
-		params: bodyParams,
+		url: CREATE_TWEET_URL,
+		params: {},
 		consumerKey,
 		consumerSecret,
 		token,
@@ -134,10 +253,10 @@ export default async function postToX(post) {
 	});
 
 	try {
-		const response = await axios.post(POST_URL, new URLSearchParams(bodyParams), {
+		const response = await axios.post(CREATE_TWEET_URL, bodyPayload, {
 			headers: {
 				Authorization: authorization,
-				"Content-Type": "application/x-www-form-urlencoded",
+				"Content-Type": "application/json",
 				"User-Agent": "PostPunkBot",
 			},
 			timeout: 10000,
@@ -145,15 +264,12 @@ export default async function postToX(post) {
 
 		return {
 			status: "success",
-			id: response.data?.id_str,
-			text: response.data?.text,
+			id: response.data?.data?.id,
+			text: response.data?.data?.text,
+			mediaId,
 			raw: response.data,
 		};
 	} catch (error) {
-		const apiErrors = error.response?.data?.errors;
-		const reason = Array.isArray(apiErrors)
-			? apiErrors.map((e) => e.message).join("; ")
-			: error.response?.data || error.message;
-		throw new Error(`Twitter post failed: ${reason}`);
+		throw new Error(formatAxiosError(error, "X create tweet"));
 	}
 }

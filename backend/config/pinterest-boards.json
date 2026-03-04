@@ -1,0 +1,121 @@
+{
+  "defaultBoard": "",
+  "boards": [
+    "AI is Neat and Scary",
+    "Angel's",
+    "Aquaponics",
+    "Art & quotes",
+    "Baby Shower!",
+    "Be a Better Leader",
+    "Beach Wedding",
+    "Beautiful me.",
+    "coloring pages",
+    "Costume makeup",
+    "Demonology",
+    "Diy for the home",
+    "Dream home",
+    "Epic cuteness",
+    "Father’s Day Gift Ideas",
+    "Firefly/Space...",
+    "Freaking Weird or mild...",
+    "fun committee",
+    "Fun Ideas",
+    "Funny Stuff",
+    "Gardening stuff",
+    "Get your Worship on.",
+    "Halloween",
+    "hemp farming",
+    "Home spa",
+    "Hot,hot,hotties",
+    "Hydroponics",
+    "I Want, I dream.",
+    "I'm so Crafty....",
+    "Infj memes",
+    "Jewish mysticism",
+    "Kabbalah",
+    "Kalimba",
+    "Kawaii Coloring",
+    "Learn computer coding",
+    "Learn hebrew",
+    "Learning javascript",
+    "LEST WE FORGET....",
+    "Live to EAT",
+    "Magic symbols",
+    "Make it sew!",
+    "More Nerdy Goodness...",
+    "Mythic Code & Dark...",
+    "Nerdcore",
+    "Only the best Jobs",
+    "origami",
+    "Out of the Loom",
+    "Prepping (SHTF)",
+    "psychology /sociology",
+    "Random thoughts",
+    "Screenshots",
+    "shipping container house",
+    "Shower and honey do",
+    "The Mad Hooker!!",
+    "The Queen in me.",
+    "Ui ux design",
+    "Vacation Ideas",
+    "Your Pinterest Likes"
+  ],
+  "rules": [
+    {
+      "board": "coloring pages",
+      "keywords": ["coloring", "coloring book", "printable", "worksheet"]
+    },
+    {
+      "board": "Kawaii Coloring",
+      "keywords": ["kawaii", "cute coloring", "kawaii coloring"]
+    },
+    {
+      "board": "Ui ux design",
+      "keywords": ["ui", "ux", "wireframe", "figma", "design system"]
+    },
+    {
+      "board": "Learning javascript",
+      "keywords": ["javascript", "js", "node", "react", "coding"]
+    },
+    {
+      "board": "Learn computer coding",
+      "keywords": ["coding", "programming", "developer", "code"]
+    },
+    {
+      "board": "I'm so Crafty....",
+      "keywords": ["diy", "craft", "handmade", "tutorial", "crochet", "sew"]
+    },
+    {
+      "board": "Gardening stuff",
+      "keywords": ["garden", "plant", "seed", "flower", "soil"]
+    },
+    {
+      "board": "Hydroponics",
+      "keywords": ["hydroponic", "hydroponics", "nutrient film", "grow system"]
+    },
+    {
+      "board": "Aquaponics",
+      "keywords": ["aquaponic", "aquaponics", "fish tank grow"]
+    },
+    {
+      "board": "Halloween",
+      "keywords": ["halloween", "spooky", "pumpkin", "costume"]
+    },
+    {
+      "board": "Costume makeup",
+      "keywords": ["makeup", "sfx", "costume makeup", "face paint"]
+    },
+    {
+      "board": "Funny Stuff",
+      "keywords": ["meme", "funny", "humor", "joke"]
+    },
+    {
+      "board": "Vacation Ideas",
+      "keywords": ["travel", "vacation", "trip", "getaway"]
+    },
+    {
+      "board": "Dream home",
+      "keywords": ["dream home", "interior", "home inspo", "renovation"]
+    }
+  ]
+}

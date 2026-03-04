@@ -47,6 +47,7 @@ cd ../frontend && npm install
     - `PINTEREST_BOARD_NAME=...`
     - `PINTEREST_SESSION_STATE_PATH=backend/config/pinterest-state.json`
     - `PINTEREST_HEADLESS=true`
+    - `PINTEREST_AUTO_RESIZE_IMAGES=true` (auto-fix images narrower than 1000px)
 
 3. Keep `backend/config/accounts.json` as placeholder-based config and let env resolve credentials.
 
@@ -192,3 +193,7 @@ tail -f /opt/postpunk/backend/backup.log
   - run a Pinterest post flow once so session state file is created
   - then set `PINTEREST_HEADLESS=true` for normal automation
 - Session is stored at `PINTEREST_SESSION_STATE_PATH`.
+- Image preflight:
+  - Pinterest image uploads require width >= 1000px.
+  - If `PINTEREST_AUTO_RESIZE_IMAGES=true`, script creates a 1000x1500 copy when needed.
+  - If disabled, script fails fast with a clear width error.

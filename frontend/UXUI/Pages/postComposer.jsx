@@ -24,6 +24,10 @@ export default function PostComposer() {
     setBody,
     image,
     setImage,
+    mediaPath,
+    setMediaPath,
+    mediaType,
+    setMediaType,
     altText,
     setAltText,
     selectedTargets,
@@ -163,6 +167,10 @@ export default function PostComposer() {
       <ImageUploader
         image={image}
         setImage={setImage}
+        mediaPath={mediaPath}
+        setMediaPath={setMediaPath}
+        mediaType={mediaType}
+        setMediaType={setMediaType}
         altText={altText}
         setAltText={setAltText}
         selectedPlatforms={selectedPlatforms}

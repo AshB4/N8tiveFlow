@@ -41,6 +41,10 @@ const resolveHandler = async (platform) => {
 
 const AMAZON_HOST_PATTERN = /(^|\.)amazon\./i;
 const TRAILING_PUNCTUATION_PATTERN = /[),.!?:;]+$/;
+const hasVendedAmazonParams = (url) =>
+	url.searchParams.has("linkCode") ||
+	url.searchParams.has("language") ||
+	Array.from(url.searchParams.keys()).some((key) => key.toLowerCase().startsWith("ref"));
 
 const withAffiliateTag = (rawText, partnerTag) => {
 	if (!rawText || !partnerTag) return rawText || "";
@@ -50,6 +54,9 @@ const withAffiliateTag = (rawText, partnerTag) => {
 		try {
 			const parsed = new URL(cleanUrl);
 			if (!AMAZON_HOST_PATTERN.test(parsed.hostname)) {
+				return rawUrl;
+			}
+			if (hasVendedAmazonParams(parsed)) {
 				return rawUrl;
 			}
 			parsed.searchParams.set("tag", partnerTag);
@@ -137,6 +144,8 @@ export const postToAllPlatforms = async (post, targetsInput) => {
 				title: post.title,
 				body,
 				image: post.image,
+				mediaPath: post.mediaPath ?? null,
+				mediaType: post.mediaType ?? null,
 				hashtags: post.hashtags,
 			};
 

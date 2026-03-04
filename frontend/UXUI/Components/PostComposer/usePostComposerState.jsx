@@ -90,6 +90,8 @@ const usePostComposerState = (initialDraft = null) => {
 		initialDraft?.body || initialDraft?.content || ""
 	);
 	const [image, setImage] = useState(initialDraft?.image || null);
+	const [mediaPath, setMediaPath] = useState(initialDraft?.mediaPath || null);
+	const [mediaType, setMediaType] = useState(initialDraft?.mediaType || null);
 	const [altText, setAltText] = useState(initialDraft?.altText || "");
 	const [selectedTargets, setSelectedTargets] = useState(initialTargets);
 	const [scheduledAt, setScheduledAt] = useState(
@@ -138,6 +140,8 @@ const usePostComposerState = (initialDraft = null) => {
 		setTitle(initialDraft.title || "");
 		setBody(initialDraft.body || initialDraft.content || "");
 		setImage(initialDraft.image || null);
+		setMediaPath(initialDraft.mediaPath || null);
+		setMediaType(initialDraft.mediaType || null);
 		setAltText(initialDraft.altText || "");
 		setSelectedTargets(
 			sanitizeTargetsInput(
@@ -208,6 +212,8 @@ const usePostComposerState = (initialDraft = null) => {
 			customText,
 			useAutoPlatformText,
 			targets: selectedTargets,
+			mediaType,
+			hasMedia: Boolean(mediaPath || image),
 		});
 		if (platformViolations.length > 0) {
 			const error = new Error(platformViolations[0].message);
@@ -219,6 +225,8 @@ const usePostComposerState = (initialDraft = null) => {
 			title,
 			body,
 			image,
+			mediaPath,
+			mediaType,
 			altText,
 			platforms: selectedPlatforms,
 			targets: selectedTargets,
@@ -260,6 +268,10 @@ const usePostComposerState = (initialDraft = null) => {
 		setBody,
 		image,
 		setImage,
+		mediaPath,
+		setMediaPath,
+		mediaType,
+		setMediaType,
 		altText,
 		setAltText,
 		selectedTargets,

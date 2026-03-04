@@ -5,12 +5,19 @@ import { useState, useEffect, useCallback } from "react";
 export default function ImageUploader({
 	image,
 	setImage,
+	mediaPath,
+	setMediaPath,
+	mediaType,
+	setMediaType,
 	altText,
 	setAltText,
 	selectedPlatforms = [],
 }) {
+	const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 	const [previewUrl, setPreviewUrl] = useState(null);
 	const [isDragging, setIsDragging] = useState(false);
+	const [isUploading, setIsUploading] = useState(false);
+	const [uploadError, setUploadError] = useState("");
 
 	const readFileToDataUrl = useCallback(
 		(file) =>
@@ -41,20 +48,56 @@ export default function ImageUploader({
 		}
 	}, [image, readFileToDataUrl]);
 
+	const uploadFile = async (file) => {
+		const dataUrl = await readFileToDataUrl(file);
+		const response = await fetch(`${API_BASE}/api/media/upload`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				dataUrl,
+				fileName: file.name || "upload",
+			}),
+		});
+		if (!response.ok) {
+			const text = await response.text();
+			throw new Error(`Upload failed: ${response.status} ${text}`);
+		}
+		return response.json();
+	};
+
+	const inferPreview = (payload) => {
+		const mediaUrl = payload?.mediaUrl || payload?.mediaPath || null;
+		if (!mediaUrl) return null;
+		if (/^https?:\/\//i.test(mediaUrl)) return mediaUrl;
+		return `${API_BASE}${mediaUrl}`;
+	};
+
 	const handleFileChange = async (event) => {
 		const file = event.target.files?.[0];
 		if (!file) {
 			setImage?.(null);
+			setMediaPath?.(null);
+			setMediaType?.(null);
 			return;
 		}
 		try {
-			const dataUrl = await readFileToDataUrl(file);
-			setPreviewUrl(dataUrl);
-			setImage?.(dataUrl);
+			setIsUploading(true);
+			setUploadError("");
+			const uploaded = await uploadFile(file);
+			const mediaPreview = inferPreview(uploaded);
+			setPreviewUrl(mediaPreview);
+			setImage?.(mediaPreview);
+			setMediaPath?.(uploaded.mediaPath || null);
+			setMediaType?.(uploaded.mediaType || null);
 		} catch (error) {
 			console.error("Failed to read image file", error);
 			setPreviewUrl(null);
 			setImage?.(null);
+			setMediaPath?.(null);
+			setMediaType?.(null);
+			setUploadError(error?.message || "Upload failed");
+		} finally {
+			setIsUploading(false);
 		}
 	};
 
@@ -65,13 +108,23 @@ export default function ImageUploader({
 		const file = event.dataTransfer.files?.[0];
 		if (!file) return;
 		try {
-			const dataUrl = await readFileToDataUrl(file);
-			setPreviewUrl(dataUrl);
-			setImage?.(dataUrl);
+			setIsUploading(true);
+			setUploadError("");
+			const uploaded = await uploadFile(file);
+			const mediaPreview = inferPreview(uploaded);
+			setPreviewUrl(mediaPreview);
+			setImage?.(mediaPreview);
+			setMediaPath?.(uploaded.mediaPath || null);
+			setMediaType?.(uploaded.mediaType || null);
 		} catch (error) {
 			console.error("Failed to read dropped image", error);
 			setPreviewUrl(null);
 			setImage?.(null);
+			setMediaPath?.(null);
+			setMediaType?.(null);
+			setUploadError(error?.message || "Upload failed");
+		} finally {
+			setIsUploading(false);
 		}
 	};
 
@@ -92,6 +145,9 @@ export default function ImageUploader({
 	const handleClear = () => {
 		setPreviewUrl(null);
 		setImage?.(null);
+		setMediaPath?.(null);
+		setMediaType?.(null);
+		setUploadError("");
 	};
 
 	return (
@@ -107,22 +163,33 @@ export default function ImageUploader({
 			>
 				<input
 					type="file"
-					accept="image/*"
+					accept="image/*,video/*"
 					className="absolute inset-0 opacity-0 cursor-pointer"
 					onChange={handleFileChange}
 				/>
 				<p className="text-sm text-teal-300 text-center pointer-events-none">
-					Drag + drop an image here, or click to browse
+					Drag + drop image/GIF/video here, or click to browse
 				</p>
 			</div>
 
 			{previewUrl && (
 				<div className="mt-3 space-y-2">
-					<img
-						src={previewUrl}
-						alt="Selected preview"
-						className="max-h-48 rounded border border-teal-600"
-					/>
+					{mediaType === "video" ? (
+						<video
+							src={previewUrl}
+							controls
+							className="max-h-48 rounded border border-teal-600"
+						/>
+					) : (
+						<img
+							src={previewUrl}
+							alt="Selected preview"
+							className="max-h-48 rounded border border-teal-600"
+						/>
+					)}
+					{mediaPath && (
+						<p className="text-xs text-gray-400 break-all">Stored: {mediaPath}</p>
+					)}
 					<button
 						type="button"
 						onClick={handleClear}
@@ -131,6 +198,12 @@ export default function ImageUploader({
 						Remove image
 					</button>
 				</div>
+			)}
+			{isUploading && (
+				<p className="mt-2 text-xs text-teal-300">Uploading media...</p>
+			)}
+			{uploadError && (
+				<p className="mt-2 text-xs text-red-400">{uploadError}</p>
 			)}
 			<div className="mt-3">
 				<label className="block text-sm text-pink-300 uppercase tracking-[0.2em] mb-1">Alt Text</label>

@@ -3,6 +3,10 @@
 import "dotenv/config";
 import axios from "axios";
 import crypto from "crypto";
+import {
+	creatorsGetItems,
+	creatorsSearchItems,
+} from "../../../integrations/amazon/creatorsApiClient.mjs";
 
 // Required env vars: AMAZON_PAAPI_ACCESS_KEY, AMAZON_PAAPI_SECRET_KEY, AMAZON_PARTNER_TAG
 
@@ -22,6 +26,12 @@ const PATHS = {
 
 const CONTENT_TYPE = "application/json; charset=utf-8";
 const CONTENT_ENCODING = "amz-1.0";
+const CREATORS_RESOURCES = [
+	"images.primary.small",
+	"images.primary.medium",
+	"itemInfo.title",
+	"detailPageURL",
+];
 
 function requiredEnv(name) {
 	const value = process.env[name];
@@ -173,19 +183,97 @@ async function callPaapi({
 	return response.data;
 }
 
+function useCreatorsApi() {
+	return String(process.env.AMAZON_USE_CREATORS_API || "false").toLowerCase() === "true";
+}
+
+function parseCreatorsItem(data) {
+	return data?.itemsResult?.items?.[0] || null;
+}
+
+function parsePaapiItem(data) {
+	return data?.ItemsResult?.Items?.[0] || data?.SearchResult?.Items?.[0] || null;
+}
+
+function normalizeCreatorsResult(item, fallbackAsin, post, partnerTag, marketplace) {
+	const asin = item?.asin || fallbackAsin;
+	return {
+		status: "success",
+		mode: fallbackAsin ? "GetItems" : "SearchItems",
+		asin,
+		link:
+			item?.detailPageURL ||
+			buildAmazonLink({
+				asin,
+				partnerTag,
+				marketplace,
+				utm: post.amazonUtm,
+			}),
+		title: item?.itemInfo?.title?.displayValue || post.title,
+		price: null,
+		image:
+			item?.images?.primary?.medium?.url ||
+			item?.images?.primary?.small?.url ||
+			null,
+		raw: item,
+	};
+}
+
 export default async function postToAmazon(post) {
 	const partnerTag = requiredEnv("AMAZON_PARTNER_TAG");
-	const accessKey = requiredEnv("AMAZON_PAAPI_ACCESS_KEY");
-	const secretKey = requiredEnv("AMAZON_PAAPI_SECRET_KEY");
 	const marketplace = process.env.AMAZON_MARKETPLACE || "www.amazon.com";
-	const region = process.env.AMAZON_PAAPI_REGION || DEFAULT_REGION;
-	const host = process.env.AMAZON_PAAPI_HOST || DEFAULT_HOST;
 
 	const asin = extractAsin(post);
 	const keywords = extractSearchKeywords(post);
 	if (!asin && !keywords) {
 		throw new Error("Amazon posting requires an ASIN or search keywords");
 	}
+
+	if (useCreatorsApi()) {
+		try {
+			let data;
+			if (asin) {
+				data = await creatorsGetItems({
+					itemIds: [asin],
+					marketplace,
+					partnerTag,
+					resources: CREATORS_RESOURCES,
+				});
+			} else {
+				data = await creatorsSearchItems({
+					keywords,
+					searchIndex: post.amazonSearchIndex || "All",
+					itemCount: 5,
+					marketplace,
+					partnerTag,
+					resources: CREATORS_RESOURCES,
+				});
+			}
+			const item = parseCreatorsItem(data);
+			if (!item) {
+				return {
+					status: "no_results",
+					mode: asin ? "GetItems" : "SearchItems",
+					asinAttempted: asin,
+					keywordsAttempted: asin ? undefined : keywords,
+					response: data,
+				};
+			}
+			return normalizeCreatorsResult(item, asin, post, partnerTag, marketplace);
+		} catch (error) {
+			const reason =
+				error?.response?.data?.errors?.map((e) => e.message).join("; ") ||
+				error?.response?.data?.message ||
+				error.message ||
+				"Unknown Creators API error";
+			throw new Error(`Amazon Creators request failed: ${reason}`);
+		}
+	}
+
+	const accessKey = requiredEnv("AMAZON_PAAPI_ACCESS_KEY");
+	const secretKey = requiredEnv("AMAZON_PAAPI_SECRET_KEY");
+	const region = process.env.AMAZON_PAAPI_REGION || DEFAULT_REGION;
+	const host = process.env.AMAZON_PAAPI_HOST || DEFAULT_HOST;
 
 	const requestBody = {
 		PartnerTag: partnerTag,
@@ -220,7 +308,7 @@ export default async function postToAmazon(post) {
 		throw new Error(`Amazon request failed: ${reason}`);
 	}
 
-	const item = data.ItemsResult?.Items?.[0] || data.SearchResult?.Items?.[0];
+	const item = parsePaapiItem(data);
 	if (!item) {
 		return {
 			status: "no_results",

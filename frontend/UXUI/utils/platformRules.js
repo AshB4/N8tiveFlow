@@ -5,6 +5,17 @@ const PLATFORM_BODY_LIMITS = {
 	twitter: 140,
 };
 
+const PLATFORM_MEDIA_RULES = {
+	instagram: {
+		requiresMedia: true,
+		allowedTypes: ["image", "gif", "video"],
+	},
+	pinterest: {
+		requiresMedia: true,
+		allowedTypes: ["image", "gif", "video"],
+	},
+};
+
 const formatAccountHint = (platform, accountId) =>
 	accountId ? `${platform} (${accountId})` : platform;
 
@@ -13,6 +24,8 @@ export function validatePostAgainstRules({
 	customText = {},
 	useAutoPlatformText = true,
 	targets = [],
+	mediaType = null,
+	hasMedia = false,
 }) {
 	if (!Array.isArray(targets) || targets.length === 0) {
 		return [];
@@ -42,6 +55,30 @@ export function validatePostAgainstRules({
 				limit,
 				actual: length,
 				message: `Limit ${limit} characters for ${formatAccountHint(platform, target.accountId)}. Currently ${length}.`,
+			});
+		}
+
+		const mediaRule = PLATFORM_MEDIA_RULES[platform];
+		if (mediaRule?.requiresMedia && !hasMedia) {
+			violations.push({
+				platform,
+				accountId: target.accountId ?? null,
+				type: "mediaRequired",
+				message: `Media is required for ${formatAccountHint(platform, target.accountId)}.`,
+			});
+			continue;
+		}
+		if (
+			hasMedia &&
+			mediaRule?.allowedTypes?.length &&
+			mediaType &&
+			!mediaRule.allowedTypes.includes(mediaType)
+		) {
+			violations.push({
+				platform,
+				accountId: target.accountId ?? null,
+				type: "mediaTypeUnsupported",
+				message: `${formatAccountHint(platform, target.accountId)} does not support media type "${mediaType}".`,
 			});
 		}
 	}

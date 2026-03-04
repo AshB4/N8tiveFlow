@@ -7,7 +7,12 @@
     "start": "node server.mjs",
     "worker": "node scripts/postingJob.mjs",
     "test": "node --test",
-    "product-finder": "node scripts/productFinder/run-product-finder.js"
+    "product-finder": "node scripts/productFinder/run-product-finder.js",
+    "health:tokens": "node scripts/health/check-tokens.mjs",
+    "queue:dry-run": "node scripts/queue/dry-run-next24h.mjs",
+    "summary:daily": "node scripts/health/daily-summary.mjs",
+    "backup:snapshot": "node scripts/backup/snapshot.mjs",
+    "revenue:export": "node scripts/revenue/export-template.mjs"
   },
   "dependencies": {
     "axios": "1.9.0",

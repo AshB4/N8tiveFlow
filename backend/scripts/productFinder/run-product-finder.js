@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import { scoreProduct } from "./score-product.js";
 import { generateAngles } from "./generate-angles.js";
 import { storeCandidates } from "./store-results.js";
+import { creatorsSearchItems } from "../../integrations/amazon/creatorsApiClient.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +31,12 @@ function parseArgs(argv) {
 		i += 1;
 	}
 	return args;
+}
+
+function parsePriceValue(displayValue) {
+	if (!displayValue) return NaN;
+	const match = String(displayValue).replace(/,/g, "").match(/([0-9]+(?:\.[0-9]+)?)/);
+	return match ? Number(match[1]) : NaN;
 }
 
 function parseNiches(value) {
@@ -103,14 +110,55 @@ function matchesNiche(product, niche) {
 	return (niche.keywords || []).some((keyword) => text.includes(String(keyword).toLowerCase()));
 }
 
+async function fetchCreatorsCandidatesForNiche(niche, itemCount, partnerTag, marketplace) {
+	const data = await creatorsSearchItems({
+		keywords: niche.name,
+		searchIndex: "All",
+		itemCount,
+		marketplace,
+		partnerTag,
+		resources: [
+			"images.primary.small",
+			"images.primary.medium",
+			"itemInfo.title",
+			"detailPageURL",
+		],
+	});
+	const items = data?.searchResult?.items || [];
+	return items
+		.map((item) => {
+			const title = item?.itemInfo?.title?.displayValue || "";
+			const asin = item?.asin || "";
+			const detailUrl = item?.detailPageURL || "";
+			const imageUrl =
+				item?.images?.primary?.medium?.url || item?.images?.primary?.small?.url || "";
+			const priceDisplay = item?.offersV2?.listings?.[0]?.price?.money?.displayAmount || "";
+			return {
+				asin,
+				title,
+				category: niche.name,
+				priceValue: parsePriceValue(priceDisplay),
+				priceDisplay,
+				imageUrl,
+				detailUrl,
+				keywords: niche.keywords || [],
+			};
+		})
+		.filter((row) => row.asin && row.title);
+}
+
 async function run() {
 	const args = parseArgs(process.argv);
 	const maxPerNiche = Math.max(1, Number(args["max-per-niche"] || 5));
 	const minScore = Number(args["min-score"] || 55);
 	const niches = parseNiches(args.niches);
 	const dryRun = Boolean(args["dry-run"]);
+	const source = String(
+		args.source || process.env.PRODUCT_FINDER_SOURCE || "seed",
+	).toLowerCase();
 
 	const partnerTag = process.env.AMAZON_PARTNER_TAG || "";
+	const marketplace = process.env.AMAZON_MARKETPLACE || "www.amazon.com";
 	const seed = await loadJson(SEED_FILE, []);
 	const history = await loadJson(HISTORY_FILE, []);
 	const normalizedSeed = Array.isArray(seed) ? seed.map(normalizeSeedRow) : [];
@@ -118,7 +166,24 @@ async function run() {
 
 	const selected = [];
 	for (const niche of niches) {
-		const candidates = normalizedSeed.filter((row) => matchesNiche(row, niche));
+		let candidates = normalizedSeed.filter((row) => matchesNiche(row, niche));
+		if (source === "creators") {
+			try {
+				const creatorsRows = await fetchCreatorsCandidatesForNiche(
+					niche,
+					maxPerNiche * 3,
+					partnerTag,
+					marketplace,
+				);
+				if (creatorsRows.length > 0) {
+					candidates = creatorsRows;
+				}
+			} catch (error) {
+				console.warn(
+					`Creators API fetch failed for niche "${niche.name}", using seed fallback: ${error?.message || error}`,
+				);
+			}
+		}
 		const ranked = candidates
 			.map((product) => {
 				const scores = scoreProduct(product, niche, historyRows);
@@ -143,6 +208,7 @@ async function run() {
 			niches: niches.map((n) => n.name),
 			maxPerNiche,
 			minScore,
+			source,
 		});
 	}
 
@@ -164,10 +230,10 @@ async function run() {
 	if (dryRun) {
 		console.log("Dry run enabled; no files were written.");
 	}
+	console.log(`Product Finder source: ${source}`);
 }
 
 run().catch((error) => {
 	console.error("Product Finder failed:", error);
 	process.exitCode = 1;
 });
-

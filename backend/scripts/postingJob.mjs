@@ -15,6 +15,8 @@ const QUEUE_DIR = path.join(__dirname, "../queue");
 const FILE_QUEUE = path.join(QUEUE_DIR, "postQueue.json");
 const FILE_POSTED = path.join(QUEUE_DIR, "postedLog.json");
 const FILE_REJECTED = path.join(QUEUE_DIR, "rejections.json");
+const MAX_ATTEMPTS = Number(process.env.POSTPUNK_MAX_ATTEMPTS || 2);
+const RETRY_DELAY_MINUTES = Number(process.env.POSTPUNK_RETRY_DELAY_MINUTES || 30);
 
 const SUPPORTED_PLATFORMS = new Set([
 	"x",
@@ -87,6 +89,20 @@ function toDate(value) {
 	return Number.isNaN(date.getTime()) ? null : date;
 }
 
+function scheduleRetry(post) {
+	const current = Number(post?.attemptCount || 0);
+	const nextAttemptCount = current + 1;
+	const nextAttemptAt = new Date(
+		Date.now() + RETRY_DELAY_MINUTES * 60 * 1000,
+	).toISOString();
+	return {
+		...post,
+		attemptCount: nextAttemptCount,
+		nextAttemptAt,
+		lastErrorAt: new Date().toISOString(),
+	};
+}
+
 function normalizePlatforms(post) {
 	const rawPlatforms = Array.isArray(post.platforms)
 		? post.platforms
@@ -110,6 +126,8 @@ function buildPostPayload(post) {
 		title: post.title ?? "",
 		body: post.body ?? post.content ?? "",
 		image: post.image ?? post.media ?? null,
+		mediaPath: post.mediaPath ?? null,
+		mediaType: post.mediaType ?? null,
 		hashtags: post.hashtags ?? post.tags ?? [],
 		platformOverrides: post.platformOverrides ?? {},
 		metadata: post.metadata ?? {},
@@ -128,8 +146,12 @@ async function processQueue() {
 	const readyPosts = queue.filter((post) => {
 		const status = String(post.status ?? "").toLowerCase();
 		if (status !== "approved") return false;
+		if (Number(post.attemptCount || 0) >= MAX_ATTEMPTS) return false;
 		const when = toDate(post.scheduledAt ?? post.scheduled_at);
-		return !when || when.getTime() <= now;
+		const retryAt = toDate(post.nextAttemptAt);
+		const scheduleReady = !when || when.getTime() <= now;
+		const retryReady = !retryAt || retryAt.getTime() <= now;
+		return scheduleReady && retryReady;
 	});
 
 	if (readyPosts.length === 0) {
@@ -138,7 +160,8 @@ async function processQueue() {
 	}
 
 	console.log(`Processing ${readyPosts.length} queued post(s)...`);
-	const processed = [];
+	const processedIds = new Set();
+	const queueUpdates = new Map();
 
 	for (const post of readyPosts) {
 		const fallbackPlatforms = normalizePlatforms(post);
@@ -149,6 +172,7 @@ async function processQueue() {
 			console.warn(
 				`Skipping "${post.title ?? post.id ?? "untitled"}" – no supported platforms.`,
 			);
+			queueUpdates.set(post.id, scheduleRetry(post));
 			continue;
 		}
 		const platforms = Array.from(
@@ -184,6 +208,7 @@ async function processQueue() {
 				await sendPostPunkTelegramAlert(
 					`Post succeeded.\nTitle: ${post.title ?? post.id ?? "untitled"}\nPlatforms: ${successSummary}`,
 				);
+				processedIds.add(post.id);
 			}
 
 			if (failures.length > 0) {
@@ -211,9 +236,15 @@ async function processQueue() {
 				await sendPostPunkTelegramAlert(
 					`Post failed on one or more targets.\nTitle: ${post.title ?? post.id ?? "untitled"}\nFailures:\n${summary}\n\nRerun command: cd backend && npm run worker`,
 				);
+				if (successes.length === 0) {
+					const retried = scheduleRetry(post);
+					if (Number(retried.attemptCount || 0) >= MAX_ATTEMPTS) {
+						processedIds.add(post.id);
+					} else {
+						queueUpdates.set(post.id, retried);
+					}
+				}
 			}
-
-			processed.push(post);
 		} catch (error) {
 			rejectedLog.push({
 				id: post.id ?? null,
@@ -229,11 +260,18 @@ async function processQueue() {
 			await sendPostPunkTelegramAlert(
 				`Worker failed processing post.\nTitle: ${post.title ?? post.id ?? "untitled"}\nError: ${error?.message || "Unknown worker error"}\n\nRerun command: cd backend && npm run worker`,
 			);
-			processed.push(post);
+			const retried = scheduleRetry(post);
+			if (Number(retried.attemptCount || 0) >= MAX_ATTEMPTS) {
+				processedIds.add(post.id);
+			} else {
+				queueUpdates.set(post.id, retried);
+			}
 		}
 	}
 
-	const remainingQueue = queue.filter((post) => !processed.includes(post));
+	const remainingQueue = queue
+		.filter((post) => !processedIds.has(post.id))
+		.map((post) => queueUpdates.get(post.id) || post);
 
 	await Promise.all([
 		writeJson(FILE_QUEUE, remainingQueue),
@@ -242,7 +280,7 @@ async function processQueue() {
 	]);
 
 	console.log(
-		`Worker finished: ${processed.length} processed, ${remainingQueue.length} remaining.`,
+		`Worker finished: ${processedIds.size} processed, ${remainingQueue.length} remaining.`,
 	);
 }
 

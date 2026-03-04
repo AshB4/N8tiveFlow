@@ -1,0 +1,210 @@
+{
+  "generatedAt": "2026-03-04T07:28:12.318Z",
+  "meta": {
+    "niches": [
+      "home office",
+      "garden decor",
+      "sensory toys"
+    ],
+    "maxPerNiche": 5,
+    "minScore": 55
+  },
+  "count": 5,
+  "candidates": [
+    {
+      "asin": "B0CM1M4T5A",
+      "title": "Adjustable Standing Desk Converter for Home Office Setup",
+      "category": "Home Office",
+      "priceValue": 89.99,
+      "priceDisplay": "$89.99",
+      "imageUrl": "https://m.media-amazon.com/images/I/example1.jpg",
+      "detailUrl": "https://www.amazon.com/dp/B0CM1M4T5A",
+      "keywords": [
+        "home",
+        "office",
+        "desk",
+        "productivity"
+      ],
+      "niche": "home office",
+      "scores": {
+        "relevance": 100,
+        "commission": 85,
+        "price": 100,
+        "socialFit": 100,
+        "historical": 50,
+        "total": 89.5
+      },
+      "affiliateUrl": "https://www.amazon.com/dp/B0CM1M4T5A",
+      "platformAngles": {
+        "pinterest": [
+          "Adjustable Standing Desk Converter for Home Office Setup: a home office favorite at $89.99.",
+          "If you want home office upgrades, this one is worth a look."
+        ],
+        "facebook": [
+          "Found a practical home office pick: Adjustable Standing Desk Converter for Home Office Setup ($89.99).",
+          "Quick find for home office: Adjustable Standing Desk Converter for Home Office Setup."
+        ],
+        "x": [
+          "Adjustable Standing Desk Converter for Home Office Setup is a clean home office pick at $89.99.",
+          "Simple home office win: Adjustable Standing Desk Converter for Home Office Setup."
+        ]
+      }
+    },
+    {
+      "asin": "B0D4S7K2L9",
+      "title": "Minimalist Desk Organizer Tray Set for Cables and Accessories",
+      "category": "Home Office",
+      "priceValue": 26.5,
+      "priceDisplay": "$26.50",
+      "imageUrl": "https://m.media-amazon.com/images/I/example2.jpg",
+      "detailUrl": "https://www.amazon.com/dp/B0D4S7K2L9",
+      "keywords": [
+        "desk",
+        "organizer",
+        "workspace",
+        "office"
+      ],
+      "niche": "home office",
+      "scores": {
+        "relevance": 33.33333333333333,
+        "commission": 85,
+        "price": 100,
+        "socialFit": 100,
+        "historical": 50,
+        "total": 69.5
+      },
+      "affiliateUrl": "https://www.amazon.com/dp/B0D4S7K2L9",
+      "platformAngles": {
+        "pinterest": [
+          "Minimalist Desk Organizer Tray Set for Cables and Accessories: a home office favorite at $26.50.",
+          "If you want home office upgrades, this one is worth a look."
+        ],
+        "facebook": [
+          "Found a practical home office pick: Minimalist Desk Organizer Tray Set for Cables and Accessories ($26.50).",
+          "Quick find for home office: Minimalist Desk Organizer Tray Set for Cables and Accessories."
+        ],
+        "x": [
+          "Minimalist Desk Organizer Tray Set for Cables and Accessories is a clean home office pick at $26.50.",
+          "Simple home office win: Minimalist Desk Organizer Tray Set for Cables and Accessories."
+        ]
+      }
+    },
+    {
+      "asin": "B0C8J6V7X1",
+      "title": "Outdoor Solar Lantern Set for Patio and Garden Decor",
+      "category": "Garden",
+      "priceValue": 34.99,
+      "priceDisplay": "$34.99",
+      "imageUrl": "https://m.media-amazon.com/images/I/example3.jpg",
+      "detailUrl": "https://www.amazon.com/dp/B0C8J6V7X1",
+      "keywords": [
+        "garden",
+        "outdoor",
+        "decor",
+        "patio"
+      ],
+      "niche": "garden decor",
+      "scores": {
+        "relevance": 100,
+        "commission": 75,
+        "price": 100,
+        "socialFit": 100,
+        "historical": 50,
+        "total": 87.5
+      },
+      "affiliateUrl": "https://www.amazon.com/dp/B0C8J6V7X1",
+      "platformAngles": {
+        "pinterest": [
+          "Outdoor Solar Lantern Set for Patio and Garden Decor: a garden decor favorite at $34.99.",
+          "If you want garden decor upgrades, this one is worth a look."
+        ],
+        "facebook": [
+          "Found a practical garden decor pick: Outdoor Solar Lantern Set for Patio and Garden Decor ($34.99).",
+          "Quick find for garden decor: Outdoor Solar Lantern Set for Patio and Garden Decor."
+        ],
+        "x": [
+          "Outdoor Solar Lantern Set for Patio and Garden Decor is a clean garden decor pick at $34.99.",
+          "Simple garden decor win: Outdoor Solar Lantern Set for Patio and Garden Decor."
+        ]
+      }
+    },
+    {
+      "asin": "B0CZ9T1P4M",
+      "title": "Sensory Fidget Box with Tactile Tools for Calm Focus",
+      "category": "Toys",
+      "priceValue": 19.99,
+      "priceDisplay": "$19.99",
+      "imageUrl": "https://m.media-amazon.com/images/I/example5.jpg",
+      "detailUrl": "https://www.amazon.com/dp/B0CZ9T1P4M",
+      "keywords": [
+        "sensory",
+        "toy",
+        "kids",
+        "fidget"
+      ],
+      "niche": "sensory toys",
+      "scores": {
+        "relevance": 33.33333333333333,
+        "commission": 60,
+        "price": 100,
+        "socialFit": 80,
+        "historical": 50,
+        "total": 60.5
+      },
+      "affiliateUrl": "https://www.amazon.com/dp/B0CZ9T1P4M",
+      "platformAngles": {
+        "pinterest": [
+          "Sensory Fidget Box with Tactile Tools for Calm Focus: a sensory toys favorite at $19.99.",
+          "If you want sensory toys upgrades, this one is worth a look."
+        ],
+        "facebook": [
+          "Found a practical sensory toys pick: Sensory Fidget Box with Tactile Tools for Calm Focus ($19.99).",
+          "Quick find for sensory toys: Sensory Fidget Box with Tactile Tools for Calm Focus."
+        ],
+        "x": [
+          "Sensory Fidget Box with Tactile Tools for Calm Focus is a clean sensory toys pick at $19.99.",
+          "Simple sensory toys win: Sensory Fidget Box with Tactile Tools for Calm Focus."
+        ]
+      }
+    },
+    {
+      "asin": "B0CR7H8M2J",
+      "title": "Weighted Lap Pad for Sensory Comfort During Study Time",
+      "category": "Toys",
+      "priceValue": 42,
+      "priceDisplay": "$42.00",
+      "imageUrl": "https://m.media-amazon.com/images/I/example6.jpg",
+      "detailUrl": "https://www.amazon.com/dp/B0CR7H8M2J",
+      "keywords": [
+        "sensory",
+        "comfort",
+        "focus",
+        "kids"
+      ],
+      "niche": "sensory toys",
+      "scores": {
+        "relevance": 33.33333333333333,
+        "commission": 60,
+        "price": 100,
+        "socialFit": 80,
+        "historical": 50,
+        "total": 60.5
+      },
+      "affiliateUrl": "https://www.amazon.com/dp/B0CR7H8M2J",
+      "platformAngles": {
+        "pinterest": [
+          "Weighted Lap Pad for Sensory Comfort During Study Time: a sensory toys favorite at $42.00.",
+          "If you want sensory toys upgrades, this one is worth a look."
+        ],
+        "facebook": [
+          "Found a practical sensory toys pick: Weighted Lap Pad for Sensory Comfort During Study Time ($42.00).",
+          "Quick find for sensory toys: Weighted Lap Pad for Sensory Comfort During Study Time."
+        ],
+        "x": [
+          "Weighted Lap Pad for Sensory Comfort During Study Time is a clean sensory toys pick at $42.00.",
+          "Simple sensory toys win: Weighted Lap Pad for Sensory Comfort During Study Time."
+        ]
+      }
+    }
+  ]
+}

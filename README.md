@@ -68,6 +68,13 @@ Control how PostPunk behaves globally:
 ```
 📄 See [System Settings](./Docs/settings.md)
 
+## 🔐 Account Secrets
+Keep platform credentials in environment variables, not in tracked JSON.
+
+1. Copy `backend/config/accounts.template.json` to `backend/config/accounts.json`
+2. Set the referenced env vars in your local `.env`
+3. Start backend normally; account placeholders like `${X_API_KEY}` are resolved at runtime
+
 ---
 
 ## 🧠 Creative Recycling

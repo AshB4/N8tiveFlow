@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import seoVault from "../../../posts/seoVault.json";
-import { validatePostAgainstRules } from "../../../utils/platformRules";
+import { validatePostAgainstRules } from "../../utils/platformRules";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
@@ -113,6 +113,12 @@ const usePostComposerState = (initialDraft = null) => {
 	const [customText, setCustomText] = useState(
 		initialDraft?.platformOverrides || {}
 	);
+	const [autoAffiliateAmazon, setAutoAffiliateAmazon] = useState(
+		Boolean(
+			initialDraft?.autoAffiliateAmazon ||
+			initialDraft?.metadata?.autoAffiliateAmazon
+		)
+	);
 
 	useEffect(() => {
 		if (!selectedProduct) return;
@@ -154,6 +160,12 @@ const usePostComposerState = (initialDraft = null) => {
 			)
 		);
 		setCustomText(initialDraft.platformOverrides || {});
+		setAutoAffiliateAmazon(
+			Boolean(
+				initialDraft.autoAffiliateAmazon ||
+				initialDraft.metadata?.autoAffiliateAmazon
+			)
+		);
 	}, [initialDraft]);
 
 	const toggleTarget = (platform, accountId = null) => {
@@ -214,6 +226,11 @@ const usePostComposerState = (initialDraft = null) => {
 			saveAsDraft,
 			hashtags: useAutoHashtags ? null : manualHashtags,
 			platformOverrides: useAutoPlatformText ? null : customText,
+			autoAffiliateAmazon,
+			metadata: {
+				...(initialDraft?.metadata || {}),
+				autoAffiliateAmazon,
+			},
 		};
 
 		if (hasPersistedId) {
@@ -262,6 +279,8 @@ const usePostComposerState = (initialDraft = null) => {
 		setUseAutoPlatformText,
 		customText,
 		setCustomText,
+		autoAffiliateAmazon,
+		setAutoAffiliateAmazon,
 		handleSubmit,
 		seoVault,
 		availablePlatforms: AVAILABLE_PLATFORMS,

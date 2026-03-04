@@ -1,28 +1,78 @@
 /** @format */
 
 import { readFile } from "fs/promises";
+import { config as loadEnv } from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const BACKEND_ROOT = path.join(__dirname, "..");
+const PROJECT_ROOT = path.join(__dirname, "../..");
 const ACCOUNTS_PATH = path.join(__dirname, "../config/accounts.json");
+const ACCOUNTS_TEMPLATE_PATH = path.join(
+	__dirname,
+	"../config/accounts.template.json",
+);
+
+// Load env from both backend/.env and project-root/.env without overriding pre-set process env.
+loadEnv({ path: path.join(PROJECT_ROOT, ".env"), override: false });
+loadEnv({ path: path.join(BACKEND_ROOT, ".env"), override: false });
 
 let cachedAccounts = null;
 let cacheLoadedAt = 0;
 const CACHE_TTL_MS = 60_000;
 
 async function loadAccountsFromDisk() {
-	try {
-		const raw = await readFile(ACCOUNTS_PATH, "utf-8");
+	const resolveEnvToken = (value) => {
+		if (typeof value !== "string") return value;
+		if (value.startsWith("env:")) {
+			const envName = value.slice(4).trim();
+			return envName ? process.env[envName] ?? null : null;
+		}
+		const match = value.match(/^\$\{([A-Z0-9_]+)\}$/);
+		if (match) {
+			return process.env[match[1]] ?? null;
+		}
+		return value;
+	};
+
+	const resolveSecrets = (value) => {
+		if (Array.isArray(value)) {
+			return value.map(resolveSecrets);
+		}
+		if (value && typeof value === "object") {
+			if (
+				Object.keys(value).length === 1 &&
+				typeof value.$env === "string"
+			) {
+				return process.env[value.$env] ?? null;
+			}
+			return Object.fromEntries(
+				Object.entries(value).map(([key, nested]) => [key, resolveSecrets(nested)]),
+			);
+		}
+		return resolveEnvToken(value);
+	};
+
+	const readAccountsFile = async (filePath) => {
+		const raw = await readFile(filePath, "utf-8");
 		const parsed = JSON.parse(raw);
 		if (!Array.isArray(parsed)) {
-			throw new Error("accounts.json must be an array");
+			throw new Error(`${path.basename(filePath)} must be an array`);
 		}
-		return parsed;
-	} catch (error) {
-		console.error("Failed to load accounts configuration", error);
-		return [];
+		return parsed.map((account) => resolveSecrets(account));
+	};
+
+	try {
+		return await readAccountsFile(ACCOUNTS_PATH);
+	} catch (primaryError) {
+		try {
+			return await readAccountsFile(ACCOUNTS_TEMPLATE_PATH);
+		} catch {
+			console.error("Failed to load accounts configuration", primaryError);
+			return [];
+		}
 	}
 }
 

@@ -1,0 +1,62 @@
+[
+  {
+    "asin": "B0CM1M4T5A",
+    "title": "Adjustable Standing Desk Converter for Home Office Setup",
+    "category": "Home Office",
+    "priceValue": 89.99,
+    "priceDisplay": "$89.99",
+    "imageUrl": "https://m.media-amazon.com/images/I/example1.jpg",
+    "detailUrl": "https://www.amazon.com/dp/B0CM1M4T5A",
+    "keywords": ["home", "office", "desk", "productivity"]
+  },
+  {
+    "asin": "B0D4S7K2L9",
+    "title": "Minimalist Desk Organizer Tray Set for Cables and Accessories",
+    "category": "Home Office",
+    "priceValue": 26.5,
+    "priceDisplay": "$26.50",
+    "imageUrl": "https://m.media-amazon.com/images/I/example2.jpg",
+    "detailUrl": "https://www.amazon.com/dp/B0D4S7K2L9",
+    "keywords": ["desk", "organizer", "workspace", "office"]
+  },
+  {
+    "asin": "B0C8J6V7X1",
+    "title": "Outdoor Solar Lantern Set for Patio and Garden Decor",
+    "category": "Garden",
+    "priceValue": 34.99,
+    "priceDisplay": "$34.99",
+    "imageUrl": "https://m.media-amazon.com/images/I/example3.jpg",
+    "detailUrl": "https://www.amazon.com/dp/B0C8J6V7X1",
+    "keywords": ["garden", "outdoor", "decor", "patio"]
+  },
+  {
+    "asin": "B0CW2R3N8Q",
+    "title": "Raised Planter Box with Self-Watering Reservoir",
+    "category": "Garden",
+    "priceValue": 59.95,
+    "priceDisplay": "$59.95",
+    "imageUrl": "https://m.media-amazon.com/images/I/example4.jpg",
+    "detailUrl": "https://www.amazon.com/dp/B0CW2R3N8Q",
+    "keywords": ["garden", "planter", "outdoor", "plants"]
+  },
+  {
+    "asin": "B0CZ9T1P4M",
+    "title": "Sensory Fidget Box with Tactile Tools for Calm Focus",
+    "category": "Toys",
+    "priceValue": 19.99,
+    "priceDisplay": "$19.99",
+    "imageUrl": "https://m.media-amazon.com/images/I/example5.jpg",
+    "detailUrl": "https://www.amazon.com/dp/B0CZ9T1P4M",
+    "keywords": ["sensory", "toy", "kids", "fidget"]
+  },
+  {
+    "asin": "B0CR7H8M2J",
+    "title": "Weighted Lap Pad for Sensory Comfort During Study Time",
+    "category": "Toys",
+    "priceValue": 42,
+    "priceDisplay": "$42.00",
+    "imageUrl": "https://m.media-amazon.com/images/I/example6.jpg",
+    "detailUrl": "https://www.amazon.com/dp/B0CR7H8M2J",
+    "keywords": ["sensory", "comfort", "focus", "kids"]
+  }
+]

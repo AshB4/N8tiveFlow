@@ -1,18 +1,26 @@
 /** @format */
 
-import "dotenv/config";
+import { config as loadEnv } from "dotenv";
 import axios from "axios";
 import crypto from "crypto";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+loadEnv({ path: path.join(__dirname, "../../../.env"), override: false });
+loadEnv({ path: path.join(__dirname, "../../../../.env"), override: false });
 
 const POST_URL = "https://api.twitter.com/1.1/statuses/update.json";
 const MAX_TWEET_LENGTH = 280;
 
-function requiredEnv(name) {
-	const value = process.env[name];
-	if (!value) {
-		throw new Error(`Missing required Twitter config: ${name}`);
+function requiredEnvAny(...names) {
+	for (const name of names) {
+		const value = process.env[name];
+		if (value) return value;
 	}
-	return value;
+	throw new Error(`Missing required X config: ${names.join(" or ")}`);
 }
 
 function percentEncode(value) {
@@ -104,10 +112,10 @@ function buildOAuthHeader({
 }
 
 export default async function postToX(post) {
-	const consumerKey = requiredEnv("TWITTER_API_KEY");
-	const consumerSecret = requiredEnv("TWITTER_API_SECRET");
-	const token = requiredEnv("TWITTER_ACCESS_TOKEN");
-	const tokenSecret = requiredEnv("TWITTER_ACCESS_SECRET");
+	const consumerKey = requiredEnvAny("X_API_KEY");
+	const consumerSecret = requiredEnvAny("X_API_SECRET");
+	const token = requiredEnvAny("X_ACCESS_TOKEN");
+	const tokenSecret = requiredEnvAny("X_ACCESS_SECRET");
 
 	const status = buildStatus(post);
 	if (!status) {

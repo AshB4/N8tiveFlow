@@ -66,9 +66,6 @@
       "accessToken": "${INSTAGRAM_ACCESS_TOKEN}",
       "appId": "${INSTAGRAM_APP_ID}",
       "appSecret": "${INSTAGRAM_APP_SECRET}"
-    },
-    "metadata": {
-      "accountId": "${INSTAGRAM_ACCOUNT_ID}"
     }
   }
 ]

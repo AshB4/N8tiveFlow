@@ -2,6 +2,7 @@
 .env
 .env.local
 .env.*.local
+backend/config/accounts.json
 
 # 📦 Node modules (ignore everywhere)
 node_modules/

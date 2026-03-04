@@ -6,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { normalizeTargets, postToAllPlatforms } from "./platforms/post-to-all.js";
+import { sendPostPunkTelegramAlert } from "../utils/telegramAlerts.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -173,6 +174,16 @@ async function processQueue() {
 				console.log(
 					`Posted "${post.title ?? post.id ?? "untitled"}" to ${successes.length} platform(s).`,
 				);
+				const successSummary = successes
+					.map((success) =>
+						success.accountId
+							? `${success.platform} (${success.accountId})`
+							: success.platform,
+					)
+					.join(", ");
+				await sendPostPunkTelegramAlert(
+					`Post succeeded.\nTitle: ${post.title ?? post.id ?? "untitled"}\nPlatforms: ${successSummary}`,
+				);
 			}
 
 			if (failures.length > 0) {
@@ -189,6 +200,17 @@ async function processQueue() {
 				console.warn(
 					`Post "${post.title ?? post.id ?? "untitled"}" had ${failures.length} failure(s).`,
 				);
+				const summary = failures
+					.map((failure) => {
+						const targetLabel = failure.accountId
+							? `${failure.platform} (${failure.accountId})`
+							: failure.platform;
+						return `- ${targetLabel}: ${failure.error || failure.reason || "Unknown error"}`;
+					})
+					.join("\n");
+				await sendPostPunkTelegramAlert(
+					`Post failed on one or more targets.\nTitle: ${post.title ?? post.id ?? "untitled"}\nFailures:\n${summary}\n\nRerun command: cd backend && npm run worker`,
+				);
 			}
 
 			processed.push(post);
@@ -203,6 +225,9 @@ async function processQueue() {
 			console.error(
 				`Failed to process "${post.title ?? post.id ?? "untitled"}":`,
 				error,
+			);
+			await sendPostPunkTelegramAlert(
+				`Worker failed processing post.\nTitle: ${post.title ?? post.id ?? "untitled"}\nError: ${error?.message || "Unknown worker error"}\n\nRerun command: cd backend && npm run worker`,
 			);
 			processed.push(post);
 		}
@@ -223,5 +248,8 @@ async function processQueue() {
 
 processQueue().catch((error) => {
 	console.error("Worker crashed:", error);
+	sendPostPunkTelegramAlert(
+		`Worker crashed before completion.\nError: ${error?.message || "Unknown crash error"}\n\nRerun command: cd backend && npm run worker`,
+	).catch(() => {});
 	process.exitCode = 1;
 });

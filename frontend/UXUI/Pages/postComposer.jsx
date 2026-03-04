@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@/Components/ui/use-toast";
-import usePostComposerState from "../Global/PostComposer/usePostComposerState";
+import usePostComposerState from "../Components/PostComposer/usePostComposerState";
 import PlatformSelector from "../Global/PostComposer/PlatformSelector";
 import ImageUploader from "../Global/PostComposer/ImageUploader";
 import CustomPlatformText from "../Global/PostComposer/CustomPlatformText";
@@ -43,6 +43,8 @@ export default function PostComposer() {
     setUseAutoPlatformText,
     customText,
     setCustomText,
+    autoAffiliateAmazon,
+    setAutoAffiliateAmazon,
     handleSubmit,
     seoVault,
     availablePlatforms,
@@ -222,6 +224,16 @@ export default function PostComposer() {
           className="mr-2"
         />
         Save as Draft
+      </label>
+
+      <label className="block mb-4 text-green-400">
+        <input
+          type="checkbox"
+          checked={autoAffiliateAmazon}
+          onChange={() => setAutoAffiliateAmazon(!autoAffiliateAmazon)}
+          className="mr-2"
+        />
+        Auto-tag Amazon links with my partner tag
       </label>
 
       <button

@@ -39,6 +39,27 @@ const resolveHandler = async (platform) => {
 	return typeof firstFn === "function" ? firstFn : null;
 };
 
+const AMAZON_HOST_PATTERN = /(^|\.)amazon\./i;
+const TRAILING_PUNCTUATION_PATTERN = /[),.!?:;]+$/;
+
+const withAffiliateTag = (rawText, partnerTag) => {
+	if (!rawText || !partnerTag) return rawText || "";
+	return String(rawText).replace(/https?:\/\/[^\s]+/gi, (rawUrl) => {
+		const trailing = rawUrl.match(TRAILING_PUNCTUATION_PATTERN)?.[0] || "";
+		const cleanUrl = trailing ? rawUrl.slice(0, -trailing.length) : rawUrl;
+		try {
+			const parsed = new URL(cleanUrl);
+			if (!AMAZON_HOST_PATTERN.test(parsed.hostname)) {
+				return rawUrl;
+			}
+			parsed.searchParams.set("tag", partnerTag);
+			return `${parsed.toString()}${trailing}`;
+		} catch {
+			return rawUrl;
+		}
+	});
+};
+
 export const normalizeTargets = (input) => {
 	if (!Array.isArray(input)) return [];
 	return input
@@ -71,6 +92,10 @@ export const normalizeTargets = (input) => {
 export const postToAllPlatforms = async (post, targetsInput) => {
 	const targets = normalizeTargets(targetsInput);
 	const results = [];
+	const shouldAutoTagAmazon = Boolean(
+		post?.autoAffiliateAmazon || post?.metadata?.autoAffiliateAmazon,
+	);
+	const partnerTag = process.env.AMAZON_PARTNER_TAG || "";
 
 	for (const target of targets) {
 		const { platform, accountId } = target;
@@ -105,9 +130,12 @@ export const postToAllPlatforms = async (post, targetsInput) => {
 				(accountOverrideKey && post.platformOverrides?.[accountOverrideKey]) ??
 				post.platformOverrides?.[platform] ??
 				post.body;
+			const body = shouldAutoTagAmazon
+				? withAffiliateTag(customText, partnerTag)
+				: customText;
 			const payload = {
 				title: post.title,
-				body: customText,
+				body,
 				image: post.image,
 				hashtags: post.hashtags,
 			};

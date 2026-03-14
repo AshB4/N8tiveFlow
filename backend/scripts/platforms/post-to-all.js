@@ -46,7 +46,7 @@ const hasVendedAmazonParams = (url) =>
 	url.searchParams.has("language") ||
 	Array.from(url.searchParams.keys()).some((key) => key.toLowerCase().startsWith("ref"));
 
-const withAffiliateTag = (rawText, partnerTag) => {
+export const withAffiliateTag = (rawText, partnerTag) => {
 	if (!rawText || !partnerTag) return rawText || "";
 	return String(rawText).replace(/https?:\/\/[^\s]+/gi, (rawUrl) => {
 		const trailing = rawUrl.match(TRAILING_PUNCTUATION_PATTERN)?.[0] || "";
@@ -67,7 +67,7 @@ const withAffiliateTag = (rawText, partnerTag) => {
 	});
 };
 
-const isConfiguredValue = (value) => {
+export const isConfiguredValue = (value) => {
 	if (value === null || value === undefined) return false;
 	if (typeof value !== "string") return Boolean(value);
 	const trimmed = value.trim();
@@ -75,7 +75,7 @@ const isConfiguredValue = (value) => {
 	return !/^(replace|todo|changeme)/i.test(trimmed);
 };
 
-const isThreadsConfigured = (account) => {
+export const isThreadsConfigured = (account) => {
 	const token =
 		account?.credentials?.accessToken || process.env.THREADS_ACCESS_TOKEN || "";
 	const accountId =
@@ -89,13 +89,17 @@ export const normalizeTargets = (input) => {
 		.map((entry) => {
 			if (!entry) return null;
 			if (typeof entry === "string") {
-				return { platform: entry, accountId: null };
+				return { platform: String(entry).toLowerCase(), accountId: null };
 			}
 			if (typeof entry === "object") {
-				const platform = entry.platform || entry.name || entry.id;
+				const platform = entry.platform || entry.name || entry.value;
 				if (!platform) return null;
 				const accountId =
-					entry.accountId ?? entry.account ?? entry.account_id ?? null;
+					entry.accountId ??
+					entry.account ??
+					entry.account_id ??
+					(entry.platform ? null : entry.id) ??
+					null;
 				return {
 					platform: String(platform).toLowerCase(),
 					accountId: accountId === undefined ? null : String(accountId),

@@ -8,7 +8,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { postToAllPlatforms, normalizeTargets } from "./scripts/platforms/post-to-all.js";
 import { getPublicAccounts } from "./utils/accountStore.mjs";
+import { getAccounts } from "./utils/accountStore.mjs";
 import { findDuplicatePost } from "./utils/queueGuard.mjs";
+import { generateSeoPayload, getDryRunPayload } from "./utils/seoGeneration.mjs";
+import { buildAnalyticsSummary } from "./utils/analyticsSummary.mjs";
+import { runPlatformHealthChecks } from "./utils/platformHealth.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,6 +32,11 @@ const DIR_MEDIA_OTHER = path.join(DIR_MEDIA, "other");
 const Q_POSTS = path.join(DIR_QUEUE, "postQueue.json");
 const Q_POSTED = path.join(DIR_QUEUE, "postedLog.json");
 const Q_REJECT = path.join(DIR_QUEUE, "rejections.json");
+const STATS_FUNNEL = path.join(__dirname, "stats", "funnel.json");
+const STATS_SUMMARY = path.join(__dirname, "stats", "summary.json");
+let platformHealthCache = null;
+let platformHealthCacheAt = 0;
+const PLATFORM_HEALTH_TTL_MS = 60_000;
 
 // ---- helpers
 async function ensureFiles() {
@@ -115,6 +124,78 @@ app.get("/api/accounts", async (_req, res) => {
 		res.json(accounts);
 	} catch (error) {
 		res.status(500).json({ error: "Failed to load accounts", detail: error?.message });
+	}
+});
+
+app.get("/api/platform-health", async (req, res) => {
+	try {
+		const live = String(req.query.live || "true").toLowerCase() !== "false";
+		const now = Date.now();
+		if (
+			live &&
+			platformHealthCache &&
+			now - platformHealthCacheAt < PLATFORM_HEALTH_TTL_MS
+		) {
+			return res.json(platformHealthCache);
+		}
+		const accounts = await getAccounts();
+		const report = await runPlatformHealthChecks(accounts, { live });
+		if (live) {
+			platformHealthCache = report;
+			platformHealthCacheAt = now;
+		}
+		return res.json(report);
+	} catch (error) {
+		return res.status(500).json({
+			error: "Failed to load platform health",
+			detail: error?.message || String(error),
+		});
+	}
+});
+
+app.get("/api/analytics/summary", async (_req, res) => {
+	try {
+		const [events, storedSummary] = await Promise.all([
+			readJson(STATS_FUNNEL).catch(() => []),
+			readJson(STATS_SUMMARY).catch(() => ({})),
+		]);
+		res.json(buildAnalyticsSummary(events, storedSummary));
+	} catch (error) {
+		res.status(500).json({
+			error: "Failed to load analytics summary",
+			detail: error?.message,
+		});
+	}
+});
+
+app.post("/api/ai/seo-generate", async (req, res) => {
+	try {
+		const {
+			productName,
+			productType,
+			audience,
+			provider,
+			model,
+			dryRun = false,
+		} = req.body ?? {};
+		if (!productName || !productType || !audience) {
+			return res.status(400).json({
+				error: "productName, productType, and audience are required",
+			});
+		}
+
+		const input = { productName, productType, audience };
+		const options = { provider, model };
+		const result = dryRun
+			? getDryRunPayload(input, options)
+			: await generateSeoPayload(input, options);
+
+		return res.json(result);
+	} catch (error) {
+		return res.status(500).json({
+			error: "Failed to generate SEO suggestions",
+			detail: error?.message || String(error),
+		});
 	}
 });
 

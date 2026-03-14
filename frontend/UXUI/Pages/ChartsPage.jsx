@@ -78,37 +78,50 @@ const TopPostCard = ({ title, detail, label }) => (
 	</div>
 );
 
+const formatDate = (value) => {
+	if (!value) return "—";
+	const date = new Date(value);
+	if (Number.isNaN(date.getTime())) return value;
+	return date.toLocaleString();
+};
+
 export default function ChartsPage() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [posts, setPosts] = useState(location.state?.stats?.posts || []);
+	const [analytics, setAnalytics] = useState(null);
 	const [loading, setLoading] = useState(!location.state?.stats?.posts);
 	const [error, setError] = useState("");
 	const focus = location.state?.focus || "overview";
 
 	useEffect(() => {
-		if (location.state?.stats?.posts) return;
 		let ignore = false;
-		async function loadPosts() {
+		async function loadData() {
 			try {
-				const res = await fetch(`${API_BASE}/api/posts`);
-				if (!res.ok) throw new Error(`HTTP ${res.status}`);
-				const data = await res.json();
+				const [postsRes, analyticsRes] = await Promise.all([
+					fetch(`${API_BASE}/api/posts`),
+					fetch(`${API_BASE}/api/analytics/summary`),
+				]);
+				if (!postsRes.ok) throw new Error(`Posts HTTP ${postsRes.status}`);
+				if (!analyticsRes.ok) throw new Error(`Analytics HTTP ${analyticsRes.status}`);
+				const postsData = await postsRes.json();
+				const analyticsData = await analyticsRes.json();
 				if (!ignore) {
-					setPosts(Array.isArray(data) ? data : []);
+					setPosts(Array.isArray(postsData) ? postsData : []);
+					setAnalytics(analyticsData || null);
 				}
 			} catch (err) {
-				console.error("Failed to load posts for charts", err);
-				if (!ignore) setError("Unable to load latest post data.");
+				console.error("Failed to load dashboard data", err);
+				if (!ignore) setError("Unable to load analytics data.");
 			} finally {
 				if (!ignore) setLoading(false);
 			}
 		}
-		loadPosts();
+		loadData();
 		return () => {
 			ignore = true;
 		};
-	}, [location.state?.stats?.posts]);
+	}, []);
 
 	const stats = useMemo(() => {
 		if (location.state?.stats) {
@@ -153,7 +166,7 @@ export default function ChartsPage() {
 						Signal Dashboard
 					</h1>
 					<p className="text-sm text-teal-400 mt-2">
-						Insights tuned for engagement, reach, and the next brand push.
+						Queue health plus actual funnel performance from tracked events.
 					</p>
 				</div>
 				<div className="flex flex-wrap gap-3">
@@ -210,12 +223,44 @@ export default function ChartsPage() {
 							</div>
 							<div className="border border-teal-600 rounded p-3">
 								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">
-									Pipeline Health
+									Conversions
 								</p>
 								<p className="text-2xl text-teal-200 font-semibold">
-									{stats.totalPosts - stats.scheduledCount}
+									{analytics?.totals?.conversions ?? 0}
 								</p>
-								<p className="text-xs text-teal-500">awaiting approval</p>
+								<p className="text-xs text-teal-500">tracked funnel events</p>
+							</div>
+						</div>
+					</div>
+
+					<div className="border rounded-lg p-5 bg-black/60 border-teal-700">
+						<h2 className="text-pink-300 text-lg uppercase tracking-[0.3em] mb-3">
+							Funnel Totals
+						</h2>
+						<div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+							<div className="border border-teal-600 rounded p-3">
+								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">Clicks</p>
+								<p className="text-2xl text-pink-300 font-semibold">{analytics?.totals?.clicks ?? 0}</p>
+							</div>
+							<div className="border border-teal-600 rounded p-3">
+								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">Signups</p>
+								<p className="text-2xl text-pink-300 font-semibold">{analytics?.totals?.signups ?? 0}</p>
+							</div>
+							<div className="border border-teal-600 rounded p-3">
+								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">Likes</p>
+								<p className="text-2xl text-pink-300 font-semibold">{analytics?.totals?.likes ?? 0}</p>
+							</div>
+							<div className="border border-teal-600 rounded p-3">
+								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">Saves</p>
+								<p className="text-2xl text-pink-300 font-semibold">{analytics?.totals?.saves ?? 0}</p>
+							</div>
+							<div className="border border-teal-600 rounded p-3">
+								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">Retweets</p>
+								<p className="text-2xl text-pink-300 font-semibold">{analytics?.totals?.retweets ?? 0}</p>
+							</div>
+							<div className="border border-teal-600 rounded p-3">
+								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">Success Rate</p>
+								<p className="text-2xl text-pink-300 font-semibold">{analytics?.posting?.successRate ?? 0}%</p>
 							</div>
 						</div>
 					</div>
@@ -286,32 +331,65 @@ export default function ChartsPage() {
 					}`}
 				>
 					<h2 className="text-pink-300 text-lg uppercase tracking-[0.3em] mb-3">
-						Pipeline &amp; Experiments
+						Pipeline &amp; Funnel
 					</h2>
 					<p className="text-sm text-teal-400 mb-4">
-						Track cohort performance across the full funnel. We can bolt on
-						conversion or revenue metrics once we know which integrations you
-						want to trust (Stripe, Gumroad, manual CSV, etc.). Ping me when
-						you’re ready to connect the sales feed.
+						This panel now reads real funnel event totals from the backend stats
+						files instead of only queue counts.
 					</p>
-					<div className="space-y-3 text-sm">
+					<div className="space-y-4 text-sm">
+						<TopPostCard
+							label="Top Platform"
+							title={analytics?.topPlatform?.platform}
+							detail={
+								analytics?.topPlatform
+									? `${analytics.topPlatform.clicks} clicks · ${analytics.topPlatform.signups} signups`
+									: "No funnel events loaded."
+							}
+						/>
+						<TopPostCard
+							label="Top Campaign"
+							title={analytics?.topCampaign?.campaign}
+							detail={
+								analytics?.topCampaign
+									? `${analytics.topCampaign.clicks} clicks · ${analytics.topCampaign.conversions} conversions`
+									: "No campaign data loaded."
+							}
+						/>
 						<div className="border border-teal-600 rounded p-3">
 							<p className="uppercase text-xs tracking-[0.3em] text-teal-500">
-								Next actions
+								Recent Funnel Events
 							</p>
-							<ul className="list-disc list-inside mt-2 space-y-1 text-teal-200">
-								<li>Define what counts as a conversion for each product line.</li>
-								<li>Choose the data source (Shop, Gumroad, Patreon, etc.).</li>
-								<li>Wire the webhook or daily import so these charts stay live.</li>
-							</ul>
+							<div className="mt-3 space-y-3">
+								{analytics?.recentEvents?.length ? (
+									analytics.recentEvents.slice(0, 5).map((event) => (
+										<div
+											key={`${event.platform}-${event.campaign}-${event.timestamp}`}
+											className="border border-teal-800 rounded p-3"
+										>
+											<p className="text-pink-300">
+												{event.platform} · {event.campaign}
+											</p>
+											<p className="text-teal-400">{formatDate(event.timestamp)}</p>
+											<p className="text-teal-200">
+												{event.clicks ?? 0} clicks, {event.signups ?? 0} signups, {event.conversions ?? 0} conversions
+											</p>
+										</div>
+									))
+								) : (
+									<p className="text-teal-500">No funnel events loaded.</p>
+								)}
+							</div>
 						</div>
 						<div className="border border-pink-600 rounded p-3">
 							<p className="uppercase text-xs tracking-[0.3em] text-pink-400">
-								Experiment queue
+								Posting Health
 							</p>
 							<p className="mt-2 text-teal-300">
-								Automate A/B posts, track boost budgets, or alert when a post
-								is “recycle worthy”. Just say the word and we’ll toggle it on.
+								{analytics?.posting?.totalSuccessful ?? 0} successful out of {analytics?.posting?.totalAttempted ?? 0} attempted.
+							</p>
+							<p className="mt-1 text-teal-500">
+								Last updated: {formatDate(analytics?.posting?.lastUpdated)}
 							</p>
 						</div>
 					</div>

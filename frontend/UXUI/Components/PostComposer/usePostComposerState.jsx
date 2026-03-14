@@ -121,6 +121,12 @@ const usePostComposerState = (initialDraft = null) => {
 			initialDraft?.metadata?.autoAffiliateAmazon
 		)
 	);
+	const [aiProductName, setAiProductName] = useState(initialDraft?.title || "");
+	const [aiProductType, setAiProductType] = useState("Automation Tool");
+	const [aiAudience, setAiAudience] = useState("Indie creators and solo founders");
+	const [aiProvider, setAiProvider] = useState("ollama");
+	const [aiSuggestions, setAiSuggestions] = useState(null);
+	const [isGeneratingSeo, setIsGeneratingSeo] = useState(false);
 
 	useEffect(() => {
 		if (!selectedProduct) return;
@@ -170,6 +176,7 @@ const usePostComposerState = (initialDraft = null) => {
 				initialDraft.metadata?.autoAffiliateAmazon
 			)
 		);
+		setAiProductName(initialDraft.title || "");
 	}, [initialDraft]);
 
 	const toggleTarget = (platform, accountId = null) => {
@@ -261,6 +268,50 @@ const usePostComposerState = (initialDraft = null) => {
 		return { mode: "publish", data: results };
 	};
 
+	const generateSeoSuggestions = async ({ dryRun = false } = {}) => {
+		if (!aiProductName || !aiProductType || !aiAudience) {
+			throw new Error("Fill in product name, type, and audience before generating suggestions");
+		}
+		setIsGeneratingSeo(true);
+		try {
+			const res = await fetch(`${API_BASE}/api/ai/seo-generate`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					productName: aiProductName,
+					productType: aiProductType,
+					audience: aiAudience,
+					provider: aiProvider,
+					dryRun,
+				}),
+			});
+			if (!res.ok) {
+				const errorText = await res.text();
+				throw new Error(`SEO generation failed: ${res.status} ${errorText}`);
+			}
+			const data = await res.json();
+			setAiSuggestions(data);
+
+			if (!dryRun && data.mode !== "dry-run") {
+				setTitle(data.product_name || aiProductName);
+				setBody(data.meta_description || body);
+				setAltText(data.alt_text_examples?.[0] || "");
+				if (Array.isArray(data.keywords) && data.keywords.length > 0) {
+					setUseAutoHashtags(false);
+					setManualHashtags(
+						data.keywords
+							.map((keyword) => `#${String(keyword).replace(/\s+/g, "")}`)
+							.join(" "),
+					);
+				}
+			}
+
+			return data;
+		} finally {
+			setIsGeneratingSeo(false);
+		}
+	};
+
 	return {
 		title,
 		setTitle,
@@ -293,6 +344,17 @@ const usePostComposerState = (initialDraft = null) => {
 		setCustomText,
 		autoAffiliateAmazon,
 		setAutoAffiliateAmazon,
+		aiProductName,
+		setAiProductName,
+		aiProductType,
+		setAiProductType,
+		aiAudience,
+		setAiAudience,
+		aiProvider,
+		setAiProvider,
+		aiSuggestions,
+		isGeneratingSeo,
+		generateSeoSuggestions,
 		handleSubmit,
 		seoVault,
 		availablePlatforms: AVAILABLE_PLATFORMS,

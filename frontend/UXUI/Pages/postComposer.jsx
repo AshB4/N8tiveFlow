@@ -49,6 +49,17 @@ export default function PostComposer() {
     setCustomText,
     autoAffiliateAmazon,
     setAutoAffiliateAmazon,
+    aiProductName,
+    setAiProductName,
+    aiProductType,
+    setAiProductType,
+    aiAudience,
+    setAiAudience,
+    aiProvider,
+    setAiProvider,
+    aiSuggestions,
+    isGeneratingSeo,
+    generateSeoSuggestions,
     handleSubmit,
     seoVault,
     availablePlatforms,
@@ -59,6 +70,8 @@ export default function PostComposer() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [accountsByPlatform, setAccountsByPlatform] = useState({});
   const [accountsError, setAccountsError] = useState("");
+  const [platformHealth, setPlatformHealth] = useState([]);
+  const [platformHealthError, setPlatformHealthError] = useState("");
 
   useEffect(() => {
     let ignore = false;
@@ -86,6 +99,29 @@ export default function PostComposer() {
       }
     }
     loadAccounts();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let ignore = false;
+    async function loadPlatformHealth() {
+      try {
+        const res = await fetch(`${API_BASE}/api/platform-health`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (!ignore) {
+          setPlatformHealth(Array.isArray(data.results) ? data.results : []);
+        }
+      } catch (error) {
+        console.error("Failed to load platform health", error);
+        if (!ignore) {
+          setPlatformHealthError("Could not load live platform health.");
+        }
+      }
+    }
+    loadPlatformHealth();
     return () => {
       ignore = true;
     };
@@ -123,6 +159,33 @@ export default function PostComposer() {
     }
   };
 
+  const onGenerateSeo = async (dryRun = false) => {
+    setStatusMessage(dryRun ? "Previewing AI prompt..." : "Generating SEO suggestions...");
+    try {
+      const result = await generateSeoSuggestions({ dryRun });
+      if (result.mode === "dry-run") {
+        setStatusMessage("Dry-run complete. Prompt preview loaded below.");
+      } else {
+        setStatusMessage("SEO suggestions generated and applied to the form.");
+      }
+    } catch (error) {
+      setStatusMessage(error.message || "SEO generation failed.");
+      toast({
+        title: "SEO generation failed",
+        description: error.message || "Unexpected error while generating suggestions.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleHealthIssue = (health) => {
+    toast({
+      title: `${health.label || health.platform} unavailable`,
+      description: `${health.summary}${health.errorCode ? ` · code ${health.errorCode}` : ""}${health.errorSubcode ? `/${health.errorSubcode}` : ""} — ${health.detail}`,
+      variant: "destructive",
+    });
+  };
+
   return (
     <div className="p-4 max-w-4xl mx-auto">
       <div className="flex items-center justify-between gap-4 mb-6">
@@ -148,6 +211,74 @@ export default function PostComposer() {
         setSelectedProduct={setSelectedProduct}
         seoVault={seoVault}
       />
+
+      <section className="mb-6 rounded border border-teal-700 bg-black/60 p-4">
+        <h2 className="mb-3 text-lg font-semibold text-pink-400">AI SEO Suggestions</h2>
+        <div className="grid gap-3 md:grid-cols-2">
+          <input
+            type="text"
+            placeholder="Product or post name"
+            className="w-full p-2 bg-black text-green-400 border border-gray-600"
+            value={aiProductName}
+            onChange={(e) => setAiProductName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Product type"
+            className="w-full p-2 bg-black text-green-400 border border-gray-600"
+            value={aiProductType}
+            onChange={(e) => setAiProductType(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Audience"
+            className="w-full p-2 bg-black text-green-400 border border-gray-600 md:col-span-2"
+            value={aiAudience}
+            onChange={(e) => setAiAudience(e.target.value)}
+          />
+          <select
+            className="w-full p-2 bg-black text-green-400 border border-gray-600"
+            value={aiProvider}
+            onChange={(e) => setAiProvider(e.target.value)}
+          >
+            <option value="ollama">Ollama</option>
+            <option value="openai">OpenAI</option>
+          </select>
+          <div className="flex gap-3">
+            <button
+              type="button"
+              className="bg-black text-green-400 border border-green-400 px-4 py-2 rounded hover:bg-green-400 hover:text-black transition-colors disabled:opacity-50"
+              onClick={() => onGenerateSeo(false)}
+              disabled={isGeneratingSeo}
+            >
+              {isGeneratingSeo ? "Generating..." : "Generate Suggestions"}
+            </button>
+            <button
+              type="button"
+              className="bg-black text-teal-300 border border-teal-500 px-4 py-2 rounded hover:bg-teal-500 hover:text-black transition-colors disabled:opacity-50"
+              onClick={() => onGenerateSeo(true)}
+              disabled={isGeneratingSeo}
+            >
+              Dry Run
+            </button>
+          </div>
+        </div>
+
+        {aiSuggestions && (
+          <div className="mt-4 rounded border border-pink-700 bg-zinc-950/80 p-4 text-sm text-teal-200">
+            {"mode" in aiSuggestions ? (
+              <pre className="overflow-auto whitespace-pre-wrap">{aiSuggestions.prompt}</pre>
+            ) : (
+              <div className="space-y-2">
+                <p><span className="text-pink-300">Keywords:</span> {aiSuggestions.keywords?.join(", ") || "—"}</p>
+                <p><span className="text-pink-300">Meta:</span> {aiSuggestions.meta_description || "—"}</p>
+                <p><span className="text-pink-300">Pitch:</span> {aiSuggestions.seo_human_pitch || "—"}</p>
+                <p><span className="text-pink-300">Search queries:</span> {aiSuggestions.desperate_search_queries?.join(" | ") || "—"}</p>
+              </div>
+            )}
+          </div>
+        )}
+      </section>
 
       <input
         type="text"
@@ -181,9 +312,14 @@ export default function PostComposer() {
         toggleTarget={toggleTarget}
         accountsByPlatform={accountsByPlatform}
         platforms={availablePlatforms}
+        healthResults={platformHealth}
+        onHealthIssue={handleHealthIssue}
       />
       {accountsError && (
         <p className="text-xs text-red-400 mb-3">{accountsError}</p>
+      )}
+      {platformHealthError && (
+        <p className="text-xs text-red-400 mb-3">{platformHealthError}</p>
       )}
 
       <div className="mb-4">

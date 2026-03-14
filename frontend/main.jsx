@@ -11,6 +11,7 @@ import PostComposer from "./UXUI/Pages/postComposer";
 import PostLab from "./UXUI/Pages/PostLab";
 import PostLib from "./UXUI/Pages/PostLib";
 import ChartsPage from "./UXUI/Pages/ChartsPage";
+import SeoPages from "./UXUI/Pages/SeoPages";
 import ErrorPage from "./UXUI/Pages/notFound"; // This can now use useRouteError()
 
 const router = createBrowserRouter([
@@ -37,6 +38,16 @@ const router = createBrowserRouter([
   {
     path: "/charts",
     element: <ChartsPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/pseo",
+    element: <SeoPages />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/pseo/:slug",
+    element: <SeoPages />,
     errorElement: <ErrorPage />,
   },
   {

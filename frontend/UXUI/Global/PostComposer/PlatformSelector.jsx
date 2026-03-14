@@ -29,12 +29,33 @@ const hasTarget = (targets, platform, accountId = null) =>
 const formatPlatformName = (platform) =>
 	platform.charAt(0).toUpperCase() + platform.slice(1);
 
+const getHealthStyle = (status) => {
+	if (status === "healthy") {
+		return "border-emerald-500/60 text-emerald-300";
+	}
+	if (status === "warning") {
+		return "border-amber-500/60 text-amber-300";
+	}
+	if (status === "error") {
+		return "border-red-500/60 text-red-300 opacity-60";
+	}
+	return "border-gray-600 text-gray-400";
+};
+
 export default function PlatformSelector({
 	selectedTargets = [],
 	toggleTarget,
 	accountsByPlatform = {},
 	platforms = DEFAULT_PLATFORMS,
+	healthResults = [],
+	onHealthIssue,
 }) {
+	const healthMap = new Map(
+		(healthResults || []).map((item) => [
+			makeKey(item.platform, item.accountId ?? null),
+			item,
+		]),
+	);
 	const platformSet = Array.from(
 		new Set([
 			...platforms.map((platform) => platform.toLowerCase()),
@@ -50,6 +71,7 @@ export default function PlatformSelector({
 					const accounts = accountsByPlatform?.[platform] || [];
 					const hasAccounts = accounts.length > 0;
 					const defaultChecked = hasTarget(selectedTargets, platform, null);
+					const defaultHealth = healthMap.get(makeKey(platform, null));
 
 					return (
 						<div
@@ -78,8 +100,15 @@ export default function PlatformSelector({
 										defaultChecked
 											? "border-teal-500 bg-teal-500/20 text-teal-200 shadow-lg shadow-teal-500/50"
 											: "border-gray-600 text-gray-300 hover:border-teal-400"
-									}`}
-									onClick={() => toggleTarget?.(platform, null)}
+									} ${defaultHealth?.status === "error" ? "opacity-50" : ""}`}
+									onClick={() => {
+										if (defaultHealth?.status === "error") {
+											onHealthIssue?.(defaultHealth);
+											return;
+										}
+										toggleTarget?.(platform, null);
+									}}
+									title={defaultHealth?.detail || ""}
 								>
 									<input
 										type="checkbox"
@@ -96,6 +125,9 @@ export default function PlatformSelector({
 										platform,
 										account.id,
 									);
+									const accountHealth = healthMap.get(
+										makeKey(platform, account.id),
+									);
 									return (
 										<label
 											key={makeKey(platform, account.id)}
@@ -103,8 +135,15 @@ export default function PlatformSelector({
 												checked
 													? "border-pink-500 bg-pink-500/20 text-pink-200 shadow-lg shadow-pink-500/50"
 													: "border-gray-600 text-gray-300 hover:border-pink-400"
-											}`}
-											onClick={() => toggleTarget?.(platform, account.id)}
+											} ${getHealthStyle(accountHealth?.status)}`}
+											onClick={() => {
+												if (accountHealth?.status === "error") {
+													onHealthIssue?.(accountHealth);
+													return;
+												}
+												toggleTarget?.(platform, account.id);
+											}}
+											title={accountHealth?.detail || ""}
 										>
 											<input
 												type="checkbox"

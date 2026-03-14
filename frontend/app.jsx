@@ -9,6 +9,7 @@ import PostComposer from "./UXUI/Pages/postComposer";
 import PostLab from "./UXUI/Pages/PostLab";
 import PostLib from "./UXUI/Pages/PostLib.jsx";
 import ChartsPage from "./UXUI/Pages/ChartsPage";
+import SeoPages from "./UXUI/Pages/SeoPages";
 import NotFound from "./UXUI/Pages/notFound";
 
 export default function App() {
@@ -24,6 +25,8 @@ export default function App() {
         <Route path="/lab" element={<PostLab />} />
         <Route path="/lib" element={<PostLib />} />
         <Route path="/charts" element={<ChartsPage />} />
+        <Route path="/pseo" element={<SeoPages />} />
+        <Route path="/pseo/:slug" element={<SeoPages />} />
         <Route path="*" element={<NotFound />} 
 />
       </Routes>

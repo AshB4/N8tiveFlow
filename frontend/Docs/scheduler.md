@@ -82,4 +82,4 @@ npm run start-scheduler
 
 ---
 
-👉 [See Platform-Specific Notes](./platform-notes.md) to time posts better per site
+👉 [See Platform-Specific Notes](./platformNotes.md) to time posts better per site

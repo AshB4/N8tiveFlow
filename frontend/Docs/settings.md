@@ -48,4 +48,4 @@ Or use an override file like `settings.override.json` and merge at runtime (opti
 ---
 
 Need to understand how this ties into automation triggers?  
-👉 See [Scheduler Setup](./scheduler.md) (coming soon)
+👉 See [Scheduler Setup](./scheduler.md)

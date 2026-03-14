@@ -14,7 +14,7 @@ For a deep dive into the guiding vision and the 4WD framework, see [PostPunk Cor
 |----------------------------|--------------------------------------------------------|
 | ✅ Post Queue              | Schedule and track content across platforms           |
 | 🔁 Creative Recycling       | Remix past posts, keep evergreen content alive         |
-| 📊 UTM Chart Tracking       | Visualize post performance and campaign ROI            |
+| 📊 Funnel Analytics         | Review queue health, campaign metrics, and tracked funnel events |
 | 📲 Telegram Alerts          | Success/failure/crash notifications from worker       |
 | 🖼️ Media Library            | Local image/GIF/video uploads stored per post         |
 | 💸 Affiliate Tagging        | Optional auto-tagging of Amazon links                |
@@ -30,7 +30,7 @@ For a deep dive into the guiding vision and the 4WD framework, see [PostPunk Cor
 | React + Zustand     | Frontend UI + lightweight state  | MIT      |
 | Tailwind + Vite     | Fast, styled build system        | MIT      |
 | Playwright + Bree   | Automation / job runner          | Apache / MIT |
-| Chart.js            | UTM analytics                    | MIT      |
+| JSON-based analytics | Funnel and campaign summaries   | Built-in |
 | AdminJS             | Admin dashboard UI (optional)    | MIT      |
 | React Hook Form     | Dynamic form builder             | MIT      |
 | Yup                 | Form validation (optional)       | MIT      |
@@ -113,10 +113,10 @@ cd backend && npm run worker
 ---
 
 ## 🛠 Roadmap Highlights
-- [ ] AdminJS UI for logs & queue
-- [ ] Drag/drop image + asset manager
-- [ ] Chart dashboard for campaign insights
-- [ ] GPT prompt loader (for auto post gen)
+- [ ] Replace file-backed analytics with a persistent metrics store
+- [ ] Add richer posting/API integration tests
+- [ ] Expand credential health checks into preflight UI warnings
+- [ ] Add revenue-source integrations for conversion reporting
 
 ---
 

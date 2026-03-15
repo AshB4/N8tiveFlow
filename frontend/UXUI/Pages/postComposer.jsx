@@ -8,6 +8,7 @@ import PlatformSelector from "../Global/PostComposer/PlatformSelector";
 import ImageUploader from "../Global/PostComposer/ImageUploader";
 import CustomPlatformText from "../Global/PostComposer/CustomPlatformText";
 import SeoProductSelector from "../Global/PostComposer/SeoProductSelector";
+import { getPlatformProfile } from "../utils/platformProfiles";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
@@ -186,6 +187,10 @@ export default function PostComposer() {
     });
   };
 
+  const activeProfiles = selectedPlatforms
+    .map((platform) => getPlatformProfile(platform))
+    .filter(Boolean);
+
   return (
     <div className="p-4 max-w-4xl mx-auto">
       <div className="flex items-center justify-between gap-4 mb-6">
@@ -321,6 +326,105 @@ export default function PostComposer() {
       {platformHealthError && (
         <p className="text-xs text-red-400 mb-3">{platformHealthError}</p>
       )}
+
+      <section className="mb-6 rounded border border-pink-700 bg-black/60 p-4">
+        <div className="flex items-center justify-between gap-3 mb-4">
+          <div>
+            <h2 className="text-lg font-semibold text-pink-400">Platform Writing Guidance</h2>
+            <p className="text-sm text-teal-400">
+              Use this to match platform expectations before posting or generating AI variants.
+            </p>
+          </div>
+        </div>
+
+        {activeProfiles.length === 0 ? (
+          <p className="text-sm text-teal-300">
+            Select one or more platforms to load tone, structure, CTA, and audience guidance here.
+          </p>
+        ) : (
+          <div className="space-y-4">
+            {activeProfiles.map((profile) => (
+              <div
+                key={profile.id}
+                className="rounded border border-teal-700 bg-zinc-950/80 p-4"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+                  <h3 className="text-lg text-pink-300">{profile.label}</h3>
+                  <div className="flex flex-wrap gap-2 text-xs">
+                    <span className="rounded-full border border-teal-700 px-2 py-1 text-teal-300">
+                      links: {profile.linkTolerance}
+                    </span>
+                    <span className="rounded-full border border-teal-700 px-2 py-1 text-teal-300">
+                      humor: {profile.humorTolerance}
+                    </span>
+                    <span className="rounded-full border border-teal-700 px-2 py-1 text-teal-300">
+                      emoji: {profile.emojiTolerance}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2 text-sm">
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-1">Audience</p>
+                      <p className="text-teal-200">{profile.audienceExpectation}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-1">Voice</p>
+                      <p className="text-teal-200">{profile.voice}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-1">CTA Style</p>
+                      <p className="text-teal-200">{profile.ctaStyle}</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-1">Best Formats</p>
+                      <p className="text-teal-200">{profile.bestFormats.join(", ")}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-1">Avoid</p>
+                      <p className="text-red-300">{profile.avoid.join(", ")}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 grid gap-4 md:grid-cols-2 text-sm">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-2">Structure Rules</p>
+                    <ul className="space-y-1 text-teal-200">
+                      {profile.structureRules.map((rule) => (
+                        <li key={rule}>• {rule}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-2">Good Openers</p>
+                    <ul className="space-y-1 text-teal-200">
+                      {profile.openerPatterns.map((pattern) => (
+                        <li key={pattern}>• {pattern}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {profile.notes?.length > 0 && (
+                  <div className="mt-4">
+                    <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-2">Notes</p>
+                    <ul className="space-y-1 text-teal-300 text-sm">
+                      {profile.notes.map((note) => (
+                        <li key={note}>• {note}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
 
       <div className="mb-4">
         <label className="text-green-400">

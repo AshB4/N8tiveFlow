@@ -73,6 +73,23 @@ const readJson = async (p) => JSON.parse(await readFile(p, "utf-8"));
 const writeJson = async (p, data) =>
 	writeFile(p, JSON.stringify(data, null, 2));
 
+async function appendPostedLogEntry(post) {
+	const postedLog = await readJson(Q_POSTED).catch(() => []);
+	const alreadyLogged = postedLog.some(
+		(entry) => entry?.id === post?.id && entry?.manualArchived,
+	);
+	if (alreadyLogged) return;
+	postedLog.push({
+		id: post.id ?? null,
+		title: post.title ?? null,
+		targets: Array.isArray(post.targets) ? post.targets : [],
+		results: [],
+		processedAt: new Date().toISOString(),
+		manualArchived: true,
+	});
+	await writeJson(Q_POSTED, postedLog);
+}
+
 function safeFileName(input) {
 	const base = String(input || "upload")
 		.toLowerCase()
@@ -308,6 +325,8 @@ app.put("/api/posts/:id", async (req, res) => {
 		const posts = await readJson(Q_POSTS);
 		const i = posts.findIndex((p) => p.id === req.params.id);
 		if (i === -1) return res.status(404).json({ error: "not found" });
+		const previousPost = posts[i];
+		const previousStatus = normalizePostStatus(previousPost.status);
 		const updates = { ...req.body };
 		if ("status" in updates) {
 			updates.status = normalizePostStatus(updates.status, posts[i].status || "draft");
@@ -349,11 +368,14 @@ app.put("/api/posts/:id", async (req, res) => {
 			updates.platforms = normalizedTargets.map((target) => target.platform);
 		}
 		posts[i] = {
-			...posts[i],
+			...previousPost,
 			...updates,
-			id: posts[i].id,
+			id: previousPost.id,
 			updatedAt: new Date().toISOString(),
 		};
+		if (normalizePostStatus(posts[i].status) === "posted" && previousStatus !== "posted") {
+			await appendPostedLogEntry(posts[i]);
+		}
 		const duplicate = findDuplicatePost(posts, posts[i], { excludeId: posts[i].id });
 		if (duplicate) {
 			return res.status(409).json({
@@ -365,6 +387,24 @@ app.put("/api/posts/:id", async (req, res) => {
 		res.json(posts[i]);
 	} catch (e) {
 		res.status(500).json({ error: "Failed to update post", detail: String(e) });
+	}
+});
+
+app.delete("/api/posts", async (req, res) => {
+	try {
+		const scope = String(req.query.scope || "").toLowerCase();
+		if (scope !== "posted") {
+			return res.status(400).json({ error: "Unsupported bulk delete scope" });
+		}
+		const posts = await readJson(Q_POSTS);
+		const remaining = posts.filter(
+			(post) => normalizePostStatus(post.status) !== "posted",
+		);
+		const removedCount = posts.length - remaining.length;
+		await writeJson(Q_POSTS, remaining);
+		return res.json({ removedCount });
+	} catch (e) {
+		res.status(500).json({ error: "Failed to clear posted posts", detail: String(e) });
 	}
 });
 

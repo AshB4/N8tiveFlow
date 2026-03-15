@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@/Components/ui/use-toast";
 import usePostComposerState from "../Components/PostComposer/usePostComposerState";
+import AppTopNav from "../Components/AppTopNav";
 import PlatformSelector from "../Global/PostComposer/PlatformSelector";
 import ImageUploader from "../Global/PostComposer/ImageUploader";
 import CustomPlatformText from "../Global/PostComposer/CustomPlatformText";
@@ -226,6 +227,7 @@ export default function PostComposer() {
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
+      <AppTopNav />
       <div className="flex items-center justify-between gap-4 mb-6">
         <h1 className="text-2xl font-bold">Post Composer</h1>
         <div className="flex gap-3">

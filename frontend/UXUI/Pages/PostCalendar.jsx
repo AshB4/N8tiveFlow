@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import AppTopNav from "../Components/AppTopNav";
 import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
 import DayPostsModal from "../Components/CalendarPage/DayPostsModal.jsx";
 import logo from "../../assets/PostPunkTransparentLogo.png";
@@ -171,7 +172,14 @@ export default function PostCalendar() {
     .filter((post) => post.__date && post.__date < todayIso)
     .sort((a, b) => (a.__date > b.__date ? -1 : 1));
 
-  if (loading) return <div>Loading posts…</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black text-pink-500 font-mono p-4">
+        <AppTopNav />
+        <div>Loading posts…</div>
+      </div>
+    );
+  }
 
   const statsPayload = {
     totalPosts: postQueue.length,
@@ -220,6 +228,7 @@ export default function PostCalendar() {
 
   return (
     <div className="min-h-screen bg-black text-pink-500 font-mono p-4">
+      <AppTopNav />
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 border-b border-pink-500 pb-4">
         <img
           src={logo}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/Components/ui/use-toast";
+import AppTopNav from "../Components/AppTopNav";
 import { getStatusLabel, normalizePostStatus } from "../utils/postStatus";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
@@ -212,6 +213,45 @@ export default function PostLib() {
 		setSelectedIds([]);
 	};
 
+	const clearPostedPosts = async () => {
+		if (!confirm("Clear all posted posts from the queue? This keeps history in postedLog.json.")) {
+			return;
+		}
+
+		setIsBulkSaving(true);
+		try {
+			const res = await fetch(`${API_BASE}/api/posts?scope=posted`, {
+				method: "DELETE",
+			});
+			if (!res.ok) {
+				throw new Error(`Clear posted failed: ${res.status}`);
+			}
+			const data = await res.json();
+			setPosts((prev) =>
+				prev.filter((post) => normalizePostStatus(post.status) !== "posted"),
+			);
+			setSelectedIds((prev) =>
+				prev.filter((id) => {
+					const post = posts.find((entry) => entry.id === id);
+					return post && normalizePostStatus(post.status) !== "posted";
+				}),
+			);
+			toast({
+				title: "Posted posts cleared",
+				description: `${data.removedCount || 0} posted entries were removed from the queue.`,
+			});
+		} catch (error) {
+			console.error("Failed to clear posted posts", error);
+			toast({
+				title: "Clear failed",
+				description: error.message || "Could not clear posted posts.",
+				variant: "destructive",
+			});
+		} finally {
+			setIsBulkSaving(false);
+		}
+	};
+
 	const applyBulkSchedule = async () => {
 		if (selectedIds.length === 0) {
 			toast({
@@ -350,6 +390,7 @@ export default function PostLib() {
 	return (
 		<div className="min-h-screen bg-black text-teal-300 font-mono">
 			<div className="max-w-6xl mx-auto px-6 py-12">
+				<AppTopNav />
 				<header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10 border-b border-pink-600 pb-6">
 					<div>
 						<p className="text-sm uppercase tracking-[0.3em] text-pink-500">
@@ -481,6 +522,13 @@ export default function PostLib() {
 									className="px-4 py-2 rounded border border-amber-500 text-amber-200 hover:bg-amber-500 hover:text-black transition-colors disabled:opacity-50"
 								>
 									Reset Failed To Draft
+								</button>
+								<button
+									onClick={clearPostedPosts}
+									disabled={isBulkSaving}
+									className="px-4 py-2 rounded border border-red-500 text-red-200 hover:bg-red-500 hover:text-white transition-colors disabled:opacity-50"
+								>
+									Clear Posted From Queue
 								</button>
 							</div>
 						</section>

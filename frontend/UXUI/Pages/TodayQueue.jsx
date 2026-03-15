@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/Components/ui/use-toast";
+import AppTopNav from "../Components/AppTopNav";
 import { getStatusLabel, normalizePostStatus } from "../utils/postStatus";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
@@ -252,6 +253,7 @@ export default function TodayQueue() {
   return (
     <div className="min-h-screen bg-black text-teal-300 font-mono">
       <div className="max-w-6xl mx-auto px-6 py-12">
+        <AppTopNav />
         <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10 border-b border-pink-600 pb-6">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-pink-500">today ops</p>

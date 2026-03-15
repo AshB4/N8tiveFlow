@@ -1,24 +1,26 @@
 [
   {
     "id": "p_20260330_01",
-    "title": "Automation is only impressive until it misses the day you needed it most.",
-    "body": "A lot of creator automation tools look slick right up until they become one more thing you have to monitor.\n\nThe real value is trust: seeing what is due, knowing what failed, and not losing your mind over the queue.\n\nThat is the standard I care about.",
+    "title": "What Building a Social Scheduler Taught Me About Reliability",
+    "body": "Most automation tools feel impressive right up until you have to trust them.\n\nIt is easy to demo a scheduler.\n\nIt is much harder to build one that survives real life:\n- expired tokens\n- flaky platform APIs\n- posts that need review\n- queues that drift out of sync\n- failures that happen while you are asleep\n\nThat gap changed how I think about automation.\n\nI have been building a project called PostPunk, and I thought the hard part would be generating content and wiring platform APIs together. That turned out to be the easy part.\n\nThe real work was operational trust.\n\nA useful scheduler needs a few things that demos usually skip:\n\n## 1. Approval states matter\n\nNot every post should go straight from draft to published.\n\nSome posts are written by you and are ready immediately. Some are AI-assisted and need a second look. If your system does not distinguish that clearly, you end up either babysitting everything or accidentally posting junk.\n\nSo I ended up treating post states as part of the core workflow, not just metadata:\n- draft\n- approved\n- posted\n- failed\n\nThat sounds simple, but it changes everything.\n\n## 2. Failure is not an edge case\n\nIn scheduling systems, failure is normal.\n\nA platform token expires.\nAn API rate-limits you.\nA platform changes a field name.\nAn account is misconfigured.\nA browser fallback stops matching the UI.\n\nIf the whole system falls apart the moment one target fails, you do not have automation. You have a fragile demo.\n\nSo the system needs:\n- retries\n- visible failure states\n- alerts\n- manual assist when automation is not trustworthy\n\n## 3. Automatic is not the same as unattended\n\nA lot of posting tools sell the dream of full autopilot. In practice, a better model is often:\n- automate what is stable\n- assist where platforms are hostile\n- keep the queue and schedule as the source of truth\n\nThat still saves a huge amount of time, and more importantly, it is honest.\n\n## 4. Scheduling is really an operations problem\n\nThe UI part is not enough.\n\nYou also need:\n- a worker that checks for due posts\n- logs\n- retry logic\n- success and failure alerts\n- a clear what is due today view\n\nWithout those, the schedule is just decorative.\n\n## What I learned\n\nThe hardest part of automation is not getting software to do something once.\n\nIt is getting it to behave predictably enough that you stop worrying about it.\n\nThat is the part I care about now.\n\nIf you are building internal tools, creator tools, or any kind of scheduler, reliability is the actual feature. Everything else is packaging.\n\nPostPunk is still a project I am actively working on, but building it has made me much less interested in shiny automation promises and much more interested in boring operational trust.",
     "platforms": [
-      "linkedin",
-      "devto",
-      "x"
+      "devto"
     ],
     "targets": [
-      { "platform": "linkedin", "accountId": null },
-      { "platform": "devto", "accountId": null },
-      { "platform": "x", "accountId": null }
+      {
+        "platform": "devto",
+        "accountId": null
+      }
     ],
     "status": "approved",
     "scheduledAt": "2026-03-30T15:00:00.000Z",
-    "body": "A lot of creator automation tools look slick right up until they become one more thing you have to monitor.\n\nThe real value is trust: seeing what is due, knowing what failed, and not losing your mind over the queue.\n\nThat is the standard I care about.",
     "altText": "Queue dashboard showing scheduled posts and daily operations view",
-    "hashtags": "#automation #devtools #creatorops",
-    "tags": ["automation", "trust", "creator-ops"],
+    "hashtags": "#automation #devtools #reliability",
+    "tags": [
+      "automation",
+      "reliability",
+      "scheduler"
+    ],
     "metadata": {
       "productProfileId": "postpunk-core",
       "productProfileLabel": "PostPunk Core",
@@ -31,9 +33,15 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Editorial dashboard scene showing a stressed creator queue and missed schedule alert.",
       "imagePrompt": "Editorial product mockup of a creator scheduling dashboard, dark interface with neon pink and teal highlights, missed post alert, queue cards, moody but sharp, high-detail UI scene, no watermarks, modern devtool aesthetic.",
-      "contentTags": ["automation", "trust", "creator-ops"],
-      "distributionTags": ["post:linkedin", "post:devto", "post:x"],
-      "approvalSource": "recycled-queue",
+      "contentTags": [
+        "automation",
+        "reliability",
+        "scheduler"
+      ],
+      "distributionTags": [
+        "post:devto"
+      ],
+      "approvalSource": "devto-weekly",
       "requiresReview": false
     },
     "createdAt": "2026-03-15T02:20:00.000Z"
@@ -42,7 +50,6 @@
     "id": "p_20260401_01",
     "title": "Weird affirmations work better for me than polished ones.",
     "body": "Not everybody wants healing language that sounds like it came from a luxury retreat.\n\nGoblin Core Coloring Affirmations is for people who want something funny, printable, and weirdly comforting.\n\nThat still counts as self-care.",
-    "body": "Not everybody wants healing language that sounds like it came from a luxury retreat.\n\nGoblin Core Coloring Affirmations is for people who want something funny, printable, and weirdly comforting.\n\nThat still counts as self-care.",
     "status": "approved",
     "platforms": [
       "facebook",
@@ -50,13 +57,26 @@
       "pinterest"
     ],
     "targets": [
-      { "platform": "facebook", "accountId": null },
-      { "platform": "instagram", "accountId": null },
-      { "platform": "pinterest", "accountId": null }
+      {
+        "platform": "facebook",
+        "accountId": null
+      },
+      {
+        "platform": "instagram",
+        "accountId": null
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
     ],
     "scheduledAt": "2026-04-01T15:00:00.000Z",
     "hashtags": "#goblincore #affirmations #printables",
-    "tags": ["goblin", "affirmations", "self-care"],
+    "tags": [
+      "goblin",
+      "affirmations",
+      "self-care"
+    ],
     "metadata": {
       "productProfileId": "goblin-coloring-affirmations",
       "productProfileLabel": "Goblin Core Coloring Affirmations",
@@ -70,8 +90,16 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Whimsical goblin-themed printable affirmations page with messy cozy desk vibe.",
       "imagePrompt": "Goblin-core printable affirmation sheet on a messy cozy desk, dark cute aesthetic, forest green and pink accents, playful hand-lettered affirmations, whimsical stationery look, warm lighting, highly detailed, no text artifacts if possible.",
-      "contentTags": ["goblin", "affirmations", "self-care"],
-      "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
+      "contentTags": [
+        "goblin",
+        "affirmations",
+        "self-care"
+      ],
+      "distributionTags": [
+        "post:facebook",
+        "post:instagram",
+        "post:pinterest"
+      ],
       "approvalSource": "recycled-queue",
       "requiresReview": false
     },
@@ -87,14 +115,27 @@
       "x"
     ],
     "targets": [
-      { "platform": "linkedin", "accountId": null },
-      { "platform": "reddit", "accountId": null },
-      { "platform": "x", "accountId": null }
+      {
+        "platform": "linkedin",
+        "accountId": null
+      },
+      {
+        "platform": "reddit",
+        "accountId": null
+      },
+      {
+        "platform": "x",
+        "accountId": null
+      }
     ],
     "status": "approved",
     "scheduledAt": "2026-04-03T15:00:00.000Z",
     "hashtags": "#productstrategy #founders #decisionmaking",
-    "tags": ["strategy", "founders", "prioritization"],
+    "tags": [
+      "strategy",
+      "founders",
+      "prioritization"
+    ],
     "metadata": {
       "productProfileId": "product-strategy-25",
       "productProfileLabel": "Product Strategy 25",
@@ -108,8 +149,16 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Founder roadmap split between chaos and clarity with sticky notes and decision framework.",
       "imagePrompt": "Editorial startup strategy visual, cluttered roadmap transforming into a clean prioritization framework, sticky notes, founder desk, pink and teal business graphics, sharp modern layout, high detail, professional but bold.",
-      "contentTags": ["strategy", "founders", "prioritization"],
-      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "contentTags": [
+        "strategy",
+        "founders",
+        "prioritization"
+      ],
+      "distributionTags": [
+        "post:linkedin",
+        "post:reddit",
+        "post:x"
+      ],
       "approvalSource": "recycled-queue",
       "requiresReview": false
     },
@@ -126,15 +175,31 @@
       "instagram"
     ],
     "targets": [
-      { "platform": "amazon", "accountId": null },
-      { "platform": "pinterest", "accountId": null },
-      { "platform": "facebook", "accountId": null },
-      { "platform": "instagram", "accountId": null }
+      {
+        "platform": "amazon",
+        "accountId": null
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null
+      },
+      {
+        "platform": "facebook",
+        "accountId": null
+      },
+      {
+        "platform": "instagram",
+        "accountId": null
+      }
     ],
     "status": "approved",
     "scheduledAt": "2026-04-04T15:00:00.000Z",
     "hashtags": "#coloringbook #bees #familyactivities",
-    "tags": ["bees", "gentle", "family-friendly"],
+    "tags": [
+      "bees",
+      "gentle",
+      "family-friendly"
+    ],
     "metadata": {
       "productProfileId": "buzzing-adventures-coloring-book",
       "productProfileLabel": "Buzzing Adventures Coloring Book",
@@ -148,8 +213,17 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Gentle bee-themed coloring page spread with family-friendly nature details.",
       "imagePrompt": "Bee-themed coloring book interior spread, friendly bees, flowers, hive details, clean black and white line art, family-friendly and educational, printable coloring page style, charming and gentle composition.",
-      "contentTags": ["bees", "gentle", "family-friendly"],
-      "distributionTags": ["post:amazon", "post:pinterest", "post:facebook", "post:instagram"],
+      "contentTags": [
+        "bees",
+        "gentle",
+        "family-friendly"
+      ],
+      "distributionTags": [
+        "post:amazon",
+        "post:pinterest",
+        "post:facebook",
+        "post:instagram"
+      ],
       "approvalSource": "recycled-queue",
       "requiresReview": false
     },
@@ -165,14 +239,27 @@
       "pinterest"
     ],
     "targets": [
-      { "platform": "facebook", "accountId": null },
-      { "platform": "instagram", "accountId": null },
-      { "platform": "pinterest", "accountId": null }
+      {
+        "platform": "facebook",
+        "accountId": null
+      },
+      {
+        "platform": "instagram",
+        "accountId": null
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
     ],
     "status": "approved",
     "scheduledAt": "2026-04-05T15:00:00.000Z",
     "hashtags": "#goblinmode #selfcare #coloringkit",
-    "tags": ["goblin", "burnout", "self-care"],
+    "tags": [
+      "goblin",
+      "burnout",
+      "self-care"
+    ],
     "metadata": {
       "productProfileId": "goblin-self-care-coloring-book",
       "productProfileLabel": "Goblin Self-Care Coloring Book",
@@ -186,8 +273,16 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Funny goblin self-care kit laid out with chaotic but cozy objects.",
       "imagePrompt": "Goblin self-care flat lay, quirky candles, messy journal, coloring pages, snacks, mossy dark-cute vibe, humorous and cozy, rich texture, playful lifestyle product scene, high detail.",
-      "contentTags": ["goblin", "burnout", "self-care"],
-      "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
+      "contentTags": [
+        "goblin",
+        "burnout",
+        "self-care"
+      ],
+      "distributionTags": [
+        "post:facebook",
+        "post:instagram",
+        "post:pinterest"
+      ],
       "approvalSource": "recycled-queue",
       "requiresReview": false
     },
@@ -203,14 +298,27 @@
       "x"
     ],
     "targets": [
-      { "platform": "linkedin", "accountId": null },
-      { "platform": "reddit", "accountId": null },
-      { "platform": "x", "accountId": null }
+      {
+        "platform": "linkedin",
+        "accountId": null
+      },
+      {
+        "platform": "reddit",
+        "accountId": null
+      },
+      {
+        "platform": "x",
+        "accountId": null
+      }
     ],
     "status": "approved",
     "scheduledAt": "2026-04-06T15:00:00.000Z",
     "hashtags": "#prompts #creators #writingtools",
-    "tags": ["prompts", "creators", "momentum"],
+    "tags": [
+      "prompts",
+      "creators",
+      "momentum"
+    ],
     "metadata": {
       "productProfileId": "prompt-storm",
       "productProfileLabel": "100 Prompt Storm",
@@ -223,8 +331,16 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Creative prompt cards bursting out around a laptop and notebook.",
       "imagePrompt": "Creative productivity scene with prompt cards exploding from a notebook and laptop, energetic editorial composition, pink and teal accents, creator desk, idea storm visual metaphor, modern and clean, high detail.",
-      "contentTags": ["prompts", "creators", "momentum"],
-      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "contentTags": [
+        "prompts",
+        "creators",
+        "momentum"
+      ],
+      "distributionTags": [
+        "post:linkedin",
+        "post:reddit",
+        "post:x"
+      ],
       "approvalSource": "recycled-queue",
       "requiresReview": false
     },
@@ -240,14 +356,27 @@
       "x"
     ],
     "targets": [
-      { "platform": "linkedin", "accountId": null },
-      { "platform": "reddit", "accountId": null },
-      { "platform": "x", "accountId": null }
+      {
+        "platform": "linkedin",
+        "accountId": null
+      },
+      {
+        "platform": "reddit",
+        "accountId": null
+      },
+      {
+        "platform": "x",
+        "accountId": null
+      }
     ],
     "scheduledAt": "2026-04-08T15:00:00.000Z",
     "status": "approved",
     "hashtags": "#gumroad #devtools #indiehackers",
-    "tags": ["gumroad", "devtools", "leverage"],
+    "tags": [
+      "gumroad",
+      "devtools",
+      "leverage"
+    ],
     "metadata": {
       "productProfileId": "gumroad-devtools",
       "productProfileLabel": "Gumroad Devtools",
@@ -260,8 +389,16 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Useful digital-product toolkit scene for builders buying leverage.",
       "imagePrompt": "Editorial digital product promo for indie dev tools, laptop, notes, quick-win checklist, practical maker aesthetic, clean modern composition, pink and teal accent colors, high detail, useful not hype.",
-      "contentTags": ["gumroad", "devtools", "leverage"],
-      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "contentTags": [
+        "gumroad",
+        "devtools",
+        "leverage"
+      ],
+      "distributionTags": [
+        "post:linkedin",
+        "post:reddit",
+        "post:x"
+      ],
       "approvalSource": "recycled-queue",
       "requiresReview": false
     },
@@ -277,14 +414,27 @@
       "x"
     ],
     "targets": [
-      { "platform": "linkedin", "accountId": null },
-      { "platform": "reddit", "accountId": null },
-      { "platform": "x", "accountId": null }
+      {
+        "platform": "linkedin",
+        "accountId": null
+      },
+      {
+        "platform": "reddit",
+        "accountId": null
+      },
+      {
+        "platform": "x",
+        "accountId": null
+      }
     ],
     "scheduledAt": "2026-03-16T15:00:00.000Z",
     "status": "approved",
     "hashtags": "#productstrategy #founders #buildinpublic",
-    "tags": ["founders", "product-strategy", "decision-making"],
+    "tags": [
+      "founders",
+      "product-strategy",
+      "decision-making"
+    ],
     "metadata": {
       "productProfileId": "product-strategy-25",
       "productProfileLabel": "Product Strategy 25",
@@ -297,8 +447,16 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Founder filtering ideas with a sharp product decision framework.",
       "imagePrompt": "Founder strategy editorial image, many floating startup ideas being filtered into a clean decision framework, premium business visual, modern founder desk, teal and pink accents, high detail, confident but useful tone.",
-      "contentTags": ["founders", "product-strategy", "decision-making"],
-      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "contentTags": [
+        "founders",
+        "product-strategy",
+        "decision-making"
+      ],
+      "distributionTags": [
+        "post:linkedin",
+        "post:reddit",
+        "post:x"
+      ],
       "approvalSource": "composer",
       "requiresReview": false
     },
@@ -314,14 +472,27 @@
       "x"
     ],
     "targets": [
-      { "platform": "linkedin", "accountId": null },
-      { "platform": "reddit", "accountId": null },
-      { "platform": "x", "accountId": null }
+      {
+        "platform": "linkedin",
+        "accountId": null
+      },
+      {
+        "platform": "reddit",
+        "accountId": null
+      },
+      {
+        "platform": "x",
+        "accountId": null
+      }
     ],
     "scheduledAt": "2026-03-18T15:00:00.000Z",
     "status": "approved",
     "hashtags": "#creators #promptpack #productivity",
-    "tags": ["prompts", "creators", "content-block"],
+    "tags": [
+      "prompts",
+      "creators",
+      "content-block"
+    ],
     "metadata": {
       "productProfileId": "prompt-storm",
       "productProfileLabel": "100 Prompt Storm",
@@ -334,8 +505,16 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Blank page turning into a prompt storm with idea cards and creator tools.",
       "imagePrompt": "Creative block visual, blank page transforming into a storm of prompt cards, creator desk, laptop, notebook, high-energy but clean editorial style, idea generation theme, pink and teal accents, high detail.",
-      "contentTags": ["prompts", "creators", "content-block"],
-      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "contentTags": [
+        "prompts",
+        "creators",
+        "content-block"
+      ],
+      "distributionTags": [
+        "post:linkedin",
+        "post:reddit",
+        "post:x"
+      ],
       "approvalSource": "composer",
       "requiresReview": false
     },
@@ -351,14 +530,27 @@
       "x"
     ],
     "targets": [
-      { "platform": "facebook", "accountId": null },
-      { "platform": "pinterest", "accountId": null },
-      { "platform": "x", "accountId": null }
+      {
+        "platform": "facebook",
+        "accountId": null
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null
+      },
+      {
+        "platform": "x",
+        "accountId": null
+      }
     ],
     "scheduledAt": "2026-03-20T15:00:00.000Z",
     "status": "approved",
     "hashtags": "#graduation #aihelp #studenttools",
-    "tags": ["graduation", "ai", "students"],
+    "tags": [
+      "graduation",
+      "ai",
+      "students"
+    ],
     "metadata": {
       "productProfileId": "ai-powered-grad",
       "productProfileLabel": "AI Powered Grad",
@@ -372,8 +564,16 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Graduate-focused productivity visual with laptop, cap, checklist, and AI helper vibe.",
       "imagePrompt": "Modern graduation productivity scene, laptop, graduation cap, checklist, smart AI assistant vibe, clean and practical aesthetic, encouraging, bright but grounded, high detail, editorial digital product promo.",
-      "contentTags": ["graduation", "ai", "students"],
-      "distributionTags": ["post:facebook", "post:pinterest", "post:x"],
+      "contentTags": [
+        "graduation",
+        "ai",
+        "students"
+      ],
+      "distributionTags": [
+        "post:facebook",
+        "post:pinterest",
+        "post:x"
+      ],
       "approvalSource": "composer",
       "requiresReview": false
     },
@@ -390,15 +590,31 @@
       "facebook"
     ],
     "targets": [
-      { "platform": "amazon", "accountId": null },
-      { "platform": "pinterest", "accountId": null },
-      { "platform": "instagram", "accountId": null },
-      { "platform": "facebook", "accountId": null }
+      {
+        "platform": "amazon",
+        "accountId": null
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null
+      },
+      {
+        "platform": "instagram",
+        "accountId": null
+      },
+      {
+        "platform": "facebook",
+        "accountId": null
+      }
     ],
-    "scheduledAt": "2026-03-15T18:00:00.000Z",
+    "scheduledAt": "2026-03-15T07:58:28.268Z",
     "status": "approved",
     "hashtags": "#kawaii #coloringbook #spookyseason",
-    "tags": ["kawaii", "coloring-book", "cute-spooky"],
+    "tags": [
+      "kawaii",
+      "coloring-book",
+      "cute-spooky"
+    ],
     "metadata": {
       "productProfileId": "kawaii-coloring-series",
       "productProfileLabel": "Kawaii Coloring Series",
@@ -412,12 +628,24 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Cute spooky kawaii coloring book cover mockup with ghosts, bats, and smiling monsters.",
       "imagePrompt": "Kawaii spooky coloring book cover mockup, cute ghosts, bats, pumpkins, smiling monsters, pastel halloween palette, adorable and giftable, polished product mockup, high detail, playful spooky style.",
-      "contentTags": ["kawaii", "coloring-book", "cute-spooky"],
-      "distributionTags": ["post:amazon", "post:pinterest", "post:instagram", "post:facebook"],
+      "contentTags": [
+        "kawaii",
+        "coloring-book",
+        "cute-spooky"
+      ],
+      "distributionTags": [
+        "post:amazon",
+        "post:pinterest",
+        "post:instagram",
+        "post:facebook"
+      ],
       "approvalSource": "composer",
       "requiresReview": false
     },
-    "createdAt": "2026-03-15T02:03:00.000Z"
+    "createdAt": "2026-03-15T02:03:00.000Z",
+    "attemptCount": 1,
+    "nextAttemptAt": "2026-03-15T08:33:31.683Z",
+    "lastErrorAt": "2026-03-15T08:03:31.683Z"
   },
   {
     "id": "p_20260322_01",
@@ -429,14 +657,27 @@
       "pinterest"
     ],
     "targets": [
-      { "platform": "facebook", "accountId": null },
-      { "platform": "instagram", "accountId": null },
-      { "platform": "pinterest", "accountId": null }
+      {
+        "platform": "facebook",
+        "accountId": null
+      },
+      {
+        "platform": "instagram",
+        "accountId": null
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
     ],
     "scheduledAt": "2026-03-22T15:00:00.000Z",
     "status": "approved",
     "hashtags": "#selfcare #goblinmode #coloringbook",
-    "tags": ["goblin", "self-care", "burnout"],
+    "tags": [
+      "goblin",
+      "self-care",
+      "burnout"
+    ],
     "metadata": {
       "productProfileId": "goblin-self-care-coloring-book",
       "productProfileLabel": "Goblin Self-Care Coloring Book",
@@ -450,49 +691,20 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Goblin-mode self-care illustration with humor and a tired-but-trying energy.",
       "imagePrompt": "Funny goblin self-care illustration, chaotic but lovable goblin with tea, blanket, messy journal, candles, burnout humor, dark cute color palette, giftable product vibe, high detail.",
-      "contentTags": ["goblin", "self-care", "burnout"],
-      "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
+      "contentTags": [
+        "goblin",
+        "self-care",
+        "burnout"
+      ],
+      "distributionTags": [
+        "post:facebook",
+        "post:instagram",
+        "post:pinterest"
+      ],
       "approvalSource": "composer",
       "requiresReview": false
     },
     "createdAt": "2026-03-15T02:04:00.000Z"
-  },
-  {
-    "id": "p_20260323_01",
-    "title": "Most automation tools feel impressive right up until you have to trust them.",
-    "body": "The hard part is not making automation run once. The hard part is making it reliable enough that you stop babysitting it.\n\nThat is the whole point of PostPunk Core: queue it, schedule it, see what is due, and stop pretending chaos is a workflow.",
-    "platforms": [
-      "linkedin",
-      "devto",
-      "x"
-    ],
-    "targets": [
-      { "platform": "linkedin", "accountId": null },
-      { "platform": "devto", "accountId": null },
-      { "platform": "x", "accountId": null }
-    ],
-    "scheduledAt": "2026-03-23T15:00:00.000Z",
-    "status": "approved",
-    "hashtags": "#automation #buildinpublic #devtools",
-    "tags": ["automation", "creator-ops", "devtools"],
-    "metadata": {
-      "productProfileId": "postpunk-core",
-      "productProfileLabel": "PostPunk Core",
-      "productCategory": "Devtools",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "",
-        "primary": ""
-      },
-      "imageStatus": "prompt-needed",
-      "imageConcept": "Post scheduling dashboard with calendar, queue, and daily ops panels.",
-      "imagePrompt": "Cyberpunk creator scheduling dashboard, content calendar, queue list, daily operations panel, black interface with neon teal and pink accents, polished SaaS mockup, high detail, dramatic but practical.",
-      "contentTags": ["automation", "creator-ops", "devtools"],
-      "distributionTags": ["post:linkedin", "post:devto", "post:x"],
-      "approvalSource": "composer",
-      "requiresReview": false
-    },
-    "createdAt": "2026-03-15T02:05:00.000Z"
   },
   {
     "id": "p_20260325_01",
@@ -504,14 +716,27 @@
       "pinterest"
     ],
     "targets": [
-      { "platform": "facebook", "accountId": null },
-      { "platform": "instagram", "accountId": null },
-      { "platform": "pinterest", "accountId": null }
+      {
+        "platform": "facebook",
+        "accountId": null
+      },
+      {
+        "platform": "instagram",
+        "accountId": null
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
     ],
     "scheduledAt": "2026-03-25T15:00:00.000Z",
     "status": "approved",
     "hashtags": "#affirmations #goblincore #printables",
-    "tags": ["goblin", "affirmations", "printable"],
+    "tags": [
+      "goblin",
+      "affirmations",
+      "printable"
+    ],
     "metadata": {
       "productProfileId": "goblin-coloring-affirmations",
       "productProfileLabel": "Goblin Core Coloring Affirmations",
@@ -525,8 +750,16 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Printable affirmation pack with chaotic cute goblin charm and sarcastic comfort.",
       "imagePrompt": "Printable goblin-core affirmation pack spread, sarcastic but comforting aesthetic, dark-cute color palette, playful stationery, layered paper textures, quirky and giftable, high detail.",
-      "contentTags": ["goblin", "affirmations", "printable"],
-      "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
+      "contentTags": [
+        "goblin",
+        "affirmations",
+        "printable"
+      ],
+      "distributionTags": [
+        "post:facebook",
+        "post:instagram",
+        "post:pinterest"
+      ],
       "approvalSource": "composer",
       "requiresReview": false
     },
@@ -542,14 +775,27 @@
       "x"
     ],
     "targets": [
-      { "platform": "linkedin", "accountId": null },
-      { "platform": "reddit", "accountId": null },
-      { "platform": "x", "accountId": null }
+      {
+        "platform": "linkedin",
+        "accountId": null
+      },
+      {
+        "platform": "reddit",
+        "accountId": null
+      },
+      {
+        "platform": "x",
+        "accountId": null
+      }
     ],
     "scheduledAt": "2026-03-27T15:00:00.000Z",
     "status": "approved",
     "hashtags": "#productstrategy #founders #indiehackers",
-    "tags": ["product-strategy", "roadmap", "clarity"],
+    "tags": [
+      "product-strategy",
+      "roadmap",
+      "clarity"
+    ],
     "metadata": {
       "productProfileId": "product-strategy-25",
       "productProfileLabel": "Product Strategy 25",
@@ -563,8 +809,16 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Strategic framework visual turning a messy roadmap into a clear plan.",
       "imagePrompt": "Startup strategy editorial graphic, messy roadmap becoming a clean framework, sticky notes, arrows, founder desk details, sharp typography layout, pink and teal accents, high detail, premium digital product aesthetic.",
-      "contentTags": ["product-strategy", "roadmap", "clarity"],
-      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "contentTags": [
+        "product-strategy",
+        "roadmap",
+        "clarity"
+      ],
+      "distributionTags": [
+        "post:linkedin",
+        "post:reddit",
+        "post:x"
+      ],
       "approvalSource": "composer",
       "requiresReview": false
     },
@@ -581,15 +835,31 @@
       "instagram"
     ],
     "targets": [
-      { "platform": "amazon", "accountId": null },
-      { "platform": "pinterest", "accountId": null },
-      { "platform": "facebook", "accountId": null },
-      { "platform": "instagram", "accountId": null }
+      {
+        "platform": "amazon",
+        "accountId": null
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null
+      },
+      {
+        "platform": "facebook",
+        "accountId": null
+      },
+      {
+        "platform": "instagram",
+        "accountId": null
+      }
     ],
     "scheduledAt": "2026-03-28T15:00:00.000Z",
     "status": "approved",
     "hashtags": "#coloringbook #bees #kidactivities",
-    "tags": ["bees", "nature", "family-friendly"],
+    "tags": [
+      "bees",
+      "nature",
+      "family-friendly"
+    ],
     "metadata": {
       "productProfileId": "buzzing-adventures-coloring-book",
       "productProfileLabel": "Buzzing Adventures Coloring Book",
@@ -603,8 +873,17 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Bee and flower coloring book mockup with wholesome classroom-friendly feel.",
       "imagePrompt": "Wholesome bee-themed coloring book mockup, flowers, hive patterns, playful educational tone, warm family-friendly style, Amazon-ready product image feel, high detail, bright but gentle.",
-      "contentTags": ["bees", "nature", "family-friendly"],
-      "distributionTags": ["post:amazon", "post:pinterest", "post:facebook", "post:instagram"],
+      "contentTags": [
+        "bees",
+        "nature",
+        "family-friendly"
+      ],
+      "distributionTags": [
+        "post:amazon",
+        "post:pinterest",
+        "post:facebook",
+        "post:instagram"
+      ],
       "approvalSource": "composer",
       "requiresReview": false
     },
@@ -620,14 +899,27 @@
       "x"
     ],
     "targets": [
-      { "platform": "linkedin", "accountId": null },
-      { "platform": "reddit", "accountId": null },
-      { "platform": "x", "accountId": null }
+      {
+        "platform": "linkedin",
+        "accountId": null
+      },
+      {
+        "platform": "reddit",
+        "accountId": null
+      },
+      {
+        "platform": "x",
+        "accountId": null
+      }
     ],
     "scheduledAt": "2026-03-29T15:00:00.000Z",
     "status": "approved",
     "hashtags": "#prompts #creativity #writersblock",
-    "tags": ["prompts", "momentum", "creativity"],
+    "tags": [
+      "prompts",
+      "momentum",
+      "creativity"
+    ],
     "metadata": {
       "productProfileId": "prompt-storm",
       "productProfileLabel": "100 Prompt Storm",
@@ -640,11 +932,115 @@
       "imageStatus": "prompt-needed",
       "imageConcept": "Prompt pack visual focused on momentum, blank page relief, and idea sparks.",
       "imagePrompt": "Creative prompt pack promo image, blank page transforming into many idea cards, energetic but clean composition, creator desk, modern editorial style, high detail, inspiration and momentum theme.",
-      "contentTags": ["prompts", "momentum", "creativity"],
-      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "contentTags": [
+        "prompts",
+        "momentum",
+        "creativity"
+      ],
+      "distributionTags": [
+        "post:linkedin",
+        "post:reddit",
+        "post:x"
+      ],
       "approvalSource": "composer",
       "requiresReview": false
     },
     "createdAt": "2026-03-15T02:09:00.000Z"
+  },
+  {
+    "id": "p_20260406_01",
+    "title": "Most Founders Do Not Need More Ideas. They Need Better Filters",
+    "body": "Founders do not need more ideas. They need better filters.\n\nA lot of builders are not blocked because they lack creativity.\n\nThey are blocked because every idea feels plausible for just long enough to steal a week.\n\nThat is how backlogs turn into junk drawers.\n\nYou start with ambition:\n- new feature ideas\n- growth experiments\n- AI angles\n- platform expansions\n- side bets that might be big\n\nPretty soon, you are not building a strategy anymore. You are just collecting options.\n\n## The real problem is idea inflation\n\nEvery new idea arrives with a story:\n- this could unlock growth\n- this could differentiate the product\n- this could bring in a new audience\n- this could be quick to ship\n\nWithout a filter, every idea gets treated like an opportunity instead of a cost.\n\nThat is where founders lose time.\n\n## A better question\n\nInstead of asking Is this a good idea, ask:\n- Is this aligned with the current product goal?\n- Does this solve a painful problem for the intended buyer?\n- Is this more important than what is already in flight?\n- What do we stop doing if we do this?\n- What evidence do we have besides excitement?\n\nExcitement is not strategy.\n\n## Why this is hard\n\nFiltering sounds obvious, but it gets harder when:\n- you are building alone\n- you have multiple product directions\n- you can execute fast\n- new tools make every idea feel easier than it really is\n\nSpeed makes weak prioritization more dangerous, not less.\n\nYou can waste a month very efficiently.\n\n## What helped me\n\nI started treating product decisions less like inspiration and more like a sorting problem.\n\nNot every good idea belongs in the current season of the business.\n\nSome ideas are:\n- now\n- later\n- maybe\n- not for this audience\n- not worth the maintenance cost\n\nThat framing removes a lot of guilt. You do not need to kill every idea. You just need to stop letting all of them compete for today.\n\n## Final thought\n\nThe founders I trust most are not the ones with the most ideas.\n\nThey are the ones who can explain why they are ignoring ten attractive ones in order to finish one thing that matters.\n\nThat is the skill.\n\nIf you want a sharper way to evaluate, sort, and pressure-test product ideas, I made this for exactly that problem:\nhttps://fleurdevie.gumroad.com/l/product-strategy-25",
+    "platforms": [
+      "devto"
+    ],
+    "targets": [
+      {
+        "platform": "devto",
+        "accountId": null
+      }
+    ],
+    "scheduledAt": "2026-04-06T15:00:00.000Z",
+    "status": "approved",
+    "altText": "Founder desk with roadmap notes turning into a clean prioritization system",
+    "hashtags": "#productstrategy #founders #indiehackers",
+    "tags": [
+      "strategy",
+      "founders",
+      "prioritization"
+    ],
+    "metadata": {
+      "productProfileId": "product-strategy-25",
+      "productProfileLabel": "Product Strategy 25",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/product-strategy-25",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/product-strategy-25"
+      },
+      "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Founder roadmap clutter turning into a clean strategy framework on a desk.",
+      "imagePrompt": "Editorial startup strategy visual, cluttered roadmap transforming into a clean prioritization framework, sticky notes, founder desk, pink and teal business graphics, sharp modern layout, high detail, professional but bold.",
+      "contentTags": [
+        "strategy",
+        "founders",
+        "prioritization"
+      ],
+      "distributionTags": [
+        "post:devto"
+      ],
+      "approvalSource": "devto-weekly",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T08:50:00.000Z"
+  },
+  {
+    "id": "p_20260413_01",
+    "title": "Prompt Packs Are Not Magic. They Are Starting Systems",
+    "body": "Blank pages kill more good products than bad ideas do.\n\nA lot of creators and founders do not stall because they have nothing to say.\n\nThey stall because starting is expensive.\n\nYou open the document.\nYou know the product.\nYou know the audience.\nYou even know you should be posting.\n\nBut your brain still gives you static.\n\nThat is why prompt packs exist.\n\nNot because they are magic.\nBecause they reduce the cost of starting.\n\n## The wrong expectation\n\nPeople often expect prompts to do all the thinking for them.\n\nThat is the fastest way to get generic content.\n\nA useful prompt is not a substitute for judgment. It is a starting structure:\n- a direction\n- an angle\n- a constraint\n- a way to get moving\n\nThat is enough more often than people think.\n\n## Why starting matters so much\n\nOnce a draft exists, it gets easier.\n\nYou can improve weak writing.\nYou can tighten a hook.\nYou can change the tone.\nYou can throw out half of it and keep the good line.\n\nBut if nothing exists, none of that happens.\n\nThe real bottleneck is often activation, not capability.\n\n## What a good prompt system does\n\nA good prompt system should help you:\n- find angles faster\n- match the content to the platform\n- avoid repeating the same post over and over\n- get from idea to rough draft without burning an hour\n\nThat is the difference between prompt entertainment and an actual workflow tool.\n\n## My rule for using prompts\n\nI like prompts that give me one of three things:\n- perspective\n- structure\n- momentum\n\nIf a prompt does not help with one of those, it usually is not useful enough.\n\n## Final thought\n\nThe best prompts do not replace your voice.\n\nThey help you reach it sooner.\n\nThat is the point.\n\nIf you want a starting system for content ideas, angles, and momentum instead of a pile of random prompt fluff, this is the one I made:\nhttps://fleurdevie.gumroad.com/l/100prompt-storm",
+    "platforms": [
+      "devto"
+    ],
+    "targets": [
+      {
+        "platform": "devto",
+        "accountId": null
+      }
+    ],
+    "scheduledAt": "2026-04-13T15:00:00.000Z",
+    "status": "approved",
+    "altText": "Blank page turning into a stack of structured prompt cards on a creator desk",
+    "hashtags": "#prompts #creators #writing",
+    "tags": [
+      "prompts",
+      "creativity",
+      "momentum"
+    ],
+    "metadata": {
+      "productProfileId": "prompt-storm",
+      "productProfileLabel": "100 Prompt Storm",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
+      },
+      "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Blank page turning into stacked prompt cards and idea sparks on a desk.",
+      "imagePrompt": "Creative prompt pack promo image, blank page transforming into many idea cards, energetic but clean composition, creator desk, modern editorial style, high detail, inspiration and momentum theme.",
+      "contentTags": [
+        "prompts",
+        "creativity",
+        "momentum"
+      ],
+      "distributionTags": [
+        "post:devto"
+      ],
+      "approvalSource": "devto-weekly",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T08:51:00.000Z"
   }
 ]

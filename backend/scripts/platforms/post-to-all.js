@@ -119,7 +119,7 @@ export const normalizeTargets = (input) => {
 			if (typeof entry === "object") {
 				const platform = entry.platform || entry.name || entry.value;
 				if (!platform) return null;
-				const accountId =
+				const rawAccountId =
 					entry.accountId ??
 					entry.account ??
 					entry.account_id ??
@@ -127,7 +127,10 @@ export const normalizeTargets = (input) => {
 					null;
 				return {
 					platform: String(platform).toLowerCase(),
-					accountId: accountId === undefined ? null : String(accountId),
+					accountId:
+						rawAccountId === undefined || rawAccountId === null
+							? null
+							: String(rawAccountId),
 				};
 			}
 			return null;

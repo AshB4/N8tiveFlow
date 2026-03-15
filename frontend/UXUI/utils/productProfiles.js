@@ -140,7 +140,7 @@ export const productProfiles = [
     audience: "indie creators, writers, and prompt buyers looking for idea volume",
     brandVoice: "high-energy, practical, idea-rich",
     primaryGoal: "sell the prompt pack on Gumroad",
-    promotionChannels: ["gumroad", "x", "reddit", "linkedin"],
+    promotionChannels: ["gumroad", "devto", "x", "reddit", "linkedin"],
     links: {
       gumroad: "https://fleurdevie.gumroad.com/l/100prompt-storm",
       amazon: "",
@@ -159,7 +159,7 @@ export const productProfiles = [
     audience: "founders, indie hackers, and early-stage builders who need direction",
     brandVoice: "strategic, sharp, useful, no-fluff",
     primaryGoal: "sell the strategy guide on Gumroad",
-    promotionChannels: ["gumroad", "linkedin", "x", "reddit"],
+    promotionChannels: ["gumroad", "devto", "linkedin", "x", "reddit"],
     links: {
       gumroad: "https://fleurdevie.gumroad.com/l/product-strategy-25",
       amazon: "",

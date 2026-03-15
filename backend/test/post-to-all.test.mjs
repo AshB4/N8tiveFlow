@@ -23,6 +23,14 @@ test("normalizeTargets normalizes strings and object targets", () => {
   ]);
 });
 
+test("normalizeTargets preserves null account ids as null", () => {
+  const result = normalizeTargets([
+    { platform: "devto", accountId: null },
+  ]);
+
+  assert.deepEqual(result, [{ platform: "devto", accountId: null }]);
+});
+
 test("withAffiliateTag only tags plain Amazon links", () => {
   const result = withAffiliateTag(
     "Read this https://www.amazon.com/example-product and keep this https://example.com/test",

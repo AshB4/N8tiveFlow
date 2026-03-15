@@ -34,6 +34,12 @@ const buildScheduledIso = (dateValue, timeValue, offsetDays) => {
 	return scheduled.toISOString();
 };
 
+const getProductLink = (post) =>
+	post?.metadata?.productLinks?.primary ||
+	post?.metadata?.productLinks?.amazon ||
+	post?.metadata?.productLinks?.gumroad ||
+	"";
+
 const SCHEDULE_PRESETS = {
 	custom: {
 		label: "Custom Interval",
@@ -593,6 +599,11 @@ export default function PostLib() {
 													<p className="text-sm text-teal-500">
 														Status: {getStatusLabel(post.status)} | Targets: {formatTargetsLabel(post.targets)}
 													</p>
+													{post.metadata?.imageStatus && (
+														<p className="text-sm text-amber-300">
+															Image: {post.metadata.imageStatus}
+														</p>
+													)}
 													{post.scheduledAt && (
 														<p className="text-sm text-teal-500">
 															Scheduled: {new Date(post.scheduledAt).toLocaleString()}
@@ -616,6 +627,27 @@ export default function PostLib() {
 												</div>
 											</div>
 											<p className="text-teal-200 whitespace-pre-wrap">{post.body}</p>
+											{(post.metadata?.imageConcept || post.metadata?.imagePrompt) && (
+												<div className="mt-4 rounded border border-amber-700 bg-black/50 p-3 text-sm">
+													{post.metadata?.imageConcept && (
+														<p className="text-teal-300">
+															Concept: {post.metadata.imageConcept}
+														</p>
+													)}
+													{post.metadata?.imagePrompt && (
+														<p className="mt-2 text-amber-200 whitespace-pre-wrap">
+															Prompt: {post.metadata.imagePrompt}
+														</p>
+													)}
+												</div>
+											)}
+											{getProductLink(post) && (
+												<div className="mt-4 rounded border border-pink-700 bg-black/50 p-3 text-sm">
+													<p className="text-pink-300 break-all">
+														Link: {getProductLink(post)}
+													</p>
+												</div>
+											)}
 											{post.image ? (
 												<img
 													src={post.image}

@@ -142,6 +142,16 @@ const usePostComposerState = (initialDraft = null) => {
 	const [includeProductLink, setIncludeProductLink] = useState(
 		Boolean(initialDraft?.metadata?.includeProductLink)
 	);
+	const [imageStatus, setImageStatus] = useState(
+		initialDraft?.metadata?.imageStatus ||
+			(initialDraft?.mediaPath || initialDraft?.image ? "attached" : "prompt-needed")
+	);
+	const [imageConcept, setImageConcept] = useState(
+		initialDraft?.metadata?.imageConcept || ""
+	);
+	const [imagePrompt, setImagePrompt] = useState(
+		initialDraft?.metadata?.imagePrompt || ""
+	);
 	const [aiProductName, setAiProductName] = useState(initialDraft?.title || "");
 	const [aiProductType, setAiProductType] = useState("Automation Tool");
 	const [aiAudience, setAiAudience] = useState("Indie creators and solo founders");
@@ -220,6 +230,12 @@ const usePostComposerState = (initialDraft = null) => {
 			)
 		);
 		setIncludeProductLink(Boolean(initialDraft.metadata?.includeProductLink));
+		setImageStatus(
+			initialDraft.metadata?.imageStatus ||
+				(initialDraft.mediaPath || initialDraft.image ? "attached" : "prompt-needed")
+		);
+		setImageConcept(initialDraft.metadata?.imageConcept || "");
+		setImagePrompt(initialDraft.metadata?.imagePrompt || "");
 		setAiProductName(initialDraft.title || "");
 		setSelectedProduct(initialDraft.metadata?.productProfileId || "");
 	}, [initialDraft]);
@@ -308,6 +324,9 @@ const usePostComposerState = (initialDraft = null) => {
 				productLinks: selectedProductProfile?.links || {},
 				contentTags: normalizeTagList(contentTags),
 				distributionTags: normalizeTagList(distributionTags),
+				imageStatus,
+				imageConcept: imageConcept.trim(),
+				imagePrompt: imagePrompt.trim(),
 				approvalSource:
 					nextStatus === "approved" ? "composer" : "draft-review",
 				requiresReview: nextStatus !== "approved",
@@ -423,6 +442,12 @@ const usePostComposerState = (initialDraft = null) => {
 		setAutoAffiliateAmazon,
 		includeProductLink,
 		setIncludeProductLink,
+		imageStatus,
+		setImageStatus,
+		imageConcept,
+		setImageConcept,
+		imagePrompt,
+		setImagePrompt,
 		aiProductName,
 		setAiProductName,
 		aiProductType,

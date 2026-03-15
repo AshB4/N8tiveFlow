@@ -59,6 +59,12 @@ export default function PostComposer() {
     setAutoAffiliateAmazon,
     includeProductLink,
     setIncludeProductLink,
+    imageStatus,
+    setImageStatus,
+    imageConcept,
+    setImageConcept,
+    imagePrompt,
+    setImagePrompt,
     aiProductName,
     setAiProductName,
     aiProductType,
@@ -556,6 +562,46 @@ export default function PostComposer() {
             </p>
           </label>
         </div>
+      </section>
+
+      <section className="mb-6 rounded border border-amber-600 bg-black/60 p-4">
+        <h2 className="text-lg font-semibold text-pink-400 mb-3">Image Plan</h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          <label className="block">
+            <span className="text-sm text-teal-300">Image status</span>
+            <select
+              value={imageStatus}
+              onChange={(e) => setImageStatus(e.target.value)}
+              className="mt-2 w-full p-2 bg-black text-green-400 border border-gray-600"
+            >
+              <option value="attached">Attached</option>
+              <option value="prompt-needed">Prompt Needed</option>
+              <option value="optional">Optional</option>
+            </select>
+          </label>
+          <label className="block md:col-span-2">
+            <span className="text-sm text-teal-300">Image concept</span>
+            <input
+              type="text"
+              value={imageConcept}
+              onChange={(e) => setImageConcept(e.target.value)}
+              placeholder="Glitchy dashboard, cozy spooky coloring page, bee-themed playful cover..."
+              className="mt-2 w-full p-2 bg-black text-green-400 border border-gray-600"
+            />
+          </label>
+        </div>
+        <label className="block mt-4">
+          <span className="text-sm text-teal-300">Image prompt</span>
+          <textarea
+            value={imagePrompt}
+            onChange={(e) => setImagePrompt(e.target.value)}
+            placeholder="Generator-ready prompt for the image you want to make on posting day"
+            className="mt-2 w-full p-2 bg-black text-green-400 border border-gray-600 min-h-[110px]"
+          />
+        </label>
+        <p className="mt-2 text-xs text-teal-500">
+          Use this when nothing is auto yet: save the concept or prompt now, then generate or attach the image on posting day.
+        </p>
       </section>
 
         <label className="block mb-4 text-green-400">

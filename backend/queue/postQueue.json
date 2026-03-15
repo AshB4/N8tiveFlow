@@ -28,6 +28,9 @@
         "amazon": "",
         "primary": ""
       },
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Editorial dashboard scene showing a stressed creator queue and missed schedule alert.",
+      "imagePrompt": "Editorial product mockup of a creator scheduling dashboard, dark interface with neon pink and teal highlights, missed post alert, queue cards, moody but sharp, high-detail UI scene, no watermarks, modern devtool aesthetic.",
       "contentTags": ["automation", "trust", "creator-ops"],
       "distributionTags": ["post:linkedin", "post:devto", "post:x"],
       "approvalSource": "recycled-queue",
@@ -64,6 +67,9 @@
         "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
       },
       "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Whimsical goblin-themed printable affirmations page with messy cozy desk vibe.",
+      "imagePrompt": "Goblin-core printable affirmation sheet on a messy cozy desk, dark cute aesthetic, forest green and pink accents, playful hand-lettered affirmations, whimsical stationery look, warm lighting, highly detailed, no text artifacts if possible.",
       "contentTags": ["goblin", "affirmations", "self-care"],
       "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
       "approvalSource": "recycled-queue",
@@ -99,6 +105,9 @@
         "primary": "https://fleurdevie.gumroad.com/l/product-strategy-25"
       },
       "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Founder roadmap split between chaos and clarity with sticky notes and decision framework.",
+      "imagePrompt": "Editorial startup strategy visual, cluttered roadmap transforming into a clean prioritization framework, sticky notes, founder desk, pink and teal business graphics, sharp modern layout, high detail, professional but bold.",
       "contentTags": ["strategy", "founders", "prioritization"],
       "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
       "approvalSource": "recycled-queue",
@@ -136,6 +145,9 @@
         "primary": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX"
       },
       "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Gentle bee-themed coloring page spread with family-friendly nature details.",
+      "imagePrompt": "Bee-themed coloring book interior spread, friendly bees, flowers, hive details, clean black and white line art, family-friendly and educational, printable coloring page style, charming and gentle composition.",
       "contentTags": ["bees", "gentle", "family-friendly"],
       "distributionTags": ["post:amazon", "post:pinterest", "post:facebook", "post:instagram"],
       "approvalSource": "recycled-queue",
@@ -171,6 +183,9 @@
         "primary": "https://fleurdevie.gumroad.com/l/goblin-ritual-coloring-kit"
       },
       "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Funny goblin self-care kit laid out with chaotic but cozy objects.",
+      "imagePrompt": "Goblin self-care flat lay, quirky candles, messy journal, coloring pages, snacks, mossy dark-cute vibe, humorous and cozy, rich texture, playful lifestyle product scene, high detail.",
       "contentTags": ["goblin", "burnout", "self-care"],
       "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
       "approvalSource": "recycled-queue",
@@ -205,6 +220,9 @@
         "amazon": "",
         "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
       },
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Creative prompt cards bursting out around a laptop and notebook.",
+      "imagePrompt": "Creative productivity scene with prompt cards exploding from a notebook and laptop, energetic editorial composition, pink and teal accents, creator desk, idea storm visual metaphor, modern and clean, high detail.",
       "contentTags": ["prompts", "creators", "momentum"],
       "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
       "approvalSource": "recycled-queue",
@@ -239,6 +257,9 @@
         "amazon": "",
         "primary": "https://fleurdevie.gumroad.com/l/ai-powered-grad"
       },
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Useful digital-product toolkit scene for builders buying leverage.",
+      "imagePrompt": "Editorial digital product promo for indie dev tools, laptop, notes, quick-win checklist, practical maker aesthetic, clean modern composition, pink and teal accent colors, high detail, useful not hype.",
       "contentTags": ["gumroad", "devtools", "leverage"],
       "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
       "approvalSource": "recycled-queue",
@@ -273,6 +294,9 @@
         "amazon": "",
         "primary": "https://fleurdevie.gumroad.com/l/product-strategy-25"
       },
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Founder filtering ideas with a sharp product decision framework.",
+      "imagePrompt": "Founder strategy editorial image, many floating startup ideas being filtered into a clean decision framework, premium business visual, modern founder desk, teal and pink accents, high detail, confident but useful tone.",
       "contentTags": ["founders", "product-strategy", "decision-making"],
       "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
       "approvalSource": "composer",
@@ -307,6 +331,9 @@
         "amazon": "",
         "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
       },
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Blank page turning into a prompt storm with idea cards and creator tools.",
+      "imagePrompt": "Creative block visual, blank page transforming into a storm of prompt cards, creator desk, laptop, notebook, high-energy but clean editorial style, idea generation theme, pink and teal accents, high detail.",
       "contentTags": ["prompts", "creators", "content-block"],
       "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
       "approvalSource": "composer",
@@ -342,6 +369,9 @@
         "primary": "https://fleurdevie.gumroad.com/l/ai-powered-grad"
       },
       "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Graduate-focused productivity visual with laptop, cap, checklist, and AI helper vibe.",
+      "imagePrompt": "Modern graduation productivity scene, laptop, graduation cap, checklist, smart AI assistant vibe, clean and practical aesthetic, encouraging, bright but grounded, high detail, editorial digital product promo.",
       "contentTags": ["graduation", "ai", "students"],
       "distributionTags": ["post:facebook", "post:pinterest", "post:x"],
       "approvalSource": "composer",
@@ -365,7 +395,7 @@
       { "platform": "instagram", "accountId": null },
       { "platform": "facebook", "accountId": null }
     ],
-    "scheduledAt": "2026-03-21T15:00:00.000Z",
+    "scheduledAt": "2026-03-15T18:00:00.000Z",
     "status": "approved",
     "hashtags": "#kawaii #coloringbook #spookyseason",
     "tags": ["kawaii", "coloring-book", "cute-spooky"],
@@ -379,6 +409,9 @@
         "primary": "https://www.amazon.com/-/es/Scary-Kawaii-Halloween-Coloring-Book/dp/B0DHDNTW87"
       },
       "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Cute spooky kawaii coloring book cover mockup with ghosts, bats, and smiling monsters.",
+      "imagePrompt": "Kawaii spooky coloring book cover mockup, cute ghosts, bats, pumpkins, smiling monsters, pastel halloween palette, adorable and giftable, polished product mockup, high detail, playful spooky style.",
       "contentTags": ["kawaii", "coloring-book", "cute-spooky"],
       "distributionTags": ["post:amazon", "post:pinterest", "post:instagram", "post:facebook"],
       "approvalSource": "composer",
@@ -414,6 +447,9 @@
         "primary": "https://fleurdevie.gumroad.com/l/goblin-ritual-coloring-kit"
       },
       "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Goblin-mode self-care illustration with humor and a tired-but-trying energy.",
+      "imagePrompt": "Funny goblin self-care illustration, chaotic but lovable goblin with tea, blanket, messy journal, candles, burnout humor, dark cute color palette, giftable product vibe, high detail.",
       "contentTags": ["goblin", "self-care", "burnout"],
       "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
       "approvalSource": "composer",
@@ -448,6 +484,9 @@
         "amazon": "",
         "primary": ""
       },
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Post scheduling dashboard with calendar, queue, and daily ops panels.",
+      "imagePrompt": "Cyberpunk creator scheduling dashboard, content calendar, queue list, daily operations panel, black interface with neon teal and pink accents, polished SaaS mockup, high detail, dramatic but practical.",
       "contentTags": ["automation", "creator-ops", "devtools"],
       "distributionTags": ["post:linkedin", "post:devto", "post:x"],
       "approvalSource": "composer",
@@ -483,6 +522,9 @@
         "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
       },
       "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Printable affirmation pack with chaotic cute goblin charm and sarcastic comfort.",
+      "imagePrompt": "Printable goblin-core affirmation pack spread, sarcastic but comforting aesthetic, dark-cute color palette, playful stationery, layered paper textures, quirky and giftable, high detail.",
       "contentTags": ["goblin", "affirmations", "printable"],
       "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
       "approvalSource": "composer",
@@ -518,6 +560,9 @@
         "primary": "https://fleurdevie.gumroad.com/l/product-strategy-25"
       },
       "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Strategic framework visual turning a messy roadmap into a clear plan.",
+      "imagePrompt": "Startup strategy editorial graphic, messy roadmap becoming a clean framework, sticky notes, arrows, founder desk details, sharp typography layout, pink and teal accents, high detail, premium digital product aesthetic.",
       "contentTags": ["product-strategy", "roadmap", "clarity"],
       "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
       "approvalSource": "composer",
@@ -555,6 +600,9 @@
         "primary": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX"
       },
       "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Bee and flower coloring book mockup with wholesome classroom-friendly feel.",
+      "imagePrompt": "Wholesome bee-themed coloring book mockup, flowers, hive patterns, playful educational tone, warm family-friendly style, Amazon-ready product image feel, high detail, bright but gentle.",
       "contentTags": ["bees", "nature", "family-friendly"],
       "distributionTags": ["post:amazon", "post:pinterest", "post:facebook", "post:instagram"],
       "approvalSource": "composer",
@@ -589,6 +637,9 @@
         "amazon": "",
         "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
       },
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Prompt pack visual focused on momentum, blank page relief, and idea sparks.",
+      "imagePrompt": "Creative prompt pack promo image, blank page transforming into many idea cards, energetic but clean composition, creator desk, modern editorial style, high detail, inspiration and momentum theme.",
       "contentTags": ["prompts", "momentum", "creativity"],
       "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
       "approvalSource": "composer",

@@ -26,6 +26,7 @@ export default function App() {
         <Route path="/lab" element={<PostLab />} />
         <Route path="/lib" element={<PostLib />} />
         <Route path="/today" element={<TodayQueue />} />
+        <Route path="/today/*" element={<TodayQueue />} />
         <Route path="/charts" element={<ChartsPage />} />
         <Route path="/pseo" element={<SeoPages />} />
         <Route path="/pseo/:slug" element={<SeoPages />} />

@@ -51,6 +51,12 @@ const getPostTextForPlatform = (post, platform) => {
   return overrides[platform] || post.body || post.content || "";
 };
 
+const getProductLink = (post) =>
+  post?.metadata?.productLinks?.primary ||
+  post?.metadata?.productLinks?.amazon ||
+  post?.metadata?.productLinks?.gumroad ||
+  "";
+
 const buildRetrySchedule = (offsetDays = 1) => {
   const next = new Date();
   next.setDate(next.getDate() + offsetDays);
@@ -290,7 +296,7 @@ export default function TodayQueue() {
 
               {dueToday.length === 0 ? (
                 <div className="rounded-lg border border-teal-700 bg-black/50 p-5 text-teal-400">
-                  Nothing approved is due today.
+                  Nothing scheduled today, slacker. Go queue something.
                 </div>
               ) : (
                 dueToday.map((post) => (
@@ -332,6 +338,45 @@ export default function TodayQueue() {
                     </div>
 
                     <p className="mt-4 whitespace-pre-wrap text-teal-200">{post.body}</p>
+                    {(post.metadata?.imageStatus || post.metadata?.imageConcept || post.metadata?.imagePrompt) && (
+                      <div className="mt-4 rounded border border-amber-700 bg-black/50 p-3 text-sm">
+                        <p className="text-amber-300">
+                          Image: {post.metadata?.imageStatus || "prompt-needed"}
+                        </p>
+                        {post.metadata?.imageConcept && (
+                          <p className="mt-1 text-teal-300">
+                            Concept: {post.metadata.imageConcept}
+                          </p>
+                        )}
+                        {post.metadata?.imagePrompt && (
+                          <button
+                            onClick={() => handleCopy(post.metadata.imagePrompt, "Image prompt")}
+                            className="mt-2 px-3 py-1 rounded border border-amber-500 text-amber-200 hover:bg-amber-500 hover:text-black transition-colors"
+                          >
+                            Copy image prompt
+                          </button>
+                        )}
+                      </div>
+                    )}
+                    {getProductLink(post) && (
+                      <div className="mt-4 rounded border border-pink-700 bg-black/50 p-3 text-sm">
+                        <p className="text-pink-300">Product link attached for punch-mode posting.</p>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          <button
+                            onClick={() => handleCopy(getProductLink(post), "Product link")}
+                            className="px-3 py-1 rounded border border-pink-500 text-pink-200 hover:bg-pink-500 hover:text-black transition-colors"
+                          >
+                            Copy link
+                          </button>
+                          <button
+                            onClick={() => window.open(getProductLink(post), "_blank", "noopener,noreferrer")}
+                            className="px-3 py-1 rounded border border-teal-500 text-teal-200 hover:bg-teal-500 hover:text-black transition-colors"
+                          >
+                            Open link
+                          </button>
+                        </div>
+                      </div>
+                    )}
                     <div className="mt-4">
                       {renderPlatformActions(post)}
                     </div>
@@ -383,6 +428,11 @@ export default function TodayQueue() {
                     <p className="text-sm text-teal-500">
                       Scheduled: {getScheduledDate(post)?.toLocaleString() || "—"}
                     </p>
+                    {post.metadata?.imageStatus && (
+                      <p className="text-sm text-amber-300">
+                        Image: {post.metadata.imageStatus}
+                      </p>
+                    )}
                     {post.nextAttemptAt && (
                       <p className="text-sm text-amber-400">
                         Next retry: {new Date(post.nextAttemptAt).toLocaleString()}

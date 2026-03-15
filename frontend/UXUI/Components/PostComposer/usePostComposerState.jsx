@@ -281,6 +281,7 @@ const usePostComposerState = (initialDraft = null) => {
 					productName: aiProductName,
 					productType: aiProductType,
 					audience: aiAudience,
+					platformIds: selectedPlatforms,
 					provider: aiProvider,
 					dryRun,
 				}),

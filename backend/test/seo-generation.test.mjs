@@ -8,10 +8,26 @@ import {
 } from "../utils/seoGeneration.mjs";
 
 test("buildSeoPrompt asks for strict JSON output", () => {
-  const prompt = buildSeoPrompt("PostPunk", "Automation Tool", "Indie devs");
+  const prompt = buildSeoPrompt("PostPunk", "Automation Tool", "Indie devs", {
+    platformIds: ["linkedin"],
+    selectedPlatforms: [
+      {
+        id: "linkedin",
+        label: "LinkedIn",
+        audienceExpectation: "credible, useful, specific, professional",
+        voice: "calm, informed, human, experience-backed",
+        structureRules: ["Lead with the insight or problem."],
+        ctaStyle: "Invite discussion, feedback, or reflection.",
+        avoid: ["sloppy irony"],
+      },
+    ],
+  });
   assert.match(prompt, /Return valid JSON only/);
   assert.match(prompt, /"product_name": "PostPunk"/);
   assert.match(prompt, /"keywords": \[/);
+  assert.match(prompt, /Target platforms: linkedin/);
+  assert.match(prompt, /LinkedIn/);
+  assert.match(prompt, /Lead with the insight or problem/);
 });
 
 test("extractJsonObject parses wrapped JSON", () => {
@@ -49,6 +65,7 @@ test("dry run resolves provider without calling network", () => {
       productName: "PostPunk",
       productType: "Automation Tool",
       audience: "Indie devs",
+      platformIds: ["x", "linkedin"],
     },
     {
       provider: "ollama",
@@ -60,4 +77,5 @@ test("dry run resolves provider without calling network", () => {
   assert.equal(payload.provider, "ollama");
   assert.equal(payload.model, "llama3.1:8b");
   assert.match(payload.prompt, /PostPunk/);
+  assert.match(payload.prompt, /Target platforms: x, linkedin/);
 });

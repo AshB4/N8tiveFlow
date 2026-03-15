@@ -174,6 +174,7 @@ app.post("/api/ai/seo-generate", async (req, res) => {
 			productName,
 			productType,
 			audience,
+			platformIds = [],
 			provider,
 			model,
 			dryRun = false,
@@ -184,7 +185,7 @@ app.post("/api/ai/seo-generate", async (req, res) => {
 			});
 		}
 
-		const input = { productName, productType, audience };
+		const input = { productName, productType, audience, platformIds };
 		const options = { provider, model };
 		const result = dryRun
 			? getDryRunPayload(input, options)

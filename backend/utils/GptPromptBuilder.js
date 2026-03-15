@@ -1,14 +1,47 @@
 /** @format */
 
-export const buildSeoPrompt = (productName, productType, audience) => {
+function buildPlatformGuidance(selectedPlatforms = []) {
+	if (!Array.isArray(selectedPlatforms) || selectedPlatforms.length === 0) {
+		return "No specific platform guidance supplied. Keep the copy flexible and broadly usable.";
+	}
+
+	return selectedPlatforms
+		.map((profile) => {
+			const rules = Array.isArray(profile.structureRules)
+				? profile.structureRules.join(" | ")
+				: "";
+			const avoid = Array.isArray(profile.avoid) ? profile.avoid.join(", ") : "";
+			return `- ${profile.label} (${profile.id})
+  audience: ${profile.audienceExpectation}
+  voice: ${profile.voice}
+  structure: ${rules}
+  cta: ${profile.ctaStyle}
+  avoid: ${avoid}`;
+		})
+		.join("\n");
+}
+
+export const buildSeoPrompt = (productName, productType, audience, options = {}) => {
+	const platformGuidance = buildPlatformGuidance(options.selectedPlatforms);
 	return `
 You are an SEO and branding expert.
 
 Product: ${productName}
 Type: ${productType}
 Audience: ${audience}
+Target platforms: ${options.platformIds?.join(", ") || "general multi-platform"}
 
 Return valid JSON only. Do not wrap it in markdown fences.
+
+Platform-specific writing guidance:
+${platformGuidance}
+
+Honor the selected platform guidance in:
+- seo_human_pitch
+- keywords and hashtags
+- search query framing
+- campaign naming ideas
+- preferred platform emphasis
 
 Use this exact shape:
 {

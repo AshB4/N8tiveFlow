@@ -1,11 +1,35 @@
 import { Link, useLocation } from "react-router-dom";
+import logo from "../../assets/PostPunkTransparentLogo.png";
 
 const navItems = [
-  { to: "/", label: "Home" },
-  { to: "/compose", label: "Compose" },
-  { to: "/lib", label: "Library" },
-  { to: "/today", label: "Today" },
-  { to: "/charts", label: "Charts" },
+  {
+    to: "/today",
+    label: "Today Ops",
+    baseClass:
+      "border-amber-500 text-amber-300 hover:bg-amber-500 hover:text-black",
+    activeClass: "border-amber-400 bg-amber-500 text-black",
+  },
+  {
+    to: "/compose",
+    label: "Summon Composer",
+    baseClass:
+      "border-pink-500 text-pink-300 hover:bg-pink-500 hover:text-black",
+    activeClass: "border-pink-400 bg-pink-500 text-black",
+  },
+  {
+    to: "/lib",
+    label: "Open Library Vault",
+    baseClass:
+      "border-cyan-500 text-cyan-300 hover:bg-cyan-500 hover:text-black",
+    activeClass: "border-cyan-400 bg-cyan-500 text-black",
+  },
+  {
+    to: "/charts",
+    label: "View Charts",
+    baseClass:
+      "border-violet-500 text-violet-300 hover:bg-violet-500 hover:text-black",
+    activeClass: "border-violet-400 bg-violet-500 text-black",
+  },
 ];
 
 function isActive(pathname, to) {
@@ -13,28 +37,39 @@ function isActive(pathname, to) {
   return pathname === to || pathname.startsWith(`${to}/`);
 }
 
-export default function AppTopNav() {
+export default function AppTopNav({ includeLab = false }) {
   const location = useLocation();
+  const items = includeLab
+    ? [
+        ...navItems,
+        {
+          to: "/lab",
+          label: "Open Scribble Sanctum",
+          baseClass:
+            "border-teal-400 text-teal-300 hover:bg-teal-400 hover:text-black",
+          activeClass: "border-teal-300 bg-teal-400 text-black",
+        },
+      ]
+    : navItems;
 
   return (
-    <nav className="mb-6 border border-pink-900/70 bg-black/70 rounded-lg shadow-[0_0_18px_rgba(255,0,255,0.12)]">
-      <div className="flex flex-wrap items-center gap-2 px-4 py-3">
-        <Link
-          to="/"
-          className="mr-3 text-sm font-semibold uppercase tracking-[0.35em] text-pink-400"
-        >
-          PostPunk
-        </Link>
-        {navItems.map((item) => {
+    <div className="mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-pink-500 pb-4">
+      <Link to="/" className="shrink-0">
+        <img
+          src={logo}
+          alt="PostPunk Home"
+          className="h-24 md:h-28 w-auto drop-shadow-[0_0_12px_#ff00ff]"
+        />
+      </Link>
+      <div className="flex flex-wrap justify-center gap-3">
+        {items.map((item) => {
           const active = isActive(location.pathname, item.to);
           return (
             <Link
               key={item.to}
               to={item.to}
-              className={`rounded border px-3 py-1.5 text-sm transition-colors ${
-                active
-                  ? "border-pink-500 bg-pink-500 text-black"
-                  : "border-teal-700 text-teal-200 hover:border-pink-500 hover:text-pink-300"
+              className={`px-4 py-2 border rounded transition-colors ${
+                active ? item.activeClass : item.baseClass
               }`}
             >
               {item.label}
@@ -42,6 +77,6 @@ export default function AppTopNav() {
           );
         })}
       </div>
-    </nav>
+    </div>
   );
 }

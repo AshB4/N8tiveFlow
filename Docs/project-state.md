@@ -123,6 +123,7 @@ If you need to understand the system quickly, check these first:
 
 - `docs/code-map.md`
 - `docs/project-state.md`
+- `frontend/main.jsx`
 - `backend/queue/postQueue.json`
 - `backend/server.mjs`
 - `backend/scripts/postingJob.mjs`
@@ -213,3 +214,4 @@ Most likely future automation targets:
 - `Dev.to` should stay weekly, not daily.
 - `PostPunk` itself should be described honestly as a project in progress, not as a finished polished product.
 - Avoid adding duplicate queue, tag, or profile logic. Use the existing shared helpers instead.
+- Frontend routes live in `frontend/main.jsx`. That is the file to update when routes change.

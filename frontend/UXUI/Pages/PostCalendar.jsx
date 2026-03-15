@@ -8,7 +8,6 @@ import interactionPlugin from "@fullcalendar/interaction";
 import AppTopNav from "../Components/AppTopNav";
 import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
 import DayPostsModal from "../Components/CalendarPage/DayPostsModal.jsx";
-import logo from "../../assets/PostPunkTransparentLogo.png";
 import { isApprovedStatus, normalizePostStatus } from "../utils/postStatus";
 
 const getPostDate = (post) => {
@@ -228,34 +227,7 @@ export default function PostCalendar() {
 
   return (
     <div className="min-h-screen bg-black text-pink-500 font-mono p-4">
-      <AppTopNav />
-      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 border-b border-pink-500 pb-4">
-        <img
-          src={logo}
-          alt="PostPunk Logo"
-          className="h-32 w-auto drop-shadow-[0_0_12px_#ff00ff]"
-        />
-        <div className="flex flex-wrap gap-3">
-          <Link
-            to="/today"
-            className="px-4 py-2 border border-amber-500 text-amber-300 hover:bg-amber-500 hover:text-black transition-colors rounded"
-          >
-            Today Ops
-          </Link>
-          <Link
-            to="/compose"
-            className="px-4 py-2 border border-pink-500 text-pink-300 hover:bg-pink-500 hover:text-black transition-colors rounded"
-          >
-            Summon Composer
-          </Link>
-          <Link
-            to="/lab"
-            className="px-4 py-2 border border-teal-400 text-teal-300 hover:bg-teal-400 hover:text-black transition-colors rounded"
-          >
-            Open Scribble Sanctum
-          </Link>
-        </div>
-      </div>
+      <AppTopNav includeLab />
 
       <div className="grid grid-cols-1 md:grid-cols-[320px_1fr_260px] gap-4">
         <aside

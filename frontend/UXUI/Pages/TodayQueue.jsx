@@ -47,6 +47,23 @@ const getDateKey = (date) => {
   return new Date(date.getTime() - tzOffset).toISOString().slice(0, 10);
 };
 
+const formatVisibleDate = (dateKey) => {
+  const [year, month, day] = String(dateKey || "").split("-").map(Number);
+  if (!year || !month || !day) return dateKey;
+  return new Date(year, month - 1, day).toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+};
+
+const shiftDateKey = (dateKey, offsetDays) => {
+  const [year, month, day] = String(dateKey || "").split("-").map(Number);
+  const next = new Date(year, month - 1, day + offsetDays);
+  return getDateKey(next);
+};
+
 const getPostTextForPlatform = (post, platform) => {
   const overrides = post.platformOverrides || {};
   return overrides[platform] || post.body || post.content || "";
@@ -71,6 +88,7 @@ export default function TodayQueue() {
   const [loading, setLoading] = useState(true);
   const [workingPostId, setWorkingPostId] = useState(null);
   const [retryDays, setRetryDays] = useState("1");
+  const [selectedDateKey, setSelectedDateKey] = useState(getDateKey(new Date()));
 
   const loadPosts = async () => {
     try {
@@ -102,14 +120,14 @@ export default function TodayQueue() {
 
   const todayKey = getDateKey(new Date());
 
-  const dueToday = useMemo(() => {
+  const dueForSelectedDay = useMemo(() => {
     return posts
       .filter((post) => {
         const scheduled = getScheduledDate(post);
         return (
           post.status === "approved" &&
           scheduled &&
-          getDateKey(scheduled) === todayKey
+          getDateKey(scheduled) === selectedDateKey
         );
       })
       .sort((a, b) => {
@@ -117,18 +135,18 @@ export default function TodayQueue() {
         const right = getScheduledDate(b)?.getTime() || 0;
         return left - right;
       });
-  }, [posts, todayKey]);
+  }, [posts, selectedDateKey]);
 
   const failedOrNeedsReview = useMemo(() => {
     return posts.filter((post) => {
       if (post.status === "failed") return true;
       if (post.status === "draft") {
         const scheduled = getScheduledDate(post);
-        return scheduled && getDateKey(scheduled) <= todayKey;
+        return scheduled && getDateKey(scheduled) <= selectedDateKey;
       }
       return false;
     });
-  }, [posts, todayKey]);
+  }, [posts, selectedDateKey]);
 
   const updatePost = async (postId, payload, successMessage) => {
     setWorkingPostId(postId);
@@ -259,7 +277,7 @@ export default function TodayQueue() {
             <p className="text-sm uppercase tracking-[0.3em] text-pink-500">today ops</p>
             <h1 className="text-4xl md:text-5xl text-pink-400 glitchy">Today Queue</h1>
             <p className="text-sm text-teal-400 mt-2">
-              Due today, needs review, and manual assist in one place.
+              View any scheduled day, plus review and manual assist in one place.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -284,24 +302,66 @@ export default function TodayQueue() {
           </div>
         </header>
 
+        <section className="mb-8 rounded-lg border border-teal-700 bg-black/60 p-5">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-pink-500">day viewer</p>
+              <h2 className="mt-1 text-2xl text-pink-300">{formatVisibleDate(selectedDateKey)}</h2>
+              <p className="mt-2 text-sm text-teal-400">
+                Move backward or forward to inspect what is planned next.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => setSelectedDateKey((prev) => shiftDateKey(prev, -1))}
+                className="px-3 py-2 rounded border border-teal-500 text-teal-200 hover:bg-teal-500 hover:text-black transition-colors"
+              >
+                Previous Day
+              </button>
+              <button
+                onClick={() => setSelectedDateKey(todayKey)}
+                className="px-3 py-2 rounded border border-pink-500 text-pink-200 hover:bg-pink-500 hover:text-black transition-colors"
+              >
+                Jump To Today
+              </button>
+              <button
+                onClick={() => setSelectedDateKey((prev) => shiftDateKey(prev, 1))}
+                className="px-3 py-2 rounded border border-teal-500 text-teal-200 hover:bg-teal-500 hover:text-black transition-colors"
+              >
+                Next Day
+              </button>
+              <input
+                type="date"
+                value={selectedDateKey}
+                onChange={(e) => setSelectedDateKey(e.target.value)}
+                className="rounded border border-teal-500 bg-black px-3 py-2 text-teal-200"
+              />
+            </div>
+          </div>
+        </section>
+
         {loading ? (
           <p className="text-center text-teal-400">Loading queue...</p>
         ) : (
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
             <section className="space-y-5">
               <div className="rounded-lg border border-pink-600 bg-black/60 p-5">
-                <h2 className="text-2xl text-pink-300">Due Today</h2>
+                <h2 className="text-2xl text-pink-300">
+                  {selectedDateKey === todayKey ? "Due Today" : `Planned For ${formatVisibleDate(selectedDateKey)}`}
+                </h2>
                 <p className="text-sm text-teal-400 mt-2">
-                  These are approved posts scheduled for today. Use the manual actions when automation is flaky.
+                  These are approved posts scheduled for the selected day. Use the manual actions when automation is flaky.
                 </p>
               </div>
 
-              {dueToday.length === 0 ? (
+              {dueForSelectedDay.length === 0 ? (
                 <div className="rounded-lg border border-teal-700 bg-black/50 p-5 text-teal-400">
-                  Nothing scheduled today, slacker. Go queue something.
+                  {selectedDateKey === todayKey
+                    ? "Nothing scheduled today, slacker. Go queue something."
+                    : "Nothing scheduled for this day. Drift somewhere else or queue more."}
                 </div>
               ) : (
-                dueToday.map((post) => (
+                dueForSelectedDay.map((post) => (
                   <article
                     key={post.id}
                     className="rounded-lg border border-teal-500 bg-black/60 p-5 shadow-[0_0_20px_rgba(13,148,136,0.25)]"
@@ -391,7 +451,7 @@ export default function TodayQueue() {
               <div className="rounded-lg border border-amber-600 bg-black/60 p-5">
                 <h2 className="text-2xl text-amber-300">Needs Review Or Retry</h2>
                 <p className="text-sm text-teal-400 mt-2">
-                  Drafts scheduled for today or earlier, plus failed posts you need to revisit.
+                  Drafts scheduled for this day or earlier, plus failed posts you need to revisit.
                 </p>
                 <div className="mt-4 flex flex-wrap items-center gap-3">
                   <label className="text-sm text-teal-300">

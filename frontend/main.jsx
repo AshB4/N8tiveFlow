@@ -10,6 +10,7 @@ import CalendarPage from "./UXUI/Pages/PostCalendar";
 import PostComposer from "./UXUI/Pages/postComposer";
 import PostLab from "./UXUI/Pages/PostLab";
 import PostLib from "./UXUI/Pages/PostLib";
+import TodayQueue from "./UXUI/Pages/TodayQueue";
 import ChartsPage from "./UXUI/Pages/ChartsPage";
 import SeoPages from "./UXUI/Pages/SeoPages";
 import ErrorPage from "./UXUI/Pages/notFound"; // This can now use useRouteError()
@@ -33,6 +34,16 @@ const router = createBrowserRouter([
   {
     path: "/lib",
     element: <PostLib />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/today",
+    element: <TodayQueue />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/today/*",
+    element: <TodayQueue />,
     errorElement: <ErrorPage />,
   },
   {

@@ -6,7 +6,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 
 ## Core Flow
 
-- Frontend routes: `frontend/app.jsx`
+- Frontend entrypoint and route source of truth: `frontend/main.jsx`
 - Composer page UI: `frontend/UXUI/Pages/postComposer.jsx`
 - Composer state and submit logic: `frontend/UXUI/Components/PostComposer/usePostComposerState.jsx`
 - Backend API: `backend/server.mjs`
@@ -102,3 +102,4 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Scheduling belongs in `backend/scripts/postingJob.mjs`.
 - Posting behavior belongs in `backend/scripts/platforms/*`.
 - Cross-platform posting rules belong in `backend/scripts/platforms/post-to-all.js`.
+- Do not add or update routes in `frontend/app.jsx`. `frontend/main.jsx` is the active router.

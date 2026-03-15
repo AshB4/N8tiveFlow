@@ -67,6 +67,31 @@ export const withAffiliateTag = (rawText, partnerTag) => {
 	});
 };
 
+export const normalizeProductLink = (post, partnerTag = "") => {
+	const links = post?.metadata?.productLinks || {};
+	const candidate =
+		post?.canonicalUrl ||
+		post?.affiliateUrl ||
+		links.primary ||
+		links.amazon ||
+		links.gumroad ||
+		"";
+	if (!candidate) return "";
+	if (!AMAZON_HOST_PATTERN.test(candidate)) {
+		return candidate;
+	}
+	return withAffiliateTag(candidate, partnerTag);
+};
+
+export const ensureProductLink = (body, link) => {
+	const content = String(body || "").trim();
+	const normalizedLink = String(link || "").trim();
+	if (!normalizedLink) return content;
+	if (content.includes(normalizedLink)) return content;
+	if (!content) return normalizedLink;
+	return `${content}\n\n${normalizedLink}`;
+};
+
 export const isConfiguredValue = (value) => {
 	if (value === null || value === undefined) return false;
 	if (typeof value !== "string") return Boolean(value);
@@ -166,9 +191,15 @@ export const postToAllPlatforms = async (post, targetsInput) => {
 				(accountOverrideKey && post.platformOverrides?.[accountOverrideKey]) ??
 				post.platformOverrides?.[platform] ??
 				post.body;
-			const body = shouldAutoTagAmazon
-				? withAffiliateTag(customText, partnerTag)
-				: customText;
+			const productLink = normalizeProductLink(post, partnerTag);
+			const baseBody =
+				shouldAutoTagAmazon || productLink
+					? withAffiliateTag(customText, partnerTag)
+					: customText;
+			const body =
+				post?.metadata?.includeProductLink
+					? ensureProductLink(baseBody, productLink)
+					: baseBody;
 			const payload = {
 				title: post.title,
 				body,

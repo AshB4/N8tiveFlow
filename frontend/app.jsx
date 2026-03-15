@@ -8,6 +8,7 @@ import CalendarPage from "./UXUI/Pages/PostCalendar";
 import PostComposer from "./UXUI/Pages/postComposer";
 import PostLab from "./UXUI/Pages/PostLab";
 import PostLib from "./UXUI/Pages/PostLib.jsx";
+import TodayQueue from "./UXUI/Pages/TodayQueue.jsx";
 import ChartsPage from "./UXUI/Pages/ChartsPage";
 import SeoPages from "./UXUI/Pages/SeoPages";
 import NotFound from "./UXUI/Pages/notFound";
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/compose" element={<PostComposer />} />
         <Route path="/lab" element={<PostLab />} />
         <Route path="/lib" element={<PostLib />} />
+        <Route path="/today" element={<TodayQueue />} />
         <Route path="/charts" element={<ChartsPage />} />
         <Route path="/pseo" element={<SeoPages />} />
         <Route path="/pseo/:slug" element={<SeoPages />} />

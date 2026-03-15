@@ -1,6 +1,7 @@
 import { buildSeoPrompt } from "./GptPromptBuilder.js";
 import { generateStructuredText, resolveAiConfig } from "./aiClient.mjs";
 import { getPlatformPromptProfiles } from "./platformProfiles.mjs";
+import { getProductProfile } from "./productProfiles.mjs";
 
 export function extractJsonObject(text) {
   if (typeof text !== "string" || text.trim().length === 0) {
@@ -68,9 +69,11 @@ export function normalizeSeoResult(raw, input) {
 export async function generateSeoPayload(input, options = {}) {
   const platformIds = Array.isArray(input.platformIds) ? input.platformIds : [];
   const selectedPlatforms = getPlatformPromptProfiles(platformIds);
+  const productProfile = getProductProfile(input.productProfileId);
   const prompt = buildSeoPrompt(input.productName, input.productType, input.audience, {
     platformIds,
     selectedPlatforms,
+    productProfile,
   });
   const rawText = await generateStructuredText(prompt, options);
   const parsed = extractJsonObject(rawText);
@@ -81,6 +84,7 @@ export function getDryRunPayload(input, options = {}) {
   const config = resolveAiConfig(options);
   const platformIds = Array.isArray(input.platformIds) ? input.platformIds : [];
   const selectedPlatforms = getPlatformPromptProfiles(platformIds);
+  const productProfile = getProductProfile(input.productProfileId);
   return {
     mode: "dry-run",
     provider: config.provider,
@@ -88,6 +92,7 @@ export function getDryRunPayload(input, options = {}) {
     prompt: buildSeoPrompt(input.productName, input.productType, input.audience, {
       platformIds,
       selectedPlatforms,
+      productProfile,
     }),
   };
 }

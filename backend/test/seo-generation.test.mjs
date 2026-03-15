@@ -30,6 +30,27 @@ test("buildSeoPrompt asks for strict JSON output", () => {
   assert.match(prompt, /Lead with the insight or problem/);
 });
 
+test("buildSeoPrompt includes product profile guidance when provided", () => {
+  const prompt = buildSeoPrompt("Coloring Books", "Physical products", "Gift buyers", {
+    platformIds: ["amazon"],
+    selectedPlatforms: [],
+    productProfile: {
+      label: "Coloring Books",
+      category: "Physical products",
+      productType: "Printable and paperback coloring books",
+      audience: "parents and gift buyers",
+      brandVoice: "warm and visual",
+      primaryGoal: "sell books",
+      promotionChannels: ["amazon", "pinterest"],
+      notes: ["Lead with use case"],
+    },
+  });
+
+  assert.match(prompt, /Product-specific guidance/);
+  assert.match(prompt, /Coloring Books/);
+  assert.match(prompt, /Lead with use case/);
+});
+
 test("extractJsonObject parses wrapped JSON", () => {
   const parsed = extractJsonObject('noise before {"hello":"world"} noise after');
   assert.deepEqual(parsed, { hello: "world" });

@@ -9,6 +9,7 @@
     "test": "node --test",
     "product-finder": "node scripts/productFinder/run-product-finder.js",
     "health:tokens": "node scripts/health/check-tokens.mjs",
+    "x:capture-session": "node scripts/capture-x-session.mjs",
     "queue:dry-run": "node scripts/queue/dry-run-next24h.mjs",
     "summary:daily": "node scripts/health/daily-summary.mjs",
     "backup:snapshot": "node scripts/backup/snapshot.mjs",

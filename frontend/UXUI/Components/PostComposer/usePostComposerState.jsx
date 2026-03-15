@@ -3,6 +3,13 @@
 import { useState, useEffect, useMemo } from "react";
 import seoVault from "../../../posts/seoVault.json";
 import { validatePostAgainstRules } from "../../utils/platformRules";
+import { normalizePostStatus } from "../../utils/postStatus";
+import { getProductProfile, productProfiles } from "../../utils/productProfiles";
+import {
+	mergeTargets,
+	distributionTagsToTargets,
+	normalizeTagList,
+} from "../../utils/distributionTags";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
@@ -81,6 +88,7 @@ const sanitizeTargetsInput = (input, fallbackPlatforms = []) => {
 const usePostComposerState = (initialDraft = null) => {
 	const hasPersistedId =
 		initialDraft?.__hasRealId !== false && Boolean(initialDraft?.id);
+	const initialStatus = normalizePostStatus(initialDraft?.status);
 	const initialTargets = sanitizeTargetsInput(
 		initialDraft?.targets,
 		toArray(initialDraft?.platforms || initialDraft?.platform),
@@ -93,20 +101,30 @@ const usePostComposerState = (initialDraft = null) => {
 	const [mediaPath, setMediaPath] = useState(initialDraft?.mediaPath || null);
 	const [mediaType, setMediaType] = useState(initialDraft?.mediaType || null);
 	const [altText, setAltText] = useState(initialDraft?.altText || "");
-	const [selectedTargets, setSelectedTargets] = useState(initialTargets);
+	const [manualTargets, setManualTargets] = useState(initialTargets);
 	const [scheduledAt, setScheduledAt] = useState(
 		toDateTimeLocal(initialDraft?.scheduledAt || initialDraft?.scheduled_at)
 	);
-	const [saveAsDraft, setSaveAsDraft] = useState(
-		Boolean(initialDraft?.saveAsDraft || initialDraft?.status === "draft")
+	const [saveAsDraft, setSaveAsDraft] = useState(initialStatus !== "approved");
+	const [approveForSchedule, setApproveForSchedule] = useState(
+		initialStatus === "approved" || !initialDraft
 	);
-	const [selectedProduct, setSelectedProduct] = useState("");
+	const [selectedProduct, setSelectedProduct] = useState(
+		initialDraft?.metadata?.productProfileId || ""
+	);
 
 	const [useAutoHashtags, setUseAutoHashtags] = useState(
 		!normalizeHashtags(initialDraft?.hashtags)
 	);
 	const [manualHashtags, setManualHashtags] = useState(
 		normalizeHashtags(initialDraft?.hashtags)
+	);
+	const [contentTags, setContentTags] = useState(
+		normalizeTagList(initialDraft?.metadata?.contentTags || initialDraft?.tags || [])
+			.join(", ")
+	);
+	const [distributionTags, setDistributionTags] = useState(
+		normalizeTagList(initialDraft?.metadata?.distributionTags || []).join(", ")
 	);
 
 	const [useAutoPlatformText, setUseAutoPlatformText] = useState(
@@ -121,6 +139,9 @@ const usePostComposerState = (initialDraft = null) => {
 			initialDraft?.metadata?.autoAffiliateAmazon
 		)
 	);
+	const [includeProductLink, setIncludeProductLink] = useState(
+		Boolean(initialDraft?.metadata?.includeProductLink)
+	);
 	const [aiProductName, setAiProductName] = useState(initialDraft?.title || "");
 	const [aiProductType, setAiProductType] = useState("Automation Tool");
 	const [aiAudience, setAiAudience] = useState("Indie creators and solo founders");
@@ -128,18 +149,34 @@ const usePostComposerState = (initialDraft = null) => {
 	const [aiSuggestions, setAiSuggestions] = useState(null);
 	const [isGeneratingSeo, setIsGeneratingSeo] = useState(false);
 
+	const selectedProductProfile = useMemo(
+		() => getProductProfile(selectedProduct),
+		[selectedProduct]
+	);
+
 	useEffect(() => {
-		if (!selectedProduct) return;
-		const seo = seoVault[selectedProduct];
+		if (!selectedProductProfile) return;
+		const seo = seoVault;
 		if (!seo) return;
 
-		setTitle(seo.seo_human_pitch || "");
-		setBody(seo.meta_description || "");
-		setAltText(seo.alt_text_examples?.[0] || "");
+		if (!title) {
+			setTitle(selectedProductProfile.label);
+		}
+		if (!body && seo.meta_description) {
+			setBody(seo.meta_description || "");
+		}
+		if (!altText && seo.alt_text_examples?.[0]) {
+			setAltText(seo.alt_text_examples?.[0] || "");
+		}
 		if (!useAutoHashtags && seo.hashtags?.All) {
 			setManualHashtags(seo.hashtags.All.join(" "));
 		}
-	}, [selectedProduct, useAutoHashtags]);
+		if (!aiProductName) {
+			setAiProductName(selectedProductProfile.label);
+		}
+		setAiProductType(selectedProductProfile.productType);
+		setAiAudience(selectedProductProfile.audience);
+	}, [selectedProductProfile, useAutoHashtags]);
 
 	useEffect(() => {
 		if (!initialDraft) return;
@@ -149,7 +186,7 @@ const usePostComposerState = (initialDraft = null) => {
 		setMediaPath(initialDraft.mediaPath || null);
 		setMediaType(initialDraft.mediaType || null);
 		setAltText(initialDraft.altText || "");
-		setSelectedTargets(
+		setManualTargets(
 			sanitizeTargetsInput(
 				initialDraft.targets,
 				toArray(initialDraft.platforms || initialDraft.platform)
@@ -158,11 +195,17 @@ const usePostComposerState = (initialDraft = null) => {
 		setScheduledAt(
 			toDateTimeLocal(initialDraft.scheduledAt || initialDraft.scheduled_at)
 		);
-		setSaveAsDraft(
-			Boolean(initialDraft.saveAsDraft || initialDraft.status === "draft")
-		);
+		const nextStatus = normalizePostStatus(initialDraft.status);
+		setSaveAsDraft(nextStatus !== "approved");
+		setApproveForSchedule(nextStatus === "approved");
 		setUseAutoHashtags(!normalizeHashtags(initialDraft.hashtags));
 		setManualHashtags(normalizeHashtags(initialDraft.hashtags));
+		setContentTags(
+			normalizeTagList(initialDraft.metadata?.contentTags || initialDraft.tags || []).join(", ")
+		);
+		setDistributionTags(
+			normalizeTagList(initialDraft.metadata?.distributionTags || []).join(", ")
+		);
 		setUseAutoPlatformText(
 			!(
 				initialDraft.platformOverrides &&
@@ -176,13 +219,15 @@ const usePostComposerState = (initialDraft = null) => {
 				initialDraft.metadata?.autoAffiliateAmazon
 			)
 		);
+		setIncludeProductLink(Boolean(initialDraft.metadata?.includeProductLink));
 		setAiProductName(initialDraft.title || "");
+		setSelectedProduct(initialDraft.metadata?.productProfileId || "");
 	}, [initialDraft]);
 
 	const toggleTarget = (platform, accountId = null) => {
 		const normalized = normalizeTargetEntry(platform, accountId);
 		if (!normalized) return;
-		setSelectedTargets((prev = []) => {
+		setManualTargets((prev = []) => {
 			const exists = prev.some(
 				(target) =>
 					target.platform === normalized.platform &&
@@ -200,6 +245,16 @@ const usePostComposerState = (initialDraft = null) => {
 			return [...prev, normalized];
 		});
 	};
+
+	const derivedTargets = useMemo(
+		() => distributionTagsToTargets(distributionTags),
+		[distributionTags]
+	);
+
+	const selectedTargets = useMemo(
+		() => mergeTargets(manualTargets, derivedTargets),
+		[manualTargets, derivedTargets]
+	);
 
 	const selectedPlatforms = useMemo(
 		() => Array.from(new Set(selectedTargets.map((target) => target.platform))),
@@ -228,6 +283,7 @@ const usePostComposerState = (initialDraft = null) => {
 			throw error;
 		}
 
+		const nextStatus = saveAsDraft || !approveForSchedule ? "draft" : "approved";
 		const sharedPayload = {
 			title,
 			body,
@@ -238,34 +294,44 @@ const usePostComposerState = (initialDraft = null) => {
 			platforms: selectedPlatforms,
 			targets: selectedTargets,
 			scheduledAt: scheduledIso,
-			saveAsDraft,
+			status: nextStatus,
 			hashtags: useAutoHashtags ? null : manualHashtags,
 			platformOverrides: useAutoPlatformText ? null : customText,
 			autoAffiliateAmazon,
 			metadata: {
 				...(initialDraft?.metadata || {}),
 				autoAffiliateAmazon,
+				includeProductLink,
+				productProfileId: selectedProductProfile?.id || null,
+				productProfileLabel: selectedProductProfile?.label || "",
+				productCategory: selectedProductProfile?.category || "",
+				productLinks: selectedProductProfile?.links || {},
+				contentTags: normalizeTagList(contentTags),
+				distributionTags: normalizeTagList(distributionTags),
+				approvalSource:
+					nextStatus === "approved" ? "composer" : "draft-review",
+				requiresReview: nextStatus !== "approved",
 			},
+			tags: normalizeTagList(contentTags),
 		};
 
-		if (hasPersistedId) {
-			const res = await fetch(`${API_BASE}/api/posts/${initialDraft.id}`, {
-				method: "PUT",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(sharedPayload),
-			});
-			if (!res.ok) {
-				const errorText = await res.text();
-				throw new Error(`Update failed: ${res.status} ${errorText}`);
-			}
-			return { mode: "update", data: await res.json() };
+		const url = hasPersistedId
+			? `${API_BASE}/api/posts/${initialDraft.id}`
+			: `${API_BASE}/api/posts`;
+		const method = hasPersistedId ? "PUT" : "POST";
+		const res = await fetch(url, {
+			method,
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(sharedPayload),
+		});
+		if (!res.ok) {
+			const errorText = await res.text();
+			throw new Error(`${hasPersistedId ? "Update" : "Save"} failed: ${res.status} ${errorText}`);
 		}
-
-		const { postToAllPlatforms } = await import(
-			"../../scripts/postToAllPlatforms.js"
-		);
-		const results = await postToAllPlatforms(sharedPayload, selectedTargets);
-		return { mode: "publish", data: results };
+		return {
+			mode: hasPersistedId ? "update" : "queue",
+			data: await res.json(),
+		};
 	};
 
 	const generateSeoSuggestions = async ({ dryRun = false } = {}) => {
@@ -279,9 +345,10 @@ const usePostComposerState = (initialDraft = null) => {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					productName: aiProductName,
-					productType: aiProductType,
-					audience: aiAudience,
+					productType: selectedProductProfile?.productType || aiProductType,
+					audience: selectedProductProfile?.audience || aiAudience,
 					platformIds: selectedPlatforms,
+					productProfileId: selectedProductProfile?.id || null,
 					provider: aiProvider,
 					dryRun,
 				}),
@@ -297,6 +364,8 @@ const usePostComposerState = (initialDraft = null) => {
 				setTitle(data.product_name || aiProductName);
 				setBody(data.meta_description || body);
 				setAltText(data.alt_text_examples?.[0] || "");
+				setSaveAsDraft(true);
+				setApproveForSchedule(false);
 				if (Array.isArray(data.keywords) && data.keywords.length > 0) {
 					setUseAutoHashtags(false);
 					setManualHashtags(
@@ -329,12 +398,19 @@ const usePostComposerState = (initialDraft = null) => {
 		selectedTargets,
 		selectedPlatforms,
 		toggleTarget,
+		contentTags,
+		setContentTags,
+		distributionTags,
+		setDistributionTags,
 		scheduledAt,
 		setScheduledAt,
 		saveAsDraft,
 		setSaveAsDraft,
+		approveForSchedule,
+		setApproveForSchedule,
 		selectedProduct,
 		setSelectedProduct,
+		selectedProductProfile,
 		useAutoHashtags,
 		setUseAutoHashtags,
 		manualHashtags,
@@ -345,6 +421,8 @@ const usePostComposerState = (initialDraft = null) => {
 		setCustomText,
 		autoAffiliateAmazon,
 		setAutoAffiliateAmazon,
+		includeProductLink,
+		setIncludeProductLink,
 		aiProductName,
 		setAiProductName,
 		aiProductType,
@@ -358,6 +436,7 @@ const usePostComposerState = (initialDraft = null) => {
 		generateSeoSuggestions,
 		handleSubmit,
 		seoVault,
+		productProfiles,
 		availablePlatforms: AVAILABLE_PLATFORMS,
 		isEditing: hasPersistedId,
 	};

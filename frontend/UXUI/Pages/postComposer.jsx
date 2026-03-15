@@ -34,12 +34,19 @@ export default function PostComposer() {
     selectedTargets,
     selectedPlatforms,
     toggleTarget,
+    contentTags,
+    setContentTags,
+    distributionTags,
+    setDistributionTags,
     scheduledAt,
     setScheduledAt,
     saveAsDraft,
     setSaveAsDraft,
+    approveForSchedule,
+    setApproveForSchedule,
     selectedProduct,
     setSelectedProduct,
+    selectedProductProfile,
     useAutoHashtags,
     setUseAutoHashtags,
     manualHashtags,
@@ -50,6 +57,8 @@ export default function PostComposer() {
     setCustomText,
     autoAffiliateAmazon,
     setAutoAffiliateAmazon,
+    includeProductLink,
+    setIncludeProductLink,
     aiProductName,
     setAiProductName,
     aiProductType,
@@ -63,6 +72,7 @@ export default function PostComposer() {
     generateSeoSuggestions,
     handleSubmit,
     seoVault,
+    productProfiles,
     availablePlatforms,
     isEditing,
   } = usePostComposerState(incomingDraft);
@@ -128,18 +138,35 @@ export default function PostComposer() {
     };
   }, []);
 
-  const submitLabel = isEditing ? "Update Post" : "Post It Now";
+  const submitLabel = saveAsDraft
+    ? isEditing
+      ? "Update Draft"
+      : "Save Draft"
+    : approveForSchedule
+    ? isEditing
+      ? "Update + Approve"
+      : "Save + Approve"
+    : isEditing
+    ? "Update Queue Entry"
+    : "Save to Queue";
 
   const onSubmit = async () => {
     setIsSubmitting(true);
-    setStatusMessage(isEditing ? "Updating draft..." : "Launching post...");
+    setStatusMessage(isEditing ? "Saving queue changes..." : "Saving to queue...");
     try {
       const result = await handleSubmit();
       if (result.mode === "update") {
-        setStatusMessage("Draft updated! Back to the calendar?");
-        navigate("/", { replace: true });
+        setStatusMessage(
+          result.data?.status === "approved"
+            ? "Queue entry updated and approved for scheduling."
+            : "Draft updated in the queue."
+        );
       } else {
-        setStatusMessage("Posted across the chosen platforms!");
+        setStatusMessage(
+          result.data?.status === "approved"
+            ? "Saved and approved. The worker can publish it on schedule."
+            : "Saved to the queue as a draft."
+        );
       }
     } catch (error) {
       console.error(error);
@@ -214,8 +241,54 @@ export default function PostComposer() {
       <SeoProductSelector
         selectedProduct={selectedProduct}
         setSelectedProduct={setSelectedProduct}
-        seoVault={seoVault}
+        productProfiles={productProfiles}
       />
+
+      {selectedProductProfile && (
+        <section className="mb-6 rounded border border-amber-600 bg-black/60 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-amber-400">
+                Product Profile
+              </p>
+              <h2 className="text-xl text-pink-300 mt-1">{selectedProductProfile.label}</h2>
+            </div>
+            <span className="rounded-full border border-amber-500 px-3 py-1 text-xs text-amber-200">
+              {selectedProductProfile.category}
+            </span>
+          </div>
+
+          <div className="mt-4 grid gap-4 md:grid-cols-2 text-sm">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-1">Audience</p>
+              <p className="text-teal-200">{selectedProductProfile.audience}</p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-1">Primary Goal</p>
+              <p className="text-teal-200">{selectedProductProfile.primaryGoal}</p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-1">Voice</p>
+              <p className="text-teal-200">{selectedProductProfile.brandVoice}</p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-1">Best Channels</p>
+              <p className="text-teal-200">{selectedProductProfile.promotionChannels.join(", ")}</p>
+            </div>
+          </div>
+
+          {selectedProductProfile.notes?.length > 0 && (
+            <div className="mt-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-teal-500 mb-2">Product Notes</p>
+              <ul className="space-y-1 text-teal-300 text-sm">
+                {selectedProductProfile.notes.map((note) => (
+                  <li key={note}>• {note}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
+      )}
 
       <section className="mb-6 rounded border border-teal-700 bg-black/60 p-4">
         <h2 className="mb-3 text-lg font-semibold text-pink-400">AI SEO Suggestions</h2>
@@ -454,6 +527,37 @@ export default function PostComposer() {
         setCustomText={setCustomText}
       />
 
+      <section className="mb-6 rounded border border-teal-700 bg-black/60 p-4">
+        <h2 className="text-lg font-semibold text-pink-400 mb-3">Tags</h2>
+        <div className="grid gap-4 md:grid-cols-2">
+          <label className="block">
+            <span className="text-sm text-teal-300">Content tags</span>
+            <textarea
+              value={contentTags}
+              onChange={(e) => setContentTags(e.target.value)}
+              placeholder="goblin, burnout, self-care, kawaii, founders"
+              className="mt-2 w-full p-2 bg-black text-green-400 border border-gray-600 min-h-[90px]"
+            />
+            <p className="mt-1 text-xs text-teal-500">
+              Topic and campaign meaning. These help organize and describe the post.
+            </p>
+          </label>
+
+          <label className="block">
+            <span className="text-sm text-teal-300">Distribution tags</span>
+            <textarea
+              value={distributionTags}
+              onChange={(e) => setDistributionTags(e.target.value)}
+              placeholder="post:facebook, post:pinterest, post:instagram"
+              className="mt-2 w-full p-2 bg-black text-green-400 border border-gray-600 min-h-[90px]"
+            />
+            <p className="mt-1 text-xs text-teal-500">
+              Use tags like <code>post:facebook</code>. These auto-fill routing targets.
+            </p>
+          </label>
+        </div>
+      </section>
+
         <label className="block mb-4 text-green-400">
           Schedule Post:
           <input
@@ -468,10 +572,40 @@ export default function PostComposer() {
         <input
           type="checkbox"
           checked={saveAsDraft}
-          onChange={() => setSaveAsDraft(!saveAsDraft)}
+          onChange={() => {
+            const nextValue = !saveAsDraft;
+            setSaveAsDraft(nextValue);
+            if (nextValue) {
+              setApproveForSchedule(false);
+            }
+          }}
           className="mr-2"
         />
-        Save as Draft
+        Keep as draft
+      </label>
+
+      <label className="block mb-4 text-green-400">
+        <input
+          type="checkbox"
+          checked={approveForSchedule}
+          disabled={saveAsDraft}
+          onChange={() => setApproveForSchedule(!approveForSchedule)}
+          className="mr-2"
+        />
+        Approve for scheduled posting
+      </label>
+      <p className="mb-4 text-xs text-teal-400">
+        If you wrote it yourself, leave approval on. AI-generated copy defaults back to draft until you approve it.
+      </p>
+
+      <label className="block mb-4 text-green-400">
+        <input
+          type="checkbox"
+          checked={includeProductLink}
+          onChange={() => setIncludeProductLink(!includeProductLink)}
+          className="mr-2"
+        />
+        Include product link in outgoing copy
       </label>
 
       <label className="block mb-4 text-green-400">

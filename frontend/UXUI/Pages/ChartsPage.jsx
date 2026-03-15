@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { isApprovedStatus, normalizePostStatus } from "../utils/postStatus";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
@@ -28,14 +29,16 @@ const computeStatsFromPosts = (posts) => {
 	}
 
 	const totalPosts = posts.length;
-	const scheduledPosts = posts.filter((post) =>
-		post.status ? String(post.status).toLowerCase() === "approved" : false,
-	);
+	const normalizedPosts = posts.map((post) => ({
+		...post,
+		status: normalizePostStatus(post.status),
+	}));
+	const scheduledPosts = normalizedPosts.filter((post) => isApprovedStatus(post.status));
 	const scheduledCount = scheduledPosts.length;
 	const scheduledPercent =
 		totalPosts === 0 ? 0 : Math.round((scheduledCount / totalPosts) * 100);
 
-	const platformCounts = posts.reduce((acc, post) => {
+	const platformCounts = normalizedPosts.reduce((acc, post) => {
 		const list = post.platform
 			? [post.platform]
 			: Array.isArray(post.platforms)
@@ -49,11 +52,11 @@ const computeStatsFromPosts = (posts) => {
 		return acc;
 	}, {});
 
-	const oldestUnscheduled = posts
-		.filter((post) => String(post.status ?? "").toLowerCase() !== "approved")
+	const oldestUnscheduled = normalizedPosts
+		.filter((post) => !isApprovedStatus(post.status))
 		.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))[0] || null;
 
-	const mostEngaged = [...posts]
+	const mostEngaged = [...normalizedPosts]
 		.filter((post) => typeof post.engagement === "number")
 		.sort((a, b) => b.engagement - a.engagement)[0] || null;
 
@@ -64,7 +67,7 @@ const computeStatsFromPosts = (posts) => {
 		platformCounts,
 		oldestUnscheduled,
 		mostEngaged,
-		posts,
+		posts: normalizedPosts,
 	};
 };
 

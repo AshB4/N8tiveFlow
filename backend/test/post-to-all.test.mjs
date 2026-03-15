@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import {
   normalizeTargets,
   withAffiliateTag,
+  normalizeProductLink,
+  ensureProductLink,
   isConfiguredValue,
   isThreadsConfigured,
 } from "../scripts/platforms/post-to-all.js";
@@ -36,6 +38,27 @@ test("withAffiliateTag preserves vended Amazon links", () => {
     "https://www.amazon.com/example-product?ref_=abc123&linkCode=ll1";
   const result = withAffiliateTag(source, "ashb4studio0b-20");
   assert.equal(result, source);
+});
+
+test("normalizeProductLink tags amazon product links", () => {
+  const result = normalizeProductLink(
+    {
+      metadata: {
+        productLinks: {
+          primary: "https://www.amazon.com/example-product",
+        },
+      },
+    },
+    "ashb4studio0b-20",
+  );
+
+  assert.match(result, /amazon\.com\/example-product\?tag=ashb4studio0b-20/);
+});
+
+test("ensureProductLink appends missing product link", () => {
+  const result = ensureProductLink("Helpful punch post", "https://example.com/product");
+  assert.match(result, /Helpful punch post/);
+  assert.match(result, /https:\/\/example\.com\/product/);
 });
 
 test("isConfiguredValue rejects placeholders", () => {

@@ -8,6 +8,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
 import DayPostsModal from "../Components/CalendarPage/DayPostsModal.jsx";
 import logo from "../../assets/PostPunkTransparentLogo.png";
+import { isApprovedStatus, normalizePostStatus } from "../utils/postStatus";
 
 const getPostDate = (post) => {
   const raw =
@@ -76,7 +77,12 @@ export default function PostCalendar() {
       try {
         const res = await fetch("http://localhost:3001/api/posts");
         const data = await res.json();
-        setPostQueue(data);
+        setPostQueue(
+          data.map((post) => ({
+            ...post,
+            status: normalizePostStatus(post.status),
+          })),
+        );
       } catch (err) {
         console.error("Failed to load posts", err);
       } finally {
@@ -87,7 +93,7 @@ export default function PostCalendar() {
     loadPosts();
   }, []);
 
-  const scheduledPosts = postQueue.filter((post) => post.status === "approved");
+  const scheduledPosts = postQueue.filter((post) => isApprovedStatus(post.status));
 
   const percentScheduled = postQueue.length > 0
     ? Math.round((scheduledPosts.length / postQueue.length) * 100)
@@ -106,7 +112,7 @@ export default function PostCalendar() {
   }, {});
 
   const oldestUnscheduled = postQueue
-    .filter((post) => post.status !== "approved")
+    .filter((post) => !isApprovedStatus(post.status))
     .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))[0];
 
   const mostEngaged = [...postQueue]
@@ -116,7 +122,7 @@ export default function PostCalendar() {
   const eventz = useMemo(
     () =>
       postQueue
-        .filter((post) => post.status === "approved")
+        .filter((post) => isApprovedStatus(post.status))
         .map((post) => {
           const dateIso = getPostDate(post);
           return {
@@ -221,6 +227,12 @@ export default function PostCalendar() {
           className="h-32 w-auto drop-shadow-[0_0_12px_#ff00ff]"
         />
         <div className="flex flex-wrap gap-3">
+          <Link
+            to="/today"
+            className="px-4 py-2 border border-amber-500 text-amber-300 hover:bg-amber-500 hover:text-black transition-colors rounded"
+          >
+            Today Ops
+          </Link>
           <Link
             to="/compose"
             className="px-4 py-2 border border-pink-500 text-pink-300 hover:bg-pink-500 hover:text-black transition-colors rounded"

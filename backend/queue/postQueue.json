@@ -1,55 +1,599 @@
 [
   {
-    "id": "post-001",
-    "title": "Cron Ritual Hacks",
+    "id": "p_20260330_01",
+    "title": "Automation is only impressive until it misses the day you needed it most.",
+    "body": "A lot of creator automation tools look slick right up until they become one more thing you have to monitor.\n\nThe real value is trust: seeing what is due, knowing what failed, and not losing your mind over the queue.\n\nThat is the standard I care about.",
     "platforms": [
-      "LinkedIn",
-      "Twitter"
+      "linkedin",
+      "devto",
+      "x"
+    ],
+    "targets": [
+      { "platform": "linkedin", "accountId": null },
+      { "platform": "devto", "accountId": null },
+      { "platform": "x", "accountId": null }
     ],
     "status": "approved",
-    "scheduled_at": "2025-05-25T10:00:00",
-    "body": "Did you know CRON can summon demons at 3AM?",
-    "image": "ritual.jpg",
-    "altText": "Terminal showing cron expression"
+    "scheduledAt": "2026-03-30T15:00:00.000Z",
+    "body": "A lot of creator automation tools look slick right up until they become one more thing you have to monitor.\n\nThe real value is trust: seeing what is due, knowing what failed, and not losing your mind over the queue.\n\nThat is the standard I care about.",
+    "altText": "Queue dashboard showing scheduled posts and daily operations view",
+    "hashtags": "#automation #devtools #creatorops",
+    "tags": ["automation", "trust", "creator-ops"],
+    "metadata": {
+      "productProfileId": "postpunk-core",
+      "productProfileLabel": "PostPunk Core",
+      "productCategory": "Devtools",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "",
+        "primary": ""
+      },
+      "contentTags": ["automation", "trust", "creator-ops"],
+      "distributionTags": ["post:linkedin", "post:devto", "post:x"],
+      "approvalSource": "recycled-queue",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:20:00.000Z"
   },
   {
-    "title": "Cron Ritual Hacks",
+    "id": "p_20260401_01",
+    "title": "Weird affirmations work better for me than polished ones.",
+    "body": "Not everybody wants healing language that sounds like it came from a luxury retreat.\n\nGoblin Core Coloring Affirmations is for people who want something funny, printable, and weirdly comforting.\n\nThat still counts as self-care.",
+    "body": "Not everybody wants healing language that sounds like it came from a luxury retreat.\n\nGoblin Core Coloring Affirmations is for people who want something funny, printable, and weirdly comforting.\n\nThat still counts as self-care.",
     "status": "approved",
-    "platform": "LinkedIn",
-    "scheduled_at": "2025-05-09T10:00:00"
-  },
-  {
-    "title": "Install Video",
-    "status": "approved",
-    "platform": "YouTube",
-    "scheduled_at": "2025-05-10T12:00:00"
-  },
-  {
-    "title": "System Reboot?",
-    "status": "approved",
-    "platform": "Twitter",
-    "scheduled_at": "2025-05-08T22:00:00"
-  },
-  {
-    "title": "Dev Confession",
-    "status": "approved",
-    "platform": "Instagram",
-    "scheduled_at": "2025-05-11T11:00:00"
-  },
-  {
-    "title": "BTS Debug",
-    "status": "approved",
-    "platform": "Dev.to",
-    "scheduled_at": "2025-05-24T15:00:00"
-  },
-  {
-    "id": "p_1760677301030",
-    "title": "Cron Ritual Hacks",
-    "body": "asfasdfasdf",
     "platforms": [
-      "linkedin"
+      "facebook",
+      "instagram",
+      "pinterest"
     ],
-    "scheduledAt": "2025-05-09T15:00:00.000Z",
-    "status": "draft"
+    "targets": [
+      { "platform": "facebook", "accountId": null },
+      { "platform": "instagram", "accountId": null },
+      { "platform": "pinterest", "accountId": null }
+    ],
+    "scheduledAt": "2026-04-01T15:00:00.000Z",
+    "hashtags": "#goblincore #affirmations #printables",
+    "tags": ["goblin", "affirmations", "self-care"],
+    "metadata": {
+      "productProfileId": "goblin-coloring-affirmations",
+      "productProfileLabel": "Goblin Core Coloring Affirmations",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "includeProductLink": true,
+      "contentTags": ["goblin", "affirmations", "self-care"],
+      "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
+      "approvalSource": "recycled-queue",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:21:00.000Z"
+  },
+  {
+    "id": "p_20260403_01",
+    "title": "If your strategy keeps changing every week, that is not agility.",
+    "body": "A lot of teams call it flexibility when what they really have is weak prioritization.\n\nProduct Strategy 25 is meant to help you stop confusing motion for direction.\n\nUseful strategy should make the next decision easier, not louder.",
+    "platforms": [
+      "linkedin",
+      "reddit",
+      "x"
+    ],
+    "targets": [
+      { "platform": "linkedin", "accountId": null },
+      { "platform": "reddit", "accountId": null },
+      { "platform": "x", "accountId": null }
+    ],
+    "status": "approved",
+    "scheduledAt": "2026-04-03T15:00:00.000Z",
+    "hashtags": "#productstrategy #founders #decisionmaking",
+    "tags": ["strategy", "founders", "prioritization"],
+    "metadata": {
+      "productProfileId": "product-strategy-25",
+      "productProfileLabel": "Product Strategy 25",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/product-strategy-25",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/product-strategy-25"
+      },
+      "includeProductLink": true,
+      "contentTags": ["strategy", "founders", "prioritization"],
+      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "approvalSource": "recycled-queue",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:22:00.000Z"
+  },
+  {
+    "id": "p_20260404_01",
+    "title": "Coloring books do not have to be loud to be interesting.",
+    "body": "Buzzing Adventures Coloring Book leans gentle on purpose.\n\nIt is nature-themed, family-friendly, and made for the kind of quiet creative time people keep saying they want more of.\n\nSometimes soft wins.",
+    "platforms": [
+      "amazon",
+      "pinterest",
+      "facebook",
+      "instagram"
+    ],
+    "targets": [
+      { "platform": "amazon", "accountId": null },
+      { "platform": "pinterest", "accountId": null },
+      { "platform": "facebook", "accountId": null },
+      { "platform": "instagram", "accountId": null }
+    ],
+    "status": "approved",
+    "scheduledAt": "2026-04-04T15:00:00.000Z",
+    "hashtags": "#coloringbook #bees #familyactivities",
+    "tags": ["bees", "gentle", "family-friendly"],
+    "metadata": {
+      "productProfileId": "buzzing-adventures-coloring-book",
+      "productProfileLabel": "Buzzing Adventures Coloring Book",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX",
+        "primary": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX"
+      },
+      "includeProductLink": true,
+      "contentTags": ["bees", "gentle", "family-friendly"],
+      "distributionTags": ["post:amazon", "post:pinterest", "post:facebook", "post:instagram"],
+      "approvalSource": "recycled-queue",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:23:00.000Z"
+  },
+  {
+    "id": "p_20260405_01",
+    "title": "Some self-care products are too pretty to trust.",
+    "body": "Goblin Ritual Coloring Kit is for people who want something that feels honest, funny, and a little unhinged in the best way.\n\nIf polished wellness content makes you roll your eyes, this is probably more your speed.",
+    "platforms": [
+      "facebook",
+      "instagram",
+      "pinterest"
+    ],
+    "targets": [
+      { "platform": "facebook", "accountId": null },
+      { "platform": "instagram", "accountId": null },
+      { "platform": "pinterest", "accountId": null }
+    ],
+    "status": "approved",
+    "scheduledAt": "2026-04-05T15:00:00.000Z",
+    "hashtags": "#goblinmode #selfcare #coloringkit",
+    "tags": ["goblin", "burnout", "self-care"],
+    "metadata": {
+      "productProfileId": "goblin-self-care-coloring-book",
+      "productProfileLabel": "Goblin Self-Care Coloring Book",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-ritual-coloring-kit",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-ritual-coloring-kit"
+      },
+      "includeProductLink": true,
+      "contentTags": ["goblin", "burnout", "self-care"],
+      "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
+      "approvalSource": "recycled-queue",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:24:00.000Z"
+  },
+  {
+    "id": "p_20260406_01",
+    "title": "The best prompt packs do not make you feel smarter. They make you start.",
+    "body": "A lot of creative tools overpromise genius and underdeliver momentum.\n\n100 Prompt Storm is useful because it reduces friction at the exact point most people stall: the blank page.\n\nThat matters more than hype.",
+    "platforms": [
+      "linkedin",
+      "reddit",
+      "x"
+    ],
+    "targets": [
+      { "platform": "linkedin", "accountId": null },
+      { "platform": "reddit", "accountId": null },
+      { "platform": "x", "accountId": null }
+    ],
+    "status": "approved",
+    "scheduledAt": "2026-04-06T15:00:00.000Z",
+    "hashtags": "#prompts #creators #writingtools",
+    "tags": ["prompts", "creators", "momentum"],
+    "metadata": {
+      "productProfileId": "prompt-storm",
+      "productProfileLabel": "100 Prompt Storm",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
+      },
+      "contentTags": ["prompts", "creators", "momentum"],
+      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "approvalSource": "recycled-queue",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:25:00.000Z"
+  },
+  {
+    "id": "p_20260408_01",
+    "title": "Helpful beats slick when people are trying to buy leverage.",
+    "body": "Gumroad devtools and frameworks do better when they answer a real bottleneck instead of sounding clever.\n\nThat is the whole lane: make useful things for people who are tired of wasting hours on avoidable problems.",
+    "platforms": [
+      "linkedin",
+      "reddit",
+      "x"
+    ],
+    "targets": [
+      { "platform": "linkedin", "accountId": null },
+      { "platform": "reddit", "accountId": null },
+      { "platform": "x", "accountId": null }
+    ],
+    "scheduledAt": "2026-04-08T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": "#gumroad #devtools #indiehackers",
+    "tags": ["gumroad", "devtools", "leverage"],
+    "metadata": {
+      "productProfileId": "gumroad-devtools",
+      "productProfileLabel": "Gumroad Devtools",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/ai-powered-grad",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/ai-powered-grad"
+      },
+      "contentTags": ["gumroad", "devtools", "leverage"],
+      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "approvalSource": "recycled-queue",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:26:00.000Z"
+  },
+  {
+    "id": "p_20260316_01",
+    "title": "Founders do not need more ideas. They need better filters.",
+    "body": "Most founders are not stuck because they lack ideas. They are stuck because they keep feeding time into the wrong ones.\n\nProduct Strategy 25 is built to force sharper decisions earlier so you waste less time building things no one wants.\n\nIf your product backlog feels like a junk drawer, this is for you.",
+    "platforms": [
+      "linkedin",
+      "reddit",
+      "x"
+    ],
+    "targets": [
+      { "platform": "linkedin", "accountId": null },
+      { "platform": "reddit", "accountId": null },
+      { "platform": "x", "accountId": null }
+    ],
+    "scheduledAt": "2026-03-16T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": "#productstrategy #founders #buildinpublic",
+    "tags": ["founders", "product-strategy", "decision-making"],
+    "metadata": {
+      "productProfileId": "product-strategy-25",
+      "productProfileLabel": "Product Strategy 25",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/product-strategy-25",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/product-strategy-25"
+      },
+      "contentTags": ["founders", "product-strategy", "decision-making"],
+      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "approvalSource": "composer",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:00:00.000Z"
+  },
+  {
+    "id": "p_20260318_01",
+    "title": "When your brain is empty, prompts beat motivation.",
+    "body": "Creator block is usually not a talent problem. It is a starting problem.\n\n100 Prompt Storm gives you enough angles, hooks, and directions to stop waiting for inspiration and start making things again.\n\nGood systems beat mood every time.",
+    "platforms": [
+      "linkedin",
+      "reddit",
+      "x"
+    ],
+    "targets": [
+      { "platform": "linkedin", "accountId": null },
+      { "platform": "reddit", "accountId": null },
+      { "platform": "x", "accountId": null }
+    ],
+    "scheduledAt": "2026-03-18T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": "#creators #promptpack #productivity",
+    "tags": ["prompts", "creators", "content-block"],
+    "metadata": {
+      "productProfileId": "prompt-storm",
+      "productProfileLabel": "100 Prompt Storm",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
+      },
+      "contentTags": ["prompts", "creators", "content-block"],
+      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "approvalSource": "composer",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:01:00.000Z"
+  },
+  {
+    "id": "p_20260320_01",
+    "title": "Graduation season is chaotic enough without fake productivity hacks.",
+    "body": "AI Powered Grad is for people who want practical help, not vague advice.\n\nIf you are trying to write faster, organize better, or get through graduation season without losing your mind, this was made for that exact pressure.\n\nUseful beats clever.",
+    "platforms": [
+      "facebook",
+      "pinterest",
+      "x"
+    ],
+    "targets": [
+      { "platform": "facebook", "accountId": null },
+      { "platform": "pinterest", "accountId": null },
+      { "platform": "x", "accountId": null }
+    ],
+    "scheduledAt": "2026-03-20T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": "#graduation #aihelp #studenttools",
+    "tags": ["graduation", "ai", "students"],
+    "metadata": {
+      "productProfileId": "ai-powered-grad",
+      "productProfileLabel": "AI Powered Grad",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/ai-powered-grad",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/ai-powered-grad"
+      },
+      "includeProductLink": true,
+      "contentTags": ["graduation", "ai", "students"],
+      "distributionTags": ["post:facebook", "post:pinterest", "post:x"],
+      "approvalSource": "composer",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:02:00.000Z"
+  },
+  {
+    "id": "p_20260321_01",
+    "title": "Cute, spooky, and actually relaxing.",
+    "body": "Scary Kawaii Halloween Coloring Book is for people who want cozy spooky energy without losing the cute factor.\n\nIt is sweet, weird, visual, and giftable in the exact way kawaii people understand immediately.\n\nThis is a very real need and I will not be taking questions.",
+    "platforms": [
+      "amazon",
+      "pinterest",
+      "instagram",
+      "facebook"
+    ],
+    "targets": [
+      { "platform": "amazon", "accountId": null },
+      { "platform": "pinterest", "accountId": null },
+      { "platform": "instagram", "accountId": null },
+      { "platform": "facebook", "accountId": null }
+    ],
+    "scheduledAt": "2026-03-21T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": "#kawaii #coloringbook #spookyseason",
+    "tags": ["kawaii", "coloring-book", "cute-spooky"],
+    "metadata": {
+      "productProfileId": "kawaii-coloring-series",
+      "productProfileLabel": "Kawaii Coloring Series",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/-/es/Scary-Kawaii-Halloween-Coloring-Book/dp/B0DHDNTW87",
+        "primary": "https://www.amazon.com/-/es/Scary-Kawaii-Halloween-Coloring-Book/dp/B0DHDNTW87"
+      },
+      "includeProductLink": true,
+      "contentTags": ["kawaii", "coloring-book", "cute-spooky"],
+      "distributionTags": ["post:amazon", "post:pinterest", "post:instagram", "post:facebook"],
+      "approvalSource": "composer",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:03:00.000Z"
+  },
+  {
+    "id": "p_20260322_01",
+    "title": "Goblin self-care is still self-care.",
+    "body": "Not everybody wants wellness content that sounds like it was written by a beige candle.\n\nGoblin Ritual Coloring Kit is for the people who are exhausted, a little unhinged, and still trying to take care of themselves anyway.\n\nIt is funny on purpose. That is part of the medicine.",
+    "platforms": [
+      "facebook",
+      "instagram",
+      "pinterest"
+    ],
+    "targets": [
+      { "platform": "facebook", "accountId": null },
+      { "platform": "instagram", "accountId": null },
+      { "platform": "pinterest", "accountId": null }
+    ],
+    "scheduledAt": "2026-03-22T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": "#selfcare #goblinmode #coloringbook",
+    "tags": ["goblin", "self-care", "burnout"],
+    "metadata": {
+      "productProfileId": "goblin-self-care-coloring-book",
+      "productProfileLabel": "Goblin Self-Care Coloring Book",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-ritual-coloring-kit",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-ritual-coloring-kit"
+      },
+      "includeProductLink": true,
+      "contentTags": ["goblin", "self-care", "burnout"],
+      "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
+      "approvalSource": "composer",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:04:00.000Z"
+  },
+  {
+    "id": "p_20260323_01",
+    "title": "Most automation tools feel impressive right up until you have to trust them.",
+    "body": "The hard part is not making automation run once. The hard part is making it reliable enough that you stop babysitting it.\n\nThat is the whole point of PostPunk Core: queue it, schedule it, see what is due, and stop pretending chaos is a workflow.",
+    "platforms": [
+      "linkedin",
+      "devto",
+      "x"
+    ],
+    "targets": [
+      { "platform": "linkedin", "accountId": null },
+      { "platform": "devto", "accountId": null },
+      { "platform": "x", "accountId": null }
+    ],
+    "scheduledAt": "2026-03-23T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": "#automation #buildinpublic #devtools",
+    "tags": ["automation", "creator-ops", "devtools"],
+    "metadata": {
+      "productProfileId": "postpunk-core",
+      "productProfileLabel": "PostPunk Core",
+      "productCategory": "Devtools",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "",
+        "primary": ""
+      },
+      "contentTags": ["automation", "creator-ops", "devtools"],
+      "distributionTags": ["post:linkedin", "post:devto", "post:x"],
+      "approvalSource": "composer",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:05:00.000Z"
+  },
+  {
+    "id": "p_20260325_01",
+    "title": "Affirmations, but make them goblin.",
+    "body": "Goblin Core Coloring Affirmations is what happens when self-talk gets tired of pretending to be polished.\n\nIt is weird, printable, funny, and honestly a lot more comforting than another perfect morning-routine graphic.\n\nSome people heal in a straight line. Some of us need goblin stationery.",
+    "platforms": [
+      "facebook",
+      "instagram",
+      "pinterest"
+    ],
+    "targets": [
+      { "platform": "facebook", "accountId": null },
+      { "platform": "instagram", "accountId": null },
+      { "platform": "pinterest", "accountId": null }
+    ],
+    "scheduledAt": "2026-03-25T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": "#affirmations #goblincore #printables",
+    "tags": ["goblin", "affirmations", "printable"],
+    "metadata": {
+      "productProfileId": "goblin-coloring-affirmations",
+      "productProfileLabel": "Goblin Core Coloring Affirmations",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "includeProductLink": true,
+      "contentTags": ["goblin", "affirmations", "printable"],
+      "distributionTags": ["post:facebook", "post:instagram", "post:pinterest"],
+      "approvalSource": "composer",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:06:00.000Z"
+  },
+  {
+    "id": "p_20260327_01",
+    "title": "If your roadmap feels like a coping mechanism, fix the system.",
+    "body": "Product Strategy 25 is for the moment when you realize your team is not actually short on effort. You are short on clarity.\n\nThe right framework saves more time than the right hype.\n\nThat is the whole pitch.",
+    "platforms": [
+      "linkedin",
+      "reddit",
+      "x"
+    ],
+    "targets": [
+      { "platform": "linkedin", "accountId": null },
+      { "platform": "reddit", "accountId": null },
+      { "platform": "x", "accountId": null }
+    ],
+    "scheduledAt": "2026-03-27T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": "#productstrategy #founders #indiehackers",
+    "tags": ["product-strategy", "roadmap", "clarity"],
+    "metadata": {
+      "productProfileId": "product-strategy-25",
+      "productProfileLabel": "Product Strategy 25",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/product-strategy-25",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/product-strategy-25"
+      },
+      "includeProductLink": true,
+      "contentTags": ["product-strategy", "roadmap", "clarity"],
+      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "approvalSource": "composer",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:07:00.000Z"
+  },
+  {
+    "id": "p_20260328_01",
+    "title": "A bee coloring book is a deeply good idea, actually.",
+    "body": "Buzzing Adventures Coloring Book is soft, playful, and easy to gift.\n\nIt is the kind of book that works for kids, classrooms, gentle weekend activities, and people who just want something sweet instead of loud.\n\nSometimes wholesome wins.",
+    "platforms": [
+      "amazon",
+      "pinterest",
+      "facebook",
+      "instagram"
+    ],
+    "targets": [
+      { "platform": "amazon", "accountId": null },
+      { "platform": "pinterest", "accountId": null },
+      { "platform": "facebook", "accountId": null },
+      { "platform": "instagram", "accountId": null }
+    ],
+    "scheduledAt": "2026-03-28T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": "#coloringbook #bees #kidactivities",
+    "tags": ["bees", "nature", "family-friendly"],
+    "metadata": {
+      "productProfileId": "buzzing-adventures-coloring-book",
+      "productProfileLabel": "Buzzing Adventures Coloring Book",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX",
+        "primary": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX"
+      },
+      "includeProductLink": true,
+      "contentTags": ["bees", "nature", "family-friendly"],
+      "distributionTags": ["post:amazon", "post:pinterest", "post:facebook", "post:instagram"],
+      "approvalSource": "composer",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:08:00.000Z"
+  },
+  {
+    "id": "p_20260329_01",
+    "title": "You do not need more pressure. You need better starting points.",
+    "body": "100 Prompt Storm is for the days when you want to make something but your brain keeps opening twenty tabs and none of them are helpful.\n\nA good prompt pack is not magic. It is just a cleaner door into momentum.\n\nThat is enough.",
+    "platforms": [
+      "linkedin",
+      "reddit",
+      "x"
+    ],
+    "targets": [
+      { "platform": "linkedin", "accountId": null },
+      { "platform": "reddit", "accountId": null },
+      { "platform": "x", "accountId": null }
+    ],
+    "scheduledAt": "2026-03-29T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": "#prompts #creativity #writersblock",
+    "tags": ["prompts", "momentum", "creativity"],
+    "metadata": {
+      "productProfileId": "prompt-storm",
+      "productProfileLabel": "100 Prompt Storm",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
+      },
+      "contentTags": ["prompts", "momentum", "creativity"],
+      "distributionTags": ["post:linkedin", "post:reddit", "post:x"],
+      "approvalSource": "composer",
+      "requiresReview": false
+    },
+    "createdAt": "2026-03-15T02:09:00.000Z"
   }
 ]

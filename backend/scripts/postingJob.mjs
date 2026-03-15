@@ -7,6 +7,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { normalizeTargets, postToAllPlatforms } from "./platforms/post-to-all.js";
 import { sendPostPunkTelegramAlert } from "../utils/telegramAlerts.mjs";
+import { isApprovedStatus } from "../utils/postStatus.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -144,8 +145,7 @@ async function processQueue() {
 
 	const now = Date.now();
 	const readyPosts = queue.filter((post) => {
-		const status = String(post.status ?? "").toLowerCase();
-		if (status !== "approved") return false;
+		if (!isApprovedStatus(post.status)) return false;
 		if (Number(post.attemptCount || 0) >= MAX_ATTEMPTS) return false;
 		const when = toDate(post.scheduledAt ?? post.scheduled_at);
 		const retryAt = toDate(post.nextAttemptAt);

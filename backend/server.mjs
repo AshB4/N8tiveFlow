@@ -13,6 +13,8 @@ import { findDuplicatePost } from "./utils/queueGuard.mjs";
 import { generateSeoPayload, getDryRunPayload } from "./utils/seoGeneration.mjs";
 import { buildAnalyticsSummary } from "./utils/analyticsSummary.mjs";
 import { runPlatformHealthChecks } from "./utils/platformHealth.mjs";
+import { normalizePostStatus } from "./utils/postStatus.mjs";
+import { distributionTagsToTargets, normalizeTagList } from "./utils/distributionTags.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -175,6 +177,7 @@ app.post("/api/ai/seo-generate", async (req, res) => {
 			productType,
 			audience,
 			platformIds = [],
+			productProfileId = null,
 			provider,
 			model,
 			dryRun = false,
@@ -185,7 +188,7 @@ app.post("/api/ai/seo-generate", async (req, res) => {
 			});
 		}
 
-		const input = { productName, productType, audience, platformIds };
+		const input = { productName, productType, audience, platformIds, productProfileId };
 		const options = { provider, model };
 		const result = dryRun
 			? getDryRunPayload(input, options)
@@ -249,25 +252,41 @@ app.post("/api/posts", async (req, res) => {
 			altText = "",
 			metadata = {},
 			status = "draft",
+			hashtags = null,
+			platformOverrides = null,
+			tags = [],
 		} = req.body ?? {};
 		if (!title || !body)
 			return res.status(400).json({ error: "title and body required" });
 		const posts = await readJson(Q_POSTS);
 		const id = "p_" + Date.now();
-		const normalizedTargets = normalizeTargets(targets.length ? targets : platforms);
+		const distributionTargets = distributionTagsToTargets(
+			metadata?.distributionTags || [],
+		);
+		const normalizedTargets = normalizeTargets(
+			targets.length ? [...targets, ...distributionTargets] : [...platforms, ...distributionTargets],
+		);
 		const post = {
 			id,
 			title,
-				body,
-				image,
-				mediaPath,
-				mediaType,
-				altText,
+			body,
+			image,
+			mediaPath,
+			mediaType,
+			altText,
 			platforms: normalizedTargets.map((target) => target.platform),
 			targets: normalizedTargets,
 			scheduledAt,
-			status,
-			metadata,
+			status: normalizePostStatus(status),
+			hashtags,
+			platformOverrides,
+			metadata: {
+				...metadata,
+				contentTags: normalizeTagList(metadata?.contentTags || tags),
+				distributionTags: normalizeTagList(metadata?.distributionTags || []),
+			},
+			tags: normalizeTagList(tags),
+			createdAt: new Date().toISOString(),
 		};
 		const duplicate = findDuplicatePost(posts, post);
 		if (duplicate) {
@@ -290,20 +309,59 @@ app.put("/api/posts/:id", async (req, res) => {
 		const i = posts.findIndex((p) => p.id === req.params.id);
 		if (i === -1) return res.status(404).json({ error: "not found" });
 		const updates = { ...req.body };
+		if ("status" in updates) {
+			updates.status = normalizePostStatus(updates.status, posts[i].status || "draft");
+		}
+		if ("tags" in updates) {
+			updates.tags = normalizeTagList(updates.tags);
+		}
+		if ("metadata" in updates && updates.metadata) {
+			updates.metadata = {
+				...posts[i].metadata,
+				...updates.metadata,
+				contentTags: normalizeTagList(
+					updates.metadata.contentTags || updates.tags || posts[i].metadata?.contentTags || [],
+				),
+				distributionTags: normalizeTagList(
+					updates.metadata.distributionTags || posts[i].metadata?.distributionTags || [],
+				),
+			};
+		}
+		const nextDistributionTargets = distributionTagsToTargets(
+			updates.metadata?.distributionTags || posts[i].metadata?.distributionTags || [],
+		);
 		if (Array.isArray(updates.targets)) {
-			const normalizedTargets = normalizeTargets(updates.targets);
+			const normalizedTargets = normalizeTargets([
+				...updates.targets,
+				...nextDistributionTargets,
+			]);
+			updates.targets = normalizedTargets;
+			updates.platforms = normalizedTargets.map((target) => target.platform);
+		} else if ("metadata" in updates && nextDistributionTargets.length > 0) {
+			const existingTargets = Array.isArray(posts[i].targets)
+				? posts[i].targets
+				: posts[i].platforms || [];
+			const normalizedTargets = normalizeTargets([
+				...existingTargets,
+				...nextDistributionTargets,
+			]);
 			updates.targets = normalizedTargets;
 			updates.platforms = normalizedTargets.map((target) => target.platform);
 		}
-			posts[i] = { ...posts[i], ...updates, id: posts[i].id };
-			const duplicate = findDuplicatePost(posts, posts[i], { excludeId: posts[i].id });
-			if (duplicate) {
-				return res.status(409).json({
-					error: "Duplicate queue entry",
-					detail: `Matches existing post ${duplicate.id}`,
-				});
-			}
-			await writeJson(Q_POSTS, posts);
+		posts[i] = {
+			...posts[i],
+			...updates,
+			id: posts[i].id,
+			updatedAt: new Date().toISOString(),
+		};
+		const duplicate = findDuplicatePost(posts, posts[i], { excludeId: posts[i].id });
+		if (duplicate) {
+			return res.status(409).json({
+				error: "Duplicate queue entry",
+				detail: `Matches existing post ${duplicate.id}`,
+			});
+		}
+		await writeJson(Q_POSTS, posts);
 		res.json(posts[i]);
 	} catch (e) {
 		res.status(500).json({ error: "Failed to update post", detail: String(e) });

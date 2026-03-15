@@ -21,8 +21,25 @@ function buildPlatformGuidance(selectedPlatforms = []) {
 		.join("\n");
 }
 
+function buildProductGuidance(productProfile) {
+	if (!productProfile) {
+		return "No product profile selected. Keep the copy broadly useful.";
+	}
+
+	return `Selected product profile:
+- label: ${productProfile.label}
+- category: ${productProfile.category}
+- product type: ${productProfile.productType}
+- audience: ${productProfile.audience}
+- brand voice: ${productProfile.brandVoice}
+- primary goal: ${productProfile.primaryGoal}
+- promotion channels: ${productProfile.promotionChannels?.join(", ") || "general"}
+- notes: ${productProfile.notes?.join(" | ") || "none"}`;
+}
+
 export const buildSeoPrompt = (productName, productType, audience, options = {}) => {
 	const platformGuidance = buildPlatformGuidance(options.selectedPlatforms);
+	const productGuidance = buildProductGuidance(options.productProfile);
 	return `
 You are an SEO and branding expert.
 
@@ -36,12 +53,22 @@ Return valid JSON only. Do not wrap it in markdown fences.
 Platform-specific writing guidance:
 ${platformGuidance}
 
+Product-specific guidance:
+${productGuidance}
+
 Honor the selected platform guidance in:
 - seo_human_pitch
 - keywords and hashtags
 - search query framing
 - campaign naming ideas
 - preferred platform emphasis
+
+Honor the product guidance in:
+- tone consistency
+- audience framing
+- offer positioning
+- CTA direction
+- link destination assumptions
 
 Use this exact shape:
 {

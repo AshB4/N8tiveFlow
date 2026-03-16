@@ -8,14 +8,11 @@ import { fileURLToPath } from "url";
 import { normalizeTargets, postToAllPlatforms } from "./platforms/post-to-all.js";
 import { sendPostPunkTelegramAlert } from "../utils/telegramAlerts.mjs";
 import { isApprovedStatus } from "../utils/postStatus.mjs";
+import { initLocalDb, readStoreSnapshot, replaceStoreSnapshot } from "../utils/localDb.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const QUEUE_DIR = path.join(__dirname, "../queue");
-const FILE_QUEUE = path.join(QUEUE_DIR, "postQueue.json");
-const FILE_POSTED = path.join(QUEUE_DIR, "postedLog.json");
-const FILE_REJECTED = path.join(QUEUE_DIR, "rejections.json");
 const MAX_ATTEMPTS = Number(process.env.POSTPUNK_MAX_ATTEMPTS || 2);
 const RETRY_DELAY_MINUTES = Number(process.env.POSTPUNK_RETRY_DELAY_MINUTES || 30);
 
@@ -55,34 +52,6 @@ const PLATFORM_ALIASES = {
 	instagram: "instagram",
 	ig: "instagram",
 };
-
-async function ensureQueueFiles() {
-	await mkdir(QUEUE_DIR, { recursive: true });
-	const ensure = async (file, fallback) => {
-		try {
-			await access(file, fs.constants.F_OK);
-		} catch {
-			await writeJson(file, fallback);
-		}
-	};
-	await ensure(FILE_QUEUE, []);
-	await ensure(FILE_POSTED, []);
-	await ensure(FILE_REJECTED, []);
-}
-
-async function readJson(file, fallback) {
-	try {
-		const raw = await readFile(file, "utf-8");
-		return JSON.parse(raw);
-	} catch (error) {
-		console.warn(`Unable to read ${path.basename(file)} – using fallback.`, error);
-		return fallback;
-	}
-}
-
-async function writeJson(file, value) {
-	await writeFile(file, JSON.stringify(value, null, 2));
-}
 
 function toDate(value) {
 	if (!value) return null;
@@ -136,12 +105,8 @@ function buildPostPayload(post) {
 }
 
 async function processQueue() {
-	await ensureQueueFiles();
-	const [queue, postedLog, rejectedLog] = await Promise.all([
-		readJson(FILE_QUEUE, []),
-		readJson(FILE_POSTED, []),
-		readJson(FILE_REJECTED, []),
-	]);
+	await initLocalDb();
+	const { posts: queue, postedLog, rejections: rejectedLog } = await readStoreSnapshot();
 
 	const now = Date.now();
 	const readyPosts = queue.filter((post) => {
@@ -273,11 +238,11 @@ async function processQueue() {
 		.filter((post) => !processedIds.has(post.id))
 		.map((post) => queueUpdates.get(post.id) || post);
 
-	await Promise.all([
-		writeJson(FILE_QUEUE, remainingQueue),
-		writeJson(FILE_POSTED, postedLog),
-		writeJson(FILE_REJECTED, rejectedLog),
-	]);
+	await replaceStoreSnapshot({
+		posts: remainingQueue,
+		postedLog,
+		rejections: rejectedLog,
+	});
 
 	console.log(
 		`Worker finished: ${processedIds.size} processed, ${remainingQueue.length} remaining.`,

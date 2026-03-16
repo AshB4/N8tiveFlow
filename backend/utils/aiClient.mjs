@@ -1,5 +1,7 @@
 const DEFAULT_OPENAI_BASE_URL = "https://api.openai.com/v1";
 const DEFAULT_OLLAMA_BASE_URL = "http://127.0.0.1:11434";
+const DEFAULT_OPENAI_TIMEOUT_MS = 30_000;
+const DEFAULT_OLLAMA_TIMEOUT_MS = 120_000;
 
 function requireEnv(name) {
   const value = process.env[name];
@@ -32,6 +34,10 @@ export function resolveAiConfig(overrides = {}) {
         process.env.POSTPUNK_OPENAI_API_KEY ||
         process.env.OPENAI_API_KEY ||
         "",
+      timeoutMs:
+        overrides.timeoutMs ||
+        Number(process.env.POSTPUNK_OPENAI_TIMEOUT_MS || process.env.OPENAI_TIMEOUT_MS) ||
+        DEFAULT_OPENAI_TIMEOUT_MS,
     };
   }
 
@@ -42,13 +48,17 @@ export function resolveAiConfig(overrides = {}) {
         overrides.model ||
         process.env.POSTPUNK_OLLAMA_MODEL ||
         process.env.OLLAMA_MODEL ||
-        "llama3.1:8b",
+        "stable-code:3b-code-q4_0",
       baseUrl:
         overrides.baseUrl ||
         process.env.POSTPUNK_OLLAMA_BASE_URL ||
         process.env.OLLAMA_HOST ||
         DEFAULT_OLLAMA_BASE_URL,
       apiKey: "",
+      timeoutMs:
+        overrides.timeoutMs ||
+        Number(process.env.POSTPUNK_OLLAMA_TIMEOUT_MS || process.env.OLLAMA_TIMEOUT_MS) ||
+        DEFAULT_OLLAMA_TIMEOUT_MS,
     };
   }
 
@@ -57,29 +67,42 @@ export function resolveAiConfig(overrides = {}) {
 
 async function callOpenAI(config, prompt) {
   const apiKey = config.apiKey || requireEnv("OPENAI_API_KEY");
-  const response = await fetch(`${config.baseUrl.replace(/\/$/, "")}/chat/completions`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: config.model,
-      temperature: 0.4,
-      response_format: { type: "json_object" },
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a structured SEO assistant. Return valid JSON only.",
-        },
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-    }),
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), config.timeoutMs || DEFAULT_OPENAI_TIMEOUT_MS);
+  let response;
+  try {
+    response = await fetch(`${config.baseUrl.replace(/\/$/, "")}/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: config.model,
+        temperature: 0.4,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are a structured SEO assistant. Return valid JSON only.",
+          },
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+      }),
+      signal: controller.signal,
+    });
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      throw new Error(`OpenAI request timed out after ${config.timeoutMs}ms`);
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
 
   if (!response.ok) {
     const text = await response.text();
@@ -91,21 +114,45 @@ async function callOpenAI(config, prompt) {
 }
 
 async function callOllama(config, prompt) {
-  const response = await fetch(`${config.baseUrl.replace(/\/$/, "")}/api/generate`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: config.model,
-      prompt,
-      stream: false,
-      format: "json",
-      options: {
-        temperature: 0.4,
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), config.timeoutMs || DEFAULT_OLLAMA_TIMEOUT_MS);
+  let response;
+  try {
+    response = await fetch(`${config.baseUrl.replace(/\/$/, "")}/api/generate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    }),
-  });
+      body: JSON.stringify({
+        model: config.model,
+        prompt,
+        stream: false,
+        format: "json",
+        options: {
+          temperature: 0.4,
+        },
+      }),
+      signal: controller.signal,
+    });
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      throw new Error(
+        `Ollama took too long to respond (${config.timeoutMs}ms). Try a lighter model, a shorter prompt, or OpenAI.`,
+      );
+    }
+    const timeoutCode =
+      error?.cause?.code ||
+      error?.code ||
+      "";
+    if (timeoutCode === "UND_ERR_HEADERS_TIMEOUT") {
+      throw new Error(
+        `Ollama timed out waiting for response headers. Try a lighter model, a shorter prompt, or increase POSTPUNK_OLLAMA_TIMEOUT_MS.`,
+      );
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
 
   if (!response.ok) {
     const text = await response.text();

@@ -47,6 +47,14 @@ export default function PostComposer() {
     setApproveForSchedule,
     selectedProduct,
     setSelectedProduct,
+    postIntent,
+    setPostIntent,
+    campaignPhase,
+    setCampaignPhase,
+    campaignAngle,
+    setCampaignAngle,
+    visualHook,
+    setVisualHook,
     selectedProductProfile,
     useAutoHashtags,
     setUseAutoHashtags,
@@ -90,6 +98,21 @@ export default function PostComposer() {
   const [accountsError, setAccountsError] = useState("");
   const [platformHealth, setPlatformHealth] = useState([]);
   const [platformHealthError, setPlatformHealthError] = useState("");
+  const hasAiContext = Boolean(
+    selectedProduct ||
+    aiProductName?.trim() ||
+    title?.trim()
+  );
+  const displayedAiTitle = aiSuggestions?.product_name || aiProductName || title || "";
+  const displayedAiBody = aiSuggestions?.meta_description || "";
+  const displayedAiAltText = aiSuggestions?.alt_text_examples?.[0] || "";
+  const displayedAiHashtags = Array.isArray(aiSuggestions?.keywords)
+    ? aiSuggestions.keywords.map((keyword) => `#${String(keyword).replace(/\s+/g, "")}`).join(" ")
+    : "";
+  const displayedAiIntent = aiSuggestions?.post_intent || postIntent || "";
+  const displayedCampaignPhase = aiSuggestions?.campaign_phase || campaignPhase || "";
+  const displayedCampaignAngle = aiSuggestions?.campaign_angle || campaignAngle || "";
+  const displayedVisualHook = aiSuggestions?.visual_hook || visualHook || "";
 
   useEffect(() => {
     let ignore = false;
@@ -298,68 +321,168 @@ export default function PostComposer() {
         </section>
       )}
 
-      <section className="mb-6 rounded border border-teal-700 bg-black/60 p-4">
-        <h2 className="mb-3 text-lg font-semibold text-pink-400">AI SEO Suggestions</h2>
-        <div className="grid gap-3 md:grid-cols-2">
-          <input
-            type="text"
-            placeholder="Product or post name"
-            className="w-full p-2 bg-black text-green-400 border border-gray-600"
-            value={aiProductName}
-            onChange={(e) => setAiProductName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Product type"
-            className="w-full p-2 bg-black text-green-400 border border-gray-600"
-            value={aiProductType}
-            onChange={(e) => setAiProductType(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Audience"
-            className="w-full p-2 bg-black text-green-400 border border-gray-600 md:col-span-2"
-            value={aiAudience}
-            onChange={(e) => setAiAudience(e.target.value)}
-          />
-          <select
-            className="w-full p-2 bg-black text-green-400 border border-gray-600"
-            value={aiProvider}
-            onChange={(e) => setAiProvider(e.target.value)}
-          >
-            <option value="ollama">Ollama</option>
-            <option value="openai">OpenAI</option>
-          </select>
-          <div className="flex gap-3">
-            <button
-              type="button"
-              className="bg-black text-green-400 border border-green-400 px-4 py-2 rounded hover:bg-green-400 hover:text-black transition-colors disabled:opacity-50"
-              onClick={() => onGenerateSeo(false)}
-              disabled={isGeneratingSeo}
+      <section className="mb-6 rounded border border-cyan-700 bg-black/60 p-4">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div>
+            <h2 className="text-lg font-semibold text-cyan-300">Post Intent</h2>
+            <p className="text-sm text-teal-400">
+              Choose whether this is a value post, a direct sell, a story, or a softer reminder.
+            </p>
+            <select
+              className="mt-3 min-w-[220px] rounded border border-cyan-500 bg-black p-2 text-cyan-200"
+              value={postIntent}
+              onChange={(e) => setPostIntent(e.target.value)}
             >
-              {isGeneratingSeo ? "Generating..." : "Generate Suggestions"}
-            </button>
-            <button
-              type="button"
-              className="bg-black text-teal-300 border border-teal-500 px-4 py-2 rounded hover:bg-teal-500 hover:text-black transition-colors disabled:opacity-50"
-              onClick={() => onGenerateSeo(true)}
-              disabled={isGeneratingSeo}
+              <option value="jab">Jab</option>
+              <option value="punch">Punch</option>
+              <option value="soft-sell">Soft Sell</option>
+              <option value="educational">Educational</option>
+              <option value="story">Story</option>
+              <option value="launch">Launch</option>
+              <option value="reminder">Reminder</option>
+            </select>
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold text-cyan-300">Campaign Phase</h2>
+            <p className="text-sm text-teal-400">
+              Tell the system whether this is a teaser, launch push, follow-up, or evergreen discovery post.
+            </p>
+            <select
+              className="mt-3 min-w-[220px] rounded border border-cyan-500 bg-black p-2 text-cyan-200"
+              value={campaignPhase}
+              onChange={(e) => setCampaignPhase(e.target.value)}
             >
-              Dry Run
-            </button>
+              <option value="teaser">Teaser</option>
+              <option value="launch">Launch</option>
+              <option value="follow_up">Follow-up</option>
+              <option value="evergreen">Evergreen</option>
+            </select>
           </div>
         </div>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          <label className="block">
+            <span className="text-sm font-medium text-cyan-300">Campaign Angle</span>
+            <input
+              className="mt-2 w-full rounded border border-cyan-500 bg-black p-2 text-cyan-100"
+              value={campaignAngle}
+              onChange={(e) => setCampaignAngle(e.target.value)}
+              placeholder="Specific framing for this phase"
+            />
+          </label>
+          <label className="block">
+            <span className="text-sm font-medium text-cyan-300">Visual Hook</span>
+            <input
+              className="mt-2 w-full rounded border border-cyan-500 bg-black p-2 text-cyan-100"
+              value={visualHook}
+              onChange={(e) => setVisualHook(e.target.value)}
+              placeholder="Short visual sentence for thumbnails or pins"
+            />
+          </label>
+        </div>
+      </section>
+
+      <section className="mb-6 rounded border border-teal-700 bg-black/60 p-4">
+        <h2 className="mb-3 text-lg font-semibold text-pink-400">AI SEO Suggestions</h2>
+        {!hasAiContext ? (
+          <div className="rounded border border-dashed border-teal-700 bg-black/40 p-4 text-sm text-teal-300">
+            Pick a product profile or type a title idea first. Once you give the AI something to work from,
+            suggestions and prompt previews will show up here.
+          </div>
+        ) : (
+          <>
+            <div className="grid gap-3 md:grid-cols-2">
+              <input
+                type="text"
+                placeholder="Product or post name"
+                className="w-full p-2 bg-black text-green-400 border border-gray-600"
+                value={aiProductName}
+                onChange={(e) => setAiProductName(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Product type"
+                className="w-full p-2 bg-black text-green-400 border border-gray-600"
+                value={aiProductType}
+                onChange={(e) => setAiProductType(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Audience"
+                className="w-full p-2 bg-black text-green-400 border border-gray-600 md:col-span-2"
+                value={aiAudience}
+                onChange={(e) => setAiAudience(e.target.value)}
+              />
+              <select
+                className="w-full p-2 bg-black text-green-400 border border-gray-600"
+                value={aiProvider}
+                onChange={(e) => setAiProvider(e.target.value)}
+              >
+                <option value="ollama">Ollama</option>
+                <option value="openai">OpenAI</option>
+              </select>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  className="bg-black text-green-400 border border-green-400 px-4 py-2 rounded hover:bg-green-400 hover:text-black transition-colors disabled:opacity-50"
+                  onClick={() => onGenerateSeo(false)}
+                  disabled={isGeneratingSeo}
+                >
+                  {isGeneratingSeo ? "Generating..." : "Generate Suggestions"}
+                </button>
+                <button
+                  type="button"
+                  className="bg-black text-teal-300 border border-teal-500 px-4 py-2 rounded hover:bg-teal-500 hover:text-black transition-colors disabled:opacity-50"
+                  onClick={() => onGenerateSeo(true)}
+                  disabled={isGeneratingSeo}
+                >
+                  Dry Run
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-3 text-xs text-teal-400">
+              Generate Suggestions updates the form below. Dry Run only shows the prompt preview.
+            </div>
+          </>
+        )}
 
         {aiSuggestions && (
           <div className="mt-4 rounded border border-pink-700 bg-zinc-950/80 p-4 text-sm text-teal-200">
             {"mode" in aiSuggestions ? (
-              <pre className="overflow-auto whitespace-pre-wrap">{aiSuggestions.prompt}</pre>
+              <div className="space-y-3">
+                <p className="text-pink-300 text-xs uppercase tracking-[0.3em]">Prompt Preview</p>
+                <pre className="overflow-auto whitespace-pre-wrap">{aiSuggestions.prompt}</pre>
+              </div>
             ) : (
-              <div className="space-y-2">
-                <p><span className="text-pink-300">Keywords:</span> {aiSuggestions.keywords?.join(", ") || "—"}</p>
-                <p><span className="text-pink-300">Meta:</span> {aiSuggestions.meta_description || "—"}</p>
-                <p><span className="text-pink-300">Pitch:</span> {aiSuggestions.seo_human_pitch || "—"}</p>
-                <p><span className="text-pink-300">Search queries:</span> {aiSuggestions.desperate_search_queries?.join(" | ") || "—"}</p>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-pink-300 text-xs uppercase tracking-[0.3em]">AI Results</p>
+                  <p className="mt-2"><span className="text-pink-300">Suggested intent:</span> {displayedAiIntent || "—"}</p>
+                  <p className="mt-2"><span className="text-pink-300">Campaign phase:</span> {displayedCampaignPhase || "—"}</p>
+                  <p className="mt-2"><span className="text-pink-300">Campaign angle:</span> {displayedCampaignAngle || "—"}</p>
+                  <p className="mt-2"><span className="text-pink-300">Visual hook:</span> {displayedVisualHook || "—"}</p>
+                  <p className="mt-2"><span className="text-pink-300">Suggested title:</span> {displayedAiTitle || "—"}</p>
+                  <p className="mt-2"><span className="text-pink-300">Suggested body:</span></p>
+                  <div className="mt-1 whitespace-pre-wrap rounded border border-teal-800 bg-black/40 p-3">
+                    {displayedAiBody || "—"}
+                  </div>
+                  <p className="mt-2"><span className="text-pink-300">Suggested hashtags:</span> {displayedAiHashtags || "—"}</p>
+                  <p className="mt-2"><span className="text-pink-300">Suggested alt text:</span> {displayedAiAltText || "—"}</p>
+                </div>
+
+                <div className="rounded border border-amber-700 bg-black/40 p-3">
+                  <p className="text-amber-300 text-xs uppercase tracking-[0.3em]">Applied To Form</p>
+                  <p className="mt-2 text-teal-200">
+                    The title, body, alt text, hashtags, intent, campaign phase, angle, and visual hook were updated from these suggestions.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <p><span className="text-pink-300">Keywords:</span> {aiSuggestions.keywords?.join(", ") || "—"}</p>
+                  <p><span className="text-pink-300">Meta:</span> {aiSuggestions.meta_description || "—"}</p>
+                  <p><span className="text-pink-300">Pitch:</span> {aiSuggestions.seo_human_pitch || "—"}</p>
+                  <p><span className="text-pink-300">Search queries:</span> {aiSuggestions.desperate_search_queries?.join(" | ") || "—"}</p>
+                </div>
               </div>
             )}
           </div>

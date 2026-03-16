@@ -29,6 +29,9 @@ const AVAILABLE_PLATFORMS = [
 	"amazon",
 ];
 
+const DEFAULT_POST_INTENT = "jab";
+const DEFAULT_CAMPAIGN_PHASE = "evergreen";
+
 const toArray = (value) => {
 	if (!value) return [];
 	if (Array.isArray(value)) return value;
@@ -111,6 +114,18 @@ const usePostComposerState = (initialDraft = null) => {
 	);
 	const [selectedProduct, setSelectedProduct] = useState(
 		initialDraft?.metadata?.productProfileId || ""
+	);
+	const [postIntent, setPostIntent] = useState(
+		initialDraft?.metadata?.postIntent || DEFAULT_POST_INTENT
+	);
+	const [campaignPhase, setCampaignPhase] = useState(
+		initialDraft?.metadata?.campaignPhase || DEFAULT_CAMPAIGN_PHASE
+	);
+	const [campaignAngle, setCampaignAngle] = useState(
+		initialDraft?.metadata?.campaignAngle || ""
+	);
+	const [visualHook, setVisualHook] = useState(
+		initialDraft?.metadata?.visualHook || ""
 	);
 
 	const [useAutoHashtags, setUseAutoHashtags] = useState(
@@ -238,6 +253,10 @@ const usePostComposerState = (initialDraft = null) => {
 		setImagePrompt(initialDraft.metadata?.imagePrompt || "");
 		setAiProductName(initialDraft.title || "");
 		setSelectedProduct(initialDraft.metadata?.productProfileId || "");
+		setPostIntent(initialDraft.metadata?.postIntent || DEFAULT_POST_INTENT);
+		setCampaignPhase(initialDraft.metadata?.campaignPhase || DEFAULT_CAMPAIGN_PHASE);
+		setCampaignAngle(initialDraft.metadata?.campaignAngle || "");
+		setVisualHook(initialDraft.metadata?.visualHook || "");
 	}, [initialDraft]);
 
 	const toggleTarget = (platform, accountId = null) => {
@@ -318,6 +337,10 @@ const usePostComposerState = (initialDraft = null) => {
 				...(initialDraft?.metadata || {}),
 				autoAffiliateAmazon,
 				includeProductLink,
+				postIntent,
+				campaignPhase,
+				campaignAngle: campaignAngle.trim(),
+				visualHook: visualHook.trim(),
 				productProfileId: selectedProductProfile?.id || null,
 				productProfileLabel: selectedProductProfile?.label || "",
 				productCategory: selectedProductProfile?.category || "",
@@ -368,13 +391,24 @@ const usePostComposerState = (initialDraft = null) => {
 					audience: selectedProductProfile?.audience || aiAudience,
 					platformIds: selectedPlatforms,
 					productProfileId: selectedProductProfile?.id || null,
+					postIntent,
+					campaignPhase,
+					campaignAngle,
+					visualHook,
 					provider: aiProvider,
 					dryRun,
 				}),
 			});
 			if (!res.ok) {
 				const errorText = await res.text();
-				throw new Error(`SEO generation failed: ${res.status} ${errorText}`);
+				let detail = errorText;
+				try {
+					const parsed = JSON.parse(errorText);
+					detail = parsed?.detail || parsed?.error || errorText;
+				} catch {
+					detail = errorText;
+				}
+				throw new Error(`SEO generation failed: ${res.status} ${detail}`);
 			}
 			const data = await res.json();
 			setAiSuggestions(data);
@@ -383,6 +417,18 @@ const usePostComposerState = (initialDraft = null) => {
 				setTitle(data.product_name || aiProductName);
 				setBody(data.meta_description || body);
 				setAltText(data.alt_text_examples?.[0] || "");
+				if (data.post_intent) {
+					setPostIntent(data.post_intent);
+				}
+				if (data.campaign_phase) {
+					setCampaignPhase(data.campaign_phase);
+				}
+				if (data.campaign_angle) {
+					setCampaignAngle(data.campaign_angle);
+				}
+				if (data.visual_hook) {
+					setVisualHook(data.visual_hook);
+				}
 				setSaveAsDraft(true);
 				setApproveForSchedule(false);
 				if (Array.isArray(data.keywords) && data.keywords.length > 0) {
@@ -429,6 +475,14 @@ const usePostComposerState = (initialDraft = null) => {
 		setApproveForSchedule,
 		selectedProduct,
 		setSelectedProduct,
+		postIntent,
+		setPostIntent,
+		campaignPhase,
+		setCampaignPhase,
+		campaignAngle,
+		setCampaignAngle,
+		visualHook,
+		setVisualHook,
 		selectedProductProfile,
 		useAutoHashtags,
 		setUseAutoHashtags,

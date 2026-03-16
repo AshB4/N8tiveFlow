@@ -1,4 +1,11 @@
-import { buildSeoPrompt } from "./GptPromptBuilder.js";
+import {
+  buildChunkedPromptStages,
+  buildCopyStagePrompt,
+  buildDiscoverabilityStagePrompt,
+  buildSeoPrompt,
+  buildStrategyStagePrompt,
+  buildVisualStagePrompt,
+} from "./GptPromptBuilder.js";
 import { generateStructuredText, resolveAiConfig } from "./aiClient.mjs";
 import { getPlatformPromptProfiles } from "./platformProfiles.mjs";
 import { getProductProfile } from "./productProfiles.mjs";
@@ -39,6 +46,15 @@ export function normalizeSeoResult(raw, input) {
     slug: raw.slug || input.productName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
     product_type: raw.product_type || input.productType,
     audience: raw.audience || input.audience,
+    post_intent: raw.post_intent || "",
+    campaign_phase: raw.campaign_phase || input.campaignPhase || "",
+    campaign_angle: raw.campaign_angle || "",
+    core_problem: raw.core_problem || "",
+    core_promise: raw.core_promise || "",
+    cta_mode: raw.cta_mode || "",
+    primary_cta: raw.primary_cta || "",
+    secondary_cta: raw.secondary_cta || "",
+    hook_options: Array.isArray(raw.hook_options) ? raw.hook_options.filter(Boolean) : [],
     platforms: Array.isArray(raw.platforms) && raw.platforms.length ? raw.platforms : ["LinkedIn", "X", "Reddit"],
     desperate_search_queries: Array.isArray(raw.desperate_search_queries)
       ? raw.desperate_search_queries.filter(Boolean)
@@ -53,7 +69,14 @@ export function normalizeSeoResult(raw, input) {
     alt_text_examples: Array.isArray(raw.alt_text_examples)
       ? raw.alt_text_examples.filter(Boolean)
       : [],
+    visual_hook: raw.visual_hook || "",
+    image_concept: raw.image_concept || "",
+    image_prompt: raw.image_prompt || "",
     image_requirements: imageRequirements,
+    platform_variants:
+      raw.platform_variants && typeof raw.platform_variants === "object"
+        ? raw.platform_variants
+        : {},
     preferred_post_times: preferredPostTimes,
     link: {
       gumroad: links.gumroad || "",
@@ -66,33 +89,110 @@ export function normalizeSeoResult(raw, input) {
   };
 }
 
-export async function generateSeoPayload(input, options = {}) {
+function buildPromptContext(input) {
   const platformIds = Array.isArray(input.platformIds) ? input.platformIds : [];
   const selectedPlatforms = getPlatformPromptProfiles(platformIds);
   const productProfile = getProductProfile(input.productProfileId);
-  const prompt = buildSeoPrompt(input.productName, input.productType, input.audience, {
+  return {
     platformIds,
     selectedPlatforms,
     productProfile,
-  });
-  const rawText = await generateStructuredText(prompt, options);
-  const parsed = extractJsonObject(rawText);
+    postIntent: input.postIntent,
+    campaignPhase: input.campaignPhase,
+    campaignAngle: input.campaignAngle,
+    visualHook: input.visualHook,
+  };
+}
+
+async function runChunkedSeoGeneration(input, options = {}, context = {}) {
+  const strategyPrompt = buildStrategyStagePrompt(
+    input.productName,
+    input.productType,
+    input.audience,
+    context,
+  );
+  const strategy = extractJsonObject(await generateStructuredText(strategyPrompt, options));
+
+  const discoverabilityPrompt = buildDiscoverabilityStagePrompt(
+    input.productName,
+    input.productType,
+    input.audience,
+    context,
+    strategy,
+  );
+  const discoverability = extractJsonObject(
+    await generateStructuredText(discoverabilityPrompt, options),
+  );
+
+  const copyPrompt = buildCopyStagePrompt(
+    input.productName,
+    input.productType,
+    input.audience,
+    context,
+    strategy,
+    discoverability,
+  );
+  const copy = extractJsonObject(await generateStructuredText(copyPrompt, options));
+
+  const visualPrompt = buildVisualStagePrompt(
+    input.productName,
+    input.productType,
+    input.audience,
+    context,
+    strategy,
+  );
+  const visual = extractJsonObject(await generateStructuredText(visualPrompt, options));
+
+  return {
+    product_name: input.productName,
+    product_type: input.productType,
+    audience: input.audience,
+    ...strategy,
+    ...discoverability,
+    ...copy,
+    ...visual,
+  };
+}
+
+export async function generateSeoPayload(input, options = {}) {
+  const context = buildPromptContext(input);
+  const config = resolveAiConfig(options);
+  const parsed =
+    config.provider === "ollama"
+      ? await runChunkedSeoGeneration(input, options, context)
+      : extractJsonObject(
+          await generateStructuredText(
+            buildSeoPrompt(input.productName, input.productType, input.audience, context),
+            options,
+          ),
+        );
   return normalizeSeoResult(parsed, input);
 }
 
 export function getDryRunPayload(input, options = {}) {
   const config = resolveAiConfig(options);
-  const platformIds = Array.isArray(input.platformIds) ? input.platformIds : [];
-  const selectedPlatforms = getPlatformPromptProfiles(platformIds);
-  const productProfile = getProductProfile(input.productProfileId);
+  const context = buildPromptContext(input);
+  if (config.provider === "ollama") {
+    const stages = buildChunkedPromptStages(
+      input.productName,
+      input.productType,
+      input.audience,
+      context,
+    );
+    return {
+      mode: "dry-run",
+      provider: config.provider,
+      model: config.model,
+      prompt: stages
+        .map((stage) => `## ${stage.label}\n${stage.prompt}`)
+        .join("\n\n"),
+      stages,
+    };
+  }
   return {
     mode: "dry-run",
     provider: config.provider,
     model: config.model,
-    prompt: buildSeoPrompt(input.productName, input.productType, input.audience, {
-      platformIds,
-      selectedPlatforms,
-      productProfile,
-    }),
+    prompt: buildSeoPrompt(input.productName, input.productType, input.audience, context),
   };
 }

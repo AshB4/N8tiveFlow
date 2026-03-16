@@ -11,10 +11,22 @@ import { getPublicAccounts } from "./utils/accountStore.mjs";
 import { getAccounts } from "./utils/accountStore.mjs";
 import { findDuplicatePost } from "./utils/queueGuard.mjs";
 import { generateSeoPayload, getDryRunPayload } from "./utils/seoGeneration.mjs";
+import { generateCampaignPosts, getCampaignDryRunPayload } from "./utils/campaignGeneration.mjs";
 import { buildAnalyticsSummary } from "./utils/analyticsSummary.mjs";
 import { runPlatformHealthChecks } from "./utils/platformHealth.mjs";
 import { normalizePostStatus } from "./utils/postStatus.mjs";
 import { distributionTagsToTargets, normalizeTagList } from "./utils/distributionTags.mjs";
+import {
+	appendPostedLogEntry as appendPostedLogToDb,
+	clearPostedPostsFromQueue,
+	createPost,
+	deletePost as deletePostFromDb,
+	getLocalDbPath,
+	initLocalDb,
+	listPosts,
+	listPostedLog,
+	updatePost as updatePostInDb,
+} from "./utils/localDb.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,9 +43,6 @@ const DIR_MEDIA_IMAGES = path.join(DIR_MEDIA, "images");
 const DIR_MEDIA_GIFS = path.join(DIR_MEDIA, "gifs");
 const DIR_MEDIA_VIDEOS = path.join(DIR_MEDIA, "videos");
 const DIR_MEDIA_OTHER = path.join(DIR_MEDIA, "other");
-const Q_POSTS = path.join(DIR_QUEUE, "postQueue.json");
-const Q_POSTED = path.join(DIR_QUEUE, "postedLog.json");
-const Q_REJECT = path.join(DIR_QUEUE, "rejections.json");
 const STATS_FUNNEL = path.join(__dirname, "stats", "funnel.json");
 const STATS_SUMMARY = path.join(__dirname, "stats", "summary.json");
 let platformHealthCache = null;
@@ -47,26 +56,7 @@ async function ensureFiles() {
 	await mkdir(DIR_MEDIA_GIFS, { recursive: true });
 	await mkdir(DIR_MEDIA_VIDEOS, { recursive: true });
 	await mkdir(DIR_MEDIA_OTHER, { recursive: true });
-	const ensure = async (p, fallback) => {
-		try {
-			await access(p, fs.constants.F_OK);
-		} catch {
-			await writeFile(p, JSON.stringify(fallback, null, 2));
-		}
-	};
-	await ensure(Q_POSTS, [
-		{
-			id: "p1",
-			title: "Hello world",
-			body: "First draft",
-			platforms: ["reddit"],
-			targets: [{ platform: "reddit", accountId: null }],
-			scheduledAt: null,
-			status: "draft",
-		},
-	]);
-	await ensure(Q_POSTED, []);
-	await ensure(Q_REJECT, []);
+	await initLocalDb();
 }
 
 const readJson = async (p) => JSON.parse(await readFile(p, "utf-8"));
@@ -74,12 +64,13 @@ const writeJson = async (p, data) =>
 	writeFile(p, JSON.stringify(data, null, 2));
 
 async function appendPostedLogEntry(post) {
-	const postedLog = await readJson(Q_POSTED).catch(() => []);
-	const alreadyLogged = postedLog.some(
+	const postedLog = await listPostedLog();
+	const existing = postedLog.find(
 		(entry) => entry?.id === post?.id && entry?.manualArchived,
 	);
+	const alreadyLogged = Boolean(existing);
 	if (alreadyLogged) return;
-	postedLog.push({
+	await appendPostedLogToDb({
 		id: post.id ?? null,
 		title: post.title ?? null,
 		targets: Array.isArray(post.targets) ? post.targets : [],
@@ -87,7 +78,6 @@ async function appendPostedLogEntry(post) {
 		processedAt: new Date().toISOString(),
 		manualArchived: true,
 	});
-	await writeJson(Q_POSTED, postedLog);
 }
 
 function safeFileName(input) {
@@ -131,7 +121,7 @@ app.use("/media", express.static(DIR_MEDIA));
 // ---- API: Posts CRUD
 app.get("/api/posts", async (_req, res) => {
 	try {
-		res.json(await readJson(Q_POSTS));
+		res.json(await listPosts());
 	} catch {
 		res.status(500).json({ error: "Could not load posts" });
 	}
@@ -195,6 +185,10 @@ app.post("/api/ai/seo-generate", async (req, res) => {
 			audience,
 			platformIds = [],
 			productProfileId = null,
+			postIntent = null,
+			campaignPhase = null,
+			campaignAngle = null,
+			visualHook = null,
 			provider,
 			model,
 			dryRun = false,
@@ -205,7 +199,17 @@ app.post("/api/ai/seo-generate", async (req, res) => {
 			});
 		}
 
-		const input = { productName, productType, audience, platformIds, productProfileId };
+		const input = {
+			productName,
+			productType,
+			audience,
+			platformIds,
+			productProfileId,
+			postIntent,
+			campaignPhase,
+			campaignAngle,
+			visualHook,
+		};
 		const options = { provider, model };
 		const result = dryRun
 			? getDryRunPayload(input, options)
@@ -213,8 +217,55 @@ app.post("/api/ai/seo-generate", async (req, res) => {
 
 		return res.json(result);
 	} catch (error) {
+		console.error("AI SEO generation failed:", error);
 		return res.status(500).json({
 			error: "Failed to generate SEO suggestions",
+			detail: error?.message || String(error),
+		});
+	}
+});
+
+app.post("/api/ai/campaign-generate", async (req, res) => {
+	try {
+		const {
+			productName,
+			productType,
+			audience,
+			platformIds = [],
+			campaignPhases = [],
+			productProfileId = null,
+			postIntent = null,
+			maxPosts = 6,
+			provider,
+			model,
+			dryRun = false,
+		} = req.body ?? {};
+		if (!productName || !productType || !audience) {
+			return res.status(400).json({
+				error: "productName, productType, and audience are required",
+			});
+		}
+
+		const input = {
+			productName,
+			productType,
+			audience,
+			platformIds,
+			campaignPhases,
+			productProfileId,
+			postIntent,
+			maxPosts,
+		};
+		const options = { provider, model };
+		const result = dryRun
+			? getCampaignDryRunPayload(input, options)
+			: await generateCampaignPosts(input, options);
+
+		return res.json(result);
+	} catch (error) {
+		console.error("AI campaign generation failed:", error);
+		return res.status(500).json({
+			error: "Failed to generate campaign posts",
 			detail: error?.message || String(error),
 		});
 	}
@@ -275,7 +326,7 @@ app.post("/api/posts", async (req, res) => {
 		} = req.body ?? {};
 		if (!title || !body)
 			return res.status(400).json({ error: "title and body required" });
-		const posts = await readJson(Q_POSTS);
+		const posts = await listPosts();
 		const id = "p_" + Date.now();
 		const distributionTargets = distributionTagsToTargets(
 			metadata?.distributionTags || [],
@@ -312,8 +363,7 @@ app.post("/api/posts", async (req, res) => {
 				detail: `Matches existing post ${duplicate.id}`,
 			});
 		}
-		posts.push(post);
-		await writeJson(Q_POSTS, posts);
+		await createPost(post);
 		res.status(201).json(post);
 	} catch (e) {
 		res.status(500).json({ error: "Failed to create post", detail: String(e) });
@@ -322,7 +372,7 @@ app.post("/api/posts", async (req, res) => {
 
 app.put("/api/posts/:id", async (req, res) => {
 	try {
-		const posts = await readJson(Q_POSTS);
+		const posts = await listPosts();
 		const i = posts.findIndex((p) => p.id === req.params.id);
 		if (i === -1) return res.status(404).json({ error: "not found" });
 		const previousPost = posts[i];
@@ -383,7 +433,7 @@ app.put("/api/posts/:id", async (req, res) => {
 				detail: `Matches existing post ${duplicate.id}`,
 			});
 		}
-		await writeJson(Q_POSTS, posts);
+		await updatePostInDb(posts[i].id, posts[i]);
 		res.json(posts[i]);
 	} catch (e) {
 		res.status(500).json({ error: "Failed to update post", detail: String(e) });
@@ -396,12 +446,7 @@ app.delete("/api/posts", async (req, res) => {
 		if (scope !== "posted") {
 			return res.status(400).json({ error: "Unsupported bulk delete scope" });
 		}
-		const posts = await readJson(Q_POSTS);
-		const remaining = posts.filter(
-			(post) => normalizePostStatus(post.status) !== "posted",
-		);
-		const removedCount = posts.length - remaining.length;
-		await writeJson(Q_POSTS, remaining);
+		const removedCount = await clearPostedPostsFromQueue();
 		return res.json({ removedCount });
 	} catch (e) {
 		res.status(500).json({ error: "Failed to clear posted posts", detail: String(e) });
@@ -410,11 +455,8 @@ app.delete("/api/posts", async (req, res) => {
 
 app.delete("/api/posts/:id", async (req, res) => {
 	try {
-		const posts = await readJson(Q_POSTS);
-		const i = posts.findIndex((p) => p.id === req.params.id);
-		if (i === -1) return res.status(404).json({ error: "not found" });
-		const [removed] = posts.splice(i, 1);
-		await writeJson(Q_POSTS, posts);
+		const removed = await deletePostFromDb(req.params.id);
+		if (!removed) return res.status(404).json({ error: "not found" });
 		res.json(removed);
 	} catch (e) {
 		res.status(500).json({ error: "Failed to delete post", detail: String(e) });
@@ -455,5 +497,7 @@ app.use((req, res) => {
 
 // ---- boot
 ensureFiles().then(() => {
-	app.listen(PORT, () => console.log(`Backend running on ${PORT}`));
+	app.listen(PORT, () =>
+		console.log(`Backend running on ${PORT} (SQLite: ${getLocalDbPath()})`)
+	);
 });

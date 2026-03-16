@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildSeoPrompt } from "../utils/GptPromptBuilder.js";
+import { buildChunkedPromptStages, buildSeoPrompt } from "../utils/GptPromptBuilder.js";
 import {
   extractJsonObject,
   getDryRunPayload,
@@ -28,6 +28,12 @@ test("buildSeoPrompt asks for strict JSON output", () => {
   assert.match(prompt, /Target platforms: linkedin/);
   assert.match(prompt, /LinkedIn/);
   assert.match(prompt, /Lead with the insight or problem/);
+  assert.match(prompt, /Suggested post intent:/);
+  assert.match(prompt, /Campaign phase:/);
+  assert.match(prompt, /"hook_options": \[/);
+  assert.match(prompt, /"platform_variants":/);
+  assert.match(prompt, /"campaign_phase":/);
+  assert.match(prompt, /"visual_hook":/);
 });
 
 test("buildSeoPrompt includes product profile guidance when provided", () => {
@@ -49,6 +55,28 @@ test("buildSeoPrompt includes product profile guidance when provided", () => {
   assert.match(prompt, /Product-specific guidance/);
   assert.match(prompt, /Coloring Books/);
   assert.match(prompt, /Lead with use case/);
+  assert.match(prompt, /Link and CTA policy/);
+  assert.match(prompt, /jab posts/);
+  assert.match(prompt, /Campaign phase rules/);
+});
+
+test("buildChunkedPromptStages creates small staged prompts", () => {
+  const stages = buildChunkedPromptStages("Goblin Core", "Printable pack", "Goblin fans", {
+    platformIds: ["facebook", "pinterest"],
+    selectedPlatforms: [],
+    postIntent: "soft-sell",
+    campaignPhase: "launch",
+  });
+
+  assert.equal(stages.length, 4);
+  assert.deepEqual(
+    stages.map((stage) => stage.id),
+    ["strategy", "discoverability", "copy", "visual"],
+  );
+  assert.match(stages[0].prompt, /campaign_phase/);
+  assert.match(stages[1].prompt, /hook_options/);
+  assert.match(stages[2].prompt, /platform_variants/);
+  assert.match(stages[3].prompt, /image_prompt/);
 });
 
 test("extractJsonObject parses wrapped JSON", () => {
@@ -73,6 +101,11 @@ test("normalizeSeoResult fills defaults", () => {
   assert.equal(normalized.slug, "postpunk");
   assert.equal(normalized.product_type, "Automation Tool");
   assert.equal(normalized.audience, "Indie devs");
+  assert.equal(normalized.primary_cta, "");
+  assert.equal(normalized.campaign_phase, "");
+  assert.equal(normalized.campaign_angle, "");
+  assert.equal(normalized.visual_hook, "");
+  assert.deepEqual(normalized.hook_options, []);
   assert.deepEqual(normalized.platforms, ["LinkedIn", "X", "Reddit"]);
   assert.equal(
     normalized.link.utm_base,
@@ -80,7 +113,7 @@ test("normalizeSeoResult fills defaults", () => {
   );
 });
 
-test("dry run resolves provider without calling network", () => {
+test("dry run for ollama returns chunked stages without calling network", () => {
   const payload = getDryRunPayload(
     {
       productName: "PostPunk",
@@ -97,6 +130,28 @@ test("dry run resolves provider without calling network", () => {
   assert.equal(payload.mode, "dry-run");
   assert.equal(payload.provider, "ollama");
   assert.equal(payload.model, "llama3.1:8b");
-  assert.match(payload.prompt, /PostPunk/);
+  assert.equal(payload.stages.length, 4);
+  assert.match(payload.prompt, /## Strategy/);
+  assert.match(payload.prompt, /## Visual/);
+});
+
+test("dry run for openai keeps monolithic prompt", () => {
+  const payload = getDryRunPayload(
+    {
+      productName: "PostPunk",
+      productType: "Automation Tool",
+      audience: "Indie devs",
+      platformIds: ["x", "linkedin"],
+    },
+    {
+      provider: "openai",
+      model: "gpt-4o-mini",
+    },
+  );
+
+  assert.equal(payload.mode, "dry-run");
+  assert.equal(payload.provider, "openai");
+  assert.equal(payload.model, "gpt-4o-mini");
+  assert.equal(payload.stages, undefined);
   assert.match(payload.prompt, /Target platforms: x, linkedin/);
 });

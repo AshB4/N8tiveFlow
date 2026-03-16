@@ -2,6 +2,7 @@ export const productProfiles = [
   {
     id: "postpunk-core",
     label: "PostPunk Core",
+    lifecycleStatus: "in-progress",
     category: "Devtools",
     productType: "Local-first social automation tool",
     audience: "indie creators, solo founders, and weird-tool builders",
@@ -21,6 +22,7 @@ export const productProfiles = [
   {
     id: "gumroad-devtools",
     label: "Gumroad Devtools",
+    lifecycleStatus: "live",
     category: "Digital products",
     productType: "Paid templates, prompts, and indie dev utility kits",
     audience: "makers who buy leverage, templates, and speed",
@@ -40,6 +42,7 @@ export const productProfiles = [
   {
     id: "kawaii-coloring-series",
     label: "Kawaii Coloring Series",
+    lifecycleStatus: "live",
     category: "Physical products",
     productType: "Cute coloring books and printable coloring pages",
     audience: "kawaii fans, cozy hobby shoppers, gift buyers, and younger creative audiences",
@@ -59,6 +62,7 @@ export const productProfiles = [
   {
     id: "goblin-self-care-coloring-book",
     label: "Goblin Self-Care Coloring Book",
+    lifecycleStatus: "live",
     category: "Physical products",
     productType: "Funny, slightly unhinged self-care coloring book",
     audience: "burnt-out weird girls, goblin-mode adults, meme-friendly gift buyers",
@@ -78,6 +82,7 @@ export const productProfiles = [
   {
     id: "memoir-book",
     label: "Memoir",
+    lifecycleStatus: "planned",
     category: "Books",
     productType: "Memoir and personal nonfiction book",
     audience: "readers who connect with personal story, healing, resilience, and transformation",
@@ -97,6 +102,7 @@ export const productProfiles = [
   {
     id: "goblin-coloring-affirmations",
     label: "Goblin Core Coloring Affirmations",
+    lifecycleStatus: "live",
     category: "Digital products",
     productType: "Printable goblin-core coloring affirmation pack",
     audience: "people who like weird affirmations, goblin humor, and printable self-care kits",
@@ -116,6 +122,7 @@ export const productProfiles = [
   {
     id: "ai-powered-grad",
     label: "AI Powered Grad",
+    lifecycleStatus: "live",
     category: "Digital products",
     productType: "Graduation-themed AI prompt or resource product",
     audience: "students, grads, and buyers looking for AI-assisted graduation help",
@@ -135,6 +142,7 @@ export const productProfiles = [
   {
     id: "prompt-storm",
     label: "100 Prompt Storm",
+    lifecycleStatus: "live",
     category: "Digital products",
     productType: "Prompt pack for creators or builders",
     audience: "indie creators, writers, and prompt buyers looking for idea volume",
@@ -154,6 +162,7 @@ export const productProfiles = [
   {
     id: "product-strategy-25",
     label: "Product Strategy 25",
+    lifecycleStatus: "live",
     category: "Digital products",
     productType: "Product strategy framework or guide",
     audience: "founders, indie hackers, and early-stage builders who need direction",
@@ -173,6 +182,7 @@ export const productProfiles = [
   {
     id: "buzzing-adventures-coloring-book",
     label: "Buzzing Adventures Coloring Book",
+    lifecycleStatus: "live",
     category: "Physical products",
     productType: "Bee-themed coloring book",
     audience: "nature-loving kids, gift buyers, homeschoolers, and gentle hobby shoppers",
@@ -192,6 +202,7 @@ export const productProfiles = [
   {
     id: "reddit-product",
     label: "Reddit Product",
+    lifecycleStatus: "planned",
     category: "Community tool",
     productType: "Tool or offer designed for Reddit-driven discovery",
     audience: "niche internet communities and problem-aware subreddit users",

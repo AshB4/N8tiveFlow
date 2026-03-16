@@ -62,6 +62,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Worker chooses due posts and handles retries: `backend/scripts/postingJob.mjs`
 - Target normalization, account lookup, and product-link injection: `backend/scripts/platforms/post-to-all.js`
 - Account loading and lookup: `backend/utils/accountStore.mjs`
+- Possible future fallback for unstable social platforms: browser-scheduling automation via Playwright, instead of API-first posting
 
 ### Per-platform handlers
 

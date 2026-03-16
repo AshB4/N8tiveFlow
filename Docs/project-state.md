@@ -43,6 +43,7 @@ These pieces are built and in active use:
 - queue save and edit flow works
 - launchd worker is installed and running on this Mac
 - `Dev.to` automatic posting has been proven live
+- Product profile lifecycle status is now tracked. The shipped Gumroad/Amazon products are marked `live`, while `PostPunk Core` is `in-progress` and the memoir/Reddit product remain `planned`.
 - Telegram alerts fire for both success and failure
 
 ## What Is Not Reliable Yet
@@ -208,6 +209,33 @@ Most likely future automation targets:
 - improve Pinterest handling
 - decide whether X is worth manual-assist or browser automation later
 
+## Browser Scheduling Fallback
+
+There is a practical fallback strategy for platforms that already support native scheduling in their own UI.
+
+For platforms like `Facebook`, `X`, and `LinkedIn`, a browser-automation path may be more realistic in the near term than fighting each API integration.
+
+The idea:
+
+- log in with Playwright or browser session reuse
+- open the native compose flow
+- paste the final post copy
+- attach media if present
+- set the publish date and time using the platform's own scheduler
+- submit the scheduled post in the platform UI
+
+This is more brittle than a clean API integration, but it may still be the better short-term business choice when:
+
+- the API is paid, restricted, or unstable
+- credentials are hard to keep healthy
+- native scheduling already exists in the platform UI
+
+Current recommendation:
+
+- keep `Dev.to` on direct automation
+- keep `/today` manual-assist for unstable platforms
+- consider browser-scheduling automation as a next-step fallback for `Facebook`, `X`, and `LinkedIn`
+
 ## Important Notes
 
 - `X` should be treated as unreliable for now.
@@ -215,3 +243,5 @@ Most likely future automation targets:
 - `PostPunk` itself should be described honestly as a project in progress, not as a finished polished product.
 - Avoid adding duplicate queue, tag, or profile logic. Use the existing shared helpers instead.
 - Frontend routes live in `frontend/main.jsx`. That is the file to update when routes change.
+- Local Ollama default is set to `stable-code:3b-code-q4_0` as the lightest installed model for code-path testing on this Mac.
+- Ollama requests now use a longer backend timeout. If local generation still stalls, the app should surface a direct timeout message instead of a vague `500`.

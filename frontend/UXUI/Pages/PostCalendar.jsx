@@ -1,7 +1,7 @@
 // Refactored PostCalendar with widgets added to right panel and fixed ordering of variables
 
 import React, { useState, useEffect, useMemo } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -65,6 +65,7 @@ const formatTargetsLabel = (targets = [], fallbackPlatforms = []) => {
 };
 
 export default function PostCalendar() {
+  const location = useLocation();
   const [postQueue, setPostQueue] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -141,6 +142,10 @@ export default function PostCalendar() {
   const todayIso = now.toISOString().slice(0, 10);
 
   const initialDate = useMemo(() => {
+    const requestedDate = location.state?.focusDate;
+    if (requestedDate) {
+      return requestedDate;
+    }
     const upcomingDates = eventz
       .map((event) => event.date)
       .filter((date) => date && date >= todayIso)
@@ -149,7 +154,7 @@ export default function PostCalendar() {
       return upcomingDates[0];
     }
     return todayIso;
-  }, [eventz, todayIso]);
+  }, [eventz, todayIso, location.state?.focusDate]);
 
   const upcomingScheduled = scheduledPosts
     .map((post, idx) => ({

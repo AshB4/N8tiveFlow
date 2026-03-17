@@ -24,6 +24,13 @@ const navItems = [
     activeClass: "border-cyan-400 bg-cyan-500 text-black",
   },
   {
+    to: "/batch",
+    label: "Batch Forge",
+    baseClass:
+      "border-fuchsia-500 text-fuchsia-300 hover:bg-fuchsia-500 hover:text-black",
+    activeClass: "border-fuchsia-400 bg-fuchsia-500 text-black",
+  },
+  {
     to: "/charts",
     label: "View Charts",
     baseClass:
@@ -68,22 +75,22 @@ export default function AppTopNav({ includeLab = false }) {
 
   return (
     <div className="relative left-1/2 right-1/2 mb-6 w-screen -translate-x-1/2 border-b border-pink-500 bg-black/95 px-4 py-3 backdrop-blur">
-      <div className="flex items-center gap-4 overflow-x-auto whitespace-nowrap">
+      <div className="flex items-center gap-3 overflow-x-auto whitespace-nowrap">
         <Link to="/" className="shrink-0">
           <img
             src={logo}
             alt="PostPunk Home"
-            className="h-16 md:h-18 w-auto shrink-0 drop-shadow-[0_0_12px_#ff00ff]"
+            className="h-14 md:h-16 w-auto shrink-0 drop-shadow-[0_0_12px_#ff00ff]"
           />
         </Link>
-        <div className="flex min-w-0 flex-1 items-center gap-3 overflow-x-auto whitespace-nowrap pr-2">
+        <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto whitespace-nowrap pr-2">
           {items.map((item) => {
             const active = isActive(location.pathname, item.to);
             return (
               <Link
                 key={item.to}
                 to={item.to}
-                className={`shrink-0 rounded border px-4 py-2 transition-colors ${
+                className={`shrink-0 rounded border px-3 py-1.5 text-sm transition-colors ${
                   active ? item.activeClass : item.baseClass
                 }`}
               >

@@ -60,6 +60,9 @@ const getPerformanceMetrics = (post) => ({
 	saves7d: Number(post?.metadata?.performance?.saves7d || 0),
 });
 
+const isSelectableQueuePost = (post) =>
+	normalizePostStatus(post?.status) !== "posted" && !(post?.scheduledAt || post?.scheduled_at);
+
 const SCHEDULE_PRESETS = {
 	custom: {
 		label: "Custom Interval",
@@ -93,6 +96,13 @@ const buildPresetSchedule = (dateValue, timeValue, allowedDays, count) => {
 	}
 
 	return results;
+};
+
+const addDaysToDateOnly = (dateValue, daysToAdd) => {
+	if (!dateValue) return "";
+	const [year, month, day] = dateValue.split("-").map(Number);
+	const next = new Date(year, month - 1, day + daysToAdd, 12, 0, 0, 0);
+	return next.toISOString().slice(0, 10);
 };
 
 const interleavePostsByProduct = (selectedPosts = [], productOrder = []) => {
@@ -155,6 +165,12 @@ export default function PostLib() {
 	const [bulkMixProducts, setBulkMixProducts] = useState(true);
 	const [rotationSettings, setRotationSettings] = useState(DEFAULT_ROTATION_SETTINGS);
 	const [isBulkSaving, setIsBulkSaving] = useState(false);
+	const latestScheduledAt =
+		posts
+			.map((post) => post.scheduledAt || post.scheduled_at)
+			.filter(Boolean)
+			.sort()
+			.at(-1) || null;
 
 	const loadPosts = async () => {
 		try {
@@ -307,13 +323,64 @@ export default function PostLib() {
 	const selectDrafts = () => {
 		setSelectedIds(
 			posts
-				.filter((post) => normalizePostStatus(post.status) !== "posted")
+				.filter((post) => isSelectableQueuePost(post))
 				.map((post) => post.id),
 		);
 	};
 
 	const clearSelection = () => {
 		setSelectedIds([]);
+	};
+
+	const approveSelectedPosts = async () => {
+		const selectedPosts = posts.filter((post) => selectedIds.includes(post.id));
+		if (selectedPosts.length === 0) {
+			toast({
+				title: "No posts selected",
+				description: "Pick one or more queue entries before approving them.",
+				variant: "destructive",
+			});
+			return;
+		}
+
+		setIsBulkSaving(true);
+		try {
+			const updates = await Promise.all(
+				selectedPosts.map(async (post) => {
+					const res = await fetch(`${API_BASE}/api/posts/${post.id}`, {
+						method: "PUT",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({ status: "approved" }),
+					});
+					if (!res.ok) {
+						throw new Error(`Failed to approve ${post.title}: ${res.status}`);
+					}
+					return res.json();
+				}),
+			);
+
+			const updateMap = new Map(
+				updates.map((post) => [
+					post.id,
+					{ ...post, status: normalizePostStatus(post.status) },
+				]),
+			);
+			setPosts((prev) => prev.map((post) => updateMap.get(post.id) || post));
+			setSelectedIds([]);
+			toast({
+				title: "Posts approved",
+				description: `${updates.length} posts are approved only. They still need dates before they hit the calendar.`,
+			});
+		} catch (error) {
+			console.error("Failed to approve selected posts", error);
+			toast({
+				title: "Approve failed",
+				description: error.message || "Could not approve the selected posts.",
+				variant: "destructive",
+			});
+		} finally {
+			setIsBulkSaving(false);
+		}
 	};
 
 	const clearPostedPosts = async () => {
@@ -493,6 +560,95 @@ export default function PostLib() {
 		}
 	};
 
+	const continueAfterLastScheduled = async () => {
+		const selectedPosts = posts
+			.filter((post) => selectedIds.includes(post.id))
+			.filter((post) => isSelectableQueuePost(post));
+		if (selectedPosts.length === 0) {
+			toast({
+				title: "No unscheduled posts selected",
+				description: "Select one or more unscheduled queue entries first.",
+				variant: "destructive",
+			});
+			return;
+		}
+
+		if (!latestScheduledAt) {
+			toast({
+				title: "No scheduled posts yet",
+				description: "Schedule at least one post first, then this can continue from the last date.",
+			});
+			return;
+		}
+
+		const latest = new Date(latestScheduledAt);
+		if (Number.isNaN(latest.getTime())) return;
+		const cadence = Math.max(
+			1,
+			Number.parseInt(bulkIntervalDays, 10) ||
+				Number(rotationSettings.cadenceDays) ||
+				1,
+		);
+
+		const baseDate = addDaysToDateOnly(latest.toISOString().slice(0, 10), cadence);
+		const baseTime = latest.toISOString().slice(11, 16);
+		const sortedPosts = [...selectedPosts].sort((a, b) => {
+			const left = new Date(a.createdAt || a.scheduledAt || 0).getTime();
+			const right = new Date(b.createdAt || b.scheduledAt || 0).getTime();
+			return left - right;
+		});
+		const scheduledPosts = bulkMixProducts
+			? interleavePostsByProduct(sortedPosts, rotationSettings.activeProductIds)
+			: sortedPosts;
+
+		setIsBulkSaving(true);
+		try {
+			const updates = await Promise.all(
+				scheduledPosts.map(async (post, index) => {
+					const scheduledAt = buildScheduledIso(baseDate, baseTime, index * cadence);
+					const res = await fetch(`${API_BASE}/api/posts/${post.id}`, {
+						method: "PUT",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							scheduledAt,
+							status: bulkApprove ? "approved" : normalizePostStatus(post.status),
+						}),
+					});
+					if (!res.ok) {
+						throw new Error(`Failed to schedule ${post.title}: ${res.status}`);
+					}
+					return res.json();
+				}),
+			);
+
+			const updateMap = new Map(
+				updates.map((post) => [
+					post.id,
+					{ ...post, status: normalizePostStatus(post.status) },
+				]),
+			);
+			setPosts((prev) => prev.map((post) => updateMap.get(post.id) || post));
+			setSelectedIds([]);
+			setBulkPreset("custom");
+			setBulkStartDate(baseDate);
+			setBulkTimeOfDay(baseTime);
+			setBulkIntervalDays(String(cadence));
+			toast({
+				title: "Extended the calendar",
+				description: `${updates.length} posts were chained after ${latest.toLocaleString()}.`,
+			});
+		} catch (error) {
+			console.error("Failed to continue schedule", error);
+			toast({
+				title: "Continue schedule failed",
+				description: error.message || "Could not continue after the last scheduled post.",
+				variant: "destructive",
+			});
+		} finally {
+			setIsBulkSaving(false);
+		}
+	};
+
 	return (
 		<div className="min-h-screen bg-black text-teal-300 font-mono">
 			<div className="max-w-6xl mx-auto px-6 py-12">
@@ -535,7 +691,7 @@ export default function PostLib() {
 									</p>
 									<h2 className="text-2xl text-pink-400 mt-1">Spread posts across the next days</h2>
 									<p className="text-sm text-teal-400 mt-2">
-										Select drafts or failed posts, then apply your saved one-post-per-day rhythm or override it here for this run.
+										Select the unscheduled queue entries, then auto-chain them after your current last scheduled date.
 									</p>
 								</div>
 								<div className="flex flex-wrap gap-2">
@@ -543,7 +699,7 @@ export default function PostLib() {
 										onClick={selectDrafts}
 										className="border border-teal-500 text-teal-300 px-3 py-2 rounded hover:bg-teal-500 hover:text-black transition-colors"
 									>
-										Select Active Queue
+										Select Unscheduled Queue
 									</button>
 									<button
 										onClick={clearSelection}
@@ -608,6 +764,12 @@ export default function PostLib() {
 									<p className="mt-2">
 										{rotationSettings.activeProductIds?.length || 0} active products, {rotationSettings.cadenceDays} day between posts, default time {rotationSettings.defaultTime}, max {rotationSettings.maxPostsPerDay} per day.
 									</p>
+									<p className="mt-2 text-teal-300">
+										Scheduled through:{" "}
+										{latestScheduledAt
+											? new Date(latestScheduledAt).toLocaleString()
+											: "nothing yet"}
+									</p>
 								</div>
 								<label className="flex items-center gap-3 text-teal-300 mt-7">
 									<input
@@ -630,11 +792,25 @@ export default function PostLib() {
 							<div className="mt-4 flex flex-wrap items-center gap-3">
 								<p className="text-sm text-teal-400">{selectedIds.length} selected</p>
 								<button
+									onClick={approveSelectedPosts}
+									disabled={isBulkSaving}
+									className="px-4 py-2 rounded border border-lime-500 text-lime-200 hover:bg-lime-500 hover:text-black transition-colors disabled:opacity-50"
+								>
+									Approve Only
+								</button>
+								<button
 									onClick={applyBulkSchedule}
 									disabled={isBulkSaving}
 									className="bg-pink-500 text-black px-4 py-2 rounded hover:bg-pink-400 transition-colors disabled:opacity-50"
 								>
-									{isBulkSaving ? "Scheduling..." : "Apply Bulk Schedule"}
+									{isBulkSaving ? "Scheduling..." : "Advanced Schedule"}
+								</button>
+								<button
+									onClick={continueAfterLastScheduled}
+									disabled={isBulkSaving || !latestScheduledAt}
+									className="px-4 py-2 rounded border border-cyan-500 text-cyan-200 hover:bg-cyan-500 hover:text-black transition-colors disabled:opacity-50"
+								>
+									Auto Schedule After Last Date
 								</button>
 								<button
 									onClick={resetFailedPosts}
@@ -658,13 +834,47 @@ export default function PostLib() {
 								No posts found. Create some in the lab or composer.
 							</p>
 						) : (
-							posts.map((post) => (
-								<div
-									key={post.id}
-									className="border border-teal-500 bg-black/60 rounded-lg p-6 shadow-[0_0_20px_rgba(13,148,136,0.35)]"
-								>
-									{editingId === post.id ? (
-										<div className="space-y-4">
+							<>
+								<div className="sticky top-0 z-10 rounded-lg border border-lime-500/50 bg-black/95 p-4 shadow-[0_0_18px_rgba(132,204,22,0.14)] backdrop-blur">
+									<div className="flex flex-wrap items-center gap-3">
+										<p className="text-sm uppercase tracking-[0.2em] text-lime-400">List Actions</p>
+										<button
+											onClick={selectDrafts}
+											className="rounded border border-teal-500 px-3 py-2 text-teal-200 hover:bg-teal-500 hover:text-black transition-colors"
+										>
+											Select All Unscheduled
+										</button>
+										<button
+											onClick={approveSelectedPosts}
+											disabled={isBulkSaving}
+											className="rounded border border-lime-500 px-3 py-2 text-lime-200 hover:bg-lime-500 hover:text-black transition-colors disabled:opacity-50"
+										>
+											Approve Only
+										</button>
+										<button
+											onClick={continueAfterLastScheduled}
+											disabled={isBulkSaving || !latestScheduledAt || selectedIds.length === 0}
+											className="rounded border border-cyan-500 px-3 py-2 text-cyan-200 hover:bg-cyan-500 hover:text-black transition-colors disabled:opacity-50"
+										>
+											Auto Schedule After Last Date
+										</button>
+										<button
+											onClick={clearSelection}
+											className="rounded border border-gray-600 px-3 py-2 text-gray-300 hover:bg-gray-700 transition-colors"
+										>
+											Clear Selection
+										</button>
+										<p className="text-sm text-teal-400">{selectedIds.length} selected</p>
+									</div>
+								</div>
+
+								{posts.map((post) => (
+									<div
+										key={post.id}
+										className="border border-teal-500 bg-black/60 rounded-lg p-6 shadow-[0_0_20px_rgba(13,148,136,0.35)]"
+									>
+										{editingId === post.id ? (
+											<div className="space-y-4">
 											<label className="block">
 												<span className="text-sm text-pink-300 uppercase tracking-[0.2em]">
 													Title
@@ -785,12 +995,20 @@ export default function PostLib() {
 										<div>
 											<div className="flex justify-between items-start mb-4">
 												<div className="flex items-start gap-3">
-													<input
-														type="checkbox"
-														className="mt-1"
-														checked={selectedIds.includes(post.id)}
-														onChange={() => toggleSelected(post.id)}
-													/>
+													{isSelectableQueuePost(post) ? (
+														<input
+															type="checkbox"
+															className="mt-1"
+															checked={selectedIds.includes(post.id)}
+															onChange={() => toggleSelected(post.id)}
+														/>
+													) : (
+														<span className="mt-1 rounded border border-lime-500 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-lime-300">
+															{post.scheduledAt || post.scheduled_at
+																? "Scheduled, darling"
+																: "Locked"}
+														</span>
+													)}
 													<div>
 													<h3 className="text-xl text-pink-400">{post.title}</h3>
 													{post.metadata?.productProfileLabel && (
@@ -871,10 +1089,11 @@ export default function PostLib() {
 													🚫 No visuals – this post is flying blind!
 												</div>
 											)}
-										</div>
-									)}
-								</div>
-							))
+											</div>
+										)}
+									</div>
+								))}
+							</>
 						)}
 					</div>
 				)}

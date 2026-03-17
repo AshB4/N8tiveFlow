@@ -106,6 +106,27 @@ Selected campaign phase: ${campaignPhase}
 Selected campaign angle: ${options.campaignAngle || "not specified"}`;
 }
 
+export function buildContentMixLayer() {
+	return `Content mix guidance:
+- Do not make every post a product blurb.
+- Keep the output interesting even without the product link.
+- Mix these categories across a batch or campaign:
+  - product/value posts: the thing, the use case, the problem solved
+  - creator/identity posts: who the creator is, what they make, what they stand for
+  - process/build posts: behind the scenes, lessons learned, why it was made, what changed
+  - direct sell posts: clear CTA, product-forward, offer-aware
+
+Recommended balance across a content run:
+- 60-70% product-adjacent value or personality posts
+- 20-30% creator/process/identity posts
+- 10-20% direct sell posts
+
+Avoid:
+- repeating the same emotional angle in every post
+- sounding like every post is asking for a purchase
+- making quirky tone do all the work without a clear idea`;
+}
+
 export function buildGuardrailsLayer(options = {}) {
 	const linkPolicy = inferLinkPolicy(options.productProfile);
 	return `Link and CTA policy:
@@ -282,6 +303,8 @@ function buildCompactContext(productName, productType, audience, options = {}) {
 		buildProductGuidance(options.productProfile),
 		"Platform guidance:",
 		buildPlatformGuidance(options.selectedPlatforms),
+		"Content mix guidance:",
+		buildContentMixLayer(),
 	].join("\n");
 }
 
@@ -297,6 +320,7 @@ export function buildStrategyStagePrompt(productName, productType, audience, opt
 		buildSystemLayer(),
 		buildCompactContext(productName, productType, audience, options),
 		buildGuardrailsLayer(options),
+		buildContentMixLayer(),
 		"Task: produce the campaign strategy for one post only.",
 		`Return this exact JSON shape:
 {
@@ -326,6 +350,7 @@ export function buildDiscoverabilityStagePrompt(
 		buildSystemLayer(),
 		buildCompactContext(productName, productType, audience, options),
 		buildPriorStageSummary("Strategy", strategy),
+		buildContentMixLayer(),
 		"Task: produce discoverability signals for one post only.",
 		`Return this exact JSON shape:
 {
@@ -356,6 +381,7 @@ export function buildCopyStagePrompt(
 		buildPriorStageSummary("Strategy", strategy),
 		buildPriorStageSummary("Discoverability", discoverability),
 		buildGuardrailsLayer(options),
+		buildContentMixLayer(),
 		"Task: write compact platform-ready copy for one post only. Keep variants concise.",
 		`Return this exact JSON shape:
 {
@@ -405,6 +431,7 @@ export function buildVisualStagePrompt(
 		buildSystemLayer(),
 		buildCompactContext(productName, productType, audience, options),
 		buildPriorStageSummary("Strategy", strategy),
+		buildContentMixLayer(),
 		"Task: plan the visual for one post only.",
 		`Return this exact JSON shape:
 {
@@ -465,6 +492,8 @@ export const buildSeoPrompt = (productName, productType, audience, options = {})
 		buildGuardrailsLayer(options),
 		"",
 		buildBehaviorLayer(),
+		"",
+		buildContentMixLayer(),
 		"",
 		buildPostIntentLayer(options),
 		"",

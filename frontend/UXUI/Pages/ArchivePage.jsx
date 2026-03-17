@@ -142,7 +142,12 @@ export default function ArchivePage() {
                   <div className="mt-4 rounded border border-teal-800 bg-black/50 p-4 text-sm leading-6 text-teal-100 whitespace-pre-wrap">
                     {entry.body}
                   </div>
-                ) : null}
+                ) : (
+                  <div className="mt-4 rounded border border-amber-500/60 bg-amber-950/10 p-4 text-sm text-amber-200">
+                    Full post body is not available for this older archive entry. New posted items
+                    will save the full body going forward.
+                  </div>
+                )}
 
                 {Array.isArray(entry?.results) && entry.results.length > 0 ? (
                   <div className="mt-4 rounded border border-pink-600 bg-black/50 p-4">

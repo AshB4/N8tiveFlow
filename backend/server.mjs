@@ -16,6 +16,7 @@ import { buildAnalyticsSummary } from "./utils/analyticsSummary.mjs";
 import { runPlatformHealthChecks } from "./utils/platformHealth.mjs";
 import { normalizePostStatus } from "./utils/postStatus.mjs";
 import { distributionTagsToTargets, normalizeTagList } from "./utils/distributionTags.mjs";
+import { buildArchiveEntry } from "./utils/archiveEntry.mjs";
 import {
 	appendPostedLogEntry as appendPostedLogToDb,
 	clearPostedPostsFromQueue,
@@ -72,14 +73,14 @@ async function appendPostedLogEntry(post) {
 	);
 	const alreadyLogged = Boolean(existing);
 	if (alreadyLogged) return;
-	await appendPostedLogToDb({
-		id: post.id ?? null,
-		title: post.title ?? null,
-		targets: Array.isArray(post.targets) ? post.targets : [],
-		results: [],
-		processedAt: new Date().toISOString(),
-		manualArchived: true,
-	});
+	await appendPostedLogToDb(
+		buildArchiveEntry(post, {
+			targets: Array.isArray(post.targets) ? post.targets : [],
+			results: [],
+			processedAt: new Date().toISOString(),
+			manualArchived: true,
+		}),
+	);
 }
 
 function safeFileName(input) {

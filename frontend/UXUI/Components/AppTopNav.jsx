@@ -67,29 +67,31 @@ export default function AppTopNav({ includeLab = false }) {
     : navItems;
 
   return (
-    <div className="mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-pink-500 pb-4">
-      <Link to="/" className="shrink-0">
-        <img
-          src={logo}
-          alt="PostPunk Home"
-          className="h-24 md:h-28 w-auto drop-shadow-[0_0_12px_#ff00ff]"
-        />
-      </Link>
-      <div className="flex flex-wrap justify-center gap-3">
-        {items.map((item) => {
-          const active = isActive(location.pathname, item.to);
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={`px-4 py-2 border rounded transition-colors ${
-                active ? item.activeClass : item.baseClass
-              }`}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
+    <div className="relative left-1/2 right-1/2 mb-6 w-screen -translate-x-1/2 border-b border-pink-500 bg-black/95 px-4 py-3 backdrop-blur">
+      <div className="flex items-center gap-4 overflow-x-auto whitespace-nowrap">
+        <Link to="/" className="shrink-0">
+          <img
+            src={logo}
+            alt="PostPunk Home"
+            className="h-16 md:h-18 w-auto shrink-0 drop-shadow-[0_0_12px_#ff00ff]"
+          />
+        </Link>
+        <div className="flex min-w-0 flex-1 items-center gap-3 overflow-x-auto whitespace-nowrap pr-2">
+          {items.map((item) => {
+            const active = isActive(location.pathname, item.to);
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`shrink-0 rounded border px-4 py-2 transition-colors ${
+                  active ? item.activeClass : item.baseClass
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

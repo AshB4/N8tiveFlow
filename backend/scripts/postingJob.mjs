@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import { normalizeTargets, postToAllPlatforms } from "./platforms/post-to-all.js";
 import { sendPostPunkTelegramAlert } from "../utils/telegramAlerts.mjs";
 import { isApprovedStatus } from "../utils/postStatus.mjs";
+import { buildArchiveEntry } from "../utils/archiveEntry.mjs";
 import { initLocalDb, readStoreSnapshot, replaceStoreSnapshot } from "../utils/localDb.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -153,13 +154,13 @@ async function processQueue() {
 			const failures = results.filter((r) => r.status !== "success");
 
 			if (successes.length > 0) {
-				postedLog.push({
-					id: post.id ?? null,
-					title: post.title ?? null,
-					targets,
-					results,
-					processedAt: timestamp,
-				});
+				postedLog.push(
+					buildArchiveEntry(post, {
+						targets,
+						results,
+						processedAt: timestamp,
+					}),
+				);
 				console.log(
 					`Posted "${post.title ?? post.id ?? "untitled"}" to ${successes.length} platform(s).`,
 				);

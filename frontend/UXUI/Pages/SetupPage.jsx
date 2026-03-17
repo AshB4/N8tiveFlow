@@ -31,6 +31,10 @@ function moveItem(list, index, direction) {
   return next;
 }
 
+function isCustomProduct(settings, productId) {
+  return (settings?.customProducts || []).some((entry) => entry.id === productId);
+}
+
 export default function SetupPage() {
   const { toast } = useToast();
   const builtInProducts = useMemo(
@@ -170,6 +174,12 @@ export default function SetupPage() {
   };
 
   const removeCustomProduct = (productId) => {
+    const product = (settings?.customProducts || []).find((entry) => entry.id === productId);
+    const confirmed = window.confirm(
+      `Delete ${product?.label || "this custom product"} from setup? This removes it from the rotation list too.`,
+    );
+    if (!confirmed) return;
+
     updateSettings((current) => ({
       ...current,
       customProducts: (current.customProducts || []).filter((product) => product.id !== productId),
@@ -327,7 +337,7 @@ export default function SetupPage() {
             {orderedProducts.map((product) => {
               const active = (settings.activeProductIds || []).includes(product.id);
               const activeIndex = (settings.activeProductIds || []).indexOf(product.id);
-              const isCustom = (settings.customProducts || []).some((entry) => entry.id === product.id);
+              const isCustom = isCustomProduct(settings, product.id);
               return (
                 <div
                   key={product.id}
@@ -352,17 +362,23 @@ export default function SetupPage() {
                       {product.notes ? <p className="mt-2 text-sm text-teal-400">{product.notes}</p> : null}
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => toggleActiveProduct(product.id)}
-                        className={`rounded border px-3 py-2 transition-colors ${
-                          active
-                            ? "border-lime-500 text-lime-200 hover:bg-lime-500 hover:text-black"
-                            : "border-gray-600 text-gray-300 hover:bg-gray-700"
-                        }`}
-                      >
-                        {active ? "Active In Rotation" : "Keep Out For Now"}
-                      </button>
+                      {active ? (
+                        <button
+                          type="button"
+                          onClick={() => toggleActiveProduct(product.id)}
+                          className="rounded border border-lime-500 px-3 py-2 text-lime-200 transition-colors hover:bg-lime-500 hover:text-black"
+                        >
+                          In Rotation
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => toggleActiveProduct(product.id)}
+                          className="rounded border border-cyan-500 px-3 py-2 text-cyan-200 transition-colors hover:bg-cyan-500 hover:text-black"
+                        >
+                          Add To Rotation
+                        </button>
+                      )}
                       {active ? (
                         <>
                           <button
@@ -381,6 +397,13 @@ export default function SetupPage() {
                           >
                             Move Down
                           </button>
+                          <button
+                            type="button"
+                            onClick={() => toggleActiveProduct(product.id)}
+                            className="rounded border border-gray-600 px-3 py-2 text-gray-300 hover:bg-gray-700"
+                          >
+                            Keep Off Rotation
+                          </button>
                         </>
                       ) : null}
                       {isCustom ? (
@@ -388,8 +411,9 @@ export default function SetupPage() {
                           type="button"
                           onClick={() => removeCustomProduct(product.id)}
                           className="rounded border border-red-500 px-3 py-2 text-red-200 hover:bg-red-500 hover:text-white"
+                          title="Delete custom product"
                         >
-                          Remove Custom
+                          X Delete
                         </button>
                       ) : null}
                     </div>

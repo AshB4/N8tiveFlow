@@ -30,6 +30,20 @@ const navItems = [
       "border-violet-500 text-violet-300 hover:bg-violet-500 hover:text-black",
     activeClass: "border-violet-400 bg-violet-500 text-black",
   },
+  {
+    to: "/archive",
+    label: "Posted Archive",
+    baseClass:
+      "border-orange-500 text-orange-300 hover:bg-orange-500 hover:text-black",
+    activeClass: "border-orange-400 bg-orange-500 text-black",
+  },
+  {
+    to: "/setup",
+    label: "Tune Rotation",
+    baseClass:
+      "border-lime-500 text-lime-300 hover:bg-lime-500 hover:text-black",
+    activeClass: "border-lime-400 bg-lime-500 text-black",
+  },
 ];
 
 function isActive(pathname, to) {

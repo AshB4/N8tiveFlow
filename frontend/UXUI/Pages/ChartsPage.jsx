@@ -56,9 +56,44 @@ const computeStatsFromPosts = (posts) => {
 		.filter((post) => !isApprovedStatus(post.status))
 		.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))[0] || null;
 
-	const mostEngaged = [...normalizedPosts]
+	const withPerformance = normalizedPosts.map((post) => {
+		const perf = post?.metadata?.performance || {};
+		const engagement =
+			Number(perf.likes7d || 0) +
+			Number(perf.comments7d || 0) +
+			Number(perf.saves7d || 0);
+		return {
+			...post,
+			engagement,
+			manualMetrics: {
+				likes24h: Number(perf.likes24h || 0),
+				likes7d: Number(perf.likes7d || 0),
+				comments24h: Number(perf.comments24h || 0),
+				comments7d: Number(perf.comments7d || 0),
+				clicks24h: Number(perf.clicks24h || 0),
+				clicks7d: Number(perf.clicks7d || 0),
+				saves7d: Number(perf.saves7d || 0),
+			},
+		};
+	});
+
+	const mostEngaged = [...withPerformance]
 		.filter((post) => typeof post.engagement === "number")
 		.sort((a, b) => b.engagement - a.engagement)[0] || null;
+
+	const manualTotals = withPerformance.reduce(
+		(acc, post) => {
+			acc.likes24h += post.manualMetrics.likes24h;
+			acc.likes7d += post.manualMetrics.likes7d;
+			acc.comments24h += post.manualMetrics.comments24h;
+			acc.comments7d += post.manualMetrics.comments7d;
+			acc.clicks24h += post.manualMetrics.clicks24h;
+			acc.clicks7d += post.manualMetrics.clicks7d;
+			acc.saves7d += post.manualMetrics.saves7d;
+			return acc;
+		},
+		{ likes24h: 0, likes7d: 0, comments24h: 0, comments7d: 0, clicks24h: 0, clicks7d: 0, saves7d: 0 },
+	);
 
 	return {
 		totalPosts,
@@ -67,7 +102,8 @@ const computeStatsFromPosts = (posts) => {
 		platformCounts,
 		oldestUnscheduled,
 		mostEngaged,
-		posts: normalizedPosts,
+		manualTotals,
+		posts: withPerformance,
 	};
 };
 
@@ -185,6 +221,12 @@ export default function ChartsPage() {
 					>
 						✍️ Draft Another
 					</Link>
+					<Link
+						to="/archive"
+						className="px-3 py-2 border border-orange-500 text-orange-300 rounded hover:bg-orange-500 hover:text-black transition-colors"
+					>
+						📚 Posted Archive
+					</Link>
 				</div>
 			</header>
 
@@ -251,11 +293,11 @@ export default function ChartsPage() {
 							</div>
 							<div className="border border-teal-600 rounded p-3">
 								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">Likes</p>
-								<p className="text-2xl text-pink-300 font-semibold">{analytics?.totals?.likes ?? 0}</p>
+								<p className="text-2xl text-pink-300 font-semibold">{stats.manualTotals?.likes7d ?? analytics?.totals?.likes ?? 0}</p>
 							</div>
 							<div className="border border-teal-600 rounded p-3">
 								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">Saves</p>
-								<p className="text-2xl text-pink-300 font-semibold">{analytics?.totals?.saves ?? 0}</p>
+								<p className="text-2xl text-pink-300 font-semibold">{stats.manualTotals?.saves7d ?? analytics?.totals?.saves ?? 0}</p>
 							</div>
 							<div className="border border-teal-600 rounded p-3">
 								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">Retweets</p>
@@ -311,7 +353,7 @@ export default function ChartsPage() {
 								title={stats.mostEngaged?.title}
 								detail={
 									stats.mostEngaged
-										? `${stats.mostEngaged.engagement} reactions logged`
+										? `${stats.mostEngaged.engagement} 7-day reactions logged`
 										: "No reactions recorded yet."
 								}
 							/>
@@ -336,10 +378,9 @@ export default function ChartsPage() {
 					<h2 className="text-pink-300 text-lg uppercase tracking-[0.3em] mb-3">
 						Pipeline &amp; Funnel
 					</h2>
-					<p className="text-sm text-teal-400 mb-4">
-						This panel now reads real funnel event totals from the backend stats
-						files instead of only queue counts.
-					</p>
+						<p className="text-sm text-teal-400 mb-4">
+							Manual likes, comments, clicks, and saves recorded in the library now feed this page. Backend funnel files can still add totals later.
+						</p>
 					<div className="space-y-4 text-sm">
 						<TopPostCard
 							label="Top Platform"
@@ -394,6 +435,21 @@ export default function ChartsPage() {
 							<p className="mt-1 text-teal-500">
 								Last updated: {formatDate(analytics?.posting?.lastUpdated)}
 							</p>
+						</div>
+						<div className="border border-orange-500 rounded p-3">
+							<p className="uppercase text-xs tracking-[0.3em] text-orange-400">
+								Posted History
+							</p>
+							<p className="mt-2 text-teal-300">
+								Need to inspect what already went out instead of only seeing totals?
+							</p>
+							<button
+								type="button"
+								onClick={() => navigate("/archive")}
+								className="mt-3 rounded border border-orange-500 px-3 py-2 text-orange-200 hover:bg-orange-500 hover:text-black transition-colors"
+							>
+								Open Posted Archive
+							</button>
 						</div>
 					</div>
 				</aside>

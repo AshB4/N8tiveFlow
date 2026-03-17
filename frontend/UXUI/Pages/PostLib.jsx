@@ -7,6 +7,15 @@ import AppTopNav from "../Components/AppTopNav";
 import { getStatusLabel, normalizePostStatus } from "../utils/postStatus";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
+const DEFAULT_ROTATION_SETTINGS = {
+	cadenceDays: 1,
+	defaultTime: "10:00",
+	maxPostsPerDay: 1,
+	mixProducts: true,
+	approveOnSchedule: true,
+	activeProductIds: [],
+	customProducts: [],
+};
 
 const formatTargetsLabel = (targets = []) => {
 	if (!Array.isArray(targets) || targets.length === 0) return "—";
@@ -40,6 +49,16 @@ const getProductLink = (post) =>
 	post?.metadata?.productLinks?.amazon ||
 	post?.metadata?.productLinks?.gumroad ||
 	"";
+
+const getPerformanceMetrics = (post) => ({
+	likes24h: Number(post?.metadata?.performance?.likes24h || 0),
+	likes7d: Number(post?.metadata?.performance?.likes7d || 0),
+	comments24h: Number(post?.metadata?.performance?.comments24h || 0),
+	comments7d: Number(post?.metadata?.performance?.comments7d || 0),
+	clicks24h: Number(post?.metadata?.performance?.clicks24h || 0),
+	clicks7d: Number(post?.metadata?.performance?.clicks7d || 0),
+	saves7d: Number(post?.metadata?.performance?.saves7d || 0),
+});
 
 const SCHEDULE_PRESETS = {
 	custom: {
@@ -76,6 +95,48 @@ const buildPresetSchedule = (dateValue, timeValue, allowedDays, count) => {
 	return results;
 };
 
+const interleavePostsByProduct = (selectedPosts = [], productOrder = []) => {
+	const buckets = new Map();
+	for (const post of selectedPosts) {
+		const key =
+			post?.metadata?.productProfileId ||
+			post?.metadata?.productProfileLabel ||
+			post?.title ||
+			post?.id;
+		if (!buckets.has(key)) buckets.set(key, []);
+		buckets.get(key).push(post);
+	}
+
+	for (const bucket of buckets.values()) {
+		bucket.sort((a, b) => {
+			const left = new Date(a.createdAt || a.scheduledAt || 0).getTime();
+			const right = new Date(b.createdAt || b.scheduledAt || 0).getTime();
+			return left - right;
+		});
+	}
+
+	const preferredOrder = Array.isArray(productOrder) ? productOrder : [];
+	const orderedKeys = [
+		...preferredOrder.filter((key) => buckets.has(key)),
+		...[...buckets.keys()].filter((key) => !preferredOrder.includes(key)).sort(),
+	];
+	const mixed = [];
+	let added = true;
+
+	while (added) {
+		added = false;
+		for (const key of orderedKeys) {
+			const bucket = buckets.get(key);
+			if (bucket?.length) {
+				mixed.push(bucket.shift());
+				added = true;
+			}
+		}
+	}
+
+	return mixed;
+};
+
 export default function PostLib() {
 	const { toast } = useToast();
 	const [posts, setPosts] = useState([]);
@@ -91,6 +152,8 @@ export default function PostLib() {
 	const [bulkIntervalDays, setBulkIntervalDays] = useState("1");
 	const [bulkPreset, setBulkPreset] = useState("custom");
 	const [bulkApprove, setBulkApprove] = useState(true);
+	const [bulkMixProducts, setBulkMixProducts] = useState(true);
+	const [rotationSettings, setRotationSettings] = useState(DEFAULT_ROTATION_SETTINGS);
 	const [isBulkSaving, setIsBulkSaving] = useState(false);
 
 	const loadPosts = async () => {
@@ -118,6 +181,33 @@ export default function PostLib() {
 
 	useEffect(() => {
 		loadPosts();
+	}, []);
+
+	useEffect(() => {
+		const loadRotationSettings = async () => {
+			try {
+				const res = await fetch(`${API_BASE}/api/settings/rotation`);
+				if (!res.ok) throw new Error(`Failed to load rotation settings: ${res.status}`);
+				const data = await res.json();
+				setRotationSettings({ ...DEFAULT_ROTATION_SETTINGS, ...data });
+				setBulkTimeOfDay(data.defaultTime || DEFAULT_ROTATION_SETTINGS.defaultTime);
+				setBulkIntervalDays(String(data.cadenceDays || DEFAULT_ROTATION_SETTINGS.cadenceDays));
+				setBulkApprove(
+					typeof data.approveOnSchedule === "boolean"
+						? data.approveOnSchedule
+						: DEFAULT_ROTATION_SETTINGS.approveOnSchedule,
+				);
+				setBulkMixProducts(
+					typeof data.mixProducts === "boolean"
+						? data.mixProducts
+						: DEFAULT_ROTATION_SETTINGS.mixProducts,
+				);
+			} catch (err) {
+				console.error("Failed to load rotation settings", err);
+			}
+		};
+
+		loadRotationSettings();
 	}, []);
 
 	const handleDelete = async (id) => {
@@ -149,6 +239,7 @@ export default function PostLib() {
 			body: post.body,
 			scheduledAt: toDateTimeLocal(post.scheduledAt || post.scheduled_at),
 			status: normalizePostStatus(post.status),
+			...getPerformanceMetrics(post),
 		});
 	};
 
@@ -164,6 +255,18 @@ export default function PostLib() {
 				scheduledAt: editForm.scheduledAt
 					? new Date(editForm.scheduledAt).toISOString()
 					: null,
+				metadata: {
+					...(posts.find((post) => post.id === editingId)?.metadata || {}),
+					performance: {
+						likes24h: Number(editForm.likes24h || 0),
+						likes7d: Number(editForm.likes7d || 0),
+						comments24h: Number(editForm.comments24h || 0),
+						comments7d: Number(editForm.comments7d || 0),
+						clicks24h: Number(editForm.clicks24h || 0),
+						clicks7d: Number(editForm.clicks7d || 0),
+						saves7d: Number(editForm.saves7d || 0),
+					},
+				},
 			};
 			const res = await fetch(`${API_BASE}/api/posts/${editingId}`, {
 				method: "PUT",
@@ -270,10 +373,13 @@ export default function PostLib() {
 				const right = new Date(b.createdAt || b.scheduledAt || 0).getTime();
 				return left - right;
 			});
+			const scheduledPosts = bulkMixProducts
+				? interleavePostsByProduct(sortedPosts, rotationSettings.activeProductIds)
+				: sortedPosts;
 			const preset = SCHEDULE_PRESETS[bulkPreset] || SCHEDULE_PRESETS.custom;
 			const scheduledSlots =
 				bulkPreset === "custom"
-					? sortedPosts.map((_, index) => {
+					? scheduledPosts.map((_, index) => {
 							const interval = Math.max(1, Number.parseInt(bulkIntervalDays, 10) || 1);
 							return buildScheduledIso(
 								bulkStartDate,
@@ -285,11 +391,11 @@ export default function PostLib() {
 							bulkStartDate,
 							bulkTimeOfDay || preset.defaultTime,
 							preset.days,
-							sortedPosts.length,
+							scheduledPosts.length,
 					  );
 
 			const updates = await Promise.all(
-				sortedPosts.map(async (post, index) => {
+				scheduledPosts.map(async (post, index) => {
 					const payload = {
 						scheduledAt: scheduledSlots[index],
 						status: bulkApprove ? "approved" : "draft",
@@ -429,7 +535,7 @@ export default function PostLib() {
 									</p>
 									<h2 className="text-2xl text-pink-400 mt-1">Spread posts across the next days</h2>
 									<p className="text-sm text-teal-400 mt-2">
-										Select drafts or failed posts, then apply a custom interval or a weekday preset like Mon / Wed / Fri.
+										Select drafts or failed posts, then apply your saved one-post-per-day rhythm or override it here for this run.
 									</p>
 								</div>
 								<div className="flex flex-wrap gap-2">
@@ -497,6 +603,12 @@ export default function PostLib() {
 										disabled={bulkPreset !== "custom"}
 									/>
 								</label>
+								<div className="rounded border border-lime-500/40 bg-lime-950/10 p-3 text-sm text-lime-200 md:col-span-2">
+									<p className="uppercase tracking-[0.2em] text-lime-400">Saved Rotation Defaults</p>
+									<p className="mt-2">
+										{rotationSettings.activeProductIds?.length || 0} active products, {rotationSettings.cadenceDays} day between posts, default time {rotationSettings.defaultTime}, max {rotationSettings.maxPostsPerDay} per day.
+									</p>
+								</div>
 								<label className="flex items-center gap-3 text-teal-300 mt-7">
 									<input
 										type="checkbox"
@@ -504,6 +616,14 @@ export default function PostLib() {
 										onChange={() => setBulkApprove(!bulkApprove)}
 									/>
 									Approve scheduled posts
+								</label>
+								<label className="flex items-center gap-3 text-teal-300 mt-7">
+									<input
+										type="checkbox"
+										checked={bulkMixProducts}
+										onChange={() => setBulkMixProducts(!bulkMixProducts)}
+									/>
+									Mix products across days
 								</label>
 							</div>
 
@@ -612,6 +732,40 @@ export default function PostLib() {
 													<option value="failed">Failed</option>
 												</select>
 											</label>
+											<div className="rounded border border-amber-700 bg-black/40 p-4">
+												<p className="text-sm text-pink-300 uppercase tracking-[0.2em] mb-3">
+													Manual Metrics
+												</p>
+												<div className="grid gap-3 md:grid-cols-3">
+													{[
+														["likes24h", "Likes 24h"],
+														["likes7d", "Likes 7d"],
+														["comments24h", "Comments 24h"],
+														["comments7d", "Comments 7d"],
+														["clicks24h", "Clicks 24h"],
+														["clicks7d", "Clicks 7d"],
+														["saves7d", "Saves 7d"],
+													].map(([key, label]) => (
+														<label key={key} className="block">
+															<span className="text-xs text-teal-400 uppercase tracking-[0.2em]">
+																{label}
+															</span>
+															<input
+																type="number"
+																min="0"
+																className="mt-2 w-full bg-black border border-teal-500 text-teal-200 p-3 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+																value={editForm[key] ?? 0}
+																onChange={(e) =>
+																	setEditForm((prev) => ({
+																		...prev,
+																		[key]: e.target.value,
+																	}))
+																}
+															/>
+														</label>
+													))}
+												</div>
+											</div>
 											<div className="flex gap-3">
 												<button
 													onClick={handleUpdate}
@@ -693,6 +847,16 @@ export default function PostLib() {
 												<div className="mt-4 rounded border border-pink-700 bg-black/50 p-3 text-sm">
 													<p className="text-pink-300 break-all">
 														Link: {getProductLink(post)}
+													</p>
+												</div>
+											)}
+											{Object.values(getPerformanceMetrics(post)).some((value) => value > 0) && (
+												<div className="mt-4 rounded border border-amber-700 bg-black/50 p-3 text-sm">
+													<p className="text-amber-300">
+														24h: {getPerformanceMetrics(post).likes24h} likes, {getPerformanceMetrics(post).comments24h} comments, {getPerformanceMetrics(post).clicks24h} clicks
+													</p>
+													<p className="mt-1 text-teal-300">
+														7d: {getPerformanceMetrics(post).likes7d} likes, {getPerformanceMetrics(post).comments7d} comments, {getPerformanceMetrics(post).clicks7d} clicks, {getPerformanceMetrics(post).saves7d} saves
 													</p>
 												</div>
 											)}

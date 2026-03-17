@@ -21,10 +21,12 @@ import {
 	clearPostedPostsFromQueue,
 	createPost,
 	deletePost as deletePostFromDb,
+	getRotationSettings,
 	getLocalDbPath,
 	initLocalDb,
 	listPosts,
 	listPostedLog,
+	updateRotationSettings,
 	updatePost as updatePostInDb,
 } from "./utils/localDb.mjs";
 
@@ -127,6 +129,24 @@ app.get("/api/posts", async (_req, res) => {
 	}
 });
 
+app.get("/api/posts/archive", async (_req, res) => {
+	try {
+		const archive = await listPostedLog();
+		res.json(
+			[...archive].sort((a, b) => {
+				const left = new Date(b.processedAt || b.createdAt || 0).getTime();
+				const right = new Date(a.processedAt || a.createdAt || 0).getTime();
+				return left - right;
+			}),
+		);
+	} catch (error) {
+		res.status(500).json({
+			error: "Could not load posted archive",
+			detail: error?.message || String(error),
+		});
+	}
+});
+
 app.get("/api/accounts", async (_req, res) => {
 	try {
 		const accounts = await getPublicAccounts();
@@ -157,6 +177,28 @@ app.get("/api/platform-health", async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({
 			error: "Failed to load platform health",
+			detail: error?.message || String(error),
+		});
+	}
+});
+
+app.get("/api/settings/rotation", async (_req, res) => {
+	try {
+		return res.json(await getRotationSettings());
+	} catch (error) {
+		return res.status(500).json({
+			error: "Failed to load rotation settings",
+			detail: error?.message || String(error),
+		});
+	}
+});
+
+app.put("/api/settings/rotation", async (req, res) => {
+	try {
+		return res.json(await updateRotationSettings(req.body ?? {}));
+	} catch (error) {
+		return res.status(500).json({
+			error: "Failed to save rotation settings",
 			detail: error?.message || String(error),
 		});
 	}

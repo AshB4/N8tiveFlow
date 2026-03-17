@@ -51,6 +51,12 @@ function getDb() {
       payload TEXT NOT NULL,
       created_at TEXT NOT NULL
     );
+
+    CREATE TABLE IF NOT EXISTS settings (
+      key TEXT PRIMARY KEY,
+      payload TEXT NOT NULL,
+      updated_at TEXT NOT NULL
+    );
   `);
   return db;
 }
@@ -253,4 +259,76 @@ export async function appendRejectedEntry(entry) {
     .prepare("INSERT INTO rejections (payload, created_at) VALUES (?, ?)")
     .run(JSON.stringify(entry), entry.processedAt || new Date().toISOString());
   await syncJsonMirror();
+}
+
+const DEFAULT_ROTATION_SETTINGS = {
+  cadenceDays: 1,
+  defaultTime: "10:00",
+  maxPostsPerDay: 1,
+  mixProducts: true,
+  approveOnSchedule: true,
+  creatorPostFrequencyDays: 30,
+  activeProductIds: [
+    "goblin-self-care-coloring-book",
+    "goblin-coloring-affirmations",
+    "ai-powered-grad",
+    "prompt-storm",
+    "product-strategy-25",
+    "kawaii-coloring-series",
+    "buzzing-adventures-coloring-book",
+  ],
+  customProducts: [],
+};
+
+export function getDefaultRotationSettings() {
+  return JSON.parse(JSON.stringify(DEFAULT_ROTATION_SETTINGS));
+}
+
+export async function getSetting(key, fallback = null) {
+  const row = getDb()
+    .prepare("SELECT payload FROM settings WHERE key = ?")
+    .get(key);
+  if (!row) {
+    return fallback;
+  }
+  try {
+    return JSON.parse(row.payload);
+  } catch {
+    return fallback;
+  }
+}
+
+export async function setSetting(key, value) {
+  const payload = JSON.stringify(value);
+  getDb()
+    .prepare(
+      "INSERT INTO settings (key, payload, updated_at) VALUES (?, ?, ?) ON CONFLICT(key) DO UPDATE SET payload = excluded.payload, updated_at = excluded.updated_at",
+    )
+    .run(key, payload, new Date().toISOString());
+  return value;
+}
+
+export async function getRotationSettings() {
+  const stored = (await getSetting("rotation_settings", null)) || {};
+  return {
+    ...getDefaultRotationSettings(),
+    ...stored,
+    customProducts: Array.isArray(stored.customProducts) ? stored.customProducts : [],
+    activeProductIds: Array.isArray(stored.activeProductIds)
+      ? stored.activeProductIds
+      : getDefaultRotationSettings().activeProductIds,
+  };
+}
+
+export async function updateRotationSettings(nextSettings = {}) {
+  const merged = {
+    ...(await getRotationSettings()),
+    ...(nextSettings || {}),
+  };
+  merged.customProducts = Array.isArray(merged.customProducts) ? merged.customProducts : [];
+  merged.activeProductIds = Array.isArray(merged.activeProductIds)
+    ? merged.activeProductIds
+    : [];
+  await setSetting("rotation_settings", merged);
+  return merged;
 }

@@ -70,5 +70,6 @@ backend/data/*.sqlite-wal
 backend/queue/postQueue.json
 backend/queue/postedLog.json
 backend/queue/rejections.json
+frontend/assets/goblinposts/
 
 # My Docs

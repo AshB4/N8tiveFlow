@@ -4,12 +4,12 @@
     "id": "fb-color-with-ash",
     "label": "Facebook • Color With Ash",
     "credentials": {
-      "accessToken": "${FB_COLOR_WITH_ASH_ACCESS_TOKEN}",
-      "appId": "${FB_APP_ID}",
-      "appSecret": "${FB_APP_SECRET}"
+      "accessToken": "${FACEBOOK_PAGE_ACCESS_TOKEN}",
+      "appId": "${FACEBOOK_APP_ID}",
+      "appSecret": "${FACEBOOK_APP_SECRET}"
     },
     "metadata": {
-      "pageId": "${FB_COLOR_WITH_ASH_PAGE_ID}",
+      "pageId": "${FACEBOOK_PAGE_ID}",
       "pageName": "Color With Ash"
     }
   },

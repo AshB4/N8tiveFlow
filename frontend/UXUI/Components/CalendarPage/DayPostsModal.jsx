@@ -46,6 +46,8 @@ export default function DayPostsModal({
 	onClose,
 	onEditPost,
 	onRewriteAll,
+	onRetryPost,
+	workingPostId,
 }) {
 	if (!date) return null;
 
@@ -83,10 +85,15 @@ export default function DayPostsModal({
 							);
 							const status = post.status || "unknown";
 							const targetLabel = formatTargets(post.targets, post.platforms);
+              const isFailed = String(status).toLowerCase() === "failed";
 							return (
 								<div
 									key={post.id || `${post.title}-${post.platform}`}
-									className="border border-teal-600 rounded-lg p-4 bg-black/70"
+									className={`border rounded-lg p-4 ${
+                    isFailed
+                      ? "border-red-500 bg-red-950/20 shadow-[0_0_16px_rgba(255,45,85,0.2)]"
+                      : "border-teal-600 bg-black/70"
+                  }`}
 								>
 									<div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
 										<div>
@@ -102,6 +109,11 @@ export default function DayPostsModal({
 											<p className="text-xs text-teal-500">
 												Status: {status}
 											</p>
+                      {isFailed && (
+                        <p className="text-xs uppercase tracking-[0.3em] text-red-300 mt-1">
+                          Failed post
+                        </p>
+                      )}
 											{scheduled && (
 												<p className="text-xs text-teal-500">
 													Scheduled: {scheduled}
@@ -121,6 +133,15 @@ export default function DayPostsModal({
 											>
 												Rewrite vibes
 											</button>
+                      {isFailed && (
+                        <button
+                          onClick={() => onRetryPost?.(post)}
+                          disabled={workingPostId === post.id}
+                          className="px-3 py-1 rounded border border-red-400 text-red-200 text-sm uppercase tracking-[0.2em] hover:bg-red-500 hover:text-white transition-colors disabled:opacity-50"
+                        >
+                          {workingPostId === post.id ? "Retrying..." : "Retry tomorrow"}
+                        </button>
+                      )}
 										</div>
 									</div>
 									{post.body && (

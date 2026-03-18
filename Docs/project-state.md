@@ -63,6 +63,7 @@ These pieces are built and in active use:
 - `Threads` is incomplete
 - `Pinterest` and `Amazon` are in the queue model, but not a proven unattended posting lane
 - built-in AI generation is not a trusted daily workflow yet; external GPT output + `/batch` import is the practical path
+- `Facebook Stories` and `Facebook video` are not wired yet; they are a future Meta lane worth adding because Stories likely matter for reach, but current focus should remain on regular image posts first
 
 ## Current Operating Model
 
@@ -86,6 +87,12 @@ Use the system like this:
 - Scheduled items are not selectable in the library bulk-select flow.
 - Batch imports can be saved, approved, and chained after the current last scheduled date.
 - Archive entries now store full post bodies going forward.
+- Facebook feed posting with text and local image uploads is now proven live against the `Color With Ash` page.
+- Meta-related future work should be prioritized in this order:
+  - stabilize Facebook image posting
+  - add Facebook Stories support
+  - add Facebook video support
+  - then revisit Instagram/Threads once the credential flow is clearer
 
 ## Current Queue Snapshot
 

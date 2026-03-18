@@ -86,6 +86,18 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - LinkedIn: `backend/scripts/platforms/social/post-to-linkedin.js`
 - Pinterest: `backend/scripts/platforms/social/post-to-pinterest.js`
 - Reddit: `backend/scripts/platforms/social/post-to-reddit.js`
+- Threads: `backend/scripts/platforms/social/post-to-threads.js`
+
+### Meta lane notes
+
+- Current proven Meta lane: Facebook page posting through `post-to-facebook.js`
+- Proven now:
+  - text posts
+  - image posts using a local `mediaPath`
+- Not wired yet:
+  - Facebook Stories API flow
+  - Facebook video publishing flow
+- Instagram and Threads have adapter files, but they rely on separate `INSTAGRAM_*` and `THREADS_*` credentials and should not be treated as automatically covered by Facebook page tokens
 
 ## AI And Prompting
 

@@ -74,6 +74,15 @@ function scheduleRetry(post) {
 	};
 }
 
+function markFailed(post) {
+	return {
+		...post,
+		status: "failed",
+		nextAttemptAt: null,
+		lastErrorAt: new Date().toISOString(),
+	};
+}
+
 function normalizePlatforms(post) {
 	const rawPlatforms = Array.isArray(post.platforms)
 		? post.platforms
@@ -205,7 +214,7 @@ async function processQueue() {
 				if (successes.length === 0) {
 					const retried = scheduleRetry(post);
 					if (Number(retried.attemptCount || 0) >= MAX_ATTEMPTS) {
-						processedIds.add(post.id);
+						queueUpdates.set(post.id, markFailed(retried));
 					} else {
 						queueUpdates.set(post.id, retried);
 					}
@@ -228,7 +237,7 @@ async function processQueue() {
 			);
 			const retried = scheduleRetry(post);
 			if (Number(retried.attemptCount || 0) >= MAX_ATTEMPTS) {
-				processedIds.add(post.id);
+				queueUpdates.set(post.id, markFailed(retried));
 			} else {
 				queueUpdates.set(post.id, retried);
 			}

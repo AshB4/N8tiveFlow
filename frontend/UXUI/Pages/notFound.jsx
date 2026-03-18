@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation, useNavigate, useRouteError } from "react-router-dom";
-import gremlin from "../../assets/ErrorGremlin.png";
+import gremlin from "../../assets/appImgs/ErrorGremlin.png";
 
 export default function ErrorPage() {
   const error = useRouteError();

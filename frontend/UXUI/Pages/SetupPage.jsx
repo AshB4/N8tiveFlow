@@ -35,6 +35,29 @@ function isCustomProduct(settings, productId) {
   return (settings?.customProducts || []).some((entry) => entry.id === productId);
 }
 
+function getPlatformHealthHint(entry) {
+  const platform = String(entry?.platform || "").toLowerCase();
+  const code = Number(entry?.errorCode || 0);
+  const subcode = Number(entry?.errorSubcode || 0);
+
+  if (platform === "facebook" && code === 190) {
+    return "Refresh the Facebook Page token from Graph API Explorer using /me?fields=id,name,accounts, then update backend/.env and restart the backend.";
+  }
+  if (platform === "instagram" && code === 190) {
+    return "Refresh the Instagram token and account ID, then restart the backend.";
+  }
+  if (platform === "threads" && code === 190) {
+    return "Refresh the Threads token and account ID, then restart the backend.";
+  }
+  if (code === 190 || subcode === 463) {
+    return "This token looks expired. Refresh it in the provider console and restart the backend.";
+  }
+  if (entry?.status === "healthy") {
+    return "Credential looks healthy.";
+  }
+  return "Check the credential, required permissions, and account metadata for this platform.";
+}
+
 export default function SetupPage() {
   const { toast } = useToast();
   const builtInProducts = useMemo(
@@ -50,6 +73,7 @@ export default function SetupPage() {
     [],
   );
   const [settings, setSettings] = useState(null);
+  const [platformHealth, setPlatformHealth] = useState([]);
   const [customForm, setCustomForm] = useState(emptyCustomProduct);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -58,10 +82,17 @@ export default function SetupPage() {
     async function loadSettings() {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE}/api/settings/rotation`);
-        if (!res.ok) throw new Error(`Failed to load settings: ${res.status}`);
-        const data = await res.json();
+        const [settingsRes, healthRes] = await Promise.all([
+          fetch(`${API_BASE}/api/settings/rotation`),
+          fetch(`${API_BASE}/api/platform-health`),
+        ]);
+        if (!settingsRes.ok) throw new Error(`Failed to load settings: ${settingsRes.status}`);
+        const data = await settingsRes.json();
         setSettings(data);
+        if (healthRes.ok) {
+          const healthData = await healthRes.json();
+          setPlatformHealth(Array.isArray(healthData?.results) ? healthData.results : []);
+        }
       } catch (error) {
         toast({
           title: "Could not load setup",
@@ -237,6 +268,58 @@ export default function SetupPage() {
             content batches.
           </p>
         </header>
+
+        <section className="mb-6 rounded-lg border border-cyan-500 bg-black/60 p-5 shadow-[0_0_20px_rgba(34,211,238,0.14)]">
+          <p className="text-sm uppercase tracking-[0.3em] text-cyan-400">Token Health</p>
+          <p className="mt-3 max-w-3xl text-sm text-teal-400">
+            This is the first place to check when a platform suddenly stops posting. If a token expires,
+            it should show up here before you waste time guessing.
+          </p>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {platformHealth.length === 0 ? (
+              <p className="text-sm text-teal-500">No live platform health results loaded.</p>
+            ) : (
+              platformHealth.map((entry) => {
+                const healthy = entry.status === "healthy";
+                return (
+                  <div
+                    key={`${entry.platform}:${entry.accountId || "default"}`}
+                    className={`rounded border p-4 ${
+                      healthy
+                        ? "border-lime-500 bg-lime-950/10"
+                        : "border-red-500 bg-red-950/10"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-lg text-pink-300">{entry.label || entry.platform}</p>
+                        <p className="text-xs uppercase tracking-[0.3em] text-teal-500">
+                          {entry.platform}
+                        </p>
+                      </div>
+                      <span
+                        className={`rounded-full border px-3 py-1 text-xs uppercase tracking-[0.2em] ${
+                          healthy
+                            ? "border-lime-500 text-lime-300"
+                            : "border-red-500 text-red-300"
+                        }`}
+                      >
+                        {healthy ? "healthy" : "needs attention"}
+                      </span>
+                    </div>
+                    <p className="mt-3 text-sm text-teal-200">
+                      {entry.summary}
+                      {entry.errorCode ? ` · code ${entry.errorCode}` : ""}
+                      {entry.errorSubcode ? `/${entry.errorSubcode}` : ""}
+                    </p>
+                    <p className="mt-2 text-sm text-teal-400">{entry.detail}</p>
+                    <p className="mt-3 text-sm text-pink-200">{getPlatformHealthHint(entry)}</p>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </section>
 
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <section className="rounded-lg border border-lime-500 bg-black/60 p-5 shadow-[0_0_20px_rgba(132,204,22,0.16)]">

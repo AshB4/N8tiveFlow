@@ -10,6 +10,8 @@ import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
 import DayPostsModal from "../Components/CalendarPage/DayPostsModal.jsx";
 import { isApprovedStatus, normalizePostStatus } from "../utils/postStatus";
 
+const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
+
 const getPostDate = (post) => {
   const raw =
     post.scheduled_at || post.scheduledAt || post.intended_date || post.date;
@@ -70,13 +72,14 @@ export default function PostCalendar() {
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedDayPosts, setSelectedDayPosts] = useState([]);
+  const [workingPostId, setWorkingPostId] = useState(null);
   const navigate = useNavigate();
 
   // Fetch posts from the backend queue
   useEffect(() => {
     async function loadPosts() {
       try {
-        const res = await fetch("http://localhost:3001/api/posts");
+        const res = await fetch(`${API_BASE}/api/posts`);
         const data = await res.json();
         setPostQueue(
           data.map((post) => ({
@@ -95,6 +98,10 @@ export default function PostCalendar() {
   }, []);
 
   const scheduledPosts = postQueue.filter((post) => isApprovedStatus(post.status));
+  const calendarPosts = postQueue.filter((post) => {
+    const status = normalizePostStatus(post.status);
+    return isApprovedStatus(status) || status === "failed";
+  });
 
   const percentScheduled = postQueue.length > 0
     ? Math.round((scheduledPosts.length / postQueue.length) * 100)
@@ -122,20 +129,24 @@ export default function PostCalendar() {
 
   const eventz = useMemo(
     () =>
-      postQueue
-        .filter((post) => isApprovedStatus(post.status))
+      calendarPosts
         .map((post) => {
           const dateIso = getPostDate(post);
+          const status = normalizePostStatus(post.status);
+          const isFailed = status === "failed";
           return {
             id: post.id || `${post.title}-${dateIso}`,
-            title: post.title,
+            title: isFailed ? `FAILED • ${post.title}` : post.title,
             date: dateIso,
-            color: "#67e8f9",
+            color: isFailed ? "#ff2d55" : "#67e8f9",
             textColor: "#000000",
+            extendedProps: {
+              status,
+            },
           };
         })
         .filter((event) => Boolean(event.date)),
-    [postQueue]
+    [calendarPosts]
   );
 
   const now = new Date();
@@ -228,6 +239,49 @@ export default function PostCalendar() {
     setSelectedDate(null);
     setSelectedDayPosts([]);
     navigate("/lab", { state: { date: selectedDate, posts: postsForDay } });
+  };
+
+  const retryFailedPost = async (post) => {
+    const currentScheduled = new Date(
+      post.scheduledAt || post.scheduled_at || Date.now(),
+    );
+    if (Number.isNaN(currentScheduled.getTime())) {
+      return;
+    }
+    const nextScheduled = new Date(currentScheduled);
+    nextScheduled.setDate(nextScheduled.getDate() + 1);
+    setWorkingPostId(post.id);
+    try {
+      const res = await fetch(`${API_BASE}/api/posts/${post.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          status: "approved",
+          scheduledAt: nextScheduled.toISOString(),
+          attemptCount: 0,
+          nextAttemptAt: null,
+          lastErrorAt: null,
+        }),
+      });
+      if (!res.ok) {
+        throw new Error(`Retry failed: ${res.status}`);
+      }
+      const updated = await res.json();
+      const normalized = {
+        ...updated,
+        status: normalizePostStatus(updated.status),
+      };
+      setPostQueue((prev) =>
+        prev.map((entry) => (entry.id === normalized.id ? normalized : entry)),
+      );
+      setSelectedDayPosts((prev) =>
+        prev.map((entry) => (entry.id === normalized.id ? normalized : entry)),
+      );
+    } catch (error) {
+      console.error("Failed to retry post", error);
+    } finally {
+      setWorkingPostId(null);
+    }
   };
 
   return (
@@ -333,6 +387,8 @@ export default function PostCalendar() {
             }}
             onEditPost={handleEditPost}
             onRewriteAll={handleRewriteAll}
+            onRetryPost={retryFailedPost}
+            workingPostId={workingPostId}
           />
         </main>
 

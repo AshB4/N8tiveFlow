@@ -9,15 +9,22 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Frontend entrypoint and route source of truth: `frontend/main.jsx`
 - Composer page UI: `frontend/UXUI/Pages/postComposer.jsx`
 - Composer state and submit logic: `frontend/UXUI/Components/PostComposer/usePostComposerState.jsx`
+- Batch import and queue staging: `frontend/UXUI/Pages/BatchPage.jsx`
+- Rotation and scheduling defaults setup: `frontend/UXUI/Pages/SetupPage.jsx`
+- Posted history archive UI: `frontend/UXUI/Pages/ArchivePage.jsx`
 - Backend API: `backend/server.mjs`
 - Scheduled worker: `backend/scripts/postingJob.mjs`
 - Platform dispatch: `backend/scripts/platforms/post-to-all.js`
 
 ## Single Sources Of Truth
 
-- Queue data: `backend/queue/postQueue.json`
-- Posted log: `backend/queue/postedLog.json`
-- Rejections and failures: `backend/queue/rejections.json`
+- Queue data: SQLite `posts` table via `backend/utils/localDb.mjs`
+- Posted log/history: SQLite `posted_log` table via `backend/utils/localDb.mjs`
+- Rejections and failures: SQLite `rejections` table via `backend/utils/localDb.mjs`
+- Legacy JSON mirrors for compatibility:
+  - `backend/queue/postQueue.json`
+  - `backend/queue/postedLog.json`
+  - `backend/queue/rejections.json`
 - Status rules:
   - `backend/utils/postStatus.mjs`
   - `frontend/UXUI/utils/postStatus.js`
@@ -36,8 +43,11 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Calendar and home view: `frontend/UXUI/Pages/PostCalendar.jsx`
 - Composer: `frontend/UXUI/Pages/postComposer.jsx`
 - Library and bulk scheduling: `frontend/UXUI/Pages/PostLib.jsx`
+- Batch import and batch queue actions: `frontend/UXUI/Pages/BatchPage.jsx`
 - Today Ops and manual assist: `frontend/UXUI/Pages/TodayQueue.jsx`
 - Analytics: `frontend/UXUI/Pages/ChartsPage.jsx`
+- Posted archive: `frontend/UXUI/Pages/ArchivePage.jsx`
+- Rotation/setup: `frontend/UXUI/Pages/SetupPage.jsx`
 - pSEO pages: `frontend/UXUI/Pages/SeoPages.jsx`
 - 404 and fallback UI: `frontend/UXUI/Pages/notFound.jsx`
 
@@ -51,10 +61,13 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 ## Backend API Ownership
 
 - Posts CRUD: `backend/server.mjs`
+- Archive API: `backend/server.mjs`
+- Rotation settings API: `backend/server.mjs`
 - Accounts API: `backend/server.mjs`
 - Platform health API: `backend/server.mjs`
 - Analytics summary API: `backend/server.mjs`
 - AI SEO generation API: `backend/server.mjs`
+- AI campaign generation API: `backend/server.mjs`
 - Media upload API: `backend/server.mjs`
 
 ## Posting Pipeline
@@ -79,6 +92,15 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - SEO generation orchestration: `backend/utils/seoGeneration.mjs`
 - Prompt builder: `backend/utils/GptPromptBuilder.js`
 - Provider client: `backend/utils/aiClient.mjs`
+- Campaign planning/generation: `backend/utils/campaignGeneration.mjs`
+
+## Local Storage And Scheduling
+
+- SQLite storage layer and migration/mirroring: `backend/utils/localDb.mjs`
+- Archive entry normalization: `backend/utils/archiveEntry.mjs`
+- Rotation settings persistence: `backend/utils/localDb.mjs`
+- Queue bulk scheduling and auto-schedule-after-last-date UI: `frontend/UXUI/Pages/PostLib.jsx`
+- Batch save, approve, and continue-after-last-date flow: `frontend/UXUI/Pages/BatchPage.jsx`
 
 ## Health, Analytics, Alerts
 
@@ -92,8 +114,9 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Do not create another target parser. Use `distributionTags` and `normalizeTargets`.
 - Do not create another product-profile store. Use `productProfiles`.
 - Do not create another platform-style prompt map. Use `platformProfiles`.
+- Do not create a second storage layer. SQLite in `localDb.mjs` is the source of truth.
 - Do not put posting logic in the frontend. Route it through the backend.
-- Do not create a second queue file. `postQueue.json` is the queue.
+- Do not treat the JSON mirrors as the primary queue. They exist for compatibility only.
 
 ## Rules Of Thumb
 

@@ -12,6 +12,8 @@ PostPunk is currently:
 - a manual-post assistant for unstable platforms
 - a partially automated publishing tool
 - a proven automatic `Dev.to` lane
+- a local-first app using SQLite as the real store
+- an import-first workflow for AI-written content via `/batch`
 
 It is not yet a fully automatic multi-platform autoposter.
 
@@ -22,16 +24,22 @@ These pieces are built and in active use:
 - post composer with queue saving
 - approval workflow using `draft`, `approved`, `posted`, `failed`
 - bulk scheduling in the library
+- auto-schedule-after-last-date flow in the library
 - weekday presets like `MWF` and `MWFSu`
 - Today Ops page at `/today`
+- Batch import page at `/batch`
+- Posted archive page at `/archive`
+- Rotation/settings page at `/setup`
 - retry and failure handling
 - product profiles
 - platform writing guidance
 - AI SEO generation with product and platform context
+- campaign planning/generation backend route
 - image planning fields:
   - `imageStatus`
   - `imageConcept`
   - `imagePrompt`
+- manual metrics logging in the library for charts
 - product link injection for punch posts
 - Amazon affiliate tagging for Amazon product links
 - Telegram success and failure alerts
@@ -41,6 +49,7 @@ These pieces are built and in active use:
 - frontend build passes
 - backend tests pass
 - queue save and edit flow works
+- SQLite persistence and JSON mirroring work
 - launchd worker is installed and running on this Mac
 - `Dev.to` automatic posting has been proven live
 - Product profile lifecycle status is now tracked. The shipped Gumroad/Amazon products are marked `live`, while `PostPunk Core` is `in-progress` and the memoir/Reddit product remain `planned`.
@@ -53,36 +62,41 @@ These pieces are built and in active use:
 - `Instagram` token state has been a blocker
 - `Threads` is incomplete
 - `Pinterest` and `Amazon` are in the queue model, but not a proven unattended posting lane
+- built-in AI generation is not a trusted daily workflow yet; external GPT output + `/batch` import is the practical path
 
 ## Current Operating Model
 
 Use the system like this:
 
-1. Write or generate posts in the composer.
-2. Save as `approved` if they are ready.
-3. Bulk schedule them in the library.
+1. Generate content externally or in-app, then bring batches into `/batch`.
+2. Save selected items into the queue.
+3. Approve and schedule from `/batch` or `/lib`.
 4. Let `Dev.to` auto-post when due.
 5. Use `/today` for manual posting on the other platforms.
-6. Mark posts `posted` or `failed` as needed.
+6. Review posted items in `/archive` and log metrics from `/lib`.
+7. Mark posts `posted` or `failed` as needed.
+
+## Current System Notes
+
+- Scheduling is intentionally one post per day by default.
+- Product mixing is now supported so batches from multiple products can be interleaved across days.
+- `/lib` now separates "approved" from "scheduled" more clearly:
+  - `approved` means ready
+  - `scheduledAt` means it will appear on the calendar
+- Scheduled items are not selectable in the library bulk-select flow.
+- Batch imports can be saved, approved, and chained after the current last scheduled date.
+- Archive entries now store full post bodies going forward.
 
 ## Current Queue Snapshot
 
-At the time this file was written:
+This snapshot changes quickly now and should be checked live in the app or DB instead of trusted as a static count.
 
-- total queued posts: `17`
-- all are real scheduled content, not placeholder junk
-- `Dev.to` weekly article cadence: `3` queued posts
+What matters operationally:
 
-Platform counts in the queue:
-
-- `devto`: `3`
-- `facebook`: `7`
-- `instagram`: `6`
-- `pinterest`: `7`
-- `linkedin`: `7`
-- `reddit`: `7`
-- `x`: `8`
-- `amazon`: `2`
+- the queue is real, not fake seed content
+- scheduling currently stretches into May 2026
+- one-post-per-day cadence is the current default
+- the app now supports multiple live products in one rotating schedule
 
 ## Dev.to Plan
 
@@ -125,12 +139,15 @@ If you need to understand the system quickly, check these first:
 - `docs/code-map.md`
 - `docs/project-state.md`
 - `frontend/main.jsx`
-- `backend/queue/postQueue.json`
+- `backend/utils/localDb.mjs`
 - `backend/server.mjs`
 - `backend/scripts/postingJob.mjs`
 - `backend/scripts/platforms/post-to-all.js`
 - `frontend/UXUI/Components/PostComposer/usePostComposerState.jsx`
 - `frontend/UXUI/Pages/PostLib.jsx`
+- `frontend/UXUI/Pages/BatchPage.jsx`
+- `frontend/UXUI/Pages/ArchivePage.jsx`
+- `frontend/UXUI/Pages/SetupPage.jsx`
 - `frontend/UXUI/Pages/TodayQueue.jsx`
 
 ## Commands To Check Health
@@ -183,6 +200,14 @@ cd backend
 npm run health:tokens -- --live
 ```
 
+Inspect SQLite directly:
+
+```bash
+cd backend
+sqlite3 data/postpunk.sqlite "select count(*) from posts;"
+sqlite3 data/postpunk.sqlite "select count(*) from posts where json_extract(payload, '$.scheduledAt') is not null;"
+```
+
 ## What To Say Next Time
 
 If you want me to pick up quickly later, say something like:
@@ -198,16 +223,18 @@ That should be enough for me to reload context fast.
 
 The right order is:
 
-1. Use the system for real for 1 to 2 weeks.
-2. Keep filling the content queue.
-3. Notice actual friction in `/today`, composer, and library.
-4. Only automate more after the manual workflow proves where the pain is.
+1. Use `/batch` + `/lib` + `/today` as the main operating loop.
+2. Keep filling the content queue across the live products.
+3. Log manual performance metrics in the library.
+4. Notice actual friction in `/today`, batch import, and library scheduling.
+5. Only automate more after the manual workflow proves where the pain is.
 
 Most likely future automation targets:
 
 - refresh Facebook and Instagram credentials
 - improve Pinterest handling
 - decide whether X is worth manual-assist or browser automation later
+- build a real bulk import/setup product layer instead of relying on ad hoc operator help
 
 ## Browser Scheduling Fallback
 
@@ -245,3 +272,5 @@ Current recommendation:
 - Frontend routes live in `frontend/main.jsx`. That is the file to update when routes change.
 - Local Ollama default is set to `stable-code:3b-code-q4_0` as the lightest installed model for code-path testing on this Mac.
 - Ollama requests now use a longer backend timeout. If local generation still stalls, the app should surface a direct timeout message instead of a vague `500`.
+- SQLite is now the real source of truth. The legacy JSON files still exist, but they are mirrors, not the primary store.
+- The practical content workflow right now is import-first: generate externally if needed, then bring batches into `/batch`.

@@ -1,4 +1,5 @@
 import AppTopNav from "../Components/AppTopNav";
+import { Link } from "react-router-dom";
 
 const signalCards = [
   {
@@ -113,6 +114,85 @@ const batchModeRules = [
   "Do not batch the exact same product angle repeatedly.",
 ];
 
+const angleStack = [
+  "Use case: best X for Y",
+  "Aesthetic: cute, cozy, goth, clean, pastel, minimal",
+  "Problem: won't leak, stays cold, saves space, actually works",
+  "Lifestyle: desk setup, morning routine, self-care night, travel",
+  "Comparison / curated: best, top, favorite, must-have",
+];
+
+const breakpoints = [
+  "Weak search inputs: vague keywords collapse everything downstream.",
+  "Lazy product matching: technically relevant is not enough if the image is not clickable.",
+  "Repetitive packaging: right product, wrong repeated presentation still gets suppressed.",
+];
+
+const winnerRules = [
+  "When a pin shows traction, identify the keyword, angle, and product type.",
+  "Create 3-5 variations immediately while the pattern is still clear.",
+  "Keep the winning product idea, then vary angle, image, context, or title.",
+  "Track winners only. Do not waste time logging every dead pin.",
+];
+
+const needMoreInfo = [
+  "What counts as a winner threshold for you: views, saves, or clicks?",
+  "How should angle-based tracking links be stored in the app later?",
+  "Which Amazon sale days or event windows should be preloaded into the system?",
+  "Do you want one affiliate queue or separate queues by niche block?",
+  "When should a winner clone automatically trigger versus staying manual?",
+];
+
+const v1Shape = {
+  keyword: "string",
+  angle: "string",
+  productLink: "string",
+};
+
+const searchPromptTemplate = `You are a Pinterest + Amazon affiliate strategist.
+
+Goal:
+Find the top 10 MOST clickable Easter-related product opportunities using a SEARCH -> PRODUCT -> POST system.
+
+Rules:
+
+1. Start with SEARCH, not products.
+- Generate 15-20 real Pinterest-style search phrases related to Easter.
+- Focus on high-intent, aesthetic, or problem-solving queries.
+- Avoid generic phrases like "Easter items" or "Easter gifts".
+
+2. Validate demand using 3-signal thinking:
+- Pinterest intent (searchable, aesthetic, trendable)
+- Amazon intent (likely best sellers, movers, or review-heavy categories)
+- Optional Google-style intent (best X for Y type searches)
+
+3. From those, select the BEST 10 keyword opportunities.
+
+4. For each keyword:
+- Recommend 1-3 specific product types (not random products, but categories that convert)
+- Explain WHY it would get clicks (visual, identity, use case)
+- Suggest 3 angle variations for Pinterest posts
+
+5. Prioritize:
+- Highly visual products
+- Strong aesthetic categories (cozy, cute, pastel, bunny-core, spring decor)
+- Problem-solving or use-case driven products
+- Products that can be repackaged into lists (top 5, best of, etc.)
+
+6. Avoid:
+- Generic low-click items
+- Products with weak visuals
+- One-off novelty items with no reuse potential
+
+Output format:
+
+Keyword:
+Why it works:
+Product types:
+Angle ideas:
+
+Keep it tight, practical, and focused on what would actually get clicks and saves.`;
+
 export default function AffiliateEnginePage() {
   return (
     <div className="min-h-screen bg-black font-mono text-orange-100">
@@ -147,6 +227,23 @@ export default function AffiliateEnginePage() {
                   If this lane flops, the most likely reason is simple: you picked products first
                   instead of starting from what people were already searching for.
                 </p>
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-3">
+                <a
+                  href="https://affiliate-program.amazon.com/home"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center rounded-full border border-orange-400/60 bg-orange-500/10 px-4 py-2 text-sm font-bold text-orange-100 transition hover:bg-orange-400 hover:text-black"
+                >
+                  Open Amazon Associates
+                </a>
+                <Link
+                  to="/affiliate/builder"
+                  className="inline-flex items-center rounded-full border border-cyan-400/60 bg-cyan-500/10 px-4 py-2 text-sm font-bold text-cyan-100 transition hover:bg-cyan-400 hover:text-black"
+                >
+                  Open Batch Builder
+                </Link>
               </div>
 
               <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -244,6 +341,96 @@ export default function AffiliateEnginePage() {
                   Same niche, different search intents. Not the same product angle copied 10 times.
                 </p>
               </div>
+              <div className="mt-4 rounded-2xl border border-blue-400/30 bg-black/25 p-4 text-sm leading-7">
+                <p className="font-bold text-blue-200">Sale-window math</p>
+                <p>25th-30th at 6/day = 36 sale posts</p>
+                <p>Remaining 24 days at 3/day = 72 normal posts</p>
+                <p>Total = 108 posts for the month, or about 18 extra above baseline.</p>
+              </div>
+              <div className="mt-4 rounded-2xl border border-blue-400/30 bg-black/25 p-4 text-sm leading-7">
+                <p className="font-bold text-blue-200">Niche batch math</p>
+                <p>1 niche x 3 keywords x 3 products x 5 angles = 45 posts in one session.</p>
+              </div>
+            </section>
+
+            <section className="rounded-3xl border border-green-500/40 bg-green-950/20 p-6 text-green-100 shadow-[0_0_24px_rgba(34,197,94,0.12)]">
+              <p className="text-xs uppercase tracking-[0.35em] text-green-300">Tracking reality</p>
+              <p className="mt-4 text-sm leading-7 text-green-100/85">
+                Views are signal, not proof. Pinterest views tell you distribution happened. They
+                do not guarantee clicks or Amazon conversions.
+              </p>
+              <div className="mt-4 rounded-2xl border border-green-400/30 bg-black/25 p-4 text-sm leading-7">
+                <p className="font-bold text-green-200">Use now</p>
+                <ul className="mt-2 space-y-2">
+                  <li>- views + saves + gut check for early signal</li>
+                  <li>- high-intent titles usually imply stronger click potential</li>
+                  <li>- unique links per angle group are the first serious upgrade</li>
+                </ul>
+              </div>
+            </section>
+
+            <section className="rounded-3xl border border-orange-500/40 bg-orange-950/20 p-6 text-orange-100 shadow-[0_0_24px_rgba(249,115,22,0.12)]">
+              <p className="text-xs uppercase tracking-[0.35em] text-orange-300">V1 build shape</p>
+              <p className="mt-4 text-sm leading-7 text-orange-100/85">
+                Build an angle multiplier, not an affiliate dashboard. Keep the first version
+                small enough that it accelerates posting instead of adding admin work.
+              </p>
+              <div className="mt-4 rounded-2xl border border-orange-400/30 bg-black/25 p-4 text-sm leading-7">
+                <p className="font-bold text-orange-200">Minimal metadata</p>
+                <pre className="mt-2 overflow-x-auto whitespace-pre-wrap text-xs text-orange-100/85">
+{JSON.stringify(v1Shape, null, 2)}
+                </pre>
+              </div>
+              <div className="mt-4 rounded-2xl border border-orange-400/30 bg-black/25 p-4 text-sm leading-7">
+                <p className="font-bold text-orange-200">Architecture</p>
+                <p className="mt-2">Input: keyword + product</p>
+                <p>Process: generate angles -&gt; generate posts -&gt; schedule</p>
+                <p>Output: volume + variation</p>
+                <p>Feedback: manual observation -&gt; mark winner -&gt; clone later</p>
+              </div>
+              <p className="mt-4 text-sm text-orange-100/80">
+                If a field does not affect posting or cloning, do not store it yet.
+              </p>
+            </section>
+
+            <section className="rounded-3xl border border-slate-500/40 bg-slate-950/30 p-6 text-slate-100 shadow-[0_0_24px_rgba(148,163,184,0.12)]">
+              <p className="text-xs uppercase tracking-[0.35em] text-slate-300">GPT search prompt</p>
+              <p className="mt-4 text-sm leading-7 text-slate-100/80">
+                Use this when you want GPT to help find stronger product opportunities before you
+                build the batch.
+              </p>
+              <pre className="mt-4 overflow-x-auto whitespace-pre-wrap rounded-2xl border border-slate-400/30 bg-black/30 p-4 text-xs leading-6 text-slate-100/90">
+                {searchPromptTemplate}
+              </pre>
+              <div className="mt-4 rounded-2xl border border-slate-400/30 bg-black/25 p-4 text-sm leading-7">
+                <p className="font-bold text-slate-200">Seasonal rule</p>
+                <p className="mt-2">
+                  Do not run a holiday as one giant niche. Break it into reusable micro-niches.
+                </p>
+                <ul className="mt-3 space-y-2">
+                  <li>- gifts</li>
+                  <li>- outfits</li>
+                  <li>- decor</li>
+                  <li>- self-care / beauty</li>
+                  <li>- hosting / table / party setup</li>
+                </ul>
+                <p className="mt-3 text-slate-100/80">
+                  That keeps the prompt reusable across Easter, Halloween, Christmas, Valentine's
+                  Day, Mother's Day, graduation, and other event-driven windows.
+                </p>
+              </div>
+            </section>
+
+            <section className="rounded-3xl border border-purple-500/40 bg-purple-950/20 p-6 text-purple-100 shadow-[0_0_24px_rgba(168,85,247,0.12)]">
+              <p className="text-xs uppercase tracking-[0.35em] text-purple-300">Angle stack</p>
+              <p className="mt-4 text-sm leading-7 text-purple-100/85">
+                The real engine is Search -&gt; Product -&gt; Angle Stack -&gt; Posts.
+              </p>
+              <ul className="mt-4 space-y-3 text-sm leading-7">
+                {angleStack.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
             </section>
           </div>
 
@@ -367,6 +554,9 @@ export default function AffiliateEnginePage() {
                 <p className="mt-3 text-amber-200">Stronger:</p>
                 <p>Best tumblers for iced coffee - 3 to 5 options</p>
               </div>
+              <p className="mt-4 text-sm text-amber-100/80">
+                Clustered content usually saves and clicks better than a single isolated product.
+              </p>
             </section>
 
             <section className="rounded-3xl border border-indigo-500/40 bg-indigo-950/20 p-6 text-indigo-100 shadow-[0_0_24px_rgba(99,102,241,0.12)]">
@@ -380,6 +570,43 @@ export default function AffiliateEnginePage() {
                 The goal is not to invent a new method every day. The goal is to run the same
                 simple loop without burning energy on extra decisions.
               </p>
+            </section>
+
+            <section className="rounded-3xl border border-emerald-500/40 bg-emerald-950/15 p-6 text-emerald-100 shadow-[0_0_24px_rgba(16,185,129,0.12)]">
+              <p className="text-xs uppercase tracking-[0.35em] text-emerald-300">Winner extraction</p>
+              <ul className="mt-4 space-y-3 text-sm leading-7">
+                {winnerRules.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
+              <div className="mt-4 rounded-2xl border border-emerald-400/30 bg-black/25 p-4 text-sm leading-7">
+                <p className="font-bold text-emerald-200">Core strategy</p>
+                <p>Find demand -&gt; match product -&gt; test angles -&gt; double down on winners.</p>
+              </div>
+              <p className="mt-4 text-sm text-emerald-100/80">
+                When something hits, keep working the niche before moving on too fast.
+              </p>
+            </section>
+
+            <section className="rounded-3xl border border-red-400/40 bg-red-950/20 p-6 text-red-100 shadow-[0_0_24px_rgba(248,113,113,0.12)]">
+              <p className="text-xs uppercase tracking-[0.35em] text-red-300">Where this breaks</p>
+              <ul className="mt-4 space-y-3 text-sm leading-7">
+                {breakpoints.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
+              <p className="mt-4 text-sm text-red-100/80">
+                If this fails, the most likely cause is still bad search-to-product matching.
+              </p>
+            </section>
+
+            <section className="rounded-3xl border border-stone-500/40 bg-stone-950/30 p-6 text-stone-100 shadow-[0_0_24px_rgba(168,162,158,0.12)]">
+              <p className="text-xs uppercase tracking-[0.35em] text-stone-300">Need more info before automating</p>
+              <ul className="mt-4 space-y-3 text-sm leading-7">
+                {needMoreInfo.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
             </section>
 
             <section className="rounded-3xl border border-fuchsia-500/40 bg-fuchsia-950/15 p-6 text-fuchsia-100 shadow-[0_0_24px_rgba(217,70,239,0.12)]">

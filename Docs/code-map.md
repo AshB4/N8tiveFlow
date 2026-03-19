@@ -92,7 +92,8 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - moving a post to `status: "posted"` appends it to archive history
   - `/api/platform-health` powers the `/setup` token-health panel
 - `backend/scripts/postingJob.mjs`
-  - failed posts now stay in the queue as `failed` after max attempts instead of disappearing
+  - fully failed posts stay in the queue as `failed` after max attempts instead of disappearing
+  - partially successful posts now remain in the queue for the failed targets only, so they do not vanish after mixed success
 
 ## Posting Pipeline
 

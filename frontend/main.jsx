@@ -15,6 +15,7 @@ import ChartsPage from "./UXUI/Pages/ChartsPage";
 import ArchivePage from "./UXUI/Pages/ArchivePage";
 import BatchPage from "./UXUI/Pages/BatchPage";
 import AffiliateEnginePage from "./UXUI/Pages/AffiliateEnginePage";
+import AffiliateBuilderPage from "./UXUI/Pages/AffiliateBuilderPage";
 import SeoPages from "./UXUI/Pages/SeoPages";
 import SetupPage from "./UXUI/Pages/SetupPage";
 import ErrorPage from "./UXUI/Pages/notFound"; // This can now use useRouteError()
@@ -48,6 +49,11 @@ const router = createBrowserRouter([
   {
     path: "/affiliate",
     element: <AffiliateEnginePage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/affiliate/builder",
+    element: <AffiliateBuilderPage />,
     errorElement: <ErrorPage />,
   },
   {

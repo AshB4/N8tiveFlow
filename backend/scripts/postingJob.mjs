@@ -83,6 +83,29 @@ function markFailed(post) {
 	};
 }
 
+function buildFailureTargets(failures = []) {
+	return failures
+		.map((failure) => ({
+			platform: failure.platform,
+			accountId: failure.accountId ?? null,
+		}))
+		.filter((target) => target.platform);
+}
+
+function buildFailureRetryPost(post, failures = []) {
+	const failedTargets = buildFailureTargets(failures);
+	return {
+		...post,
+		targets: failedTargets,
+		platforms: Array.from(new Set(failedTargets.map((target) => target.platform))),
+		metadata: {
+			...(post.metadata || {}),
+			partialFailure: true,
+			lastFailedTargets: failedTargets,
+		},
+	};
+}
+
 function normalizePlatforms(post) {
 	const rawPlatforms = Array.isArray(post.platforms)
 		? post.platforms
@@ -183,7 +206,6 @@ async function processQueue() {
 				await sendPostPunkTelegramAlert(
 					`Post succeeded.\nTitle: ${post.title ?? post.id ?? "untitled"}\nPlatforms: ${successSummary}`,
 				);
-				processedIds.add(post.id);
 			}
 
 			if (failures.length > 0) {
@@ -211,14 +233,18 @@ async function processQueue() {
 				await sendPostPunkTelegramAlert(
 					`Post failed on one or more targets.\nTitle: ${post.title ?? post.id ?? "untitled"}\nFailures:\n${summary}\n\nRerun command: cd backend && npm run worker`,
 				);
-				if (successes.length === 0) {
-					const retried = scheduleRetry(post);
-					if (Number(retried.attemptCount || 0) >= MAX_ATTEMPTS) {
-						queueUpdates.set(post.id, markFailed(retried));
-					} else {
-						queueUpdates.set(post.id, retried);
-					}
+				const retryBase =
+					successes.length > 0
+						? buildFailureRetryPost(post, failures)
+						: post;
+				const retried = scheduleRetry(retryBase);
+				if (Number(retried.attemptCount || 0) >= MAX_ATTEMPTS) {
+					queueUpdates.set(post.id, markFailed(retried));
+				} else {
+					queueUpdates.set(post.id, retried);
 				}
+			} else if (successes.length > 0) {
+				processedIds.add(post.id);
 			}
 		} catch (error) {
 			rejectedLog.push({

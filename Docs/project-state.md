@@ -12,6 +12,8 @@ PostPunk is currently:
 - a manual-post assistant for unstable platforms
 - a partially automated publishing tool
 - a proven automatic `Dev.to` lane
+- a proven automatic `Facebook` lane for page posts
+- a proven automatic `Pinterest` lane for single pins
 - a local-first app using SQLite as the real store
 - an import-first workflow for AI-written content via `/batch`
 
@@ -31,10 +33,12 @@ These pieces are built and in active use:
 - Posted archive page at `/archive`
 - Rotation/settings page at `/setup`
 - retry and failure handling
+- failed-post visibility on the calendar with retry support
 - product profiles
 - platform writing guidance
 - AI SEO generation with product and platform context
 - campaign planning/generation backend route
+- visible AI result trays on `/compose` and `/batch`
 - image planning fields:
   - `imageStatus`
   - `imageConcept`
@@ -43,6 +47,7 @@ These pieces are built and in active use:
 - product link injection for punch posts
 - Amazon affiliate tagging for Amazon product links
 - Telegram success and failure alerts
+- token-health visibility on `/setup`
 
 ## What Is Proven Working
 
@@ -52,16 +57,19 @@ These pieces are built and in active use:
 - SQLite persistence and JSON mirroring work
 - launchd worker is installed and running on this Mac
 - `Dev.to` automatic posting has been proven live
+- `Facebook` page posting has been proven live for text and image posts
+- `Pinterest` posting has been proven live for single pins through Playwright + saved session
 - Product profile lifecycle status is now tracked. The shipped Gumroad/Amazon products are marked `live`, while `PostPunk Core` is `in-progress` and the memoir/Reddit product remain `planned`.
 - Telegram alerts fire for both success and failure
 
 ## What Is Not Reliable Yet
 
 - `X` is not a trusted posting lane
-- `Facebook` token state has been a blocker
+- `Facebook` token expiry is still an operational risk, but the lane itself is working
 - `Instagram` token state has been a blocker
 - `Threads` is incomplete
-- `Pinterest` and `Amazon` are in the queue model, but not a proven unattended posting lane
+- `Pinterest` works for single live pins, but batch posting, topics/tags, alt text, and publish-later are not wired yet
+- `Amazon` is in the queue model, but not a proven unattended posting lane
 - built-in AI generation is not a trusted daily workflow yet; external GPT output + `/batch` import is the practical path
 - `Facebook Stories` and `Facebook video` are not wired yet; they are a future Meta lane worth adding because Stories likely matter for reach, but current focus should remain on regular image posts first
 
@@ -73,9 +81,11 @@ Use the system like this:
 2. Save selected items into the queue.
 3. Approve and schedule from `/batch` or `/lib`.
 4. Let `Dev.to` auto-post when due.
-5. Use `/today` for manual posting on the other platforms.
-6. Review posted items in `/archive` and log metrics from `/lib`.
-7. Mark posts `posted` or `failed` as needed.
+5. Let `Facebook` auto-post when due if the page token is healthy.
+6. Use `/today` for manual posting or manual confirmation on the other platforms.
+7. Use the Pinterest Playwright lane for single-pin posting when needed.
+8. Review posted items in `/archive` and log metrics from `/lib`.
+9. Mark posts `posted` or `failed` as needed.
 
 ## Current System Notes
 
@@ -87,12 +97,18 @@ Use the system like this:
 - Scheduled items are not selectable in the library bulk-select flow.
 - Batch imports can be saved, approved, and chained after the current last scheduled date.
 - Archive entries now store full post bodies going forward.
+- `/setup` now shows platform token/credential health so auth failures are visible before they become mysteries.
 - Facebook feed posting with text and local image uploads is now proven live against the `Color With Ash` page.
+- Pinterest Playwright posting is now proven for single live pins using the saved Pinterest session/profile.
+- OpenAI is the practical in-app AI default. Ollama remains optional but is not the trusted path on this Mac.
 - Meta-related future work should be prioritized in this order:
   - stabilize Facebook image posting
   - add Facebook Stories support
   - add Facebook video support
   - then revisit Instagram/Threads once the credential flow is clearer
+- Pinterest near-term next step:
+  - support sequential batch pin posting in one reused Pinterest session instead of one pin per run
+  - then add Pinterest-specific fields like topics/tags, alt text, and publish-later scheduling
 
 ## Current Queue Snapshot
 
@@ -156,6 +172,9 @@ If you need to understand the system quickly, check these first:
 - `frontend/UXUI/Pages/ArchivePage.jsx`
 - `frontend/UXUI/Pages/SetupPage.jsx`
 - `frontend/UXUI/Pages/TodayQueue.jsx`
+- `backend/scripts/platforms/social/post-to-facebook.js`
+- `backend/scripts/platforms/social/post-to-pinterest.js`
+- `backend/scripts/platforms/social/capture-pinterest-state.js`
 
 ## Commands To Check Health
 

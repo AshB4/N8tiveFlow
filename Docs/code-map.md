@@ -51,6 +51,22 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - pSEO pages: `frontend/UXUI/Pages/SeoPages.jsx`
 - 404 and fallback UI: `frontend/UXUI/Pages/notFound.jsx`
 
+### Current page-specific operational notes
+
+- `frontend/UXUI/Pages/PostCalendar.jsx`
+  - shows scheduled approved posts
+  - now also shows failed scheduled posts in red
+  - supports retrying failed posts forward by a day
+- `frontend/UXUI/Pages/SetupPage.jsx`
+  - owns rotation defaults
+  - now also surfaces token/platform health from `/api/platform-health`
+- `frontend/UXUI/Pages/postComposer.jsx`
+  - owns single-post AI assist
+  - has visible AI results tray and one-click `Approve + Schedule Next Open Day`
+- `frontend/UXUI/Pages/BatchPage.jsx`
+  - owns import-first batch workflow
+  - has AI response staging and batch scheduling/mix actions
+
 ## Composer Dependencies
 
 - Platform selector UI: `frontend/UXUI/Global/PostComposer/PlatformSelector.jsx`
@@ -70,6 +86,14 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - AI campaign generation API: `backend/server.mjs`
 - Media upload API: `backend/server.mjs`
 
+### Important backend behavior notes
+
+- `backend/server.mjs`
+  - moving a post to `status: "posted"` appends it to archive history
+  - `/api/platform-health` powers the `/setup` token-health panel
+- `backend/scripts/postingJob.mjs`
+  - failed posts now stay in the queue as `failed` after max attempts instead of disappearing
+
 ## Posting Pipeline
 
 - Worker chooses due posts and handles retries: `backend/scripts/postingJob.mjs`
@@ -87,6 +111,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Pinterest: `backend/scripts/platforms/social/post-to-pinterest.js`
 - Reddit: `backend/scripts/platforms/social/post-to-reddit.js`
 - Threads: `backend/scripts/platforms/social/post-to-threads.js`
+- Pinterest session bootstrap helper: `backend/scripts/platforms/social/capture-pinterest-state.js`
 
 ### Meta lane notes
 
@@ -98,6 +123,23 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - Facebook Stories API flow
   - Facebook video publishing flow
 - Instagram and Threads have adapter files, but they rely on separate `INSTAGRAM_*` and `THREADS_*` credentials and should not be treated as automatically covered by Facebook page tokens
+
+### Pinterest lane notes
+
+- Current proven Pinterest lane: `post-to-pinterest.js`
+- Proven now:
+  - single live pin posting
+  - image upload from local `mediaPath`
+  - title/description/link fill
+  - board selection from `backend/config/pinterest-boards.json`
+  - saved-session reuse through a dedicated Pinterest Chrome profile
+- Supporting helper:
+  - `capture-pinterest-state.js` creates/saves the Pinterest automation session
+- Not wired yet:
+  - publish-later scheduling
+  - alt text
+  - tagged topics / product tagging
+  - sequential multi-pin posting in one run
 
 ## AI And Prompting
 
@@ -119,6 +161,12 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Platform credential checks: `backend/utils/platformHealth.mjs`
 - Analytics aggregation: `backend/utils/analyticsSummary.mjs`
 - Telegram alerts: `backend/utils/telegramAlerts.mjs`
+
+## AI Provider Reality
+
+- `backend/utils/aiClient.mjs` supports both OpenAI and Ollama
+- operational default should be treated as `OpenAI`
+- Ollama remains optional/testing-only on this Mac because local inference was not reliable enough for daily use
 
 ## Avoid Duplicates
 

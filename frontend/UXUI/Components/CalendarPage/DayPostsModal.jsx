@@ -1,6 +1,11 @@
 /** @format */
 
 import React from "react";
+import {
+	getStatusLabel,
+	getWorkflowPalette,
+	isAffiliatePost,
+} from "../../utils/postStatus";
 
 const formatDateLabel = (iso) => {
 	try {
@@ -83,21 +88,18 @@ export default function DayPostsModal({
 							const scheduled = formatDateTime(
 								post.scheduledAt || post.scheduled_at || post.intended_date
 							);
-							const status = post.status || "unknown";
+							const palette = getWorkflowPalette(post);
 							const targetLabel = formatTargets(post.targets, post.platforms);
-              const isFailed = String(status).toLowerCase() === "failed";
+              const isFailed = palette.key === "failed";
 							return (
 								<div
 									key={post.id || `${post.title}-${post.platform}`}
-									className={`border rounded-lg p-4 ${
-                    isFailed
-                      ? "border-red-500 bg-red-950/20 shadow-[0_0_16px_rgba(255,45,85,0.2)]"
-                      : "border-teal-600 bg-black/70"
-                  }`}
+									className={`border rounded-lg p-4 ${palette.cardClass}`}
 								>
 									<div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
 										<div>
 											<p className="text-pink-300 text-lg font-semibold">
+												{isAffiliatePost(post) ? "🛒 " : ""}
 												{post.title || "Untitled draft"}
 											</p>
 											<p className="text-xs text-teal-500 uppercase tracking-[0.3em]">
@@ -106,14 +108,12 @@ export default function DayPostsModal({
 											<p className="text-xs text-teal-500">
 												Targets: {targetLabel}
 											</p>
-											<p className="text-xs text-teal-500">
-												Status: {status}
+											<p className={`text-xs ${palette.textClass}`}>
+												Status: {getStatusLabel(post.status)}
 											</p>
-                      {isFailed && (
-                        <p className="text-xs uppercase tracking-[0.3em] text-red-300 mt-1">
-                          Failed post
-                        </p>
-                      )}
+                      <p className={`text-xs uppercase tracking-[0.3em] mt-1 ${palette.textClass}`}>
+                        {palette.label}
+                      </p>
 											{scheduled && (
 												<p className="text-xs text-teal-500">
 													Scheduled: {scheduled}

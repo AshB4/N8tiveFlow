@@ -8,7 +8,11 @@ import interactionPlugin from "@fullcalendar/interaction";
 import AppTopNav from "../Components/AppTopNav";
 import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
 import DayPostsModal from "../Components/CalendarPage/DayPostsModal.jsx";
-import { isApprovedStatus, normalizePostStatus } from "../utils/postStatus";
+import {
+  getWorkflowPalette,
+  isApprovedStatus,
+  normalizePostStatus,
+} from "../utils/postStatus";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
@@ -132,16 +136,21 @@ export default function PostCalendar() {
       calendarPosts
         .map((post) => {
           const dateIso = getPostDate(post);
-          const status = normalizePostStatus(post.status);
-          const isFailed = status === "failed";
+          const palette = getWorkflowPalette(post);
           return {
             id: post.id || `${post.title}-${dateIso}`,
-            title: isFailed ? `FAILED • ${post.title}` : post.title,
+            title:
+              palette.key === "failed"
+                ? `FAILED • ${post.title}`
+                : palette.key === "needs_action"
+                ? `FIX • ${post.title}`
+                : post.title,
             date: dateIso,
-            color: isFailed ? "#ff2d55" : "#67e8f9",
-            textColor: "#000000",
+            color: palette.calendarColor,
+            textColor: palette.calendarTextColor,
             extendedProps: {
-              status,
+              status: normalizePostStatus(post.status),
+              workflow: palette.key,
             },
           };
         })

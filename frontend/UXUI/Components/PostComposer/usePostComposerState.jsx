@@ -170,7 +170,7 @@ const usePostComposerState = (initialDraft = null) => {
 	const [aiProductName, setAiProductName] = useState(initialDraft?.title || "");
 	const [aiProductType, setAiProductType] = useState("Automation Tool");
 	const [aiAudience, setAiAudience] = useState("Indie creators and solo founders");
-	const [aiProvider, setAiProvider] = useState("ollama");
+	const [aiProvider, setAiProvider] = useState("openai");
 	const [aiSuggestions, setAiSuggestions] = useState(null);
 	const [isGeneratingSeo, setIsGeneratingSeo] = useState(false);
 
@@ -296,12 +296,14 @@ const usePostComposerState = (initialDraft = null) => {
 		[selectedTargets]
 	);
 
-	const handleSubmit = async () => {
+	const handleSubmit = async (overrides = {}) => {
 		if (selectedTargets.length === 0) {
 			throw new Error("Select at least one platform or account target before posting");
 		}
-		const scheduledIso = scheduledAt
-			? new Date(scheduledAt).toISOString()
+		const scheduledSource =
+			overrides.scheduledAt !== undefined ? overrides.scheduledAt : scheduledAt;
+		const scheduledIso = scheduledSource
+			? new Date(scheduledSource).toISOString()
 			: null;
 
 		const platformViolations = validatePostAgainstRules({
@@ -318,7 +320,9 @@ const usePostComposerState = (initialDraft = null) => {
 			throw error;
 		}
 
-		const nextStatus = saveAsDraft || !approveForSchedule ? "draft" : "approved";
+		const nextStatus =
+			overrides.status ||
+			(saveAsDraft || !approveForSchedule ? "draft" : "approved");
 		const sharedPayload = {
 			title,
 			body,

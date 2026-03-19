@@ -38,6 +38,8 @@ test-results/
 **/playwright/**/browsers/
 backend/config/x-chrome-profile/
 backend/config/x-state.json
+backend/config/pinterest-chrome-profile/
+backend/config/pinterest-state.json
 
 # ⚙️ System folders
 dist/

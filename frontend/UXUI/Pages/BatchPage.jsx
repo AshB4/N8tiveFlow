@@ -31,6 +31,8 @@ const DEFAULT_ROTATION_SETTINGS = {
   defaultTime: "10:00",
 };
 
+const isUnscheduledQueuePost = (post) => !(post?.scheduledAt || post?.scheduled_at);
+
 function normalizeList(value) {
   if (Array.isArray(value)) {
     return [...new Set(value.map((item) => String(item || "").trim()).filter(Boolean))];
@@ -165,10 +167,53 @@ function addDaysToDateOnly(dateValue, daysToAdd) {
   return next.toISOString().slice(0, 10);
 }
 
+function interleavePostsByProduct(selectedPosts = [], productOrder = []) {
+  const buckets = new Map();
+  for (const post of selectedPosts) {
+    const key =
+      post?.metadata?.productProfileId ||
+      post?.metadata?.productProfileLabel ||
+      post?.title ||
+      post?.id;
+    if (!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key).push(post);
+  }
+
+  for (const bucket of buckets.values()) {
+    bucket.sort((a, b) => {
+      const left = new Date(a.createdAt || a.scheduledAt || 0).getTime();
+      const right = new Date(b.createdAt || b.scheduledAt || 0).getTime();
+      return left - right;
+    });
+  }
+
+  const preferredOrder = Array.isArray(productOrder) ? productOrder : [];
+  const orderedKeys = [
+    ...preferredOrder.filter((key) => buckets.has(key)),
+    ...[...buckets.keys()].filter((key) => !preferredOrder.includes(key)).sort(),
+  ];
+  const mixed = [];
+  let added = true;
+
+  while (added) {
+    added = false;
+    for (const key of orderedKeys) {
+      const bucket = buckets.get(key);
+      if (bucket?.length) {
+        mixed.push(bucket.shift());
+        added = true;
+      }
+    }
+  }
+
+  return mixed;
+}
+
 export default function BatchPage() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [rawInput, setRawInput] = useState("");
+  const [aiResponseText, setAiResponseText] = useState("");
   const [defaults, setDefaults] = useState(emptyDefaults);
   const [parsedPosts, setParsedPosts] = useState([]);
   const [selectedIndexes, setSelectedIndexes] = useState([]);
@@ -258,6 +303,22 @@ export default function BatchPage() {
         variant: "destructive",
       });
     }
+  };
+
+  const moveAiResponseToBatchInput = () => {
+    if (!aiResponseText.trim()) {
+      toast({
+        title: "No AI response yet",
+        description: "Paste or generate the multi-post AI output here first.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setRawInput(aiResponseText);
+    toast({
+      title: "AI response staged",
+      description: "The AI output was copied into the batch input box. Parse it when you're ready.",
+    });
   };
 
   const saveSelected = async () => {
@@ -550,6 +611,110 @@ export default function BatchPage() {
     });
   };
 
+  const mixSavedBatchIntoRotation = async () => {
+    if (savedBatchIndexes.length === 0) {
+      toast({
+        title: "Nothing saved yet",
+        description: "Save this batch first, then mix it into the future rotation.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsBatchUpdating(true);
+    try {
+      const postsRes = await fetch(`${API_BASE}/api/posts`);
+      if (!postsRes.ok) {
+        throw new Error(`Failed to load queue posts: ${postsRes.status}`);
+      }
+      const postsData = await postsRes.json();
+      const queuePosts = Array.isArray(postsData) ? postsData : [];
+      const latestOverallScheduled =
+        [...queuePosts]
+          .map((post) => post.scheduledAt || post.scheduled_at)
+          .filter(Boolean)
+          .sort()
+          .at(-1) || null;
+
+      const unscheduledPosts = queuePosts
+        .filter((post) => isUnscheduledQueuePost(post))
+        .sort((a, b) => {
+          const left = new Date(a.createdAt || a.updatedAt || 0).getTime();
+          const right = new Date(b.createdAt || b.updatedAt || 0).getTime();
+          return left - right;
+        });
+
+      if (unscheduledPosts.length === 0) {
+        toast({
+          title: "Nothing to mix",
+          description: "There are no unscheduled queue posts waiting for rotation slots.",
+        });
+        return;
+      }
+
+      const cadence = Math.max(1, Number(rotationSettings.cadenceDays || 1));
+      const baseStart = latestOverallScheduled
+        ? addDaysToDateOnly(new Date(latestOverallScheduled).toISOString().slice(0, 10), cadence)
+        : new Date().toISOString().slice(0, 10);
+      const baseTime = latestOverallScheduled
+        ? new Date(latestOverallScheduled).toISOString().slice(11, 16)
+        : rotationSettings.defaultTime || "10:00";
+
+      const mixedPosts = interleavePostsByProduct(
+        unscheduledPosts,
+        rotationSettings.activeProductIds,
+      );
+
+      const updates = await Promise.all(
+        mixedPosts.map(async (post, index) => {
+          const scheduledAt = new Date(
+            `${addDaysToDateOnly(baseStart, index * cadence)}T${baseTime}:00`,
+          ).toISOString();
+          const res = await fetch(`${API_BASE}/api/posts/${post.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              scheduledAt,
+              status: "approved",
+            }),
+          });
+          if (!res.ok) {
+            const data = await res.json().catch(() => ({}));
+            throw new Error(data?.detail || data?.error || `HTTP ${res.status}`);
+          }
+          return await res.json();
+        }),
+      );
+
+      const updateMap = new Map(updates.map((post) => [post.id, post]));
+      const nextMatches = {};
+      Object.entries(completedMatches).forEach(([index, post]) => {
+        nextMatches[index] = updateMap.get(post?.id) || post;
+      });
+      setCompletedMatches((current) => ({ ...current, ...nextMatches }));
+      setLastSaveSummary((current) =>
+        current
+          ? {
+              ...current,
+              unscheduledCount: 0,
+            }
+          : current,
+      );
+      toast({
+        title: "Mixed into rotation",
+        description: `${updates.length} unscheduled posts were spread across future days.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Mix into rotation failed",
+        description: error.message || "Could not remix unscheduled posts into future slots.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsBatchUpdating(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-teal-200 font-mono">
       <div className="mx-auto max-w-6xl px-6 py-12">
@@ -569,7 +734,7 @@ export default function BatchPage() {
             <li>1. Pick the default product, platforms, intent, and phase for this batch.</li>
             <li>2. Paste either a JSON array or your `# Post / Hook / Body / CTA / Image Idea` format.</li>
             <li>3. Parse the batch and inspect the preview cards before saving.</li>
-            <li>4. Save only the posts you want in the queue, then schedule them later from the library.</li>
+            <li>4. Save only the posts you want in the queue, then either append them or mix them into the future rotation.</li>
           </ul>
         </section>
 
@@ -694,11 +859,35 @@ Goblin affirmation page on a messy cozy desk.`}
         </section>
 
         <section className="mt-6 rounded-lg border border-lime-500 bg-black/60 p-5">
+          <div className="mb-6 rounded-lg border border-cyan-500 bg-black/40 p-4">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-[0.3em] text-cyan-400">AI Response Staging</p>
+                <p className="mt-2 text-sm text-teal-400">
+                  This is where a multi-post AI answer should land. Paste the raw GPT output here first,
+                  then move it into the parser when it looks right.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={moveAiResponseToBatchInput}
+                className="rounded border border-cyan-500 px-4 py-2 text-cyan-200 hover:bg-cyan-500 hover:text-black"
+              >
+                Use As Batch Input
+              </button>
+            </div>
+            <textarea
+              value={aiResponseText}
+              onChange={(e) => setAiResponseText(e.target.value)}
+              className="mt-4 min-h-[220px] w-full rounded border border-cyan-500 bg-black p-4 text-sm text-teal-200"
+              placeholder="Paste the AI's multi-post response here so it has a visible landing zone on /batch..."
+            />
+          </div>
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="text-sm uppercase tracking-[0.3em] text-lime-400">Paste Batch</p>
               <p className="mt-2 text-sm text-teal-400">
-                Use your marketing bot, paste the batch here, and turn it into queue-ready drafts.
+                This is the parser input. Use your marketing bot or the AI staging box above, then turn that batch into queue-ready drafts.
               </p>
             </div>
             <button
@@ -787,6 +976,14 @@ Goblin affirmation page on a messy cozy desk.`}
                   className="rounded border border-cyan-500 px-3 py-2 text-cyan-200 hover:bg-cyan-500 hover:text-black disabled:opacity-50"
                 >
                   Continue After Last Scheduled
+                </button>
+                <button
+                  type="button"
+                  onClick={mixSavedBatchIntoRotation}
+                  disabled={isBatchUpdating || lastSaveSummary.savedCount === 0}
+                  className="rounded border border-fuchsia-500 px-3 py-2 text-fuchsia-200 hover:bg-fuchsia-500 hover:text-black disabled:opacity-50"
+                >
+                  Mix Into Rotation
                 </button>
                 <button
                   type="button"
@@ -896,10 +1093,10 @@ Goblin affirmation page on a messy cozy desk.`}
                       ) : (
                         <button
                           type="button"
-                          onClick={continueSavedBatchAfterLastScheduled}
+                          onClick={mixSavedBatchIntoRotation}
                           className="rounded border border-lime-500 px-3 py-2 text-lime-200 hover:bg-lime-500 hover:text-black"
                         >
-                          Continue After Last Scheduled
+                          Mix Into Rotation
                         </button>
                       )}
                     </div>
@@ -932,10 +1129,10 @@ Goblin affirmation page on a messy cozy desk.`}
                       ) : (
                         <button
                           type="button"
-                          onClick={openLibrary}
-                          className="rounded border border-lime-500 px-3 py-2 text-lime-200 hover:bg-lime-500 hover:text-black"
+                          onClick={mixSavedBatchIntoRotation}
+                          className="rounded border border-fuchsia-500 px-3 py-2 text-fuchsia-200 hover:bg-fuchsia-500 hover:text-black"
                         >
-                          Schedule In Library
+                          Mix Into Rotation
                         </button>
                       )}
                     </div>

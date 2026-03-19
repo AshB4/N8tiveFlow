@@ -3,6 +3,7 @@
 import "dotenv/config";
 import fs from "fs";
 import { mkdir, readFile, writeFile } from "fs/promises";
+import os from "os";
 import path from "path";
 import { fileURLToPath } from "url";
 import { chromium } from "playwright";
@@ -16,6 +17,11 @@ const DEFAULT_STATE_PATH = path.join(
 	BACKEND_ROOT,
 	"config",
 	"pinterest-state.json",
+);
+const DEFAULT_PROFILE_DIR = path.join(
+	BACKEND_ROOT,
+	"config",
+	"pinterest-chrome-profile",
 );
 const DEFAULT_BOARD_CONFIG_PATH = path.join(
 	BACKEND_ROOT,
@@ -36,6 +42,33 @@ function boolFromEnv(name, fallback = true) {
 	const value = process.env[name];
 	if (value === undefined) return fallback;
 	return !["0", "false", "off", "no"].includes(String(value).toLowerCase());
+}
+
+function getDefaultChromeUserDataDir() {
+	return path.join(
+		os.homedir(),
+		"Library",
+		"Application Support",
+		"Google",
+		"Chrome",
+	);
+}
+
+function getPinterestBrowserOptions() {
+	const channel = process.env.PINTEREST_BROWSER_CHANNEL || "chrome";
+	const executablePath = process.env.PINTEREST_EXECUTABLE_PATH || undefined;
+	const useSystemProfile = boolFromEnv(
+		"PINTEREST_USE_SYSTEM_CHROME_PROFILE",
+		true,
+	);
+	const systemProfileDir = getDefaultChromeUserDataDir();
+	const profileDir =
+		process.env.PINTEREST_PROFILE_DIR ||
+		(useSystemProfile && fs.existsSync(systemProfileDir)
+			? systemProfileDir
+			: DEFAULT_PROFILE_DIR);
+	const profileName = process.env.PINTEREST_CHROME_PROFILE_NAME || "Default";
+	return { channel, executablePath, profileDir, profileName, useSystemProfile };
 }
 
 function createDebugRecorder(enabled) {
@@ -147,6 +180,24 @@ async function clickFirst(page, selectors, debug, stepName = "click") {
 	return false;
 }
 
+async function handleRestoreSession(page, debug) {
+	const restored = await clickFirst(
+		page,
+		[
+			'button:has-text("Restore session")',
+			'button:has-text("Restore")',
+			'text=/Restore session/i',
+		],
+		debug,
+		"restore-session",
+	);
+	if (restored) {
+		await page.waitForTimeout(1500);
+		await debug?.screenshot(page, "after-restore-session");
+	}
+	return restored;
+}
+
 async function fillFirst(page, selectors, value, debug, stepName = "fill") {
 	if (!value) return false;
 	for (const selector of selectors) {
@@ -169,6 +220,7 @@ async function ensureLoggedIn(page, email, password, statePath, debug) {
 	await page.goto("https://www.pinterest.com/pin-creation-tool/", {
 		waitUntil: "domcontentloaded",
 	});
+	await handleRestoreSession(page, debug);
 	await debug?.screenshot(page, "after-open-pin-creation-tool");
 
 	const onLoginScreen =
@@ -222,6 +274,10 @@ async function selectBoard(page, boardName, debug) {
 
 	await clickFirst(page, [
 		'[data-test-id="board-dropdown-select-button"]',
+		'button[aria-label*="board" i]',
+		'div[aria-label*="board" i]',
+		'input[placeholder*="board" i]',
+		'text=/Choose a board/i',
 		'button:has-text("Select")',
 		'button:has-text("Board")',
 	], debug, "open-board-dropdown");
@@ -230,6 +286,7 @@ async function selectBoard(page, boardName, debug) {
 	const searchFilled = await fillFirst(page, [
 		'input[placeholder*="Search"]',
 		'input[aria-label*="Search"]',
+		'input[placeholder*="board" i]',
 	], boardName, debug, "fill-board-search");
 	if (searchFilled) {
 		await page.waitForTimeout(600);
@@ -239,6 +296,8 @@ async function selectBoard(page, boardName, debug) {
 		`[data-test-id="board-row-${boardName}"]`,
 		`div[role="button"]:has-text("${boardName}")`,
 		`button:has-text("${boardName}")`,
+		`[role="option"]:has-text("${boardName}")`,
+		`div:has-text("${boardName}")`,
 	], debug, "select-board");
 	if (!boardClicked) {
 		await debug?.screenshot(page, "board-select-failed");
@@ -263,11 +322,6 @@ async function publishPin(page, debug) {
 }
 
 export default async function postToPinterest(post, _context = {}) {
-	const username =
-		process.env.PINTEREST_LOGIN_EMAIL ||
-		process.env.PINTEREST_USERNAME ||
-		requiredEnv("PINTEREST_USERNAME");
-	const password = requiredEnv("PINTEREST_PASSWORD");
 	const boardConfigPath =
 		process.env.PINTEREST_BOARD_CONFIG_PATH || DEFAULT_BOARD_CONFIG_PATH;
 	const boardConfig = await loadBoardConfig(boardConfigPath);
@@ -291,20 +345,48 @@ export default async function postToPinterest(post, _context = {}) {
 	const debug = createDebugRecorder(boolFromEnv("PINTEREST_DEBUG", false));
 	const statePath =
 		process.env.PINTEREST_SESSION_STATE_PATH || DEFAULT_STATE_PATH;
+	const { channel, executablePath, profileDir, profileName, useSystemProfile } =
+		getPinterestBrowserOptions();
+	const hasSavedState = fs.existsSync(statePath);
+	const username =
+		process.env.PINTEREST_LOGIN_EMAIL ||
+		process.env.PINTEREST_USERNAME ||
+		"";
+	const password = process.env.PINTEREST_PASSWORD || "";
+	if (!hasSavedState && (!username || !password)) {
+		throw new Error(
+			"Pinterest login is not configured. Create a saved session first or set PINTEREST_USERNAME/PINTEREST_PASSWORD.",
+		);
+	}
 
-	const browser = await chromium.launch({ headless });
-	const contextOptions = fs.existsSync(statePath)
-		? { storageState: statePath }
-		: {};
-	const context = await browser.newContext(contextOptions);
-	const page = await context.newPage();
+	const context = await chromium.launchPersistentContext(profileDir, {
+		headless,
+		channel,
+		executablePath,
+		args: [`--profile-directory=${profileName}`],
+	});
+	const page = context.pages()[0] || (await context.newPage());
 
 	try {
-		await debug.log("start", { headless, statePath, board, boardConfigPath });
-		await ensureLoggedIn(page, username, password, statePath, debug);
+		await debug.log("start", {
+			headless,
+			channel,
+			executablePath: executablePath || null,
+			profileDir,
+			profileName,
+			useSystemProfile,
+			statePath,
+			hasSavedState,
+			board,
+			boardConfigPath,
+		});
+		if (hasSavedState || (username && password)) {
+			await ensureLoggedIn(page, username, password, statePath, debug);
+		}
 		await page.goto("https://www.pinterest.com/pin-creation-tool/", {
 			waitUntil: "domcontentloaded",
 		});
+		await handleRestoreSession(page, debug);
 		await debug.screenshot(page, "ready-pin-creation-tool");
 
 		const title = post?.title || "";
@@ -331,9 +413,44 @@ export default async function postToPinterest(post, _context = {}) {
 		});
 
 		await uploadMedia(page, mediaPath, debug);
-		await fillFirst(page, ['textarea[aria-label*="Title"]', 'input[aria-label*="Title"]'], title, debug, "fill-pin-title");
-		await fillFirst(page, ['div[contenteditable="true"]', 'textarea[aria-label*="description"]'], description, debug, "fill-pin-description");
-		await fillFirst(page, ['input[aria-label*="destination"]', 'input[placeholder*="link"]'], link, debug, "fill-pin-link");
+		await fillFirst(
+			page,
+			[
+				'input[placeholder*="title" i]',
+				'textarea[placeholder*="title" i]',
+				'input[aria-label*="title" i]',
+				'textarea[aria-label*="title" i]',
+				'input[name*="title" i]',
+			],
+			title,
+			debug,
+			"fill-pin-title",
+		);
+		await fillFirst(
+			page,
+			[
+				'textarea[placeholder*="description" i]',
+				'div[contenteditable="true"][aria-label*="description" i]',
+				'textarea[aria-label*="description" i]',
+				'textarea[name*="description" i]',
+				'div[contenteditable="true"]',
+			],
+			description,
+			debug,
+			"fill-pin-description",
+		);
+		await fillFirst(
+			page,
+			[
+				'input[placeholder*="link" i]',
+				'input[aria-label*="link" i]',
+				'input[name*="link" i]',
+				'input[aria-label*="destination" i]',
+			],
+			link,
+			debug,
+			"fill-pin-link",
+		);
 		await selectBoard(page, board, debug);
 		await publishPin(page, debug);
 
@@ -356,6 +473,5 @@ export default async function postToPinterest(post, _context = {}) {
 		throw error;
 	} finally {
 		await context.close();
-		await browser.close();
 	}
 }

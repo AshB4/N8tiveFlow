@@ -31,6 +31,13 @@ const navItems = [
     activeClass: "border-fuchsia-400 bg-fuchsia-500 text-black",
   },
   {
+    to: "/affiliate",
+    label: "Affiliate Engine",
+    baseClass:
+      "border-orange-400 text-orange-200 hover:bg-orange-400 hover:text-black",
+    activeClass: "border-orange-300 bg-orange-400 text-black",
+  },
+  {
     to: "/charts",
     label: "View Charts",
     baseClass:

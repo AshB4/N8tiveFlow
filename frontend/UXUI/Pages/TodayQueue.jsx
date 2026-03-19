@@ -2,7 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/Components/ui/use-toast";
 import AppTopNav from "../Components/AppTopNav";
-import { getStatusLabel, normalizePostStatus } from "../utils/postStatus";
+import {
+  getStatusLabel,
+  getWorkflowPalette,
+  isAffiliatePost,
+  normalizePostStatus,
+} from "../utils/postStatus";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
@@ -362,20 +367,29 @@ export default function TodayQueue() {
                 </div>
               ) : (
                 dueForSelectedDay.map((post) => (
+                  (() => {
+                    const palette = getWorkflowPalette(post);
+                    return (
                   <article
                     key={post.id}
-                    className="rounded-lg border border-teal-500 bg-black/60 p-5 shadow-[0_0_20px_rgba(13,148,136,0.25)]"
+                    className={`rounded-lg border p-5 ${palette.cardClass}`}
                   >
                     <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                       <div>
-                        <h3 className="text-2xl text-pink-300">{post.title}</h3>
+                        <h3 className="text-2xl text-pink-300">
+                          {isAffiliatePost(post) ? "🛒 " : ""}
+                          {post.title}
+                        </h3>
                         {post.metadata?.productProfileLabel && (
                           <p className="text-sm text-amber-300 mt-2">
                             Product: {post.metadata.productProfileLabel}
                           </p>
                         )}
-                        <p className="text-sm text-teal-500 mt-2">
+                        <p className={`text-sm mt-2 ${palette.textClass}`}>
                           Status: {getStatusLabel(post.status)} | Targets: {formatTargetsLabel(post.targets)}
+                        </p>
+                        <p className={`text-xs uppercase tracking-[0.3em] mt-1 ${palette.textClass}`}>
+                          {palette.label}
                         </p>
                         <p className="text-sm text-teal-500">
                           Scheduled: {getScheduledDate(post)?.toLocaleString() || "—"}
@@ -443,6 +457,8 @@ export default function TodayQueue() {
                       {renderPlatformActions(post)}
                     </div>
                   </article>
+                    );
+                  })()
                 ))
               )}
             </section>
@@ -474,18 +490,27 @@ export default function TodayQueue() {
                 </div>
               ) : (
                 failedOrNeedsReview.map((post) => (
+                  (() => {
+                    const palette = getWorkflowPalette(post);
+                    return (
                   <article
                     key={post.id}
-                    className="rounded-lg border border-amber-500 bg-black/60 p-5"
+                    className={`rounded-lg border p-5 ${palette.cardClass}`}
                   >
-                    <h3 className="text-xl text-pink-300">{post.title}</h3>
+                    <h3 className="text-xl text-pink-300">
+                      {isAffiliatePost(post) ? "🛒 " : ""}
+                      {post.title}
+                    </h3>
                     {post.metadata?.productProfileLabel && (
                       <p className="text-sm text-amber-300 mt-2">
                         Product: {post.metadata.productProfileLabel}
                       </p>
                     )}
-                    <p className="text-sm text-teal-500 mt-2">
+                    <p className={`text-sm mt-2 ${palette.textClass}`}>
                       Status: {getStatusLabel(post.status)} | Targets: {formatTargetsLabel(post.targets)}
+                    </p>
+                    <p className={`text-xs uppercase tracking-[0.3em] mt-1 ${palette.textClass}`}>
+                      {palette.label}
                     </p>
                     <p className="text-sm text-teal-500">
                       Scheduled: {getScheduledDate(post)?.toLocaleString() || "—"}
@@ -530,6 +555,8 @@ export default function TodayQueue() {
                       </button>
                     </div>
                   </article>
+                    );
+                  })()
                 ))
               )}
             </section>

@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/Components/ui/use-toast";
 import AppTopNav from "../Components/AppTopNav";
-import { getStatusLabel, normalizePostStatus } from "../utils/postStatus";
+import {
+	getStatusLabel,
+	getWorkflowPalette,
+	isAffiliatePost,
+	normalizePostStatus,
+} from "../utils/postStatus";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 const DEFAULT_ROTATION_SETTINGS = {
@@ -993,6 +998,9 @@ export default function PostLib() {
 										</div>
 									) : (
 										<div>
+											{(() => {
+												const palette = getWorkflowPalette(post);
+												return (
 											<div className="flex justify-between items-start mb-4">
 												<div className="flex items-start gap-3">
 													{isSelectableQueuePost(post) ? (
@@ -1003,21 +1011,25 @@ export default function PostLib() {
 															onChange={() => toggleSelected(post.id)}
 														/>
 													) : (
-														<span className="mt-1 rounded border border-lime-500 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-lime-300">
-															{post.scheduledAt || post.scheduled_at
-																? "Scheduled, darling"
-																: "Locked"}
+														<span className={`mt-1 rounded border px-2 py-1 text-[10px] uppercase tracking-[0.2em] ${palette.badgeClass}`}>
+															{palette.label}
 														</span>
 													)}
 													<div>
-													<h3 className="text-xl text-pink-400">{post.title}</h3>
+													<h3 className="text-xl text-pink-400">
+														{isAffiliatePost(post) ? "🛒 " : ""}
+														{post.title}
+													</h3>
 													{post.metadata?.productProfileLabel && (
 														<p className="text-sm text-amber-300">
 															Product: {post.metadata.productProfileLabel}
 														</p>
 													)}
-													<p className="text-sm text-teal-500">
+													<p className={`text-sm ${palette.textClass}`}>
 														Status: {getStatusLabel(post.status)} | Targets: {formatTargetsLabel(post.targets)}
+													</p>
+													<p className={`text-xs uppercase tracking-[0.3em] mt-1 ${palette.textClass}`}>
+														{palette.label}
 													</p>
 													{post.metadata?.imageStatus && (
 														<p className="text-sm text-amber-300">
@@ -1046,6 +1058,8 @@ export default function PostLib() {
 													</button>
 												</div>
 											</div>
+												);
+											})()}
 											<p className="text-teal-200 whitespace-pre-wrap">{post.body}</p>
 											{(post.metadata?.imageConcept || post.metadata?.imagePrompt) && (
 												<div className="mt-4 rounded border border-amber-700 bg-black/50 p-3 text-sm">

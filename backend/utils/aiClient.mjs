@@ -1,6 +1,6 @@
 const DEFAULT_OPENAI_BASE_URL = "https://api.openai.com/v1";
 const DEFAULT_OLLAMA_BASE_URL = "http://127.0.0.1:11434";
-const DEFAULT_OPENAI_TIMEOUT_MS = 30_000;
+const DEFAULT_OPENAI_TIMEOUT_MS = 90_000;
 const DEFAULT_OLLAMA_TIMEOUT_MS = 120_000;
 
 function requireEnv(name) {
@@ -97,7 +97,9 @@ async function callOpenAI(config, prompt) {
     });
   } catch (error) {
     if (error?.name === "AbortError") {
-      throw new Error(`OpenAI request timed out after ${config.timeoutMs}ms`);
+      throw new Error(
+        `OpenAI took too long to respond (${config.timeoutMs}ms). Try a shorter prompt, a smaller output, or increase POSTPUNK_OPENAI_TIMEOUT_MS.`,
+      );
     }
     throw error;
   } finally {

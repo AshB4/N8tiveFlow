@@ -14,6 +14,7 @@ import TodayQueue from "./UXUI/Pages/TodayQueue";
 import ChartsPage from "./UXUI/Pages/ChartsPage";
 import ArchivePage from "./UXUI/Pages/ArchivePage";
 import BatchPage from "./UXUI/Pages/BatchPage";
+import AffiliateEnginePage from "./UXUI/Pages/AffiliateEnginePage";
 import SeoPages from "./UXUI/Pages/SeoPages";
 import SetupPage from "./UXUI/Pages/SetupPage";
 import ErrorPage from "./UXUI/Pages/notFound"; // This can now use useRouteError()
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
   {
     path: "/batch",
     element: <BatchPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/affiliate",
+    element: <AffiliateEnginePage />,
     errorElement: <ErrorPage />,
   },
   {

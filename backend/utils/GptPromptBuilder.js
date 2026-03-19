@@ -161,6 +161,21 @@ Honor the product guidance in:
 - jab vs punch judgment`;
 }
 
+export function buildIntentAnswerLayer() {
+	return `Intent and answer framing:
+- Map the post to a clear user intent instead of treating it like a vague product blurb.
+- Frame the product or post as an answer to a specific situation, problem, aesthetic desire, beginner need, or comparison question.
+- Prefer structured, useful, specific phrasing over generic hype.
+- Use this answer-style pattern when writing copy: "If you're looking for [problem or goal], this [product or post] helps because [benefit]. It's especially useful for [use case or audience]."
+- Generate multiple useful angles when possible so the same product can be packaged in different ways.
+
+Supported angle families:
+- problem
+- aesthetic
+- beginner
+- comparison`;
+}
+
 export function buildOutputSchema(productName, productType, audience, options = {}) {
 	const postIntent = inferPostIntent(options, options.productProfile);
 	const campaignPhase = inferCampaignPhase(options, options.productProfile);
@@ -173,13 +188,26 @@ export function buildOutputSchema(productName, productType, audience, options = 
   "post_intent": "${postIntent}",
   "campaign_phase": "${campaignPhase}",
   "campaign_angle": "",
+  "intent_layer": {
+    "primary_intent": "problem | aesthetic | comparison | beginner | lifestyle | direct-offer",
+    "keyword_focus": "",
+    "use_case": "",
+    "audience_segment": ""
+  },
   "platforms": ["Twitter", "LinkedIn", "Medium", "Dev.to", "Pinterest", "Instagram"],
   "core_problem": "",
   "core_promise": "",
   "cta_mode": "jab | punch | soft-sell | educational | story",
   "primary_cta": "",
   "secondary_cta": "",
+  "answer_style_description": "",
   "hook_options": ["", "", ""],
+  "angle_options": {
+    "problem": "",
+    "aesthetic": "",
+    "beginner": "",
+    "comparison": ""
+  },
   "desperate_search_queries": ["", "", ""],
   "unaware_search_questions": ["", "", ""],
   "seo_human_pitch": "",
@@ -272,11 +300,14 @@ export function buildRequirementsLayer() {
 - post_intent: choose the best fit for this product and angle
 - campaign_phase: choose the best phase for the request and timing
 - campaign_angle: the specific framing idea for this phase
+- intent_layer: map the likely user intent, keyword focus, use case, and audience segment
 - core_problem: the painful or urgent thing the audience is dealing with
 - core_promise: the believable outcome or relief offered
 - primary_cta: what you want them to do next
 - secondary_cta: softer fallback CTA for less sales-heavy platforms
+- answer_style_description: 1-2 sentences that clearly answer a user need using the answer-style pattern
 - hook_options: exactly 3 useful opening lines, not generic fluff
+- angle_options: provide one useful angle each for problem, aesthetic, beginner, and comparison framing
 - desperate_search_queries: real high-intent searches someone might type before buying
 - unaware_search_questions: problem-first searches by someone who does not know the product exists
 - seo_human_pitch: 1-2 sentences, human-readable, not robotic
@@ -321,6 +352,7 @@ export function buildStrategyStagePrompt(productName, productType, audience, opt
 		buildCompactContext(productName, productType, audience, options),
 		buildGuardrailsLayer(options),
 		buildContentMixLayer(),
+		buildIntentAnswerLayer(),
 		"Task: produce the campaign strategy for one post only.",
 		`Return this exact JSON shape:
 {
@@ -330,6 +362,12 @@ export function buildStrategyStagePrompt(productName, productType, audience, opt
   "post_intent": "${inferPostIntent(options, options.productProfile)}",
   "campaign_phase": "${inferCampaignPhase(options, options.productProfile)}",
   "campaign_angle": "",
+  "intent_layer": {
+    "primary_intent": "",
+    "keyword_focus": "",
+    "use_case": "",
+    "audience_segment": ""
+  },
   "core_problem": "",
   "core_promise": "",
   "cta_mode": "",
@@ -351,10 +389,18 @@ export function buildDiscoverabilityStagePrompt(
 		buildCompactContext(productName, productType, audience, options),
 		buildPriorStageSummary("Strategy", strategy),
 		buildContentMixLayer(),
+		buildIntentAnswerLayer(),
 		"Task: produce discoverability signals for one post only.",
 		`Return this exact JSON shape:
 {
   "hook_options": ["", "", ""],
+  "answer_style_description": "",
+  "angle_options": {
+    "problem": "",
+    "aesthetic": "",
+    "beginner": "",
+    "comparison": ""
+  },
   "desperate_search_queries": ["", "", ""],
   "unaware_search_questions": ["", "", ""],
   "seo_human_pitch": "",
@@ -382,6 +428,7 @@ export function buildCopyStagePrompt(
 		buildPriorStageSummary("Discoverability", discoverability),
 		buildGuardrailsLayer(options),
 		buildContentMixLayer(),
+		buildIntentAnswerLayer(),
 		"Task: write compact platform-ready copy for one post only. Keep variants concise.",
 		`Return this exact JSON shape:
 {
@@ -432,6 +479,7 @@ export function buildVisualStagePrompt(
 		buildCompactContext(productName, productType, audience, options),
 		buildPriorStageSummary("Strategy", strategy),
 		buildContentMixLayer(),
+		buildIntentAnswerLayer(),
 		"Task: plan the visual for one post only.",
 		`Return this exact JSON shape:
 {
@@ -492,6 +540,8 @@ export const buildSeoPrompt = (productName, productType, audience, options = {})
 		buildGuardrailsLayer(options),
 		"",
 		buildBehaviorLayer(),
+		"",
+		buildIntentAnswerLayer(),
 		"",
 		buildContentMixLayer(),
 		"",

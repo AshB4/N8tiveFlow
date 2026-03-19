@@ -33,6 +33,9 @@ test("buildSeoPrompt asks for strict JSON output", () => {
   assert.match(prompt, /"hook_options": \[/);
   assert.match(prompt, /"platform_variants":/);
   assert.match(prompt, /"campaign_phase":/);
+  assert.match(prompt, /"intent_layer":/);
+  assert.match(prompt, /"answer_style_description":/);
+  assert.match(prompt, /"angle_options":/);
   assert.match(prompt, /"visual_hook":/);
 });
 
@@ -58,6 +61,8 @@ test("buildSeoPrompt includes product profile guidance when provided", () => {
   assert.match(prompt, /Link and CTA policy/);
   assert.match(prompt, /jab posts/);
   assert.match(prompt, /Campaign phase rules/);
+  assert.match(prompt, /Intent and answer framing/);
+  assert.match(prompt, /If you're looking for \[problem or goal\]/);
 });
 
 test("buildChunkedPromptStages creates small staged prompts", () => {
@@ -74,7 +79,9 @@ test("buildChunkedPromptStages creates small staged prompts", () => {
     ["strategy", "discoverability", "copy", "visual"],
   );
   assert.match(stages[0].prompt, /campaign_phase/);
+  assert.match(stages[0].prompt, /intent_layer/);
   assert.match(stages[1].prompt, /hook_options/);
+  assert.match(stages[1].prompt, /answer_style_description/);
   assert.match(stages[2].prompt, /platform_variants/);
   assert.match(stages[3].prompt, /image_prompt/);
 });
@@ -104,8 +111,11 @@ test("normalizeSeoResult fills defaults", () => {
   assert.equal(normalized.primary_cta, "");
   assert.equal(normalized.campaign_phase, "");
   assert.equal(normalized.campaign_angle, "");
+  assert.equal(normalized.intent_layer.primary_intent, "");
+  assert.equal(normalized.answer_style_description, "");
   assert.equal(normalized.visual_hook, "");
   assert.deepEqual(normalized.hook_options, []);
+  assert.equal(normalized.angle_options.problem, "");
   assert.deepEqual(normalized.platforms, ["LinkedIn", "X", "Reddit"]);
   assert.equal(
     normalized.link.utm_base,

@@ -40,6 +40,10 @@ export function normalizeSeoResult(raw, input) {
       ? raw.preferred_post_times
       : {};
   const links = raw.link && typeof raw.link === "object" ? raw.link : {};
+  const intentLayer =
+    raw.intent_layer && typeof raw.intent_layer === "object" ? raw.intent_layer : {};
+  const angleOptions =
+    raw.angle_options && typeof raw.angle_options === "object" ? raw.angle_options : {};
 
   return {
     product_name: raw.product_name || input.productName,
@@ -49,12 +53,25 @@ export function normalizeSeoResult(raw, input) {
     post_intent: raw.post_intent || "",
     campaign_phase: raw.campaign_phase || input.campaignPhase || "",
     campaign_angle: raw.campaign_angle || "",
+    intent_layer: {
+      primary_intent: intentLayer.primary_intent || "",
+      keyword_focus: intentLayer.keyword_focus || "",
+      use_case: intentLayer.use_case || "",
+      audience_segment: intentLayer.audience_segment || "",
+    },
     core_problem: raw.core_problem || "",
     core_promise: raw.core_promise || "",
     cta_mode: raw.cta_mode || "",
     primary_cta: raw.primary_cta || "",
     secondary_cta: raw.secondary_cta || "",
+    answer_style_description: raw.answer_style_description || "",
     hook_options: Array.isArray(raw.hook_options) ? raw.hook_options.filter(Boolean) : [],
+    angle_options: {
+      problem: angleOptions.problem || "",
+      aesthetic: angleOptions.aesthetic || "",
+      beginner: angleOptions.beginner || "",
+      comparison: angleOptions.comparison || "",
+    },
     platforms: Array.isArray(raw.platforms) && raw.platforms.length ? raw.platforms : ["LinkedIn", "X", "Reddit"],
     desperate_search_queries: Array.isArray(raw.desperate_search_queries)
       ? raw.desperate_search_queries.filter(Boolean)

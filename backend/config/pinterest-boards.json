@@ -1,5 +1,5 @@
 {
-  "defaultBoard": "",
+  "defaultBoard": "Random thoughts",
   "boards": [
     "AI is Neat and Scary",
     "Angel's",
@@ -116,6 +116,182 @@
     {
       "board": "Dream home",
       "keywords": ["dream home", "interior", "home inspo", "renovation"]
+    },
+    {
+      "board": "AI is Neat and Scary",
+      "keywords": ["ai", "artificial intelligence", "machine learning", "automation", "future tech"]
+    },
+    {
+      "board": "Angel's",
+      "keywords": ["angel", "guardian angel", "wings", "heavenly", "angelic"]
+    },
+    {
+      "board": "Art & quotes",
+      "keywords": ["quote", "quotes", "art print", "inspirational art", "wall art"]
+    },
+    {
+      "board": "Baby Shower!",
+      "keywords": ["baby shower", "baby sprinkle", "new mom", "onesie", "baby party"]
+    },
+    {
+      "board": "Be a Better Leader",
+      "keywords": ["leadership", "manager", "team building", "executive", "productivity"]
+    },
+    {
+      "board": "Beach Wedding",
+      "keywords": ["beach wedding", "coastal wedding", "seaside ceremony", "bridal", "wedding decor"]
+    },
+    {
+      "board": "Beautiful me.",
+      "keywords": ["self care", "confidence", "beauty", "glow up", "wellness"]
+    },
+    {
+      "board": "Demonology",
+      "keywords": ["demonology", "demon", "occult", "infernal", "dark lore"]
+    },
+    {
+      "board": "Diy for the home",
+      "keywords": ["home diy", "home project", "home improvement", "decor diy", "weekend project"]
+    },
+    {
+      "board": "Epic cuteness",
+      "keywords": ["cute", "adorable", "puppy", "kitten", "aww"]
+    },
+    {
+      "board": "Father’s Day Gift Ideas",
+      "keywords": ["father's day", "dad gift", "gift for him", "best dad", "mens gifts"]
+    },
+    {
+      "board": "Firefly/Space...",
+      "keywords": ["space", "galaxy", "stars", "firefly", "cosmos", "scifi"]
+    },
+    {
+      "board": "Freaking Weird or mild...",
+      "keywords": ["weird", "oddities", "strange", "unusual", "creepy"]
+    },
+    {
+      "board": "fun committee",
+      "keywords": ["office party", "team event", "employee engagement", "work fun", "event ideas"]
+    },
+    {
+      "board": "Fun Ideas",
+      "keywords": ["fun idea", "party idea", "activities", "things to do", "weekend fun"]
+    },
+    {
+      "board": "Get your Worship on.",
+      "keywords": ["worship", "praise", "faith", "church", "gospel", "devotional"]
+    },
+    {
+      "board": "hemp farming",
+      "keywords": ["hemp", "cbd", "hemp farming", "cultivation", "grow tent"]
+    },
+    {
+      "board": "Home spa",
+      "keywords": ["home spa", "spa day", "bath ritual", "facial", "relaxation"]
+    },
+    {
+      "board": "Hot,hot,hotties",
+      "keywords": ["glam", "fashion", "model", "style", "hot look"]
+    },
+    {
+      "board": "I Want, I dream.",
+      "keywords": ["wishlist", "dream list", "bucket list", "aspiration", "manifest"]
+    },
+    {
+      "board": "Infj memes",
+      "keywords": ["infj", "mbti", "personality meme", "introvert meme", "type 16"]
+    },
+    {
+      "board": "Jewish mysticism",
+      "keywords": ["jewish mysticism", "zohar", "sefirot", "kabbalah", "torah mystic"]
+    },
+    {
+      "board": "Kabbalah",
+      "keywords": ["kabbalah", "tree of life", "sefirot", "esoteric", "mystic study"]
+    },
+    {
+      "board": "Kalimba",
+      "keywords": ["kalimba", "thumb piano", "music practice", "instrument", "song tutorial"]
+    },
+    {
+      "board": "Learn hebrew",
+      "keywords": ["hebrew", "learn hebrew", "hebrew alphabet", "ivrit", "vocabulary"]
+    },
+    {
+      "board": "LEST WE FORGET....",
+      "keywords": ["memorial", "remembrance", "lest we forget", "veterans", "tribute"]
+    },
+    {
+      "board": "Live to EAT",
+      "keywords": ["food", "recipe", "dessert", "meal prep", "restaurant", "cooking"]
+    },
+    {
+      "board": "Magic symbols",
+      "keywords": ["sigil", "rune", "magic symbol", "esoteric symbol", "occult art"]
+    },
+    {
+      "board": "Make it sew!",
+      "keywords": ["sewing", "stitch", "pattern", "fabric", "sew tutorial"]
+    },
+    {
+      "board": "More Nerdy Goodness...",
+      "keywords": ["nerdy", "geek", "fandom", "tabletop", "tech humor"]
+    },
+    {
+      "board": "Mythic Code & Dark...",
+      "keywords": ["mythic", "dark fantasy", "arcane", "occult coding", "gothic tech"]
+    },
+    {
+      "board": "Nerdcore",
+      "keywords": ["nerdcore", "geek rap", "fandom music", "retro tech", "gaming culture"]
+    },
+    {
+      "board": "Only the best Jobs",
+      "keywords": ["job search", "career", "resume", "interview", "remote jobs"]
+    },
+    {
+      "board": "origami",
+      "keywords": ["origami", "paper craft", "paper folding", "crane", "folding tutorial"]
+    },
+    {
+      "board": "Out of the Loom",
+      "keywords": ["loom", "weaving", "yarn", "fiber art", "textile"]
+    },
+    {
+      "board": "Prepping (SHTF)",
+      "keywords": ["prepping", "shtf", "survival", "bug out", "emergency kit", "off grid"]
+    },
+    {
+      "board": "psychology /sociology",
+      "keywords": ["psychology", "sociology", "human behavior", "social science", "mental models"]
+    },
+    {
+      "board": "Random thoughts",
+      "keywords": ["random thought", "shower thought", "journal prompt", "reflection", "mind dump"]
+    },
+    {
+      "board": "Screenshots",
+      "keywords": ["screenshot", "screen capture", "app screenshot", "ui capture", "notes screenshot"]
+    },
+    {
+      "board": "shipping container house",
+      "keywords": ["shipping container house", "container home", "tiny home", "modular home", "prefab"]
+    },
+    {
+      "board": "Shower and honey do",
+      "keywords": ["honey do", "home checklist", "chores", "bathroom diy", "house tasks"]
+    },
+    {
+      "board": "The Mad Hooker!!",
+      "keywords": ["crochet", "hook", "yarn crafts", "amigurumi", "crochet pattern"]
+    },
+    {
+      "board": "The Queen in me.",
+      "keywords": ["queen energy", "self love", "feminine power", "confidence", "boss babe"]
+    },
+    {
+      "board": "Your Pinterest Likes",
+      "keywords": ["pinterest", "pin inspo", "saved ideas", "inspiration board", "curated picks"]
     }
   ]
 }

@@ -10,6 +10,8 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Composer page UI: `frontend/UXUI/Pages/postComposer.jsx`
 - Composer state and submit logic: `frontend/UXUI/Components/PostComposer/usePostComposerState.jsx`
 - Batch import and queue staging: `frontend/UXUI/Pages/BatchPage.jsx`
+- Affiliate strategy/rules page: `frontend/UXUI/Pages/AffiliateEnginePage.jsx`
+- Affiliate batch builder: `frontend/UXUI/Pages/AffiliateBuilderPage.jsx`
 - Rotation and scheduling defaults setup: `frontend/UXUI/Pages/SetupPage.jsx`
 - Posted history archive UI: `frontend/UXUI/Pages/ArchivePage.jsx`
 - Backend API: `backend/server.mjs`
@@ -44,6 +46,8 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Composer: `frontend/UXUI/Pages/postComposer.jsx`
 - Library and bulk scheduling: `frontend/UXUI/Pages/PostLib.jsx`
 - Batch import and batch queue actions: `frontend/UXUI/Pages/BatchPage.jsx`
+- Affiliate rules, planning kernel, and reusable GPT prompts: `frontend/UXUI/Pages/AffiliateEnginePage.jsx`
+- Affiliate row builder, bulk JSON import, and affiliate queue scheduling: `frontend/UXUI/Pages/AffiliateBuilderPage.jsx`
 - Today Ops and manual assist: `frontend/UXUI/Pages/TodayQueue.jsx`
 - Analytics: `frontend/UXUI/Pages/ChartsPage.jsx`
 - Posted archive: `frontend/UXUI/Pages/ArchivePage.jsx`
@@ -66,6 +70,14 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - `frontend/UXUI/Pages/BatchPage.jsx`
   - owns import-first batch workflow
   - has AI response staging and batch scheduling/mix actions
+- `frontend/UXUI/Pages/AffiliateEnginePage.jsx`
+  - owns the Amazon affiliate planning framework
+  - holds decision rules, sale-mode notes, tracking guidance, and reusable GPT research prompts
+- `frontend/UXUI/Pages/AffiliateBuilderPage.jsx`
+  - owns the Amazon affiliate working builder
+  - supports row-based affiliate pin prep using `keyword`, `angle`, `productLink`, `title`, `description`, `image`, and `board`
+  - supports bulk GPT JSON import, local autosave, row selection, and queueing selected rows into the main queue
+  - mixes queued rows by product/link before scheduling so one product does not clump on consecutive slots
 
 ## Composer Dependencies
 
@@ -141,6 +153,14 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - alt text
   - tagged topics / product tagging
   - sequential multi-pin posting in one run
+
+### Affiliate workflow notes
+
+- `/affiliate` is the strategy layer, not the posting engine
+- `/affiliate/builder` is the operational affiliate batch builder
+- The builder currently feeds Pinterest-oriented affiliate posts into the normal queue one by one
+- Default affiliate cadence in the builder is `3/day`, with date-range overrides for sale windows such as `25th-30th -> 6/day`
+- The builder does not export paid Pinterest bulk CSV workflows; it prepares and queues rows into PostPunk instead
 
 ## AI And Prompting
 

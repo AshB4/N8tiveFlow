@@ -14,6 +14,7 @@ PostPunk is currently:
 - a proven automatic `Dev.to` lane
 - a proven automatic `Facebook` lane for page posts
 - a proven automatic `Pinterest` lane for single pins
+- an affiliate planning and batch-building system for Amazon-to-Pinterest workflows
 - a local-first app using SQLite as the real store
 - an import-first workflow for AI-written content via `/batch`
 
@@ -32,6 +33,8 @@ These pieces are built and in active use:
 - Batch import page at `/batch`
 - Posted archive page at `/archive`
 - Rotation/settings page at `/setup`
+- Affiliate strategy page at `/affiliate`
+- Affiliate batch builder at `/affiliate/builder`
 - retry and failure handling
 - failed-post visibility on the calendar with retry support
 - product profiles
@@ -59,6 +62,7 @@ These pieces are built and in active use:
 - `Dev.to` automatic posting has been proven live
 - `Facebook` page posting has been proven live for text and image posts
 - `Pinterest` posting has been proven live for single pins through Playwright + saved session
+- affiliate builder rows can now be queued into the main PostPunk schedule with default `3/day` cadence and sale-window overrides
 - Product profile lifecycle status is now tracked. The shipped Gumroad/Amazon products are marked `live`, while `PostPunk Core` is `in-progress` and the memoir/Reddit product remain `planned`.
 - Telegram alerts fire for both success and failure
 
@@ -69,7 +73,7 @@ These pieces are built and in active use:
 - `Instagram` token state has been a blocker
 - `Threads` is incomplete
 - `Pinterest` works for single live pins, but batch posting, topics/tags, alt text, and publish-later are not wired yet
-- `Amazon` is in the queue model, but not a proven unattended posting lane
+- `Amazon` now has a usable planning/builder workflow, but it is not a proven unattended posting lane yet
 - built-in AI generation is not a trusted daily workflow yet; external GPT output + `/batch` import is the practical path
 - `Facebook Stories` and `Facebook video` are not wired yet; they are a future Meta lane worth adding because Stories likely matter for reach, but current focus should remain on regular image posts first
 
@@ -84,8 +88,10 @@ Use the system like this:
 5. Let `Facebook` auto-post when due if the page token is healthy.
 6. Use `/today` for manual posting or manual confirmation on the other platforms.
 7. Use the Pinterest Playwright lane for single-pin posting when needed.
-8. Review posted items in `/archive` and log metrics from `/lib`.
-9. Mark posts `posted` or `failed` as needed.
+8. Use `/affiliate` to keep the affiliate rules and research prompts visible while planning.
+9. Use `/affiliate/builder` to import/build affiliate rows, mix them, and queue them into the main schedule.
+10. Review posted items in `/archive` and log metrics from `/lib`.
+11. Mark posts `posted` or `failed` as needed.
 
 ## Current System Notes
 
@@ -101,6 +107,14 @@ Use the system like this:
 - Facebook feed posting with text and local image uploads is now proven live against the `Color With Ash` page.
 - Pinterest Playwright posting is now proven for single live pins using the saved Pinterest session/profile.
 - OpenAI is the practical in-app AI default. Ollama remains optional but is not the trusted path on this Mac.
+- `/affiliate` now holds the working Amazon affiliate framework, including signal rules, sale-mode reminders, angle-stack logic, and GPT research prompts.
+- `/affiliate/builder` now supports:
+  - row-based affiliate pin building
+  - bulk GPT JSON import
+  - local autosave
+  - selected-row queueing
+  - mixed scheduling by product/link to avoid clumping one product repeatedly
+  - default `3/day` cadence with date-range sale overrides such as `25th-30th -> 6/day`
 - Meta-related future work should be prioritized in this order:
   - stabilize Facebook image posting
   - add Facebook Stories support
@@ -109,6 +123,9 @@ Use the system like this:
 - Pinterest near-term next step:
   - support sequential batch pin posting in one reused Pinterest session instead of one pin per run
   - then add Pinterest-specific fields like topics/tags, alt text, and publish-later scheduling
+- Affiliate near-term next step:
+  - use the builder to research and queue real product batches
+  - then add deeper winner-cloning and posting helpers only after the manual process stabilizes
 
 ## Current Queue Snapshot
 
@@ -120,6 +137,7 @@ What matters operationally:
 - scheduling currently stretches into May 2026
 - one-post-per-day cadence is the current default
 - the app now supports multiple live products in one rotating schedule
+- affiliate scheduling can now be built separately with its own cadence defaults inside `/affiliate/builder`
 
 ## Dev.to Plan
 
@@ -169,6 +187,8 @@ If you need to understand the system quickly, check these first:
 - `frontend/UXUI/Components/PostComposer/usePostComposerState.jsx`
 - `frontend/UXUI/Pages/PostLib.jsx`
 - `frontend/UXUI/Pages/BatchPage.jsx`
+- `frontend/UXUI/Pages/AffiliateEnginePage.jsx`
+- `frontend/UXUI/Pages/AffiliateBuilderPage.jsx`
 - `frontend/UXUI/Pages/ArchivePage.jsx`
 - `frontend/UXUI/Pages/SetupPage.jsx`
 - `frontend/UXUI/Pages/TodayQueue.jsx`

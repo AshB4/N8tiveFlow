@@ -105,6 +105,14 @@ const saleModeRules = [
   "Track Amazon sale days so the volume lift is intentional instead of random.",
 ];
 
+const batchModeRules = [
+  "Pick one niche block per session, not random unrelated products.",
+  "Generate 20-30 items in one sitting when the pattern is obvious.",
+  "Batch by niche, then vary the keyword and angle for each post.",
+  "Load the finished set into /batch and let the schedule spread it out.",
+  "Do not batch the exact same product angle repeatedly.",
+];
+
 export default function AffiliateEnginePage() {
   return (
     <div className="min-h-screen bg-black font-mono text-orange-100">
@@ -214,6 +222,26 @@ export default function AffiliateEnginePage() {
                 <p>
                   Keep a visible list of Amazon sale windows and Prime-style events so posting
                   cadence can ramp up on purpose, then cool back down after the event ends.
+                </p>
+              </div>
+            </section>
+
+            <section className="rounded-3xl border border-blue-500/40 bg-blue-950/20 p-6 text-blue-100 shadow-[0_0_24px_rgba(59,130,246,0.12)]">
+              <p className="text-xs uppercase tracking-[0.35em] text-blue-300">Batch mode</p>
+              <p className="mt-4 text-sm leading-7 text-blue-100/85">
+                Think in monthly loads, not daily panic. The goal is to make decisions in chunks,
+                then let PostPunk execute the schedule.
+              </p>
+              <ul className="mt-4 space-y-3 text-sm leading-7">
+                {batchModeRules.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
+              <div className="mt-4 rounded-2xl border border-blue-400/30 bg-black/25 p-4 text-sm leading-7">
+                <p className="font-bold text-blue-200">Default math</p>
+                <p>3 posts/day x 30 days = 90 posts/month baseline</p>
+                <p className="mt-2">
+                  Same niche, different search intents. Not the same product angle copied 10 times.
                 </p>
               </div>
             </section>

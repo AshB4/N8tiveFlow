@@ -1,0 +1,48 @@
+{
+  "productLink": "https://www.amazon.com/your-affiliate-link",
+  "board": "Affiliate Finds",
+  "items": [
+    {
+      "keyword": "mess-free Easter basket ideas for toddlers",
+      "angle": "problem",
+      "title": "Mess-free Easter basket ideas for toddlers",
+      "description": "Skip the candy. These Easter basket fillers keep toddlers busy without the mess. Perfect for parents who want easy, no-stress activities.",
+      "image": "frontend/assets/easter2026/skipcandywatercolor.png",
+      "tags": [
+        "easter basket ideas",
+        "toddler easter basket",
+        "mess free toddler activities",
+        "easter basket fillers",
+        "no candy easter basket"
+      ]
+    },
+    {
+      "keyword": "what to put in a toddler Easter basket no junk",
+      "angle": "use case",
+      "title": "What to put in a toddler Easter basket (no junk)",
+      "description": "Easy Easter basket ideas toddlers will actually use. No sugar overload, just fun and simple activities.",
+      "image": "frontend/assets/easter2026/nomesswatercolor.png",
+      "tags": [
+        "toddler easter basket",
+        "what to put in easter basket",
+        "no junk easter basket",
+        "easter basket ideas for toddlers",
+        "simple toddler activities"
+      ]
+    },
+    {
+      "keyword": "easter basket fillers that keep toddlers busy",
+      "angle": "problem",
+      "title": "Easter basket fillers that keep toddlers busy",
+      "description": "If you need toddler Easter ideas that actually last longer than 5 minutes, this is one of the best no-mess options.",
+      "image": "frontend/assets/easter2026/watercolorbook.png",
+      "tags": [
+        "easter basket fillers",
+        "toddler busy activities",
+        "quiet activities for toddlers",
+        "easter ideas for toddlers",
+        "activity book for toddlers"
+      ]
+    }
+  ]
+}

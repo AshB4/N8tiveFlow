@@ -29,7 +29,21 @@ function createEmptyRow(defaultBoard = "") {
     description: "",
     image: "",
     board: defaultBoard,
+    tags: [],
   };
+}
+
+function normalizeTagList(value) {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => String(item || "").trim())
+      .filter(Boolean);
+  }
+
+  return String(value || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
 }
 
 function inferDescription(keyword, angle) {
@@ -89,19 +103,49 @@ function buildSchedulePlan(totalRows, startDate, defaultPostsPerDay, overrides =
 
 function parseBulkJson(raw) {
   const parsed = JSON.parse(raw);
-  if (!Array.isArray(parsed)) {
-    throw new Error("JSON must be an array of affiliate rows.");
-  }
-  return parsed.map((entry) => ({
+
+  const normalizeEntry = (entry, shared = {}) => ({
     id: makeId(),
-    keyword: String(entry.keyword || "").trim(),
-    angle: String(entry.angle || "").trim(),
-    productLink: String(entry.productLink || entry.link || "").trim(),
-    title: String(entry.title || entry.keyword || "").trim(),
-    description: String(entry.description || "").trim(),
-    image: String(entry.image || entry.mediaPath || "").trim(),
-    board: String(entry.board || "").trim(),
-  }));
+    keyword: String(entry.keyword || shared.keyword || "").trim(),
+    angle: String(entry.angle || shared.angle || "").trim(),
+    productLink: String(
+      entry.productLink || entry.link || shared.productLink || shared.link || "",
+    ).trim(),
+    title: String(entry.title || entry.keyword || shared.title || shared.keyword || "").trim(),
+    description: String(entry.description || shared.description || "").trim(),
+    image: String(entry.image || entry.mediaPath || shared.image || shared.mediaPath || "").trim(),
+    board: String(entry.board || shared.board || "").trim(),
+    tags: normalizeTagList(entry.tags || shared.tags || []),
+  });
+
+  if (Array.isArray(parsed)) {
+    return parsed.map((entry) => normalizeEntry(entry));
+  }
+
+  if (parsed && typeof parsed === "object") {
+    const items = Array.isArray(parsed.items)
+      ? parsed.items
+      : Array.isArray(parsed.posts)
+        ? parsed.posts
+        : null;
+
+    if (items) {
+      const shared = {
+        keyword: parsed.keyword,
+        angle: parsed.angle,
+        productLink: parsed.productLink,
+        link: parsed.link,
+        title: parsed.title,
+        description: parsed.description,
+        image: parsed.image,
+        mediaPath: parsed.mediaPath,
+        board: parsed.board,
+      };
+      return items.map((entry) => normalizeEntry(entry, shared));
+    }
+  }
+
+  throw new Error("JSON must be an array of rows or an object with items/posts.");
 }
 
 function buildMixKey(row) {
@@ -273,6 +317,7 @@ export default function AffiliateBuilderPage() {
         title: row.keyword || row.title,
         description: inferDescription(row.keyword, angle),
         board: row.board || defaultBoard,
+        tags: row.tags || [],
       }));
       return [...current, ...additions];
     });
@@ -381,15 +426,16 @@ export default function AffiliateBuilderPage() {
             keyword: row.keyword,
             angle: row.angle,
             pinterestBoard: row.board || defaultBoard || "",
+            pinterestTags: normalizeTagList(row.tags),
             productLinks: {
               primary: row.productLink,
               amazon: row.productLink,
             },
             includeProductLink: true,
-            contentTags: ["affiliate", "amazon"],
+            contentTags: ["affiliate", "amazon", ...normalizeTagList(row.tags)],
             distributionTags: ["post:pinterest"],
           },
-          tags: ["affiliate", "amazon", row.angle].filter(Boolean),
+          tags: ["affiliate", "amazon", row.angle, ...normalizeTagList(row.tags)].filter(Boolean),
         };
 
         const res = await fetch(`${API_BASE}/api/posts`, {
@@ -543,15 +589,23 @@ export default function AffiliateBuilderPage() {
             <div className="mt-4 rounded-2xl border border-orange-400/30 bg-black/25 p-4">
               <p className="text-xs uppercase tracking-[0.3em] text-orange-300">Bulk GPT import</p>
               <p className="mt-2 text-sm text-orange-100/80">
-                Paste a JSON array of affiliate rows here. The builder will turn them into editable rows.
+                Paste JSON here. The builder accepts either row arrays or grouped product bundles
+                and turns them into editable rows.
               </p>
               <textarea
                 value={bulkJson}
                 onChange={(e) => setBulkJson(e.target.value)}
                 rows={10}
-                placeholder={`[\n  {\n    "keyword": "cozy desk lighting for night work setup",\n    "angle": "problem",\n    "productLink": "https://www.amazon.com/...",\n    "title": "Cozy desk lighting for night work setup",\n    "description": "Desk lighting ideas that feel warm and easy on your eyes for late-night work.",\n    "image": "desk_lamp_01.jpg",\n    "board": "Cozy Desk Setup"\n  }\n]`}
+                placeholder={`{\n  "productLink": "https://www.amazon.com/your-affiliate-link",\n  "image": "easter_2026/toddler-basket.jpg",\n  "board": "easter 2026",\n  "items": [\n    {\n      "keyword": "mess-free Easter basket ideas for toddlers",\n      "angle": "problem",\n      "title": "Mess-free Easter basket ideas for toddlers",\n      "description": "Skip the candy. These Easter basket fillers keep toddlers busy without the mess. Perfect for parents who want easy, no-stress activities."\n    },\n    {\n      "keyword": "what to put in a toddler Easter basket no junk",\n      "angle": "use case",\n      "title": "What to put in a toddler Easter basket (no junk)",\n      "description": "Easy Easter basket ideas toddlers will actually use. No sugar overload, just fun and simple activities."\n    }\n  ]\n}`}
                 className="mt-3 w-full rounded-2xl border border-orange-400/30 bg-black/40 px-4 py-3 text-sm text-orange-100 outline-none focus:border-orange-300"
               />
+              <p className="mt-2 text-xs leading-6 text-orange-100/65">
+                Shared fields like <span className="font-bold text-orange-200">productLink</span>,
+                <span className="mx-1 font-bold text-orange-200">image</span>, and
+                <span className="mx-1 font-bold text-orange-200">board</span> can live once at the
+                top level, with individual entries inside <span className="font-bold text-orange-200">items</span>
+                {" "}or <span className="font-bold text-orange-200">posts</span>.
+              </p>
               <div className="mt-3">
                 <button
                   onClick={importBulkRows}
@@ -700,6 +754,15 @@ export default function AffiliateBuilderPage() {
                         className="mt-2 w-full rounded-xl border border-orange-400/30 bg-black/40 px-3 py-2 text-sm text-orange-100 outline-none focus:border-orange-300"
                       />
                     </label>
+                    <label className="block md:col-span-2">
+                      <span className="text-xs uppercase tracking-[0.25em] text-orange-300">Pinterest tags</span>
+                      <input
+                        value={Array.isArray(row.tags) ? row.tags.join(", ") : ""}
+                        onChange={(e) => updateRow(row.id, "tags", normalizeTagList(e.target.value))}
+                        placeholder="easter basket ideas, toddler activities, no mess easter, toddler easter basket, easter basket fillers"
+                        className="mt-2 w-full rounded-xl border border-orange-400/30 bg-black/40 px-3 py-2 text-sm text-orange-100 outline-none focus:border-orange-300"
+                      />
+                    </label>
                   </div>
 
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -723,7 +786,7 @@ export default function AffiliateBuilderPage() {
               <p className="text-xs uppercase tracking-[0.35em] text-cyan-300">Builder rules</p>
               <ul className="mt-4 space-y-3 text-sm leading-7">
                 <li>- Each row is one Pinterest-ready affiliate post.</li>
-                <li>- Keep the internal shape minimal: keyword, angle, product link, title, description, image, board.</li>
+                <li>- Keep the internal shape minimal: keyword, angle, product link, title, description, image, board, tags.</li>
                 <li>- Expand one product across angles instead of adding random unrelated products.</li>
                 <li>- Use this builder for volume, then post rows one by one through the existing Pinterest lane.</li>
                 <li>- Default cadence is 3/day unless an override window says otherwise.</li>

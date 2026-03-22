@@ -38,6 +38,8 @@ test-results/
 **/playwright/**/browsers/
 backend/config/x-chrome-profile/
 backend/config/x-state.json
+backend/config/facebook-chrome-profile/
+backend/config/facebook-state.json
 backend/config/pinterest-chrome-profile/
 backend/config/pinterest-state.json
 
@@ -74,4 +76,6 @@ backend/queue/postedLog.json
 backend/queue/rejections.json
 frontend/assets/goblinposts/
 
+#assets
+frontend/assets/easter2026/*
 # My Docs

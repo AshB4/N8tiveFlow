@@ -45,6 +45,21 @@ const dailyLoop = [
   "Post only after the search-to-product match is clear.",
 ];
 
+const cleanWorkflow = [
+  "Search Pinterest -> find pattern",
+  "Find matching Amazon product",
+  "Write 3-5 angles",
+  "Post each as separate pins",
+  "Link to Amazon",
+  "Repeat",
+];
+
+const gutCheck = [
+  "Would I click this if I searched it?",
+  "Does the image match the keyword exactly?",
+  "Does it feel like content, not a listing?",
+];
+
 const quickChecks = [
   "Is it being searched?",
   "Does it look clickable?",
@@ -133,6 +148,13 @@ const winnerRules = [
   "Create 3-5 variations immediately while the pattern is still clear.",
   "Keep the winning product idea, then vary angle, image, context, or title.",
   "Track winners only. Do not waste time logging every dead pin.",
+];
+
+const affiliateLinkRules = [
+  "Use the tracked Amazon affiliate link, not a plain product URL.",
+  "The affiliate link belongs in the destination URL, not only in the pin description.",
+  "Do not link to the Amazon homepage or a random search page.",
+  "Your job is to earn the click. Amazon's job is to convert the buyer.",
 ];
 
 const needMoreInfo = [
@@ -244,6 +266,26 @@ export default function AffiliateEnginePage() {
                 >
                   Open Batch Builder
                 </Link>
+              </div>
+
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                <div className="rounded-2xl border border-orange-400/30 bg-black/25 p-4 text-sm leading-7 text-orange-100">
+                  <p className="font-bold text-orange-200">Actual workflow</p>
+                  <ul className="mt-2 space-y-2">
+                    {cleanWorkflow.map((item) => (
+                      <li key={item}>- {item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-2xl border border-orange-400/30 bg-black/25 p-4 text-sm leading-7 text-orange-100">
+                  <p className="font-bold text-orange-200">Quick gut check</p>
+                  <ul className="mt-2 space-y-2">
+                    {gutCheck.map((item) => (
+                      <li key={item}>- {item}</li>
+                    ))}
+                  </ul>
+                  <p className="mt-3 text-orange-100/75">If yes, post. If not, re-angle it.</p>
+                </div>
               </div>
 
               <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -366,6 +408,22 @@ export default function AffiliateEnginePage() {
                   <li>- high-intent titles usually imply stronger click potential</li>
                   <li>- unique links per angle group are the first serious upgrade</li>
                 </ul>
+              </div>
+            </section>
+
+            <section className="rounded-3xl border border-emerald-500/40 bg-emerald-950/20 p-6 text-emerald-100 shadow-[0_0_24px_rgba(16,185,129,0.12)]">
+              <p className="text-xs uppercase tracking-[0.35em] text-emerald-300">Affiliate link rule</p>
+              <ul className="mt-4 space-y-3 text-sm leading-7">
+                {affiliateLinkRules.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
+              <div className="mt-4 rounded-2xl border border-emerald-400/30 bg-black/25 p-4 text-sm leading-7">
+                <p className="font-bold text-emerald-200">Keep it clean</p>
+                <p>
+                  Pinterest gets the discovery click. Amazon handles the conversion. If the
+                  destination link is wrong, the pin can perform and still make you nothing.
+                </p>
               </div>
             </section>
 

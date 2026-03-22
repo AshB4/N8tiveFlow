@@ -10,7 +10,9 @@ import GuiltDaemon from "../Components/CalendarPage/GuiltDaemon.jsx";
 import DayPostsModal from "../Components/CalendarPage/DayPostsModal.jsx";
 import {
   getWorkflowPalette,
+  getWorkflowColorKey,
   isApprovedStatus,
+  isAffiliatePost,
   normalizePostStatus,
 } from "../utils/postStatus";
 
@@ -68,6 +70,18 @@ const formatTargetsLabel = (targets = [], fallbackPlatforms = []) => {
       entry.accountId ? `${entry.platform} (${entry.accountId})` : entry.platform
     )
     .join(", ");
+};
+
+const getAffiliateDayBadgeStyle = (workflowKey) => {
+  const styles = {
+    failed: { backgroundColor: "#e11d48", color: "#ffffff" },
+    posted: { backgroundColor: "#65a30d", color: "#ffffff" },
+    scheduled: { backgroundColor: "#06b6d4", color: "#000000" },
+    needs_action: { backgroundColor: "#f97316", color: "#000000" },
+    draft: { backgroundColor: "#8b5cf6", color: "#ffffff" },
+    archived: { backgroundColor: "#71717a", color: "#ffffff" },
+  };
+  return styles[workflowKey] || styles.scheduled;
 };
 
 export default function PostCalendar() {
@@ -151,12 +165,38 @@ export default function PostCalendar() {
             extendedProps: {
               status: normalizePostStatus(post.status),
               workflow: palette.key,
+              affiliate: isAffiliatePost(post),
+              originalTitle: post.title,
             },
           };
         })
         .filter((event) => Boolean(event.date)),
     [calendarPosts]
   );
+
+  const affiliateDayMap = useMemo(() => {
+    const priority = {
+      failed: 5,
+      posted: 4,
+      scheduled: 3,
+      needs_action: 2,
+      draft: 1,
+      archived: 0,
+    };
+    const result = new Map();
+
+    for (const post of calendarPosts) {
+      const dateIso = getPostDate(post);
+      if (!dateIso || !isAffiliatePost(post)) continue;
+      const key = getWorkflowColorKey(post);
+      const current = result.get(dateIso);
+      if (!current || priority[key] > priority[current]) {
+        result.set(dateIso, key);
+      }
+    }
+
+    return result;
+  }, [calendarPosts]);
 
   const now = new Date();
   const todayIso = now.toISOString().slice(0, 10);
@@ -293,6 +333,40 @@ export default function PostCalendar() {
     }
   };
 
+  const retryFailedPostNow = async (post) => {
+    setWorkingPostId(post.id);
+    try {
+      const res = await fetch(`${API_BASE}/api/posts/${post.id}/retry-now`, {
+        method: "POST",
+      });
+      if (!res.ok) {
+        throw new Error(`Retry-now failed: ${res.status}`);
+      }
+      const data = await res.json();
+      const queueItem = data?.queueItem
+        ? { ...data.queueItem, status: normalizePostStatus(data.queueItem.status) }
+        : null;
+
+      setPostQueue((prev) => {
+        if (queueItem) {
+          return prev.map((entry) => (entry.id === queueItem.id ? queueItem : entry));
+        }
+        return prev.filter((entry) => entry.id !== post.id);
+      });
+
+      setSelectedDayPosts((prev) => {
+        if (queueItem) {
+          return prev.map((entry) => (entry.id === queueItem.id ? queueItem : entry));
+        }
+        return prev.filter((entry) => entry.id !== post.id);
+      });
+    } catch (error) {
+      console.error("Failed to retry post now", error);
+    } finally {
+      setWorkingPostId(null);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-pink-500 font-mono p-4">
       <AppTopNav includeLab />
@@ -317,7 +391,18 @@ export default function PostCalendar() {
                     day: "numeric",
                   })}
                 </div>
-                <div className="pl-2 text-pink-300 font-bold">"{post.title}"</div>
+                <div className="pl-2">
+                  {isAffiliatePost(post) && (
+                    <span
+                      className={`mb-1 inline-flex h-6 w-6 items-center justify-center rounded-full border text-[11px] ${getWorkflowPalette(post).badgeClass}`}
+                      aria-label="Affiliate post"
+                      title="Affiliate post"
+                    >
+                      🛒
+                    </span>
+                  )}
+                  <div className="text-pink-300 font-bold">"{post.title}"</div>
+                </div>
                 <div className="pl-2 text-sm text-teal-400">
                   {formatTargetsLabel(post.__targets, post.platforms)}
                 </div>
@@ -333,7 +418,18 @@ export default function PostCalendar() {
                 {pastScheduled.map((post) => (
                   <li key={`past-${post.__queueIndex}`} className="border border-teal-700 rounded p-2 bg-black/60">
                     <div className="flex justify-between gap-2">
-                      <span className="text-pink-300 font-semibold">{post.title}</span>
+                      <span className="text-pink-300 font-semibold flex items-center gap-2">
+                        {isAffiliatePost(post) && (
+                          <span
+                            className={`inline-flex h-6 w-6 items-center justify-center rounded-full border text-[11px] ${getWorkflowPalette(post).badgeClass}`}
+                            aria-label="Affiliate post"
+                            title="Affiliate post"
+                          >
+                            🛒
+                          </span>
+                        )}
+                        <span>{post.title}</span>
+                      </span>
                       <span>
                         {new Date(post.__date).toLocaleDateString("en-US", {
                           month: "short",
@@ -360,6 +456,17 @@ export default function PostCalendar() {
             initialView="dayGridMonth"
             initialDate={initialDate}
             events={eventz}
+            eventContent={(eventInfo) => {
+              const title =
+                eventInfo.event.extendedProps.originalTitle || eventInfo.event.title;
+              return (
+                <div className="overflow-hidden">
+                  <span className="truncate text-[11px] font-semibold leading-tight">
+                    {title}
+                  </span>
+                </div>
+              );
+            }}
             eventClick={(info) => {
               handleDaySelection(info.event.startStr);
             }}
@@ -386,6 +493,33 @@ export default function PostCalendar() {
               }
               return classes;
             }}
+            dayCellContent={(arg) => {
+              const dateStr = arg.date.toISOString().slice(0, 10);
+              const affiliateWorkflow = affiliateDayMap.get(dateStr);
+              const affiliateBadgeStyle = affiliateWorkflow
+                ? getAffiliateDayBadgeStyle(affiliateWorkflow)
+                : null;
+
+              return (
+                <div className="flex items-start justify-between px-1 pt-1">
+                  <div className="flex items-center gap-1.5">
+                    {affiliateBadgeStyle ? (
+                      <span
+                        className="inline-flex h-6 w-6 items-center justify-center rounded-full text-[11px] leading-none shadow-[0_0_0_1px_rgba(0,0,0,0.35)]"
+                        style={affiliateBadgeStyle}
+                        aria-label="Affiliate post scheduled"
+                        title={`Affiliate post: ${affiliateWorkflow}`}
+                      >
+                        🛒
+                      </span>
+                    ) : (
+                      <span className="inline-flex h-6 w-6" aria-hidden="true" />
+                    )}
+                    <span>{arg.dayNumberText}</span>
+                  </div>
+                </div>
+              );
+            }}
           />
           <DayPostsModal
             date={selectedDate}
@@ -397,6 +531,7 @@ export default function PostCalendar() {
             onEditPost={handleEditPost}
             onRewriteAll={handleRewriteAll}
             onRetryPost={retryFailedPost}
+            onRetryNow={retryFailedPostNow}
             workingPostId={workingPostId}
           />
         </main>

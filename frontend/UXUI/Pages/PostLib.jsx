@@ -1000,6 +1000,7 @@ export default function PostLib() {
 										<div>
 											{(() => {
 												const palette = getWorkflowPalette(post);
+                        const showAffiliateBadge = isAffiliatePost(post);
 												return (
 											<div className="flex justify-between items-start mb-4">
 												<div className="flex items-start gap-3">
@@ -1016,8 +1017,16 @@ export default function PostLib() {
 														</span>
 													)}
 													<div>
+                          {showAffiliateBadge && (
+                            <span
+                              className={`mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full border text-xs ${palette.badgeClass}`}
+                              aria-label="Affiliate post"
+                              title="Affiliate post"
+                            >
+                              🛒
+                            </span>
+                          )}
 													<h3 className="text-xl text-pink-400">
-														{isAffiliatePost(post) ? "🛒 " : ""}
 														{post.title}
 													</h3>
 													{post.metadata?.productProfileLabel && (

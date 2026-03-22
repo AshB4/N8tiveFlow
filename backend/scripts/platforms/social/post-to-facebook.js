@@ -9,6 +9,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const GRAPH_VERSION = "v18.0";
 
+function boolFromEnv(name, fallback = false) {
+	const value = process.env[name];
+	if (value === undefined) return fallback;
+	return !["0", "false", "off", "no"].includes(String(value).toLowerCase());
+}
+
 function resolveAccount(input) {
 	if (input?.account || input?.target) return input.account || null;
 	return input || null;
@@ -69,8 +75,15 @@ async function postToFacebook(post, context = {}) {
 	const accessToken =
 		account?.credentials?.accessToken || process.env.FACEBOOK_PAGE_ACCESS_TOKEN || "";
 	const pageId = account?.metadata?.pageId || process.env.FACEBOOK_PAGE_ID || "";
+	const allowBrowserFallback =
+		account?.metadata?.browserFallback ??
+		boolFromEnv("FACEBOOK_BROWSER_FALLBACK", true);
 
 	if (!accessToken || accessToken === "REPLACE_WITH_REAL_PAGE_TOKEN") {
+		if (allowBrowserFallback) {
+			const { default: postToFacebookBrowser } = await import("./post-to-facebook-browser.js");
+			return postToFacebookBrowser(post, { account, target: context?.target });
+		}
 		throw new Error("Facebook page access token not configured");
 	}
 	if (!pageId) {
@@ -87,6 +100,14 @@ async function postToFacebook(post, context = {}) {
 		return await postTextOrLink(pageId, accessToken, post);
 	} catch (error) {
 		console.error("Facebook posting error:", error.response?.data || error.message);
+		const fbError = error?.response?.data?.error || {};
+		const tokenExpired =
+			Number(fbError?.code) === 190 ||
+			/session has expired/i.test(String(fbError?.message || ""));
+		if (allowBrowserFallback && tokenExpired) {
+			const { default: postToFacebookBrowser } = await import("./post-to-facebook-browser.js");
+			return postToFacebookBrowser(post, { account, target: context?.target });
+		}
 		throw new Error("Failed to post to Facebook");
 	}
 }

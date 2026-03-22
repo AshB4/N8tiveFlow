@@ -61,6 +61,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - shows scheduled approved posts
   - now also shows failed scheduled posts in red
   - supports retrying failed posts forward by a day
+  - shows affiliate day markers in the month grid with a small status-colored `🛒` badge beside the date number
 - `frontend/UXUI/Pages/SetupPage.jsx`
   - owns rotation defaults
   - now also surfaces token/platform health from `/api/platform-health`
@@ -75,9 +76,10 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - holds decision rules, sale-mode notes, tracking guidance, and reusable GPT research prompts
 - `frontend/UXUI/Pages/AffiliateBuilderPage.jsx`
   - owns the Amazon affiliate working builder
-  - supports row-based affiliate pin prep using `keyword`, `angle`, `productLink`, `title`, `description`, `image`, and `board`
+  - supports row-based affiliate pin prep using `keyword`, `angle`, `productLink`, `title`, `description`, `image`, `board`, optional `boards`, and `tags`
   - supports bulk GPT JSON import, local autosave, row selection, and queueing selected rows into the main queue
   - mixes queued rows by product/link before scheduling so one product does not clump on consecutive slots
+  - pulls saved board suggestions from `/api/pinterest-boards` and uses them for primary and alternate board fields
 
 ## Composer Dependencies
 
@@ -92,6 +94,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Archive API: `backend/server.mjs`
 - Rotation settings API: `backend/server.mjs`
 - Accounts API: `backend/server.mjs`
+- Pinterest boards API: `backend/server.mjs`
 - Platform health API: `backend/server.mjs`
 - Analytics summary API: `backend/server.mjs`
 - AI SEO generation API: `backend/server.mjs`
@@ -103,6 +106,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - `backend/server.mjs`
   - moving a post to `status: "posted"` appends it to archive history
   - `/api/platform-health` powers the `/setup` token-health panel
+  - `/api/pinterest-boards` exposes saved Pinterest board names and default board for the affiliate builder
 - `backend/scripts/postingJob.mjs`
   - fully failed posts stay in the queue as `failed` after max attempts instead of disappearing
   - partially successful posts now remain in the queue for the failed targets only, so they do not vanish after mixed success
@@ -160,6 +164,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - `/affiliate/builder` is the operational affiliate batch builder
 - The builder currently feeds Pinterest-oriented affiliate posts into the normal queue one by one
 - Default affiliate cadence in the builder is `3/day`, with date-range overrides for sale windows such as `25th-30th -> 6/day`
+- The builder supports one immediate `board` plus optional per-row `boards` for future reposting to niche-fit boards on different days
 - The builder does not export paid Pinterest bulk CSV workflows; it prepares and queues rows into PostPunk instead
 
 ## AI And Prompting

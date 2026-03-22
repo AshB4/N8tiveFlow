@@ -37,6 +37,7 @@ These pieces are built and in active use:
 - Affiliate batch builder at `/affiliate/builder`
 - retry and failure handling
 - failed-post visibility on the calendar with retry support
+- day-level affiliate markers on the calendar
 - product profiles
 - platform writing guidance
 - AI SEO generation with product and platform context
@@ -63,6 +64,7 @@ These pieces are built and in active use:
 - `Facebook` page posting has been proven live for text and image posts
 - `Pinterest` posting has been proven live for single pins through Playwright + saved session
 - affiliate builder rows can now be queued into the main PostPunk schedule with default `3/day` cadence and sale-window overrides
+- affiliate builder now understands a primary board plus alternate boards per row and suggests saved Pinterest board names from config
 - Product profile lifecycle status is now tracked. The shipped Gumroad/Amazon products are marked `live`, while `PostPunk Core` is `in-progress` and the memoir/Reddit product remain `planned`.
 - Telegram alerts fire for both success and failure
 
@@ -112,9 +114,12 @@ Use the system like this:
   - row-based affiliate pin building
   - bulk GPT JSON import
   - local autosave
+  - one immediate board plus optional alternate boards per row
+  - saved-board autocomplete from the Pinterest board config
   - selected-row queueing
   - mixed scheduling by product/link to avoid clumping one product repeatedly
   - default `3/day` cadence with date-range sale overrides such as `25th-30th -> 6/day`
+- calendar month cells now show a small filled `🛒` badge next to the date number when affiliate posts are scheduled that day, with badge color following workflow state
 - Meta-related future work should be prioritized in this order:
   - stabilize Facebook image posting
   - add Facebook Stories support

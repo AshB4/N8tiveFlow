@@ -52,6 +52,7 @@ export default function DayPostsModal({
 	onEditPost,
 	onRewriteAll,
 	onRetryPost,
+	onRetryNow,
 	workingPostId,
 }) {
 	if (!date) return null;
@@ -91,6 +92,7 @@ export default function DayPostsModal({
 							const palette = getWorkflowPalette(post);
 							const targetLabel = formatTargets(post.targets, post.platforms);
               const isFailed = palette.key === "failed";
+              const showAffiliateBadge = isAffiliatePost(post);
 							return (
 								<div
 									key={post.id || `${post.title}-${post.platform}`}
@@ -98,8 +100,16 @@ export default function DayPostsModal({
 								>
 									<div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
 										<div>
+                      {showAffiliateBadge && (
+                        <span
+                          className={`mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full border text-xs ${palette.badgeClass}`}
+                          aria-label="Affiliate post"
+                          title="Affiliate post"
+                        >
+                          🛒
+                        </span>
+                      )}
 											<p className="text-pink-300 text-lg font-semibold">
-												{isAffiliatePost(post) ? "🛒 " : ""}
 												{post.title || "Untitled draft"}
 											</p>
 											<p className="text-xs text-teal-500 uppercase tracking-[0.3em]">
@@ -134,13 +144,22 @@ export default function DayPostsModal({
 												Rewrite vibes
 											</button>
                       {isFailed && (
-                        <button
-                          onClick={() => onRetryPost?.(post)}
-                          disabled={workingPostId === post.id}
-                          className="px-3 py-1 rounded border border-red-400 text-red-200 text-sm uppercase tracking-[0.2em] hover:bg-red-500 hover:text-white transition-colors disabled:opacity-50"
-                        >
-                          {workingPostId === post.id ? "Retrying..." : "Retry tomorrow"}
-                        </button>
+                        <>
+                          <button
+                            onClick={() => onRetryNow?.(post)}
+                            disabled={workingPostId === post.id}
+                            className="px-3 py-1 rounded border border-amber-400 text-amber-200 text-sm uppercase tracking-[0.2em] hover:bg-amber-400 hover:text-black transition-colors disabled:opacity-50"
+                          >
+                            {workingPostId === post.id ? "Posting..." : "Retry now"}
+                          </button>
+                          <button
+                            onClick={() => onRetryPost?.(post)}
+                            disabled={workingPostId === post.id}
+                            className="px-3 py-1 rounded border border-red-400 text-red-200 text-sm uppercase tracking-[0.2em] hover:bg-red-500 hover:text-white transition-colors disabled:opacity-50"
+                          >
+                            {workingPostId === post.id ? "Posting..." : "Retry tomorrow"}
+                          </button>
+                        </>
                       )}
 										</div>
 									</div>

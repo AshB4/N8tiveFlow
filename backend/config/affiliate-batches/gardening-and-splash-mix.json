@@ -1,0 +1,65 @@
+{
+  "board": "Fun Ideas",
+  "items": [
+    {
+      "productLink": "https://www.amazon.com/Gardening-Wheelbarrow-Repotting-Watering-Learning/dp/B0G4W77WL6/",
+      "keyword": "kids gardening tool set",
+      "angle": "family activity",
+      "title": "They Think They’re Helping… and It’s Actually Adorable",
+      "description": "This kids gardening tool set turns backyard time into a real family activity. Perfect for spring play, little helpers, and outdoor learning.",
+      "image": "frontend/assets/easter2026/kids_gardening_helping.png",
+      "tags": [
+        "kids gardening",
+        "outdoor activities",
+        "family fun",
+        "spring activities",
+        "backyard ideas"
+      ]
+    },
+    {
+      "productLink": "https://www.amazon.com/Gardening-Wheelbarrow-Repotting-Watering-Learning/dp/B0G4W77WL6/",
+      "keyword": "kids gardening tools outdoor",
+      "angle": "product layout",
+      "title": "Backyard Hack Parents Swear By",
+      "description": "A colorful gardening set that gives kids their own tools, wheelbarrow, and watering can for outdoor play that feels useful and fun.",
+      "image": "frontend/assets/easter2026/Kids_gardening_hack.png",
+      "tags": [
+        "garden toys",
+        "kids tools",
+        "outdoor kids",
+        "spring toys",
+        "parent hacks"
+      ]
+    },
+    {
+      "productLink": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1",
+      "keyword": "toddler splash pad outdoor",
+      "angle": "product feature",
+      "title": "Turns Any Yard Into a Splash Zone",
+      "description": "This toddler splash pad makes backyard play easy, fun, and fast. Great for hot days, summer play, and keeping little kids busy outside.",
+      "image": "frontend/assets/easter2026/Splash_pad_top_down.png",
+      "tags": [
+        "splash pad",
+        "summer toys",
+        "backyard fun",
+        "water play",
+        "toddler activities"
+      ]
+    },
+    {
+      "productLink": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1",
+      "keyword": "safe water play toddler",
+      "angle": "safety reassurance",
+      "title": "Safe Water Play for Little Ones",
+      "description": "A shallow splash pad that gives toddlers safe water play with parent-friendly peace of mind. No pool, no drama, just summer fun.",
+      "image": "frontend/assets/easter2026/Safe_splash_pad.png",
+      "tags": [
+        "toddler safety",
+        "water toys",
+        "summer kids",
+        "mom life",
+        "outdoor play"
+      ]
+    }
+  ]
+}

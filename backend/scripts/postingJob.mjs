@@ -137,7 +137,7 @@ function buildPostPayload(post) {
 	};
 }
 
-async function processQueue() {
+export async function processQueue() {
 	await initLocalDb();
 	const { posts: queue, postedLog, rejections: rejectedLog } = await readStoreSnapshot();
 
@@ -285,10 +285,17 @@ async function processQueue() {
 	);
 }
 
-processQueue().catch((error) => {
-	console.error("Worker crashed:", error);
-	sendPostPunkTelegramAlert(
-		`Worker crashed before completion.\nError: ${error?.message || "Unknown crash error"}\n\nRerun command: cd backend && npm run worker`,
-	).catch(() => {});
-	process.exitCode = 1;
-});
+const entryScript = process.argv[1]
+	? path.resolve(process.argv[1])
+	: null;
+const isDirectRun = entryScript === __filename;
+
+if (isDirectRun) {
+	processQueue().catch((error) => {
+		console.error("Worker crashed:", error);
+		sendPostPunkTelegramAlert(
+			`Worker crashed before completion.\nError: ${error?.message || "Unknown crash error"}\n\nRerun command: cd backend && npm run worker`,
+		).catch(() => {});
+		process.exitCode = 1;
+	});
+}

@@ -369,6 +369,7 @@ export default function TodayQueue() {
                 dueForSelectedDay.map((post) => (
                   (() => {
                     const palette = getWorkflowPalette(post);
+                    const showAffiliateBadge = isAffiliatePost(post);
                     return (
                   <article
                     key={post.id}
@@ -376,8 +377,16 @@ export default function TodayQueue() {
                   >
                     <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                       <div>
+                        {showAffiliateBadge && (
+                          <span
+                            className={`mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full border text-xs ${palette.badgeClass}`}
+                            aria-label="Affiliate post"
+                            title="Affiliate post"
+                          >
+                            🛒
+                          </span>
+                        )}
                         <h3 className="text-2xl text-pink-300">
-                          {isAffiliatePost(post) ? "🛒 " : ""}
                           {post.title}
                         </h3>
                         {post.metadata?.productProfileLabel && (
@@ -492,13 +501,22 @@ export default function TodayQueue() {
                 failedOrNeedsReview.map((post) => (
                   (() => {
                     const palette = getWorkflowPalette(post);
+                    const showAffiliateBadge = isAffiliatePost(post);
                     return (
                   <article
                     key={post.id}
                     className={`rounded-lg border p-5 ${palette.cardClass}`}
                   >
+                    {showAffiliateBadge && (
+                      <span
+                        className={`mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full border text-xs ${palette.badgeClass}`}
+                        aria-label="Affiliate post"
+                        title="Affiliate post"
+                      >
+                        🛒
+                      </span>
+                    )}
                     <h3 className="text-xl text-pink-300">
-                      {isAffiliatePost(post) ? "🛒 " : ""}
                       {post.title}
                     </h3>
                     {post.metadata?.productProfileLabel && (

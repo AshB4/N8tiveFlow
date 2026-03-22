@@ -1,0 +1,48 @@
+{
+  "productLink": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1",
+  "board": "Fun Ideas",
+  "items": [
+    {
+      "keyword": "toddler splash pad outdoor",
+      "angle": "backyard transformation",
+      "title": "Turn Your Backyard Into a Splash Zone for Toddlers",
+      "description": "This toddler splash pad turns any backyard into instant summer fun. Easy setup, safe shallow water, and perfect for hot days. A must-have outdoor activity for kids.",
+      "image": "frontend/assets/easter2026/Splash_pad_top_down.png",
+      "tags": [
+        "toddler summer",
+        "outdoor play",
+        "splash pad",
+        "backyard ideas",
+        "kids activities"
+      ]
+    },
+    {
+      "keyword": "safe water play toddler",
+      "angle": "safety + parent peace of mind",
+      "title": "Safe Water Play for Toddlers (No Pool Needed)",
+      "description": "Let them splash safely. This shallow sprinkler pad is perfect for toddlers with supervised play and gentle water flow. Great alternative to pools.",
+      "image": "frontend/assets/easter2026/Safe_splash_pad.png",
+      "tags": [
+        "toddler safety",
+        "water play",
+        "summer kids",
+        "mom hacks",
+        "parenting tips"
+      ]
+    },
+    {
+      "keyword": "outdoor toddler activities summer",
+      "angle": "parent win / energy burn",
+      "title": "The Backyard Trick That Wears Kids Out Fast",
+      "description": "Need an easy way to burn toddler energy? This splash pad keeps them active, entertained, and cooled off for hours. Minimal effort, maximum peace.",
+      "image": "frontend/assets/easter2026/Splash_pad_top_down.png",
+      "tags": [
+        "toddler activities",
+        "summer fun",
+        "mom life",
+        "kids outside",
+        "energy burner"
+      ]
+    }
+  ]
+}

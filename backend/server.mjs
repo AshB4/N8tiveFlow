@@ -7,6 +7,7 @@ import fs from "fs"; // only for constants like fs.constants.F_OK
 import path from "path";
 import { fileURLToPath } from "url";
 import { postToAllPlatforms, normalizeTargets } from "./scripts/platforms/post-to-all.js";
+import { processQueue } from "./scripts/postingJob.mjs";
 import { getPublicAccounts } from "./utils/accountStore.mjs";
 import { getAccounts } from "./utils/accountStore.mjs";
 import { findDuplicatePost } from "./utils/queueGuard.mjs";
@@ -48,6 +49,7 @@ const DIR_MEDIA_VIDEOS = path.join(DIR_MEDIA, "videos");
 const DIR_MEDIA_OTHER = path.join(DIR_MEDIA, "other");
 const STATS_FUNNEL = path.join(__dirname, "stats", "funnel.json");
 const STATS_SUMMARY = path.join(__dirname, "stats", "summary.json");
+const PINTEREST_BOARDS_PATH = path.join(__dirname, "config", "pinterest-boards.json");
 let platformHealthCache = null;
 let platformHealthCacheAt = 0;
 const PLATFORM_HEALTH_TTL_MS = 60_000;
@@ -200,6 +202,23 @@ app.put("/api/settings/rotation", async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({
 			error: "Failed to save rotation settings",
+			detail: error?.message || String(error),
+		});
+	}
+});
+
+app.get("/api/pinterest-boards", async (_req, res) => {
+	try {
+		const config = await readJson(PINTEREST_BOARDS_PATH).catch(() => ({}));
+		return res.json({
+			defaultBoard: String(config?.defaultBoard || "").trim(),
+			boards: Array.isArray(config?.boards)
+				? config.boards.map((board) => String(board || "").trim()).filter(Boolean)
+				: [],
+		});
+	} catch (error) {
+		return res.status(500).json({
+			error: "Failed to load Pinterest boards",
 			detail: error?.message || String(error),
 		});
 	}
@@ -480,6 +499,40 @@ app.put("/api/posts/:id", async (req, res) => {
 		res.json(posts[i]);
 	} catch (e) {
 		res.status(500).json({ error: "Failed to update post", detail: String(e) });
+	}
+});
+
+app.post("/api/posts/:id/retry-now", async (req, res) => {
+	try {
+		const posts = await listPosts();
+		const existing = posts.find((p) => p.id === req.params.id);
+		if (!existing) return res.status(404).json({ error: "not found" });
+
+		const updatedPost = {
+			...existing,
+			status: "approved",
+			scheduledAt: new Date().toISOString(),
+			nextAttemptAt: null,
+			attemptCount: 0,
+			lastErrorAt: null,
+			updatedAt: new Date().toISOString(),
+		};
+
+		await updatePostInDb(updatedPost.id, updatedPost);
+		await processQueue();
+
+		const refreshedPosts = await listPosts();
+		const refreshedQueueItem = refreshedPosts.find((p) => p.id === req.params.id) || null;
+		const archive = await listPostedLog();
+		const archivedItem = archive.find((entry) => entry.id === req.params.id) || null;
+
+		res.json({
+			ok: true,
+			queueItem: refreshedQueueItem,
+			archivedItem,
+		});
+	} catch (e) {
+		res.status(500).json({ error: "Failed to retry post now", detail: String(e) });
 	}
 });
 

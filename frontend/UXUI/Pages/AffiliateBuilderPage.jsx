@@ -14,6 +14,28 @@ const ANGLE_PRESETS = [
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 const STORAGE_KEY = "postpunk-affiliate-builder-v1";
+const BLANK_GROUPED_TEMPLATE = `{
+  "productLink": "https://www.amazon.com/your-affiliate-link",
+  "board": "Fun Ideas",
+  "publishAt": "",
+  "items": [
+    {
+      "keyword": "",
+      "angle": "",
+      "title": "",
+      "description": "",
+      "image": "",
+      "boards": ["Fun Ideas", "Epic cuteness"],
+      "tags": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  ]
+}`;
 
 function makeId() {
   return `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
@@ -29,11 +51,25 @@ function createEmptyRow(defaultBoard = "") {
     description: "",
     image: "",
     board: defaultBoard,
+    boards: defaultBoard ? [defaultBoard] : [],
     tags: [],
   };
 }
 
 function normalizeTagList(value) {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => String(item || "").trim())
+      .filter(Boolean);
+  }
+
+  return String(value || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function normalizeBoardList(value) {
   if (Array.isArray(value)) {
     return value
       .map((item) => String(item || "").trim())
@@ -115,6 +151,7 @@ function parseBulkJson(raw) {
     description: String(entry.description || shared.description || "").trim(),
     image: String(entry.image || entry.mediaPath || shared.image || shared.mediaPath || "").trim(),
     board: String(entry.board || shared.board || "").trim(),
+    boards: normalizeBoardList(entry.boards || shared.boards || []),
     tags: normalizeTagList(entry.tags || shared.tags || []),
   });
 
@@ -140,6 +177,7 @@ function parseBulkJson(raw) {
         image: parsed.image,
         mediaPath: parsed.mediaPath,
         board: parsed.board,
+        boards: parsed.boards,
       };
       return items.map((entry) => normalizeEntry(entry, shared));
     }
@@ -184,8 +222,10 @@ function mixRows(rows) {
 
 export default function AffiliateBuilderPage() {
   const { toast } = useToast();
+  const boardListId = "pinterest-board-suggestions";
   const [batchLabel, setBatchLabel] = useState("Amazon affiliate batch");
   const [defaultBoard, setDefaultBoard] = useState("");
+  const [availableBoards, setAvailableBoards] = useState([]);
   const [rows, setRows] = useState([createEmptyRow("")]);
   const [selectedIds, setSelectedIds] = useState([]);
   const [startDate, setStartDate] = useState(() => new Date().toISOString().slice(0, 10));
@@ -213,6 +253,40 @@ export default function AffiliateBuilderPage() {
     } catch {
       // ignore bad local state
     }
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`${API_BASE}/api/pinterest-boards`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Board lookup failed: ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        if (cancelled) return;
+        const boards = normalizeBoardList(data?.boards || []);
+        setAvailableBoards(boards);
+        setDefaultBoard((current) => current || String(data?.defaultBoard || "").trim());
+        setRows((current) =>
+          current.map((row) => {
+            if (row.board || !data?.defaultBoard) return row;
+            return {
+              ...row,
+              board: String(data.defaultBoard || "").trim(),
+              boards: normalizeBoardList(
+                row.boards || [String(data.defaultBoard || "").trim()],
+              ),
+            };
+          }),
+        );
+      })
+      .catch(() => {
+        // keep manual entry working if board config is unavailable
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -258,7 +332,10 @@ export default function AffiliateBuilderPage() {
             field === "angle" ? value : next.angle,
           );
         }
-        if (field === "board" && !value && defaultBoard) next.board = defaultBoard;
+        if (field === "board") {
+          if (!value && defaultBoard) next.board = defaultBoard;
+          next.boards = normalizeBoardList(value ? [value, ...(row.boards || [])] : row.boards || []);
+        }
         return next;
       }),
     );
@@ -292,6 +369,9 @@ export default function AffiliateBuilderPage() {
           title: row.keyword || row.title,
           description: inferDescription(row.keyword, angle),
           board: row.board || defaultBoard,
+          boards: normalizeBoardList(
+            row.boards || (row.board || defaultBoard ? [row.board || defaultBoard] : []),
+          ),
         };
       }),
     );
@@ -317,6 +397,9 @@ export default function AffiliateBuilderPage() {
         title: row.keyword || row.title,
         description: inferDescription(row.keyword, angle),
         board: row.board || defaultBoard,
+        boards: normalizeBoardList(
+          row.boards || (row.board || defaultBoard ? [row.board || defaultBoard] : []),
+        ),
         tags: row.tags || [],
       }));
       return [...current, ...additions];
@@ -371,6 +454,9 @@ export default function AffiliateBuilderPage() {
         ...imported.map((row) => ({
           ...row,
           board: row.board || defaultBoard,
+          boards: normalizeBoardList(
+            row.boards || (row.board || defaultBoard ? [row.board || defaultBoard] : []),
+          ),
           description: row.description || inferDescription(row.keyword, row.angle),
         })),
       ]);
@@ -383,6 +469,22 @@ export default function AffiliateBuilderPage() {
       toast({
         title: "Import failed",
         description: error.message || "Could not parse the GPT JSON block.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const copyBlankTemplate = async () => {
+    try {
+      await navigator.clipboard.writeText(BLANK_GROUPED_TEMPLATE);
+      toast({
+        title: "Template copied",
+        description: "Blank Pinterest affiliate JSON template copied to your clipboard.",
+      });
+    } catch (error) {
+      toast({
+        title: "Copy failed",
+        description: error.message || "Could not copy the blank template.",
         variant: "destructive",
       });
     }
@@ -426,6 +528,9 @@ export default function AffiliateBuilderPage() {
             keyword: row.keyword,
             angle: row.angle,
             pinterestBoard: row.board || defaultBoard || "",
+            pinterestBoards: normalizeBoardList(
+              row.boards || (row.board || defaultBoard ? [row.board || defaultBoard] : []),
+            ),
             pinterestTags: normalizeTagList(row.tags),
             productLinks: {
               primary: row.productLink,
@@ -469,6 +574,11 @@ export default function AffiliateBuilderPage() {
     <div className="min-h-screen bg-black font-mono text-orange-100">
       <div className="mx-auto max-w-7xl px-6 py-10">
         <AppTopNav />
+        <datalist id={boardListId}>
+          {availableBoards.map((board) => (
+            <option key={board} value={board} />
+          ))}
+        </datalist>
 
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
@@ -505,7 +615,8 @@ export default function AffiliateBuilderPage() {
                 <input
                   value={defaultBoard}
                   onChange={(e) => setDefaultBoard(e.target.value)}
-                  placeholder="Coloring pages"
+                  list={boardListId}
+                  placeholder="Start typing a saved board"
                   className="mt-2 w-full rounded-xl border border-orange-400/40 bg-black/40 px-4 py-3 text-sm text-orange-100 outline-none focus:border-orange-300"
                 />
               </label>
@@ -587,6 +698,21 @@ export default function AffiliateBuilderPage() {
             </div>
 
             <div className="mt-4 rounded-2xl border border-orange-400/30 bg-black/25 p-4">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-xs uppercase tracking-[0.3em] text-orange-300">Blank template</p>
+                <button
+                  onClick={copyBlankTemplate}
+                  className="rounded-full border border-cyan-400/60 bg-cyan-500/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-cyan-100 transition hover:bg-cyan-400 hover:text-black"
+                >
+                  Copy template
+                </button>
+              </div>
+              <pre className="mt-3 overflow-x-auto whitespace-pre-wrap rounded-2xl border border-orange-400/30 bg-black/40 p-4 text-xs leading-6 text-orange-100/90">
+                {BLANK_GROUPED_TEMPLATE}
+              </pre>
+            </div>
+
+            <div className="mt-4 rounded-2xl border border-orange-400/30 bg-black/25 p-4">
               <p className="text-xs uppercase tracking-[0.3em] text-orange-300">Bulk GPT import</p>
               <p className="mt-2 text-sm text-orange-100/80">
                 Paste JSON here. The builder accepts either row arrays or grouped product bundles
@@ -596,7 +722,7 @@ export default function AffiliateBuilderPage() {
                 value={bulkJson}
                 onChange={(e) => setBulkJson(e.target.value)}
                 rows={10}
-                placeholder={`{\n  "productLink": "https://www.amazon.com/your-affiliate-link",\n  "image": "easter_2026/toddler-basket.jpg",\n  "board": "easter 2026",\n  "items": [\n    {\n      "keyword": "mess-free Easter basket ideas for toddlers",\n      "angle": "problem",\n      "title": "Mess-free Easter basket ideas for toddlers",\n      "description": "Skip the candy. These Easter basket fillers keep toddlers busy without the mess. Perfect for parents who want easy, no-stress activities."\n    },\n    {\n      "keyword": "what to put in a toddler Easter basket no junk",\n      "angle": "use case",\n      "title": "What to put in a toddler Easter basket (no junk)",\n      "description": "Easy Easter basket ideas toddlers will actually use. No sugar overload, just fun and simple activities."\n    }\n  ]\n}`}
+                placeholder={`{\n  "productLink": "https://www.amazon.com/your-affiliate-link",\n  "image": "frontend/assets/easter2026/toddler-basket.jpg",\n  "board": "Fun Ideas",\n  "items": [\n    {\n      "keyword": "mess-free Easter basket ideas for toddlers",\n      "angle": "problem",\n      "title": "Mess-free Easter basket ideas for toddlers",\n      "description": "Skip the candy. These Easter basket fillers keep toddlers busy without the mess. Perfect for parents who want easy, no-stress activities.",\n      "boards": ["Fun Ideas", "Epic cuteness"]\n    },\n    {\n      "keyword": "what to put in a toddler Easter basket no junk",\n      "angle": "use case",\n      "title": "What to put in a toddler Easter basket (no junk)",\n      "description": "Easy Easter basket ideas toddlers will actually use. No sugar overload, just fun and simple activities."\n    }\n  ]\n}`}
                 className="mt-3 w-full rounded-2xl border border-orange-400/30 bg-black/40 px-4 py-3 text-sm text-orange-100 outline-none focus:border-orange-300"
               />
               <p className="mt-2 text-xs leading-6 text-orange-100/65">
@@ -604,7 +730,9 @@ export default function AffiliateBuilderPage() {
                 <span className="mx-1 font-bold text-orange-200">image</span>, and
                 <span className="mx-1 font-bold text-orange-200">board</span> can live once at the
                 top level, with individual entries inside <span className="font-bold text-orange-200">items</span>
-                {" "}or <span className="font-bold text-orange-200">posts</span>.
+                {" "}or <span className="font-bold text-orange-200">posts</span>. Add
+                <span className="mx-1 font-bold text-orange-200">boards</span> per item when a pin
+                could be reposted to another niche-fit board later.
               </p>
               <div className="mt-3">
                 <button
@@ -750,7 +878,18 @@ export default function AffiliateBuilderPage() {
                       <input
                         value={row.board}
                         onChange={(e) => updateRow(row.id, "board", e.target.value)}
-                        placeholder={defaultBoard || "Affiliate Finds"}
+                        list={boardListId}
+                        placeholder={defaultBoard || "Fun Ideas"}
+                        className="mt-2 w-full rounded-xl border border-orange-400/30 bg-black/40 px-3 py-2 text-sm text-orange-100 outline-none focus:border-orange-300"
+                      />
+                    </label>
+                    <label className="block md:col-span-2">
+                      <span className="text-xs uppercase tracking-[0.25em] text-orange-300">Optional boards</span>
+                      <input
+                        value={Array.isArray(row.boards) ? row.boards.join(", ") : ""}
+                        onChange={(e) => updateRow(row.id, "boards", normalizeBoardList(e.target.value))}
+                        list={boardListId}
+                        placeholder="Fun Ideas, Epic cuteness"
                         className="mt-2 w-full rounded-xl border border-orange-400/30 bg-black/40 px-3 py-2 text-sm text-orange-100 outline-none focus:border-orange-300"
                       />
                     </label>
@@ -786,8 +925,9 @@ export default function AffiliateBuilderPage() {
               <p className="text-xs uppercase tracking-[0.35em] text-cyan-300">Builder rules</p>
               <ul className="mt-4 space-y-3 text-sm leading-7">
                 <li>- Each row is one Pinterest-ready affiliate post.</li>
-                <li>- Keep the internal shape minimal: keyword, angle, product link, title, description, image, board, tags.</li>
+                <li>- Keep the internal shape minimal: keyword, angle, product link, title, description, image, board, optional boards, tags.</li>
                 <li>- Expand one product across angles instead of adding random unrelated products.</li>
+                <li>- Use <span className="font-bold">board</span> for the next target and <span className="font-bold">boards</span> for alternate boards on future days.</li>
                 <li>- Use this builder for volume, then post rows one by one through the existing Pinterest lane.</li>
                 <li>- Default cadence is 3/day unless an override window says otherwise.</li>
                 <li>- Builder state autosaves locally so you can come back without losing the batch.</li>

@@ -83,6 +83,19 @@ function markFailed(post) {
 	};
 }
 
+function isRetryNowAttempt(post) {
+	return Boolean(post?.metadata?.retryNowAttempt);
+}
+
+function clearRetryNowAttempt(post) {
+	const metadata = { ...(post?.metadata || {}) };
+	delete metadata.retryNowAttempt;
+	return {
+		...post,
+		metadata,
+	};
+}
+
 function buildFailureTargets(failures = []) {
 	return failures
 		.map((failure) => ({
@@ -162,6 +175,7 @@ export async function processQueue() {
 	const queueUpdates = new Map();
 
 	for (const post of readyPosts) {
+		const retryNowAttempt = isRetryNowAttempt(post);
 		const fallbackPlatforms = normalizePlatforms(post);
 		const targets = normalizeTargets(
 			Array.isArray(post.targets) && post.targets.length ? post.targets : fallbackPlatforms,
@@ -237,11 +251,18 @@ export async function processQueue() {
 					successes.length > 0
 						? buildFailureRetryPost(post, failures)
 						: post;
-				const retried = scheduleRetry(retryBase);
-				if (Number(retried.attemptCount || 0) >= MAX_ATTEMPTS) {
-					queueUpdates.set(post.id, markFailed(retried));
+				if (retryNowAttempt) {
+					queueUpdates.set(
+						post.id,
+						markFailed(clearRetryNowAttempt(retryBase)),
+					);
 				} else {
-					queueUpdates.set(post.id, retried);
+					const retried = scheduleRetry(retryBase);
+					if (Number(retried.attemptCount || 0) >= MAX_ATTEMPTS) {
+						queueUpdates.set(post.id, markFailed(retried));
+					} else {
+						queueUpdates.set(post.id, retried);
+					}
 				}
 			} else if (successes.length > 0) {
 				processedIds.add(post.id);
@@ -261,11 +282,15 @@ export async function processQueue() {
 			await sendPostPunkTelegramAlert(
 				`Worker failed processing post.\nTitle: ${post.title ?? post.id ?? "untitled"}\nError: ${error?.message || "Unknown worker error"}\n\nRerun command: cd backend && npm run worker`,
 			);
-			const retried = scheduleRetry(post);
-			if (Number(retried.attemptCount || 0) >= MAX_ATTEMPTS) {
-				queueUpdates.set(post.id, markFailed(retried));
+			if (retryNowAttempt) {
+				queueUpdates.set(post.id, markFailed(clearRetryNowAttempt(post)));
 			} else {
-				queueUpdates.set(post.id, retried);
+				const retried = scheduleRetry(post);
+				if (Number(retried.attemptCount || 0) >= MAX_ATTEMPTS) {
+					queueUpdates.set(post.id, markFailed(retried));
+				} else {
+					queueUpdates.set(post.id, retried);
+				}
 			}
 		}
 	}

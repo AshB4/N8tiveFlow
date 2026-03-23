@@ -5,7 +5,7 @@
  * @format
  */
 
-import { getAccount } from "../../utils/accountStore.mjs";
+import { getAccount, getPreferredAccount } from "../../utils/accountStore.mjs";
 
 const platformLoaders = {
 	x: () => import("./social/post-to-x.js"),
@@ -177,6 +177,8 @@ export const postToAllPlatforms = async (post, targetsInput) => {
 				});
 				continue;
 			}
+		} else {
+			account = await getPreferredAccount(platform);
 		}
 		if (platform === "threads" && !isThreadsConfigured(account)) {
 			results.push({
@@ -206,10 +208,15 @@ export const postToAllPlatforms = async (post, targetsInput) => {
 			const payload = {
 				title: post.title,
 				body,
+				canonicalUrl: productLink || post.canonicalUrl || post.affiliateUrl || "",
+				affiliateUrl: productLink || post.affiliateUrl || post.canonicalUrl || "",
 				image: post.image,
 				mediaPath: post.mediaPath ?? null,
 				mediaType: post.mediaType ?? null,
 				hashtags: post.hashtags,
+				platformOverrides: post.platformOverrides ?? {},
+				metadata: post.metadata ?? {},
+				tags: post.tags ?? [],
 			};
 
 			const result = await handler(payload, { account, target });

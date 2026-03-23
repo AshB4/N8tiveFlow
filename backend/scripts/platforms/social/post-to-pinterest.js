@@ -59,7 +59,7 @@ function getPinterestBrowserOptions() {
 	const executablePath = process.env.PINTEREST_EXECUTABLE_PATH || undefined;
 	const useSystemProfile = boolFromEnv(
 		"PINTEREST_USE_SYSTEM_CHROME_PROFILE",
-		true,
+		false,
 	);
 	const systemProfileDir = getDefaultChromeUserDataDir();
 	const profileDir =
@@ -125,6 +125,10 @@ function resolveLocalMediaPath(post) {
 	const mediaPath = post?.mediaPath || "";
 	if (!mediaPath) return null;
 	if (path.isAbsolute(mediaPath)) return mediaPath;
+	const projectRootPath = path.join(BACKEND_ROOT, "..", mediaPath);
+	if (fs.existsSync(projectRootPath)) {
+		return projectRootPath;
+	}
 	if (mediaPath.startsWith("/media/")) {
 		return path.join(BACKEND_ROOT, mediaPath.slice(1));
 	}
@@ -216,6 +220,55 @@ async function fillFirst(page, selectors, value, debug, stepName = "fill") {
 	return false;
 }
 
+async function fillLabeledField(page, labelText, value, debug, stepName) {
+	if (!value) {
+		await debug?.log(stepName, { ok: false, reason: "empty-value" });
+		return false;
+	}
+
+	const attempts = [
+		async () => {
+			const label = page.getByText(new RegExp(`^${labelText}$`, "i")).first();
+			if ((await label.count()) === 0) return false;
+			const container = label.locator("xpath=..");
+			const input = container.locator("input, textarea, [contenteditable='true']").first();
+			if ((await input.count()) === 0) return false;
+			await input.click({ timeout: 4000 });
+			if ((await input.getAttribute("contenteditable")) === "true") {
+				await input.fill(value, { timeout: 4000 });
+			} else {
+				await input.fill(value, { timeout: 4000 });
+			}
+			return true;
+		},
+		async () => {
+			const input = page
+				.locator(
+					`xpath=//*[normalize-space(text())='${labelText}']/following::*[(self::input or self::textarea or @contenteditable='true')][1]`,
+				)
+				.first();
+			if ((await input.count()) === 0) return false;
+			await input.click({ timeout: 4000 });
+			await input.fill(value, { timeout: 4000 });
+			return true;
+		},
+	];
+
+	for (const attempt of attempts) {
+		try {
+			if (await attempt()) {
+				await debug?.log(stepName, { ok: true, labelText });
+				return true;
+			}
+		} catch {
+			// continue
+		}
+	}
+
+	await debug?.log(stepName, { ok: false, labelText });
+	return false;
+}
+
 async function ensureLoggedIn(page, email, password, statePath, debug) {
 	await page.goto("https://www.pinterest.com/pin-creation-tool/", {
 		waitUntil: "domcontentloaded",
@@ -269,6 +322,30 @@ async function uploadMedia(page, mediaPath, debug) {
 	return true;
 }
 
+async function waitForPinEditorReady(page, debug) {
+	const candidates = [
+		'input[type="file"]',
+		'text=Title',
+		'text=Description',
+		'text=Board',
+		'text=Tagged topics',
+	];
+
+	for (const selector of candidates) {
+		try {
+			await page.locator(selector).first().waitFor({ state: "visible", timeout: 15000 });
+			await debug?.log("editor-ready", { selector });
+			return true;
+		} catch {
+			// continue
+		}
+	}
+
+	await debug?.log("editor-ready", { ok: false });
+	await debug?.screenshot(page, "editor-not-ready");
+	throw new Error("Pinterest pin editor did not finish loading");
+}
+
 async function selectBoard(page, boardName, debug) {
 	if (!boardName) return;
 
@@ -280,6 +357,7 @@ async function selectBoard(page, boardName, debug) {
 		'text=/Choose a board/i',
 		'button:has-text("Select")',
 		'button:has-text("Board")',
+		"text=Board",
 	], debug, "open-board-dropdown");
 	await debug?.screenshot(page, "after-open-board-dropdown");
 
@@ -319,6 +397,50 @@ async function publishPin(page, debug) {
 	}
 	await page.waitForTimeout(2500);
 	await debug?.screenshot(page, "after-publish");
+}
+
+async function commitDraftBatchIfPresent(page, debug) {
+	const hasDraftPanel = await page
+		.locator('text=/Pin drafts/i')
+		.first()
+		.isVisible()
+		.catch(() => false);
+	await debug?.log("draft-panel-check", { hasDraftPanel });
+	if (!hasDraftPanel) return false;
+
+	await clickFirst(
+		page,
+		[
+			'button:has-text("Select all")',
+			'div[role="button"]:has-text("Select all")',
+			'text=/Select all/i',
+		],
+		debug,
+		"draft-select-all",
+	);
+	await page.waitForTimeout(500);
+
+	const finalPublished = await clickFirst(
+		page,
+		[
+			'button:has-text("Publish")',
+			'div[role="button"]:has-text("Publish")',
+			'text=/Publish/i',
+		],
+		debug,
+		"draft-final-publish",
+	);
+	if (!finalPublished) {
+		await debug?.log("draft-panel-no-final-publish", {
+			reason: "assuming-single-pin-publish-already-succeeded",
+		});
+		await debug?.screenshot(page, "draft-final-publish-missing");
+		return false;
+	}
+
+	await page.waitForTimeout(2500);
+	await debug?.screenshot(page, "after-draft-final-publish");
+	return true;
 }
 
 export default async function postToPinterest(post, _context = {}) {
@@ -387,6 +509,7 @@ export default async function postToPinterest(post, _context = {}) {
 			waitUntil: "domcontentloaded",
 		});
 		await handleRestoreSession(page, debug);
+		await waitForPinEditorReady(page, debug);
 		await debug.screenshot(page, "ready-pin-creation-tool");
 
 		const title = post?.title || "";
@@ -413,7 +536,8 @@ export default async function postToPinterest(post, _context = {}) {
 		});
 
 		await uploadMedia(page, mediaPath, debug);
-		await fillFirst(
+		const titleFilled =
+			(await fillFirst(
 			page,
 			[
 				'input[placeholder*="title" i]',
@@ -425,8 +549,9 @@ export default async function postToPinterest(post, _context = {}) {
 			title,
 			debug,
 			"fill-pin-title",
-		);
-		await fillFirst(
+		)) || (await fillLabeledField(page, "Title", title, debug, "fill-pin-title-labeled"));
+		const descriptionFilled =
+			(await fillFirst(
 			page,
 			[
 				'textarea[placeholder*="description" i]',
@@ -438,8 +563,16 @@ export default async function postToPinterest(post, _context = {}) {
 			description,
 			debug,
 			"fill-pin-description",
-		);
-		await fillFirst(
+		)) ||
+			(await fillLabeledField(
+				page,
+				"Description",
+				description,
+				debug,
+				"fill-pin-description-labeled",
+			));
+		const linkFilled =
+			(await fillFirst(
 			page,
 			[
 				'input[placeholder*="link" i]',
@@ -450,9 +583,16 @@ export default async function postToPinterest(post, _context = {}) {
 			link,
 			debug,
 			"fill-pin-link",
-		);
+		)) || (await fillLabeledField(page, "Link", link, debug, "fill-pin-link-labeled"));
+		await debug.log("field-fill-summary", {
+			titleFilled,
+			descriptionFilled,
+			linkFilled,
+			linkValuePresent: Boolean(link),
+		});
 		await selectBoard(page, board, debug);
 		await publishPin(page, debug);
+		await commitDraftBatchIfPresent(page, debug);
 
 		await context.storageState({ path: statePath });
 		await debug.log("post-success", { board, finalUrl: page.url() });

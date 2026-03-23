@@ -75,9 +75,31 @@ async function postToFacebook(post, context = {}) {
 	const accessToken =
 		account?.credentials?.accessToken || process.env.FACEBOOK_PAGE_ACCESS_TOKEN || "";
 	const pageId = account?.metadata?.pageId || process.env.FACEBOOK_PAGE_ID || "";
+	const browserOnly =
+		account?.metadata?.browserOnly ??
+		boolFromEnv("FACEBOOK_BROWSER_ONLY", false);
+	const browserFirst =
+		account?.metadata?.browserFirst ??
+		boolFromEnv("FACEBOOK_BROWSER_FIRST", false);
 	const allowBrowserFallback =
 		account?.metadata?.browserFallback ??
 		boolFromEnv("FACEBOOK_BROWSER_FALLBACK", true);
+
+	if (browserOnly && allowBrowserFallback) {
+		console.log(
+			`[fb-post] browser-only enabled for ${account?.id || account?.label || "facebook account"}`,
+		);
+		const { default: postToFacebookBrowser } = await import("./post-to-facebook-browser.js");
+		return postToFacebookBrowser(post, { account, target: context?.target });
+	}
+
+	if (browserFirst && allowBrowserFallback) {
+		console.log(
+			`[fb-post] browser-first enabled for ${account?.id || account?.label || "facebook account"}`,
+		);
+		const { default: postToFacebookBrowser } = await import("./post-to-facebook-browser.js");
+		return postToFacebookBrowser(post, { account, target: context?.target });
+	}
 
 	if (!accessToken || accessToken === "REPLACE_WITH_REAL_PAGE_TOKEN") {
 		if (allowBrowserFallback) {

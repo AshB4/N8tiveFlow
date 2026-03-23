@@ -9,7 +9,16 @@ import {
 
 const formatDateLabel = (iso) => {
 	try {
-		return new Date(iso).toLocaleDateString(undefined, {
+		const dateOnlyMatch =
+			typeof iso === "string" ? iso.match(/^(\d{4})-(\d{2})-(\d{2})$/) : null;
+		const parsed = dateOnlyMatch
+			? new Date(
+					Number(dateOnlyMatch[1]),
+					Number(dateOnlyMatch[2]) - 1,
+					Number(dateOnlyMatch[3]),
+			  )
+			: new Date(iso);
+		return parsed.toLocaleDateString(undefined, {
 			weekday: "long",
 			year: "numeric",
 			month: "long",

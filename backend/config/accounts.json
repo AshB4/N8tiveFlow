@@ -10,7 +10,11 @@
     },
     "metadata": {
       "pageId": "${FACEBOOK_PAGE_ID}",
-      "pageName": "Color With Ash"
+      "pageName": "Color With Ash",
+      "pageUrl": "https://www.facebook.com/ColorWithAshB",
+      "browserOnly": true,
+      "browserFirst": true,
+      "browserFallback": true
     }
   },
   {
@@ -23,7 +27,11 @@
       "appSecret": "${FB_APP_SECRET}"
     },
     "metadata": {
-      "pageId": "${FB_MAIN_PAGE_ID}"
+      "pageId": "${FB_MAIN_PAGE_ID}",
+      "profileUrl": "https://www.facebook.com/SanguineQueen/",
+      "browserOnly": true,
+      "browserFirst": true,
+      "browserFallback": true
     }
   },
   {

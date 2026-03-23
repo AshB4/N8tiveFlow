@@ -16,6 +16,7 @@ const DEFAULT_CLONED_PROFILE_DIR = path.join(
 	"config",
 	"facebook-chrome-profile",
 );
+const STEP_TIMEOUT_MS = Number(process.env.FACEBOOK_BROWSER_STEP_TIMEOUT_MS || 15000);
 
 function boolFromEnv(name, fallback = true) {
 	const value = process.env[name];
@@ -41,15 +42,34 @@ function resolveProfileConfig() {
 		executablePath: process.env.FACEBOOK_EXECUTABLE_PATH || undefined,
 		headless: boolFromEnv("FACEBOOK_HEADLESS", false),
 		sourceUserDataDir:
-			process.env.FACEBOOK_CHROME_USER_DATA_DIR || defaultChromeUserDataDir(),
+			process.env.FACEBOOK_CHROME_USER_DATA_DIR || DEFAULT_CLONED_PROFILE_DIR,
 		profileDirectory: process.env.FACEBOOK_CHROME_PROFILE_DIRECTORY || "Default",
-		cloneEnabled: boolFromEnv("FACEBOOK_CLONE_CHROME_PROFILE", true),
+		cloneEnabled: boolFromEnv("FACEBOOK_CLONE_CHROME_PROFILE", false),
 		clonedUserDataDir:
 			process.env.FACEBOOK_CLONED_CHROME_USER_DATA_DIR || DEFAULT_CLONED_PROFILE_DIR,
+		keepOpenOnAuthRequired: boolFromEnv("FACEBOOK_KEEP_OPEN_ON_AUTH_REQUIRED", true),
 	};
 }
 
+function logStep(step, detail = "") {
+	const suffix = detail ? ` :: ${detail}` : "";
+	console.log(`[fb-browser] ${step}${suffix}`);
+}
+
+async function withStepTimeout(label, task, timeoutMs = STEP_TIMEOUT_MS) {
+	return await Promise.race([
+		task(),
+		new Promise((_, reject) =>
+			setTimeout(
+				() => reject(new Error(`Facebook browser step timed out: ${label}`)),
+				timeoutMs,
+			),
+		),
+	]);
+}
+
 async function connectViaCdp(config) {
+	logStep("connect-cdp:start", config.cdpUrl);
 	const browser = await chromium.connectOverCDP(config.cdpUrl);
 	const context = browser.contexts()[0];
 	if (!context) {
@@ -57,12 +77,11 @@ async function connectViaCdp(config) {
 			`Facebook CDP connected to ${config.cdpUrl}, but no browser context was available`,
 		);
 	}
+	logStep("connect-cdp:ready");
 
 	return {
 		context,
-		cleanup: async () => {
-			await browser.close();
-		},
+		cleanup: async () => {},
 	};
 }
 
@@ -73,6 +92,12 @@ async function copyDirectory(source, destination) {
 }
 
 async function prepareChromeProfile(config) {
+	logStep(
+		"profile:prepare",
+		config.cloneEnabled
+			? `${config.sourceUserDataDir} -> ${config.clonedUserDataDir}`
+			: config.sourceUserDataDir,
+	);
 	if (!config.cloneEnabled) {
 		return {
 			launchUserDataDir: config.sourceUserDataDir,
@@ -98,6 +123,7 @@ async function prepareChromeProfile(config) {
 	if (fs.existsSync(sourceLocalState)) {
 		await fs.promises.copyFile(sourceLocalState, path.join(clonedRoot, "Local State"));
 	}
+	logStep("profile:ready", clonedRoot);
 
 	return {
 		launchUserDataDir: clonedRoot,
@@ -129,6 +155,15 @@ function resolveTargetUrl(account = {}) {
 	return "https://www.facebook.com/me";
 }
 
+function pageLooksLikeAuthRequired(page) {
+	const url = String(page?.url?.() || "");
+	return (
+		/facebook\.com\/login/i.test(url) ||
+		/facebook\.com\/checkpoint/i.test(url) ||
+		/facebook\.com\/accounts/i.test(url)
+	);
+}
+
 async function clickFirst(page, selectors, timeout = 4000) {
 	for (const selector of selectors) {
 		try {
@@ -148,8 +183,17 @@ async function fillComposer(page, text) {
 	const selectors = [
 		'div[role="dialog"] [contenteditable="true"][role="textbox"]',
 		'div[role="dialog"] div[contenteditable="true"]',
+		'div[role="dialog"] textarea',
+		'div[role="dialog"] [data-lexical-editor="true"]',
+		'div[role="dialog"] div[aria-label*="What\'s on your mind" i]',
+		'div[role="dialog"] div[aria-label*="Write something" i]',
+		'[role="main"] [contenteditable="true"][role="textbox"]',
+		'[role="main"] div[contenteditable="true"]',
+		'[role="main"] textarea',
+		'[role="main"] [data-lexical-editor="true"]',
 		'div[contenteditable="true"][role="textbox"]',
 		'div[contenteditable="true"]',
+		'textarea',
 	];
 
 	for (const selector of selectors) {
@@ -210,6 +254,128 @@ async function attachMedia(page, mediaPath) {
 	return null;
 }
 
+async function confirmPostSubmitted(page) {
+	const dialogLocator = page.locator('div[role="dialog"]').first();
+	const postButtonLocator = page
+		.getByRole("dialog")
+		.getByRole("button", { name: /^Post$/ })
+		.last();
+
+	for (let attempt = 0; attempt < 12; attempt += 1) {
+		const dialogVisible = await dialogLocator.isVisible().catch(() => false);
+		const postButtonVisible = await postButtonLocator.isVisible().catch(() => false);
+		if (!dialogVisible || !postButtonVisible) {
+			return true;
+		}
+		await page.waitForTimeout(1000);
+	}
+
+	return false;
+}
+
+async function clickDialogActionByText(page, label) {
+	const textLocator = page
+		.getByRole("dialog")
+		.getByText(new RegExp(`^${label}$`))
+		.last();
+	if ((await textLocator.count().catch(() => 0)) === 0) {
+		return null;
+	}
+
+	const containerAttempts = [
+		textLocator.locator("xpath=ancestor::div[@role='button'][1]"),
+		textLocator.locator("xpath=ancestor::button[1]"),
+		textLocator.locator("xpath=ancestor::div[@role='none'][1]"),
+		textLocator.locator("xpath=ancestor::div[@tabindex][1]"),
+	];
+
+	for (const locator of containerAttempts) {
+		try {
+			if ((await locator.count()) > 0) {
+				await locator.first().click({ timeout: 4000 });
+				return `dialog-action:${label}`;
+			}
+		} catch {
+			// continue
+		}
+	}
+
+	try {
+		await textLocator.click({ timeout: 4000, force: true });
+		return `dialog-text:${label}`;
+	} catch {
+		return null;
+	}
+}
+
+async function clickFacebookSubmitButton(page) {
+	const nextClicked = await clickDialogActionByText(page, "Next");
+	if (nextClicked) {
+		await page.waitForTimeout(2000);
+		return nextClicked;
+	}
+
+	const postButtons = page
+		.getByRole("dialog")
+		.getByRole("button", { name: /^Post$/ });
+	const postCount = await postButtons.count().catch(() => 0);
+	if (postCount > 0) {
+		await postButtons.nth(postCount - 1).click({ timeout: 4000 });
+		return 'role=button[name="Post"]';
+	}
+
+	const ariaPostButtons = page.locator('div[role="dialog"] [aria-label="Post"]');
+	const ariaPostCount = await ariaPostButtons.count().catch(() => 0);
+	if (ariaPostCount > 0) {
+		await ariaPostButtons.nth(ariaPostCount - 1).click({ timeout: 4000 });
+			return 'div[role="dialog"] [aria-label="Post"]';
+		}
+
+	const postClicked = await clickDialogActionByText(page, "Post");
+	if (postClicked) {
+		return postClicked;
+	}
+
+	return null;
+}
+
+async function clickFacebookFinalPostButton(page) {
+	const postButtons = page
+		.getByRole("dialog")
+		.getByRole("button", { name: /^Post$/ });
+	const postCount = await postButtons.count().catch(() => 0);
+	if (postCount > 0) {
+		await postButtons.nth(postCount - 1).click({ timeout: 4000 });
+		return 'role=button[name="Post"]';
+	}
+
+	const ariaPostButtons = page.locator('div[role="dialog"] [aria-label="Post"]');
+	const ariaPostCount = await ariaPostButtons.count().catch(() => 0);
+	if (ariaPostCount > 0) {
+		await ariaPostButtons.nth(ariaPostCount - 1).click({ timeout: 4000 });
+		return 'div[role="dialog"] [aria-label="Post"]';
+	}
+
+	const postClicked = await clickDialogActionByText(page, "Post");
+	if (postClicked) {
+		return postClicked;
+	}
+
+	return null;
+}
+
+async function handlePageIdentitySwitch(page) {
+	const switchSelector = await clickFirst(page, [
+		'div[role="button"]:has-text("Switch now")',
+		'button:has-text("Switch now")',
+		'div[role="button"]:has-text("Switch")',
+		'button:has-text("Switch")',
+	]);
+	if (!switchSelector) return null;
+	await page.waitForTimeout(4000);
+	return switchSelector;
+}
+
 export default async function postToFacebookBrowser(post, context = {}) {
 	const account = context?.account || context?.target?.account || context || {};
 	const targetUrl = resolveTargetUrl(account);
@@ -218,6 +384,7 @@ export default async function postToFacebookBrowser(post, context = {}) {
 	let browserContext = null;
 	let cleanup = async () => {};
 	let shouldCloseContext = true;
+	let keepWindowOpen = false;
 
 	if (config.useCdp) {
 		const connected = await connectViaCdp(config);
@@ -226,6 +393,7 @@ export default async function postToFacebookBrowser(post, context = {}) {
 		shouldCloseContext = false;
 	} else {
 		const profile = await prepareChromeProfile(config);
+		logStep("browser:launch", profile.launchUserDataDir);
 		browserContext = await chromium.launchPersistentContext(
 			profile.launchUserDataDir,
 			{
@@ -240,47 +408,119 @@ export default async function postToFacebookBrowser(post, context = {}) {
 	}
 
 	try {
+		logStep("page:open", targetUrl);
 		const page = browserContext.pages()[0] || (await browserContext.newPage());
-		await page.goto(targetUrl, { waitUntil: "domcontentloaded", timeout: 45000 });
+		await withStepTimeout("goto-target", () =>
+			page.goto(targetUrl, { waitUntil: "domcontentloaded", timeout: 45000 }),
+		);
 		await page.waitForTimeout(2500);
+		logStep("page:url", page.url());
 
-		const composerSelector = await clickFirst(page, [
-			'div[role="button"]:has-text("What\'s on your mind")',
-			'div[role="button"]:has-text("Write something")',
-			'div[aria-label="Create a post"]',
-			'div[role="button"][aria-label*="What\'s on your mind"]',
-		]);
+		if (pageLooksLikeAuthRequired(page)) {
+			logStep("auth-required", page.url());
+			keepWindowOpen = config.keepOpenOnAuthRequired && !config.useCdp;
+			throw new Error(
+				"Facebook browser session needs login/account selection. Complete it in the opened browser window and retry.",
+			);
+		}
+
+		const switchSelector = await handlePageIdentitySwitch(page);
+		if (switchSelector) {
+			logStep("page-switch:clicked", switchSelector);
+			logStep("page-switch:url", page.url());
+		}
+
+		logStep("composer:find");
+		const composerSelector = await withStepTimeout("find-composer", () =>
+			clickFirst(page, [
+				'div[role="button"]:has-text("What\'s on your mind")',
+				'div[role="button"]:has-text("Write something")',
+				'div[role="button"]:has-text("Create post")',
+				'button:has-text("Create post")',
+				'div[aria-label="Create a post"]',
+				'div[role="button"][aria-label*="What\'s on your mind"]',
+			]),
+		);
 
 		if (!composerSelector) {
+			logStep("composer:missing");
+			keepWindowOpen = config.keepOpenOnAuthRequired && !config.useCdp;
 			throw new Error("Facebook browser fallback could not find the post composer");
 		}
+		logStep("composer:clicked", composerSelector);
 
 		await page.waitForTimeout(1200);
 
-		const filled = await fillComposer(page, post.body || post.title || "");
+		logStep("composer:fill");
+		const filled = await withStepTimeout("fill-composer", () =>
+			fillComposer(page, post.body || post.title || ""),
+		);
 		if (!filled) {
+			logStep("composer:fill-missing");
 			throw new Error("Facebook browser fallback could not fill the post body");
 		}
+		logStep("composer:filled", filled);
 
 		if (mediaPath) {
-			const attached = await attachMedia(page, mediaPath);
+			logStep("media:attach", mediaPath);
+			const attached = await withStepTimeout("attach-media", () =>
+				attachMedia(page, mediaPath),
+			);
 			if (!attached) {
+				logStep("media:missing");
 				throw new Error("Facebook browser fallback could not attach media");
 			}
+			logStep("media:attached", attached);
 			await page.waitForTimeout(2500);
 		}
 
-		const postButtonSelector = await clickFirst(page, [
-			'div[role="dialog"] div[role="button"]:has-text("Post")',
-			'div[role="dialog"] div[aria-label="Post"]',
-			'div[aria-label="Post"]',
-		]);
+		logStep("post-button:find");
+		const postButtonSelector = await withStepTimeout("find-post-button", () =>
+			clickFacebookSubmitButton(page),
+		);
 
 		if (!postButtonSelector) {
+			logStep("post-button:missing");
+			keepWindowOpen = config.keepOpenOnAuthRequired && !config.useCdp;
 			throw new Error("Facebook browser fallback could not find the Post button");
 		}
+		logStep("post-button:clicked", postButtonSelector);
 
-		await page.waitForTimeout(4000);
+		if (String(postButtonSelector).includes("Next")) {
+			await page.waitForTimeout(3000);
+			const finalPostButtonSelector = await withStepTimeout(
+				"find-final-post-button",
+				async () => {
+					for (let attempt = 0; attempt < 8; attempt += 1) {
+						const clicked = await clickFacebookFinalPostButton(page);
+						if (clicked) return clicked;
+						await page.waitForTimeout(1000);
+					}
+					return null;
+				},
+			);
+			if (
+				!finalPostButtonSelector ||
+				String(finalPostButtonSelector).includes("Next")
+			) {
+				keepWindowOpen = config.keepOpenOnAuthRequired && !config.useCdp;
+				logStep("post-button:final-missing");
+				throw new Error(
+					"Facebook browser fallback advanced with Next, but could not find the final Post button.",
+				);
+			}
+			logStep("post-button:final-clicked", finalPostButtonSelector);
+		}
+
+		const submitted = await confirmPostSubmitted(page);
+		if (!submitted) {
+			keepWindowOpen = config.keepOpenOnAuthRequired && !config.useCdp;
+			logStep("post-submit:not-confirmed");
+			throw new Error(
+				"Facebook browser fallback clicked Post, but the composer did not close.",
+			);
+		}
+		logStep("done");
 
 		return {
 			type: "browser-post",
@@ -290,7 +530,8 @@ export default async function postToFacebookBrowser(post, context = {}) {
 			postButtonSelector,
 		};
 	} finally {
-		if (shouldCloseContext) {
+		logStep("cleanup", shouldCloseContext && !keepWindowOpen ? "close" : "keep-open");
+		if (shouldCloseContext && !keepWindowOpen) {
 			await browserContext.close();
 		}
 		await cleanup();

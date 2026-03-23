@@ -100,6 +100,20 @@ export async function getAccountsByPlatform() {
 	}, {});
 }
 
+export async function getPreferredAccount(platform) {
+	if (!platform) return null;
+	const platformKey = String(platform).toLowerCase();
+	const accounts = await ensureAccounts();
+	const candidates = accounts.filter(
+		(account) => String(account.platform).toLowerCase() === platformKey,
+	);
+	if (!candidates.length) return null;
+	return (
+		candidates.find((account) => account?.metadata?.default === true) ||
+		candidates[0]
+	);
+}
+
 export async function getAccount(platform, accountId) {
 	if (!platform) return null;
 	const platformKey = String(platform).toLowerCase();

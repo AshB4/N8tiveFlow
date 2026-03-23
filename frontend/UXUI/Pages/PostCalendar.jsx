@@ -18,13 +18,18 @@ import {
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
+const toLocalDateKey = (value) => {
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  const tzOffset = date.getTimezoneOffset() * 60 * 1000;
+  return new Date(date.getTime() - tzOffset).toISOString().slice(0, 10);
+};
+
 const getPostDate = (post) => {
   const raw =
     post.scheduled_at || post.scheduledAt || post.intended_date || post.date;
   if (!raw) return null;
-  const date = new Date(raw);
-  if (Number.isNaN(date.getTime())) return null;
-  return date.toISOString().slice(0, 10);
+  return toLocalDateKey(raw);
 };
 
 const normalizeTargetsForPost = (post) => {
@@ -199,7 +204,7 @@ export default function PostCalendar() {
   }, [calendarPosts]);
 
   const now = new Date();
-  const todayIso = now.toISOString().slice(0, 10);
+  const todayIso = toLocalDateKey(now);
 
   const initialDate = useMemo(() => {
     const requestedDate = location.state?.focusDate;
@@ -483,7 +488,7 @@ export default function PostCalendar() {
             dayMaxEventRows={3}
             eventDisplay="block"
             dayCellClassNames={(arg) => {
-              const dateStr = arg.date.toISOString().slice(0, 10);
+              const dateStr = toLocalDateKey(arg.date);
               const classes = [];
               if (dateStr === todayIso) {
                 classes.push("bg-pink-900/20");
@@ -494,7 +499,7 @@ export default function PostCalendar() {
               return classes;
             }}
             dayCellContent={(arg) => {
-              const dateStr = arg.date.toISOString().slice(0, 10);
+              const dateStr = toLocalDateKey(arg.date);
               const affiliateWorkflow = affiliateDayMap.get(dateStr);
               const affiliateBadgeStyle = affiliateWorkflow
                 ? getAffiliateDayBadgeStyle(affiliateWorkflow)

@@ -511,11 +511,15 @@ app.post("/api/posts/:id/retry-now", async (req, res) => {
 		const updatedPost = {
 			...existing,
 			status: "approved",
-			scheduledAt: new Date().toISOString(),
+			scheduledAt: existing.scheduledAt || existing.scheduled_at || null,
 			nextAttemptAt: null,
 			attemptCount: 0,
 			lastErrorAt: null,
 			updatedAt: new Date().toISOString(),
+			metadata: {
+				...(existing.metadata || {}),
+				retryNowAttempt: true,
+			},
 		};
 
 		await updatePostInDb(updatedPost.id, updatedPost);

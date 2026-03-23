@@ -29,13 +29,8 @@ For a deep dive into the guiding vision and the 4WD framework, see [PostPunk Cor
 |---------------------|----------------------------------|----------|
 | React + Zustand     | Frontend UI + lightweight state  | MIT      |
 | Tailwind + Vite     | Fast, styled build system        | MIT      |
-| Playwright + Bree   | Automation / job runner          | Apache / MIT |
+| Playwright + launchd/systemd | Browser automation + scheduled worker | Apache / OS built-in |
 | JSON-based analytics | Funnel and campaign summaries   | Built-in |
-| AdminJS             | Admin dashboard UI (optional)    | MIT      |
-| React Hook Form     | Dynamic form builder             | MIT      |
-| Yup                 | Form validation (optional)       | MIT      |
-| Node-RED            | Local automation flows           | Apache 2.0 |
-| Apprise             | Alerts to Slack, Discord, etc.   | BSD      |
 
 ---
 
@@ -47,20 +42,6 @@ Only posts with `"status": "approved"` in the `postQueue.json` are eligible for 
 - Posts can be rejected or recycled via logs
 
 ---
-
-## ⚙️ System Settings
-Control how PostPunk behaves globally:
-```json
-{
-  "active_platforms": ["LinkedIn", "Pinterest"],
-  "platform_mode": "exclusive",
-  "daily_limit": 3,
-  "auto_post": true,
-  "campaign_start": "2025-06-01",
-  "campaign_end": "2025-07-01"
-}
-```
-📄 See [System Settings](./Docs/settings.md)
 
 ## 🔐 Account Secrets
 Keep platform credentials in environment variables, not in tracked JSON.

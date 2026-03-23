@@ -77,4 +77,4 @@ You can track what was posted — **but not clicks or sales** unless you connect
 
 ---
 
-👉 Next: [Scheduler Automation](./scheduler.md)
+👉 Next: see `Docs/README-OPERATIONS.md` for worker scheduling

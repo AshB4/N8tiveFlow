@@ -124,6 +124,10 @@ Use the system like this:
   - selected-row queueing
   - mixed scheduling by product/link to avoid clumping one product repeatedly
   - default `3/day` cadence with date-range sale overrides such as `25th-30th -> 6/day`
+- JSON shape reminder:
+  - `/affiliate/builder` expects the grouped affiliate import shape with `productLink`, `board`, optional `publishAt`, and `items[]`
+  - PostPunk queue storage uses a different internal post shape with `platforms`, `targets`, `scheduledAt`, `mediaPath`, and `metadata.pinterestBoard`
+  - the copy-pasteable examples for both live in `Docs/code-map.md`
 - calendar month cells now show a small filled `🛒` badge next to the date number when affiliate posts are scheduled that day, with badge color following workflow state
 - Meta-related future work should be prioritized in this order:
   - add explicit account targeting defaults so generic `facebook` targets stop guessing between profile and page

@@ -190,6 +190,59 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - The builder supports one immediate `board` plus optional per-row `boards` for future reposting to niche-fit boards on different days
 - The builder does not export paid Pinterest bulk CSV workflows; it prepares and queues rows into PostPunk instead
 
+### JSON shapes to reuse
+
+- Affiliate builder grouped import shape:
+
+```json
+{
+  "productLink": "https://www.amazon.com/your-affiliate-link",
+  "board": "Fun Ideas",
+  "publishAt": "",
+  "items": [
+    {
+      "keyword": "",
+      "angle": "",
+      "title": "",
+      "description": "",
+      "image": "frontend/assets/easter2026/example.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Epic cuteness"],
+      "tags": ["", "", "", "", ""]
+    }
+  ]
+}
+```
+
+- What the affiliate builder queues into the main system for Pinterest posts:
+
+```json
+{
+  "title": "Pin title",
+  "body": "Pin description",
+  "platforms": ["pinterest"],
+  "targets": [{ "platform": "pinterest", "accountId": null }],
+  "scheduledAt": "2026-03-25T15:00:00.000Z",
+  "status": "approved",
+  "mediaPath": "frontend/assets/easter2026/example.png",
+  "metadata": {
+    "contentMode": "affiliate",
+    "pinterestBoard": "Fun Ideas",
+    "pinterestBoards": ["Fun Ideas", "Epic cuteness"],
+    "pinterestTags": ["tag one", "tag two"],
+    "productLinks": {
+      "primary": "https://www.amazon.com/your-affiliate-link",
+      "amazon": "https://www.amazon.com/your-affiliate-link"
+    },
+    "includeProductLink": true
+  }
+}
+```
+
+- Distinction that matters:
+  - builder-import JSON is what you copy/paste into `/affiliate/builder`
+  - queued-post JSON is the internal shape PostPunk stores in SQLite and hands to the platform posters
+
 ## AI And Prompting
 
 - SEO generation orchestration: `backend/utils/seoGeneration.mjs`

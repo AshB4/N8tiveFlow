@@ -64,4 +64,4 @@ For platforms like Pinterest or IG.
 
 ---
 
-👉 Next: `dev-notes.md` (optional contributor guide or internal logic)
+👉 Next: see `Docs/code-map.md` and `Docs/project-state.md` for the current live system

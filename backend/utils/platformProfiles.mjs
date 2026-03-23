@@ -71,6 +71,18 @@ export const platformProfiles = {
     ctaStyle: "Save this, try this, click for the full guide.",
     avoid: ["vague captions", "jokes without utility"],
   },
+  substack: {
+    label: "Substack",
+    audienceExpectation: "thoughtful, serialized, trust-building, subscriber-friendly",
+    voice: "clear, personal, useful, slightly editorial",
+    structureRules: [
+      "Lead with the point or premise quickly.",
+      "Write in paragraphs that feel good in email.",
+      "Give the reader a reason to come back next post.",
+    ],
+    ctaStyle: "Subscribe, read more, reply, or click through.",
+    avoid: ["feed-style fragments", "hard ad copy with no context"],
+  },
   reddit: {
     label: "Reddit",
     audienceExpectation: "subreddit-specific value, authenticity, anti-spam",

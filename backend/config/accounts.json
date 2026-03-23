@@ -35,6 +35,20 @@
     }
   },
   {
+    "platform": "substack",
+    "id": "substack-main",
+    "label": "Substack • Main Publication",
+    "credentials": {},
+    "metadata": {
+      "profileHandle": "ash1611539",
+      "publicationUrl": "${SUBSTACK_PUBLICATION_URL}",
+      "newPostUrl": "${SUBSTACK_NEW_POST_URL}",
+      "browserOnly": true,
+      "browserFirst": true,
+      "default": true
+    }
+  },
+  {
     "platform": "x",
     "id": "x-main",
     "label": "X • Main Handle",

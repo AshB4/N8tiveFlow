@@ -126,6 +126,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Instagram: `backend/scripts/platforms/social/post-to-instagram.js`
 - LinkedIn: `backend/scripts/platforms/social/post-to-linkedin.js`
 - Pinterest: `backend/scripts/platforms/social/post-to-pinterest.js`
+- Substack: `backend/scripts/platforms/social/post-to-substack.js`
 - Reddit: `backend/scripts/platforms/social/post-to-reddit.js`
 - Threads: `backend/scripts/platforms/social/post-to-threads.js`
 - Pinterest session bootstrap helper: `backend/scripts/platforms/social/capture-pinterest-state.js`
@@ -163,6 +164,22 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - alt text
   - tagged topics / product tagging
   - sequential multi-pin posting in one run
+
+### Substack lane notes
+
+- Current Substack lane: `post-to-substack.js`
+- Wired now:
+  - browser-only posting through Playwright
+  - dedicated persistent profile at `backend/config/substack-chrome-profile`
+  - account/config support through `backend/config/accounts.json`
+  - frontend platform visibility in the composer and queue views
+  - worker/platform routing through `post-to-all.js` and `postingJob.mjs`
+- Current blocker:
+  - Substack auth/session has not been completed yet
+  - the automation currently lands on `https://substack.com/` / `https://substack.com/home` without a signed-in writer session
+  - the next resume step is to sign in once inside the dedicated Substack automation browser profile, then rerun the editor flow
+- Helper test harness:
+  - `backend/test-substack.js`
 
 ### Affiliate workflow notes
 

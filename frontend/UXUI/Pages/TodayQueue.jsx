@@ -16,6 +16,7 @@ const platformUrls = {
   facebook: "https://www.facebook.com/",
   linkedin: "https://www.linkedin.com/feed/",
   pinterest: "https://www.pinterest.com/",
+  substack: "https://substack.com/",
   reddit: "https://www.reddit.com/submit",
   tumblr: "https://www.tumblr.com/new/text",
   onlyfans: "https://onlyfans.com/posts/create",

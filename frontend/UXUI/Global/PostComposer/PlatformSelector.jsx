@@ -5,6 +5,7 @@ const DEFAULT_PLATFORMS = [
 	"facebook",
 	"linkedin",
 	"pinterest",
+	"substack",
 	"reddit",
 	"tumblr",
 	"onlyfans",

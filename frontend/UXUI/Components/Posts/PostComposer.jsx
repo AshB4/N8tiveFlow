@@ -9,6 +9,7 @@ const availablePlatforms = [
   "facebook",
   "linkedin",
   "pinterest",
+  "substack",
   "reddit",
   "tumblr",
   "onlyfans",

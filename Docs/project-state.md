@@ -131,6 +131,11 @@ Use the system like this:
   - add Facebook Stories support
   - add Facebook video support
   - then revisit Instagram/Threads once the credential flow is clearer
+- Substack current state:
+  - platform wiring is in place across backend and frontend
+  - posting is browser-only through Playwright with a dedicated persistent profile
+  - the remaining blocker is auth: the Substack automation profile has not been fully signed in yet
+  - resume point: open the dedicated Substack automation browser, complete email login there once, then rerun `backend/test-substack.js` to continue editor selector work
 - Pinterest near-term next step:
   - support sequential batch pin posting in one reused Pinterest session instead of one pin per run
   - then add Pinterest-specific fields like topics/tags, alt text, and publish-later scheduling
@@ -205,7 +210,9 @@ If you need to understand the system quickly, check these first:
 - `frontend/UXUI/Pages/TodayQueue.jsx`
 - `backend/scripts/platforms/social/post-to-facebook.js`
 - `backend/scripts/platforms/social/post-to-pinterest.js`
+- `backend/scripts/platforms/social/post-to-substack.js`
 - `backend/scripts/platforms/social/capture-pinterest-state.js`
+- `backend/test-substack.js`
 
 ## Commands To Check Health
 

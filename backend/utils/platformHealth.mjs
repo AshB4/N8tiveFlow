@@ -26,6 +26,10 @@ export const REQUIREMENTS = {
     credentials: [],
     metadata: [],
   },
+  substack: {
+    credentials: [],
+    metadata: ["publicationUrl"],
+  },
 };
 
 export const isMissing = (value) => {
@@ -302,6 +306,20 @@ async function validatePinterestCredentials(account) {
   });
 }
 
+async function validateSubstackCredentials(account) {
+  const publicationUrl = account?.metadata?.publicationUrl;
+  const newPostUrl = account?.metadata?.newPostUrl;
+  return buildResult({
+    account,
+    platform: "substack",
+    status: "healthy",
+    summary: "Ready for browser posting",
+    detail: newPostUrl
+      ? `editor ${newPostUrl}`
+      : `publication ${publicationUrl}`,
+  });
+}
+
 async function liveValidate(platform, account) {
   if (platform === "x") return validateXCredentials(account);
   if (platform === "facebook") return validateFacebookCredentials(account);
@@ -309,6 +327,7 @@ async function liveValidate(platform, account) {
   if (platform === "threads") return validateThreadsCredentials(account);
   if (platform === "devto") return validateDevtoCredentials(account);
   if (platform === "pinterest") return validatePinterestCredentials(account);
+  if (platform === "substack") return validateSubstackCredentials(account);
   return buildResult({
     account,
     platform,

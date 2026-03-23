@@ -13,6 +13,7 @@ PostPunk is currently:
 - a partially automated publishing tool
 - a proven automatic `Dev.to` lane
 - a proven automatic `Facebook` lane for page posts
+- a proven automatic `Facebook` lane for personal-profile posts
 - a proven automatic `Pinterest` lane for single pins
 - an affiliate planning and batch-building system for Amazon-to-Pinterest workflows
 - a local-first app using SQLite as the real store
@@ -72,6 +73,7 @@ These pieces are built and in active use:
 
 - `X` is not a trusted posting lane
 - `Facebook` token expiry is still an operational risk, but the lane itself is working
+- the proven Facebook posting path is now browser-only and does not rely on daily token refreshes
 - `Instagram` token state has been a blocker
 - `Threads` is incomplete
 - `Pinterest` works for single live pins, but batch posting, topics/tags, alt text, and publish-later are not wired yet
@@ -87,7 +89,7 @@ Use the system like this:
 2. Save selected items into the queue.
 3. Approve and schedule from `/batch` or `/lib`.
 4. Let `Dev.to` auto-post when due.
-5. Let `Facebook` auto-post when due if the page token is healthy.
+5. Let `Facebook` auto-post when due through the browser-only lane.
 6. Use `/today` for manual posting or manual confirmation on the other platforms.
 7. Use the Pinterest Playwright lane for single-pin posting when needed.
 8. Use `/affiliate` to keep the affiliate rules and research prompts visible while planning.
@@ -106,7 +108,10 @@ Use the system like this:
 - Batch imports can be saved, approved, and chained after the current last scheduled date.
 - Archive entries now store full post bodies going forward.
 - `/setup` now shows platform token/credential health so auth failures are visible before they become mysteries.
-- Facebook feed posting with text and local image uploads is now proven live against the `Color With Ash` page.
+- Facebook browser posting is now proven live against:
+  - the personal profile (`SanguineQueen`)
+  - the `Color With Ash` page
+- Facebook page posting for `Color With Ash` now uses a two-step composer flow where the page submit path is `Next -> Post`.
 - Pinterest Playwright posting is now proven for single live pins using the saved Pinterest session/profile.
 - OpenAI is the practical in-app AI default. Ollama remains optional but is not the trusted path on this Mac.
 - `/affiliate` now holds the working Amazon affiliate framework, including signal rules, sale-mode reminders, angle-stack logic, and GPT research prompts.
@@ -121,6 +126,7 @@ Use the system like this:
   - default `3/day` cadence with date-range sale overrides such as `25th-30th -> 6/day`
 - calendar month cells now show a small filled `🛒` badge next to the date number when affiliate posts are scheduled that day, with badge color following workflow state
 - Meta-related future work should be prioritized in this order:
+  - add explicit account targeting defaults so generic `facebook` targets stop guessing between profile and page
   - stabilize Facebook image posting
   - add Facebook Stories support
   - add Facebook video support

@@ -136,6 +136,10 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Proven now:
   - text posts
   - image posts using a local `mediaPath`
+  - browser-only posting through `post-to-facebook-browser.js`
+  - personal-profile posting routed by `profileUrl`
+  - page posting routed by `pageUrl`
+  - `Color With Ash` page flow using `Next -> Post`
 - Not wired yet:
   - Facebook Stories API flow
   - Facebook video publishing flow
@@ -150,6 +154,8 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - title/description/link fill
   - board selection from `backend/config/pinterest-boards.json`
   - saved-session reuse through a dedicated Pinterest Chrome profile
+  - product-link passthrough from queued metadata into the Pinterest `Link` field
+  - draft-rail handling for single-pin publish flows
 - Supporting helper:
   - `capture-pinterest-state.js` creates/saves the Pinterest automation session
 - Not wired yet:

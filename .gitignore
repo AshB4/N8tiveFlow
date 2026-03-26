@@ -78,6 +78,7 @@ backend/queue/postedLog.json
 backend/queue/rejections.json
 frontend/assets/goblinposts/
 frontend/assets/BuzzingBees/
+frontend/assets/spring26/
 
 #assets
 frontend/assets/easter2026/*

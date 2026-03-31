@@ -1,0 +1,31 @@
+{
+  "ai-powered-grad": [
+    "frontend/assets/appImgs/PostPunkCalenderDesign.png",
+    "frontend/assets/appImgs/dailysquare-banner.png",
+    "frontend/assets/appImgs/postpunk-banner.png"
+  ],
+  "goblin-coloring-affirmations": [
+    "frontend/assets/spring2026/tats_01_skipCandy.png",
+    "frontend/assets/spring2026/tats_02_Too_Cute.png",
+    "frontend/assets/spring2026/Tats_03_0EffortWin.png",
+    "frontend/assets/spring2026/Tats_04_under10.png",
+    "frontend/assets/spring2026/Tats05_NoPrep.png"
+  ],
+  "goblin-self-care-coloring-book": [
+    "frontend/assets/spring2026/tats_01_skipCandy.png",
+    "frontend/assets/spring2026/tats_02_Too_Cute.png",
+    "frontend/assets/spring2026/Tats_03_0EffortWin.png",
+    "frontend/assets/spring2026/Tats_04_under10.png",
+    "frontend/assets/spring2026/Tats05_NoPrep.png"
+  ],
+  "buzzing-adventures-coloring-book": [
+    "frontend/assets/buzzingbees/5minsOfCalmBigBee.png",
+    "frontend/assets/buzzingbees/AdultsColoringAgainBigBee.png",
+    "frontend/assets/buzzingbees/CheapHobbySunflower.png",
+    "frontend/assets/buzzingbees/FeelGoodHobbyPoppy.png"
+  ],
+  "_default": [
+    "frontend/assets/appImgs/PostPunkCalenderDesign.png",
+    "frontend/assets/appImgs/dailysquare-banner.png"
+  ]
+}

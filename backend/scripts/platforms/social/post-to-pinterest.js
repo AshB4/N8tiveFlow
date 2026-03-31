@@ -2,7 +2,7 @@
 
 import "dotenv/config";
 import fs from "fs";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -87,7 +87,62 @@ function getPinterestBrowserOptions() {
 			? systemProfileDir
 			: DEFAULT_PROFILE_DIR);
 	const profileName = process.env.PINTEREST_CHROME_PROFILE_NAME || "Default";
-	return { channel, executablePath, profileDir, profileName, useSystemProfile };
+	const cloneEnabled = boolFromEnv("PINTEREST_CLONE_CHROME_PROFILE", true);
+	const clonedUserDataDir =
+		process.env.PINTEREST_CLONED_CHROME_USER_DATA_DIR ||
+		path.join(os.tmpdir(), "postpunk-pinterest-cdp");
+	return {
+		channel,
+		executablePath,
+		profileDir,
+		profileName,
+		useSystemProfile,
+		cloneEnabled,
+		clonedUserDataDir,
+	};
+}
+
+async function copyDirectory(source, destination) {
+	await mkdir(path.dirname(destination), { recursive: true });
+	await fs.promises.rm(destination, { recursive: true, force: true });
+	await cp(source, destination, { recursive: true });
+}
+
+async function preparePinterestProfileLaunch(options) {
+	if (!options.cloneEnabled) {
+		return {
+			launchUserDataDir: options.profileDir,
+			profileName: options.profileName,
+			cleanup: async () => {},
+		};
+	}
+
+	const sourceRoot = options.profileDir;
+	const sourceProfileDir = path.join(sourceRoot, options.profileName);
+	const sourceLocalState = path.join(sourceRoot, "Local State");
+	if (!fs.existsSync(sourceProfileDir)) {
+		throw new Error(`Pinterest Chrome source profile not found: ${sourceProfileDir}`);
+	}
+
+	const cloneRootParent = path.dirname(options.clonedUserDataDir);
+	const cloneRootPrefix = `${path.basename(options.clonedUserDataDir)}-`;
+	await mkdir(cloneRootParent, { recursive: true });
+	const clonedRoot = await fs.promises.mkdtemp(
+		path.join(cloneRootParent, cloneRootPrefix),
+	);
+	const clonedProfileDir = path.join(clonedRoot, options.profileName);
+	await copyDirectory(sourceProfileDir, clonedProfileDir);
+	if (fs.existsSync(sourceLocalState)) {
+		await fs.promises.copyFile(sourceLocalState, path.join(clonedRoot, "Local State"));
+	}
+
+	return {
+		launchUserDataDir: clonedRoot,
+		profileName: options.profileName,
+		cleanup: async () => {
+			await fs.promises.rm(clonedRoot, { recursive: true, force: true });
+		},
+	};
 }
 
 function createDebugRecorder(enabled) {
@@ -489,6 +544,60 @@ async function selectBoard(page, boardName, debug) {
 	await debug?.screenshot(page, "after-select-board");
 }
 
+function knownBoardsFromConfig(config) {
+	return (config?.boards || [])
+		.map((entry) => {
+			if (typeof entry === "string") return entry;
+			return entry?.board || "";
+		})
+		.map((name) => String(name || "").trim())
+		.filter(Boolean);
+}
+
+function splitBoardValues(value) {
+	if (Array.isArray(value)) {
+		return value.flatMap((item) => splitBoardValues(item));
+	}
+	const raw = String(value || "").trim();
+	if (!raw) return [];
+	return raw
+		.split(",")
+		.map((item) => item.trim())
+		.filter(Boolean);
+}
+
+function isContextClosedError(error) {
+	const message = String(error?.message || error || "");
+	return /target page, context or browser has been closed/i.test(message);
+}
+
+function buildBoardCandidates({
+	board,
+	boardOverride,
+	routedBoard,
+	config,
+	metadataBoards = [],
+}) {
+	const maxCandidates = Number(process.env.PINTEREST_MAX_BOARD_CANDIDATES || 8);
+	const configBoards = knownBoardsFromConfig(config).slice(0, Math.max(maxCandidates, 8));
+	const resolved = [];
+	for (const source of [
+		board,
+		boardOverride,
+		process.env.PINTEREST_BOARD_NAME || "",
+		routedBoard,
+		config?.defaultBoard || "",
+		...metadataBoards,
+		"Fun Ideas",
+		...configBoards,
+	]) {
+		for (const name of splitBoardValues(source)) {
+			resolved.push(name);
+		}
+	}
+	return Array.from(new Set(resolved)).slice(0, Math.max(1, maxCandidates));
+}
+
 async function publishPin(page, debug) {
 	const published = await clickFirst(page, [
 		'[data-test-id="board-dropdown-save-button"]',
@@ -624,8 +733,16 @@ export default async function postToPinterest(post, _context = {}) {
 	const debug = createDebugRecorder(boolFromEnv("PINTEREST_DEBUG", false));
 	const statePath =
 		process.env.PINTEREST_SESSION_STATE_PATH || DEFAULT_STATE_PATH;
-	const { channel, executablePath, profileDir, profileName, useSystemProfile } =
-		getPinterestBrowserOptions();
+	const browserOptions = getPinterestBrowserOptions();
+	const {
+		channel,
+		executablePath,
+		profileDir,
+		profileName,
+		useSystemProfile,
+		cloneEnabled,
+	} = browserOptions;
+	const preparedProfile = await preparePinterestProfileLaunch(browserOptions);
 	const hasSavedState = fs.existsSync(statePath);
 	const username =
 		process.env.PINTEREST_LOGIN_EMAIL ||
@@ -638,11 +755,11 @@ export default async function postToPinterest(post, _context = {}) {
 		);
 	}
 
-	const context = await chromium.launchPersistentContext(profileDir, {
+	const context = await chromium.launchPersistentContext(preparedProfile.launchUserDataDir, {
 		headless,
 		channel,
 		executablePath,
-		args: [`--profile-directory=${profileName}`],
+		args: [`--profile-directory=${preparedProfile.profileName}`],
 	});
 	const page = context.pages()[0] || (await context.newPage());
 
@@ -651,9 +768,10 @@ export default async function postToPinterest(post, _context = {}) {
 			headless,
 			channel,
 			executablePath: executablePath || null,
-			profileDir,
-			profileName,
+			profileDir: preparedProfile.launchUserDataDir,
+			profileName: preparedProfile.profileName,
 			useSystemProfile,
+			cloneEnabled,
 			statePath,
 			hasSavedState,
 			board,
@@ -686,6 +804,11 @@ export default async function postToPinterest(post, _context = {}) {
 			})
 			: { path: null, changed: false, reason: "no_media" };
 		const mediaPath = preparedMedia.path;
+		if (!mediaPath) {
+			throw new Error(
+				"Pinterest post requires an image (mediaPath). This queued post has no media attached.",
+			);
+		}
 		await debug.log("resolved-inputs", {
 			titleLength: title.length,
 			descriptionLength: description.length,
@@ -751,7 +874,44 @@ export default async function postToPinterest(post, _context = {}) {
 			linkFilled,
 			linkValuePresent: Boolean(link),
 		});
-		await selectBoard(page, board, debug);
+		if (!titleFilled && !descriptionFilled && !linkFilled) {
+			throw new Error(
+				"Pinterest editor fields were not found/fillable (title/description/link). UI selectors likely need refresh.",
+			);
+		}
+		const boardCandidates = buildBoardCandidates({
+			board,
+			boardOverride,
+			routedBoard,
+			config: boardConfig,
+			metadataBoards: post?.metadata?.pinterestBoards || [],
+		});
+		let selectedBoard = "";
+		let boardError = null;
+		for (const candidate of boardCandidates) {
+			try {
+				await selectBoard(page, candidate, debug);
+				selectedBoard = candidate;
+				await debug.log("board-selected", { candidate });
+				break;
+			} catch (error) {
+				boardError = error;
+				await debug.log("board-select-failed", {
+					candidate,
+					error: error?.message || String(error),
+				});
+				if (isContextClosedError(error)) {
+					break;
+				}
+			}
+		}
+		if (!selectedBoard) {
+			throw new Error(
+				`Unable to select Pinterest board. Tried: ${boardCandidates.join(", ")}. Last error: ${
+					boardError?.message || "unknown"
+				}`,
+			);
+		}
 		await publishPin(page, debug);
 		await commitDraftBatchIfPresent(page, debug);
 		await page.waitForLoadState("domcontentloaded").catch(() => {});
@@ -762,11 +922,11 @@ export default async function postToPinterest(post, _context = {}) {
 		await persistPinMapping(post, pinUrl, debug);
 
 		await context.storageState({ path: statePath });
-		await debug.log("post-success", { board, finalUrl: page.url(), pinUrl, pinId });
+		await debug.log("post-success", { board: selectedBoard, finalUrl: page.url(), pinUrl, pinId });
 		await debug.flush();
 		return {
 			success: true,
-			board,
+			board: selectedBoard,
 			url: page.url(),
 			pinUrl: pinUrl || null,
 			pinId: pinId || null,
@@ -782,6 +942,15 @@ export default async function postToPinterest(post, _context = {}) {
 		await debug.flush();
 		throw error;
 	} finally {
-		await context.close();
+		await context.close().catch(async (error) => {
+			await debug.log("context-close-error", {
+				message: error?.message || String(error),
+			});
+		});
+		await preparedProfile.cleanup().catch(async (error) => {
+			await debug.log("profile-cleanup-error", {
+				message: error?.message || String(error),
+			});
+		});
 	}
 }

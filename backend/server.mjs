@@ -7,6 +7,8 @@ import fs from "fs"; // only for constants like fs.constants.F_OK
 import path from "path";
 import { fileURLToPath } from "url";
 import { postToAllPlatforms, normalizeTargets } from "./scripts/platforms/post-to-all.js";
+import authRouter from "./routes/auth.js";
+import contentRouter from "./routes/content/index.js";
 import { processQueue } from "./scripts/postingJob.mjs";
 import { getPublicAccounts } from "./utils/accountStore.mjs";
 import { getAccounts } from "./utils/accountStore.mjs";
@@ -42,6 +44,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: "75mb" }));
+app.use("/api/auth", authRouter);
+app.use("/api/content", contentRouter);
 const PORT = process.env.PORT || 3001;
 
 // ---- data paths

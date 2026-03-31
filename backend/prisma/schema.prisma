@@ -1,0 +1,65 @@
+// Prisma schema for backend database
+// Defines users, content_items, content_assets, and platform_targets tables.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  name          String?
+  role          String         @default("creator")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  contentItems  ContentItem[]
+
+  @@map("users")
+}
+
+model ContentItem {
+  id              Int              @id @default(autoincrement())
+  title           String
+  body            String?
+  status          String           @default("draft")
+  scheduledAt     DateTime?        @map("scheduled_at")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+  user            User?            @relation(fields: [userId], references: [id])
+  userId          Int?             @map("user_id")
+  contentAssets   ContentAsset[]
+  platformTargets PlatformTarget[]
+
+  @@map("content_items")
+}
+
+model ContentAsset {
+  id            Int         @id @default(autoincrement())
+  type          String
+  url           String
+  altText       String?     @map("alt_text")
+  createdAt     DateTime    @default(now()) @map("created_at")
+  contentItem   ContentItem @relation(fields: [contentItemId], references: [id])
+  contentItemId Int         @map("content_item_id")
+
+  @@map("content_assets")
+}
+
+model PlatformTarget {
+  id            Int         @id @default(autoincrement())
+  platform      String
+  status        String      @default("pending")
+  scheduledAt   DateTime    @map("scheduled_at")
+  metadata      String?
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+  contentItem   ContentItem @relation(fields: [contentItemId], references: [id])
+  contentItemId Int         @map("content_item_id")
+
+  @@map("platform_targets")
+}

@@ -15,7 +15,10 @@
     "queue:dry-run": "node scripts/queue/dry-run-next24h.mjs",
     "summary:daily": "node scripts/health/daily-summary.mjs",
     "backup:snapshot": "node scripts/backup/snapshot.mjs",
-    "revenue:export": "node scripts/revenue/export-template.mjs"
+    "revenue:export": "node scripts/revenue/export-template.mjs",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "db:seed": "prisma db seed"
   },
   "dependencies": {
     "axios": "1.9.0",
@@ -27,14 +30,21 @@
     "dotenv": "16.5.0",
     "express": "5.1.0",
     "fs-extra": "11.3.0",
+    "jsonwebtoken": "^9.0.2",
     "inquirer": "12.6.1",
     "markdown-it": "14.1.0",
+    "node-cron": "^4.0.6",
     "open": "10.1.2",
     "p-limit": "6.2.0",
     "playwright": "1.52.0",
     "playwright-extra": "^4.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "sharp": "^0.33.5",
-    "shelljs": "0.10.0"
+    "shelljs": "0.10.0",
+    "bree": "^9.2.4",
+    "@prisma/client": "^5.15.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.15.0"
   }
 }

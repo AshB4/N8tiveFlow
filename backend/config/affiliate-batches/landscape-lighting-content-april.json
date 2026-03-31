@@ -1,0 +1,102 @@
+{
+  "productLink": "https://www.amazon.com/dp/B09JFW2ZXC?tag=ashb4studio0b-20",
+  "board": "Dream home",
+  "publishAt": "2026-04-21",
+  "items": [
+    {
+      "keyword": "backyard lighting ideas",
+      "angle": "before after transformation",
+      "title": "Backyard Lighting Before and After Transformation",
+      "description": "See how simple landscape lighting turns a dark backyard into a safe, inviting outdoor space with warm LED lights.",
+      "image": "frontend/assets/spring26/landscapeb4andafter.png",
+      "board": "Dream home",
+      "boards": [
+        "Dream home",
+        "Diy for the home"
+      ],
+      "tags": [
+        "backyard lighting",
+        "landscape lighting",
+        "outdoor design",
+        "before after",
+        "home improvement"
+      ]
+    },
+    {
+      "keyword": "outdoor pathway lighting",
+      "angle": "safety upgrade",
+      "title": "Outdoor Path Lighting for Safer Walkways",
+      "description": "Upgrade your yard with pathway lighting that improves visibility and adds a clean modern look.",
+      "image": "frontend/assets/spring26/landscapewalkway.png",
+      "board": "Dream home",
+      "boards": [
+        "Dream home",
+        "Gardening stuff"
+      ],
+      "tags": [
+        "path lighting",
+        "garden lights",
+        "walkway ideas",
+        "outdoor safety",
+        "led lights"
+      ]
+    },
+    {
+      "keyword": "cozy backyard lighting",
+      "angle": "lifestyle cozy",
+      "title": "Cozy Backyard Lighting Setup You'll Want Every Night",
+      "description": "Warm lighting transforms any patio into a relaxing, cozy outdoor space perfect for evenings.",
+      "image": "frontend/assets/spring26/landscapePatio.png",
+      "board": "Dream home",
+      "boards": [
+        "Dream home",
+        "Diy for the home"
+      ],
+      "tags": [
+        "cozy backyard",
+        "patio lighting",
+        "ambient lighting",
+        "outdoor living",
+        "warm lights"
+      ]
+    },
+    {
+      "keyword": "modern landscape lighting",
+      "angle": "minimalist design",
+      "title": "Modern Landscape Lighting That Looks High-End",
+      "description": "Clean, minimal lighting that highlights trees, architecture, and pathways for a sleek outdoor look.",
+      "image": "frontend/assets/spring26/landscapeb4andafter.png",
+      "board": "Dream home",
+      "boards": [
+        "Dream home",
+        "Diy for the home"
+      ],
+      "tags": [
+        "modern backyard",
+        "minimal design",
+        "landscape lights",
+        "home exterior",
+        "lighting design"
+      ]
+    },
+    {
+      "keyword": "backyard lighting makeover",
+      "angle": "dramatic before after",
+      "title": "Backyard Glow Up with Simple Lighting",
+      "description": "A few well-placed lights can completely transform your backyard into a safe and beautiful space.",
+      "image": "frontend/assets/spring26/landscapeb4andafter.png",
+      "board": "Dream home",
+      "boards": [
+        "Dream home",
+        "Gardening stuff"
+      ],
+      "tags": [
+        "before after yard",
+        "garden lighting",
+        "home upgrade",
+        "yard ideas",
+        "outdoor glow"
+      ]
+    }
+  ]
+}

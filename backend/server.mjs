@@ -20,14 +20,18 @@ import { distributionTagsToTargets, normalizeTagList } from "./utils/distributio
 import { buildArchiveEntry } from "./utils/archiveEntry.mjs";
 import {
 	appendPostedLogEntry as appendPostedLogToDb,
+	appendPinterestMetricsSnapshot,
 	clearPostedPostsFromQueue,
 	createPost,
 	deletePost as deletePostFromDb,
 	getRotationSettings,
 	getLocalDbPath,
 	initLocalDb,
+	getPinterestPinMappings,
 	listPosts,
+	listPinterestMetricsSnapshots,
 	listPostedLog,
+	savePinterestPinMappings,
 	updateRotationSettings,
 	updatePost as updatePostInDb,
 } from "./utils/localDb.mjs";
@@ -235,6 +239,83 @@ app.get("/api/analytics/summary", async (_req, res) => {
 		res.status(500).json({
 			error: "Failed to load analytics summary",
 			detail: error?.message,
+		});
+	}
+});
+
+app.get("/api/analytics/pinterest/snapshots", async (req, res) => {
+	try {
+		const snapshots = await listPinterestMetricsSnapshots({
+			postId: req.query.postId ? String(req.query.postId) : null,
+			limit: req.query.limit ? Number(req.query.limit) : 200,
+		});
+		return res.json(snapshots);
+	} catch (error) {
+		return res.status(500).json({
+			error: "Failed to load Pinterest metrics snapshots",
+			detail: error?.message || String(error),
+		});
+	}
+});
+
+app.post("/api/analytics/pinterest/snapshots", async (req, res) => {
+	try {
+		const payload = req.body ?? {};
+		if (!payload.pinId && !payload.pinUrl) {
+			return res.status(400).json({ error: "pinId or pinUrl is required" });
+		}
+		if (!payload.capturedAt) {
+			payload.capturedAt = new Date().toISOString();
+		}
+		await appendPinterestMetricsSnapshot(payload);
+		return res.status(201).json(payload);
+	} catch (error) {
+		return res.status(500).json({
+			error: "Failed to save Pinterest metrics snapshot",
+			detail: error?.message || String(error),
+		});
+	}
+});
+
+app.get("/api/analytics/pinterest/mappings", async (_req, res) => {
+	try {
+		return res.json(await getPinterestPinMappings());
+	} catch (error) {
+		return res.status(500).json({
+			error: "Failed to load Pinterest pin mappings",
+			detail: error?.message || String(error),
+		});
+	}
+});
+
+app.put("/api/analytics/pinterest/mappings", async (req, res) => {
+	try {
+		const body = req.body;
+		if (Array.isArray(body)) {
+			return res.json(await savePinterestPinMappings(body));
+		}
+		const current = await getPinterestPinMappings();
+		const incoming = body ?? {};
+		if (!incoming.postId || (!incoming.pinId && !incoming.pinUrl)) {
+			return res.status(400).json({ error: "postId and pinId or pinUrl are required" });
+		}
+		const next = current.filter(
+			(entry) =>
+				!(
+					String(entry?.postId || "") === String(incoming.postId) ||
+					(incoming.pinId &&
+						String(entry?.pinId || "") === String(incoming.pinId))
+				),
+		);
+		next.push({
+			...incoming,
+			updatedAt: new Date().toISOString(),
+		});
+		return res.json(await savePinterestPinMappings(next));
+	} catch (error) {
+		return res.status(500).json({
+			error: "Failed to save Pinterest pin mappings",
+			detail: error?.message || String(error),
 		});
 	}
 });

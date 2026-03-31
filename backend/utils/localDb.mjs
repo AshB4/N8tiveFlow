@@ -57,6 +57,12 @@ function getDb() {
       payload TEXT NOT NULL,
       updated_at TEXT NOT NULL
     );
+
+    CREATE TABLE IF NOT EXISTS pinterest_metrics_snapshots (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      payload TEXT NOT NULL,
+      created_at TEXT NOT NULL
+    );
   `);
   return db;
 }
@@ -331,4 +337,37 @@ export async function updateRotationSettings(nextSettings = {}) {
     : [];
   await setSetting("rotation_settings", merged);
   return merged;
+}
+
+export async function listPinterestMetricsSnapshots({ postId = null, limit = 200 } = {}) {
+  const safeLimit = Math.max(1, Math.min(Number(limit) || 200, 1000));
+  const conn = getDb();
+  const rows = postId
+    ? conn
+        .prepare(
+          "SELECT payload FROM pinterest_metrics_snapshots WHERE json_extract(payload, '$.postId') = ? ORDER BY id DESC LIMIT ?",
+        )
+        .all(postId, safeLimit)
+    : conn
+        .prepare("SELECT payload FROM pinterest_metrics_snapshots ORDER BY id DESC LIMIT ?")
+        .all(safeLimit);
+  return parsePayloadRows(rows);
+}
+
+export async function appendPinterestMetricsSnapshot(entry) {
+  getDb()
+    .prepare("INSERT INTO pinterest_metrics_snapshots (payload, created_at) VALUES (?, ?)")
+    .run(JSON.stringify(entry), entry.capturedAt || new Date().toISOString());
+  return entry;
+}
+
+export async function getPinterestPinMappings() {
+  const stored = (await getSetting("pinterest_pin_mappings", [])) || [];
+  return Array.isArray(stored) ? stored : [];
+}
+
+export async function savePinterestPinMappings(mappings = []) {
+  const normalized = Array.isArray(mappings) ? mappings : [];
+  await setSetting("pinterest_pin_mappings", normalized);
+  return normalized;
 }

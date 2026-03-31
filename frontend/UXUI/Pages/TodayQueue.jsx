@@ -8,6 +8,7 @@ import {
   isAffiliatePost,
   normalizePostStatus,
 } from "../utils/postStatus";
+import { getPostProductLink } from "../utils/productIdentity";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
@@ -74,12 +75,6 @@ const getPostTextForPlatform = (post, platform) => {
   const overrides = post.platformOverrides || {};
   return overrides[platform] || post.body || post.content || "";
 };
-
-const getProductLink = (post) =>
-  post?.metadata?.productLinks?.primary ||
-  post?.metadata?.productLinks?.amazon ||
-  post?.metadata?.productLinks?.gumroad ||
-  "";
 
 const buildRetrySchedule = (offsetDays = 1) => {
   const next = new Date();

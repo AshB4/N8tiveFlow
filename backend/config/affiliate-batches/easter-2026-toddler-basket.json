@@ -1,5 +1,5 @@
 {
-  "productLink": "https://www.amazon.com/your-affiliate-link",
+  "productLink": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Essentials-Activities/dp/B0FPNT8S8Q?tag=ashb4studio0b-20",
   "board": "Fun Ideas",
   "items": [
     {
@@ -8,6 +8,8 @@
       "title": "Mess-free Easter basket ideas for toddlers",
       "description": "Skip the candy. These Easter basket fillers keep toddlers busy without the mess. Perfect for parents who want easy, no-stress activities.",
       "image": "frontend/assets/easter2026/skipcandywatercolor.png",
+      "board": "Baby Shower!",
+      "boards": ["Baby Shower!", "Fun Ideas"],
       "tags": [
         "easter basket ideas",
         "toddler easter basket",
@@ -22,6 +24,8 @@
       "title": "What to put in a toddler Easter basket (no junk)",
       "description": "Easy Easter basket ideas toddlers will actually use. No sugar overload, just fun and simple activities.",
       "image": "frontend/assets/easter2026/nomesswatercolor.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Baby Shower!", "I Want, I dream."],
       "tags": [
         "toddler easter basket",
         "what to put in easter basket",
@@ -36,6 +40,8 @@
       "title": "Easter basket fillers that keep toddlers busy",
       "description": "If you need toddler Easter ideas that actually last longer than 5 minutes, this is one of the best no-mess options.",
       "image": "frontend/assets/easter2026/watercolorbook.png",
+      "board": "I Want, I dream.",
+      "boards": ["I Want, I dream.", "Fun Ideas", "Baby Shower!"],
       "tags": [
         "easter basket fillers",
         "toddler busy activities",

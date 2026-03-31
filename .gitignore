@@ -42,6 +42,8 @@ backend/config/facebook-chrome-profile/
 backend/config/facebook-state.json
 backend/config/pinterest-chrome-profile/
 backend/config/pinterest-state.json
+backend/**/config/pinterest-state.json
+backend/backend/
 backend/config/substack-chrome-profile/
 backend/config/substack-state.json
 

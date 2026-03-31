@@ -1,5 +1,5 @@
 {
-  "productLink": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen",
+  "productLink": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen",
   "board": "Fun Ideas",
   "items": [
     {
@@ -7,35 +7,45 @@
       "angle": "problem",
       "title": "Skip the Sugar — Kids Actually Love These Instead",
       "description": "Trying to avoid candy overload? These Easter tattoos + stickers keep kids busy without the sugar crash.",
-      "image": "frontend/assets/easter2026/tats_01_skipCandy.png"
+      "image": "frontend/assets/easter2026/tats_01_skipCandy.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Epic cuteness"]
     },
     {
       "keyword": "easter tattoos for kids",
       "angle": "visual",
       "title": "These Easter Tattoos Are Way Too Cute to Ignore",
       "description": "Bunnies, eggs, bright colors everywhere. Kids go straight for these before anything else in the basket.",
-      "image": "frontend/assets/easter2026/tats_02_Too_Cute.png"
+      "image": "frontend/assets/easter2026/tats_02_Too_Cute.png",
+      "board": "Epic cuteness",
+      "boards": ["Epic cuteness", "Fun Ideas", "Your Pinterest Likes"]
     },
     {
       "keyword": "easter basket ideas for toddlers",
       "angle": "use case",
       "title": "Easy Easter Basket Filler Kids Actually Use",
       "description": "Simple, fun, and zero effort. Perfect filler that keeps toddlers entertained longer than candy ever does.",
-      "image": "frontend/assets/easter2026/Tats_03_0EffortWin.png"
+      "image": "frontend/assets/easter2026/Tats_03_0EffortWin.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Baby Shower!"]
     },
     {
       "keyword": "cheap easter basket stuffers",
       "angle": "budget",
       "title": "Cheap Easter Basket Fillers That Don’t Feel Cheap",
       "description": "Low-cost, high-fun. These stickers and tattoos stretch your basket without looking like filler junk.",
-      "image": "frontend/assets/easter2026/Tats_04_under10.png"
+      "image": "frontend/assets/easter2026/Tats_04_under10.png",
+      "board": "I Want, I dream.",
+      "boards": ["I Want, I dream.", "Fun Ideas"]
     },
     {
       "keyword": "kids easter party favors",
       "angle": "event",
       "title": "The Easiest Easter Party Favor Idea for Kids",
       "description": "Hand these out and you’re done. Instant hit for Easter parties, classrooms, or egg hunts.",
-      "image": "frontend/assets/easter2026/Tats05_NoPrep.png"
+      "image": "frontend/assets/easter2026/Tats05_NoPrep.png",
+      "board": "Baby Shower!",
+      "boards": ["Baby Shower!", "Fun Ideas", "Epic cuteness"]
     }
   ]
 }

@@ -93,6 +93,28 @@ export const ensureProductLink = (body, link) => {
 	return `${content}\n\n${normalizedLink}`;
 };
 
+const AFFILIATE_DISCLOSURE = "Affiliate links may earn me a small commission.";
+
+export const isAffiliatePost = (post) => {
+	const contentMode = post?.metadata?.contentMode || "";
+	const affiliateUrl =
+		post?.affiliateUrl ||
+		post?.canonicalUrl ||
+		post?.metadata?.affiliateUrl ||
+		post?.metadata?.productLinks?.amazon ||
+		post?.metadata?.productLinks?.primary ||
+		"";
+	return contentMode === "affiliate" || /amazon\./i.test(String(affiliateUrl));
+};
+
+export const ensureAffiliateDisclosure = (body, disclosure = AFFILIATE_DISCLOSURE) => {
+	const content = String(body || "").trim();
+	if (!disclosure) return content;
+	if (content.toLowerCase().includes(disclosure.toLowerCase())) return content;
+	if (!content) return disclosure;
+	return `${content}\n\n${disclosure}`;
+};
+
 export const isConfiguredValue = (value) => {
 	if (value === null || value === undefined) return false;
 	if (typeof value !== "string") return Boolean(value);
@@ -107,6 +129,25 @@ export const isThreadsConfigured = (account) => {
 	const accountId =
 		account?.metadata?.accountId || process.env.THREADS_ACCOUNT_ID || "";
 	return isConfiguredValue(token) && isConfiguredValue(accountId);
+};
+
+const isInstagramConfigured = (account) => {
+	const token =
+		account?.credentials?.accessToken || process.env.INSTAGRAM_ACCESS_TOKEN || "";
+	const accountId =
+		account?.metadata?.accountId || process.env.INSTAGRAM_ACCOUNT_ID || "";
+	return isConfiguredValue(token) && isConfiguredValue(accountId);
+};
+
+const isAmazonConfigured = () => {
+	const partnerTag = process.env.AMAZON_PARTNER_TAG || "";
+	const accessKey = process.env.AMAZON_PAAPI_ACCESS_KEY || "";
+	const secretKey = process.env.AMAZON_PAAPI_SECRET_KEY || "";
+	return (
+		isConfiguredValue(partnerTag) &&
+		isConfiguredValue(accessKey) &&
+		isConfiguredValue(secretKey)
+	);
 };
 
 export const normalizeTargets = (input) => {
@@ -190,6 +231,24 @@ export const postToAllPlatforms = async (post, targetsInput) => {
 			});
 			continue;
 		}
+		if (platform === "instagram" && !isInstagramConfigured(account)) {
+			results.push({
+				platform,
+				accountId,
+				status: "skipped",
+				reason: "Instagram not configured",
+			});
+			continue;
+		}
+		if (platform === "amazon" && !isAmazonConfigured()) {
+			results.push({
+				platform,
+				accountId,
+				status: "skipped",
+				reason: "Amazon PA-API not configured",
+			});
+			continue;
+		}
 
 		try {
 			const accountOverrideKey = accountId ? `${platform}:${accountId}` : null;
@@ -202,10 +261,13 @@ export const postToAllPlatforms = async (post, targetsInput) => {
 				shouldAutoTagAmazon || productLink
 					? withAffiliateTag(customText, partnerTag)
 					: customText;
-			const body =
+			const linkedBody =
 				post?.metadata?.includeProductLink
 					? ensureProductLink(baseBody, productLink)
 					: baseBody;
+			const body = platform === "pinterest" && isAffiliatePost(post)
+				? ensureAffiliateDisclosure(linkedBody)
+				: linkedBody;
 			const payload = {
 				title: post.title,
 				body,

@@ -1,0 +1,227 @@
+{
+  "productLink": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
+  "board": "Fun Ideas",
+  "items": [
+    {
+      "keyword": "montessori easter eggs for toddlers",
+      "angle": "educational easter filler",
+      "title": "Montessori Easter Eggs for Toddlers",
+      "description": "These matching eggs help toddlers learn colors and shapes while they play. Perfect Easter basket filler that is actually educational.",
+      "image": "frontend/assets/easter2026/Montessori_easy_gift.png",
+      "board": "Baby Shower!",
+      "boards": ["Baby Shower!", "Fun Ideas"],
+      "tags": [
+        "montessori toys",
+        "toddler easter ideas",
+        "learning toys",
+        "easter egg fillers toddler"
+      ]
+    },
+    {
+      "keyword": "easter eggs that teach kids while playing",
+      "angle": "problem solution",
+      "title": "Easter Eggs That Teach Kids While Playing",
+      "description": "Skip junk toys. These matching eggs build fine motor skills and keep toddlers engaged longer than candy.",
+      "image": "frontend/assets/easter2026/montessori_learning_play_02.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Baby Shower!"],
+      "tags": [
+        "toddler learning toys",
+        "fine motor skills toy",
+        "easter basket ideas toddler"
+      ]
+    },
+    {
+      "keyword": "best no candy easter gift for toddlers",
+      "angle": "no candy alternative",
+      "title": "Best No-Candy Easter Gift for Toddlers",
+      "description": "A simple Easter alternative kids actually use. These matching eggs teach and entertain at the same time.",
+      "image": "frontend/assets/easter2026/Montessori_easy_gift.png",
+      "board": "Baby Shower!",
+      "boards": ["Baby Shower!", "Fun Ideas"],
+      "tags": [
+        "no candy easter",
+        "toddler gifts",
+        "educational toys toddler"
+      ]
+    },
+    {
+      "keyword": "toddler toy that builds real skills",
+      "angle": "development benefit",
+      "title": "Toddler Toy That Builds Real Skills",
+      "description": "These Montessori eggs help with coordination, problem-solving, and early learning. Perfect for ages 1 to 4.",
+      "image": "frontend/assets/easter2026/montessori_fine_motor_04.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Baby Shower!"],
+      "tags": [
+        "toddler development",
+        "montessori learning",
+        "kids educational toys"
+      ]
+    },
+    {
+      "keyword": "simple toddler toy that actually gets used",
+      "angle": "quiet independent play",
+      "title": "Simple Toddler Toy That Actually Gets Used",
+      "description": "No noise, no screens, just a simple matching toy toddlers keep coming back to. Great for independent play.",
+      "image": "frontend/assets/easter2026/Montessori_Not_screen_time.png",
+      "board": "I Want, I dream.",
+      "boards": ["I Want, I dream.", "Fun Ideas"],
+      "tags": [
+        "screen free toys",
+        "toddler activities",
+        "quiet toys for kids"
+      ]
+    },
+    {
+      "keyword": "skip the candy this easter toddler toy",
+      "angle": "no candy alternative",
+      "title": "Skip the Candy This Easter",
+      "description": "Toddlers actually learn while they play with these matching eggs. A smarter Easter basket idea that keeps them engaged.",
+      "image": "frontend/assets/easter2026/montessori_no_candy_01.png",
+      "board": "Baby Shower!",
+      "boards": ["Baby Shower!", "Fun Ideas"],
+      "tags": [
+        "easter basket toddler",
+        "no candy easter",
+        "toddler toys",
+        "montessori toys"
+      ]
+    },
+    {
+      "keyword": "learning disguised as play toddler toy",
+      "angle": "development disguised as fun",
+      "title": "Learning Disguised as Play",
+      "description": "These matching eggs help toddlers build coordination, color recognition, and problem-solving skills.",
+      "image": "frontend/assets/easter2026/montessori_learning_play_02.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Baby Shower!"],
+      "tags": [
+        "learning toys",
+        "toddler development",
+        "fine motor skills",
+        "educational toys"
+      ]
+    },
+    {
+      "keyword": "a toy thats actually worth it toddler",
+      "angle": "value",
+      "title": "A Toy That’s Actually Worth It",
+      "description": "No noise. No screens. Just a simple toy toddlers keep coming back to.",
+      "image": "frontend/assets/easter2026/montessori_worth_it_03.png",
+      "board": "I Want, I dream.",
+      "boards": ["I Want, I dream.", "Fun Ideas"],
+      "tags": [
+        "screen free toys",
+        "toddler activities",
+        "quiet toys",
+        "parenting hacks"
+      ]
+    },
+    {
+      "keyword": "build fine motor skills fast toddler",
+      "angle": "fine motor benefit",
+      "title": "Build Fine Motor Skills Fast",
+      "description": "Simple matching play that improves coordination and early learning skills without overwhelm.",
+      "image": "frontend/assets/easter2026/montessori_fine_motor_04.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Baby Shower!"],
+      "tags": [
+        "fine motor skills",
+        "toddler learning",
+        "kids development",
+        "montessori"
+      ]
+    },
+    {
+      "keyword": "keeps toddlers busy instantly toy",
+      "angle": "busy toddler win",
+      "title": "Keeps Toddlers Busy Instantly",
+      "description": "No setup, no mess, just open and play. Perfect for quick engagement.",
+      "image": "frontend/assets/easter2026/montessori_busy_toddler_05.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "I Want, I dream."],
+      "tags": [
+        "busy toddler",
+        "easy toys",
+        "independent play",
+        "toddler life"
+      ]
+    },
+    {
+      "keyword": "finally a quiet toy for toddlers",
+      "angle": "quiet toy",
+      "title": "Finally… A Quiet Toy",
+      "description": "A peaceful toy parents actually appreciate. No noise, no chaos, just focused play.",
+      "image": "frontend/assets/easter2026/Montessori_Not_screen_time.png",
+      "board": "I Want, I dream.",
+      "boards": ["I Want, I dream.", "Fun Ideas"],
+      "tags": [
+        "quiet toys",
+        "parent must haves",
+        "toddler toys",
+        "calm play"
+      ]
+    },
+    {
+      "keyword": "encourages independent play toddler toy",
+      "angle": "independent play",
+      "title": "Encourages Independent Play",
+      "description": "Toddlers stay engaged on their own while learning shapes and colors.",
+      "image": "frontend/assets/easter2026/montessori_busy_toddler_05.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Baby Shower!"],
+      "tags": [
+        "independent play",
+        "toddler toys",
+        "learning toys",
+        "kids activities"
+      ]
+    },
+    {
+      "keyword": "one toy multiple skills toddler",
+      "angle": "multi skill benefit",
+      "title": "One Toy. Multiple Skills.",
+      "description": "Matching, sorting, coordination, this toy covers it all in a simple format kids love.",
+      "image": "frontend/assets/easter2026/Montessori_easy_gift.png",
+      "board": "Baby Shower!",
+      "boards": ["Baby Shower!", "Fun Ideas"],
+      "tags": [
+        "montessori toys",
+        "learning activities",
+        "toddler skills",
+        "early education"
+      ]
+    },
+    {
+      "keyword": "no mess no cleanup toddler toy",
+      "angle": "no mess",
+      "title": "No Mess. No Cleanup.",
+      "description": "Skip the clutter. This toy keeps things simple while still being fun and engaging.",
+      "image": "frontend/assets/easter2026/Montessori_Not_screen_time.png",
+      "board": "I Want, I dream.",
+      "boards": ["I Want, I dream.", "Fun Ideas"],
+      "tags": [
+        "no mess toys",
+        "easy parenting",
+        "toddler toys",
+        "minimal toys"
+      ]
+    },
+    {
+      "keyword": "boost early learning fast toddler toy",
+      "angle": "early learning",
+      "title": "Boost Early Learning Fast",
+      "description": "Help toddlers learn shapes, colors, and coordination through simple play.",
+      "image": "frontend/assets/easter2026/montessori_learning_play_02.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Baby Shower!"],
+      "tags": [
+        "early learning",
+        "toddler development",
+        "educational toys",
+        "kids learning"
+      ]
+    }
+  ]
+}

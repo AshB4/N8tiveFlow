@@ -8,6 +8,10 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { chromium } from "playwright";
 import { ensurePinterestImageReady } from "../../../utils/imagePreflight.mjs";
+import {
+	getPinterestPinMappings,
+	savePinterestPinMappings,
+} from "../../../utils/localDb.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,6 +33,21 @@ const DEFAULT_BOARD_CONFIG_PATH = path.join(
 	"pinterest-boards.json",
 );
 const DEBUG_DIR = path.join(BACKEND_ROOT, "debug", "pinterest");
+
+function extractPinId(value = "") {
+	const match = String(value || "").match(/\/pin\/(\d+)/);
+	return match ? match[1] : "";
+}
+
+function buildPinUrl(pinId = "") {
+	return pinId ? `https://www.pinterest.com/pin/${pinId}/` : "";
+}
+
+function buildPinAnalyticsUrl(pinId = "") {
+	return pinId
+		? `https://www.pinterest.com/pin/${pinId}/analytics?content_type=all&device_type=all&source_type=all&aggregation=last30d`
+		: "";
+}
 
 function requiredEnv(name) {
 	const value = process.env[name];
@@ -97,10 +116,25 @@ function createDebugRecorder(enabled) {
 		if (!enabled) return;
 		await ensureDir();
 		const safeName = String(name || "step").replace(/[^a-z0-9_-]+/gi, "-");
-		await page.screenshot({
-			path: path.join(sessionDir, `${Date.now()}_${safeName}.png`),
-			fullPage: true,
-		});
+		try {
+			await page.screenshot({
+				path: path.join(sessionDir, `${Date.now()}_${safeName}.png`),
+				fullPage: false,
+				timeout: 5000,
+				animations: "disabled",
+			});
+		} catch (error) {
+			events.push({
+				at: new Date().toISOString(),
+				step: "debug-screenshot-failed",
+				name: safeName,
+				error: error?.message || String(error),
+			});
+			console.warn(
+				`[PINTEREST_DEBUG] screenshot failed for ${safeName}:`,
+				error?.message || String(error),
+			);
+		}
 	};
 
 	const flush = async () => {
@@ -124,15 +158,50 @@ function createDebugRecorder(enabled) {
 function resolveLocalMediaPath(post) {
 	const mediaPath = post?.mediaPath || "";
 	if (!mediaPath) return null;
+	if (/^https?:\/\//i.test(mediaPath)) return mediaPath;
 	if (path.isAbsolute(mediaPath)) return mediaPath;
 	const projectRootPath = path.join(BACKEND_ROOT, "..", mediaPath);
 	if (fs.existsSync(projectRootPath)) {
 		return projectRootPath;
 	}
+	// Some queued paths drift across asset subfolders; recover by basename before failing.
+	const assetBasename = path.basename(mediaPath);
+	if (assetBasename) {
+		const assetDirs = [
+			path.join(BACKEND_ROOT, "..", "frontend", "assets", "BuzzingBees"),
+			path.join(BACKEND_ROOT, "..", "frontend", "assets", "spring26"),
+			path.join(BACKEND_ROOT, "..", "frontend", "assets"),
+		];
+		for (const assetDir of assetDirs) {
+			const candidate = path.join(assetDir, assetBasename);
+			if (fs.existsSync(candidate)) {
+				return candidate;
+			}
+		}
+	}
 	if (mediaPath.startsWith("/media/")) {
 		return path.join(BACKEND_ROOT, mediaPath.slice(1));
 	}
 	return path.join(BACKEND_ROOT, mediaPath);
+}
+
+async function downloadRemoteMediaToTemp(mediaUrl) {
+	const url = new URL(mediaUrl);
+	const extFromPath = path.extname(url.pathname) || ".jpg";
+	const safeExt = /^\.[a-z0-9]+$/i.test(extFromPath) ? extFromPath : ".jpg";
+	const tempPath = path.join(
+		os.tmpdir(),
+		`postpunk-pinterest-${Date.now()}${safeExt}`,
+	);
+	const response = await fetch(mediaUrl);
+	if (!response.ok) {
+		throw new Error(
+			`Failed to download remote media (${response.status} ${response.statusText})`,
+		);
+	}
+	const buffer = Buffer.from(await response.arrayBuffer());
+	await writeFile(tempPath, buffer);
+	return tempPath;
 }
 
 async function loadBoardConfig(configPath) {
@@ -346,6 +415,39 @@ async function waitForPinEditorReady(page, debug) {
 	throw new Error("Pinterest pin editor did not finish loading");
 }
 
+function normalizeBoardLabel(value) {
+	return String(value || "")
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, " ")
+		.replace(/\s+/g, " ")
+		.trim();
+}
+
+async function clickBoardByNormalizedText(page, boardName, debug) {
+	const target = normalizeBoardLabel(boardName);
+	if (!target) return false;
+	const candidates = page.locator(
+		'[role="option"], div[role="button"], button, [data-test-id^="board-row-"]',
+	);
+	const count = await candidates.count();
+	for (let i = 0; i < count; i += 1) {
+		const option = candidates.nth(i);
+		const text = await option.innerText().catch(() => "");
+		const normalized = normalizeBoardLabel(text);
+		if (!normalized) continue;
+		if (normalized === target || normalized.includes(target) || target.includes(normalized)) {
+			await option.click({ timeout: 2000 }).catch(() => {});
+			await debug?.log("select-board-normalized", {
+				boardName,
+				matchedText: text,
+				ok: true,
+			});
+			return true;
+		}
+	}
+	return false;
+}
+
 async function selectBoard(page, boardName, debug) {
 	if (!boardName) return;
 
@@ -370,13 +472,16 @@ async function selectBoard(page, boardName, debug) {
 		await page.waitForTimeout(600);
 	}
 
-	const boardClicked = await clickFirst(page, [
+	let boardClicked = await clickFirst(page, [
 		`[data-test-id="board-row-${boardName}"]`,
 		`div[role="button"]:has-text("${boardName}")`,
 		`button:has-text("${boardName}")`,
 		`[role="option"]:has-text("${boardName}")`,
 		`div:has-text("${boardName}")`,
 	], debug, "select-board");
+	if (!boardClicked) {
+		boardClicked = await clickBoardByNormalizedText(page, boardName, debug);
+	}
 	if (!boardClicked) {
 		await debug?.screenshot(page, "board-select-failed");
 		throw new Error(`Unable to select Pinterest board "${boardName}"`);
@@ -397,6 +502,58 @@ async function publishPin(page, debug) {
 	}
 	await page.waitForTimeout(2500);
 	await debug?.screenshot(page, "after-publish");
+}
+
+async function findPublishedPinUrl(page, debug) {
+	const currentUrl = page.url();
+	const currentPinId = extractPinId(currentUrl);
+	if (currentPinId) {
+		return buildPinUrl(currentPinId);
+	}
+
+	const hrefs = await page
+		.evaluate(() =>
+			Array.from(document.querySelectorAll('a[href*="/pin/"]'))
+				.map((anchor) => anchor.href || anchor.getAttribute("href") || "")
+				.filter(Boolean),
+		)
+		.catch(() => []);
+	for (const href of hrefs) {
+		const pinId = extractPinId(href);
+		if (pinId) return buildPinUrl(pinId);
+	}
+
+	const bodyText = await page.locator("body").innerText().catch(() => "");
+	const inlineMatch = String(bodyText || "").match(/https?:\/\/www\.pinterest\.com\/pin\/(\d+)/i);
+	if (inlineMatch?.[1]) {
+		return buildPinUrl(inlineMatch[1]);
+	}
+
+	await debug?.log("pin-url-not-found", { currentUrl });
+	return "";
+}
+
+async function persistPinMapping(post, pinUrl, debug) {
+	const pinId = extractPinId(pinUrl);
+	if (!post?.id || !pinId) return null;
+	const current = await getPinterestPinMappings();
+	const next = current.filter(
+		(entry) =>
+			String(entry?.postId || "") !== String(post.id) &&
+			String(entry?.pinId || "") !== String(pinId),
+	);
+	const mapping = {
+		postId: post.id,
+		pinId,
+		pinUrl: buildPinUrl(pinId),
+		analyticsUrl: buildPinAnalyticsUrl(pinId),
+		titleSeen: post?.title || null,
+		updatedAt: new Date().toISOString(),
+	};
+	next.push(mapping);
+	await savePinterestPinMappings(next);
+	await debug?.log("pin-mapping-saved", { postId: post.id, pinId });
+	return mapping;
 }
 
 async function commitDraftBatchIfPresent(page, debug) {
@@ -516,9 +673,12 @@ export default async function postToPinterest(post, _context = {}) {
 		const description = post?.body || "";
 		const link = post?.canonicalUrl || post?.affiliateUrl || "";
 		const mediaPathRaw = resolveLocalMediaPath(post);
+		const mediaPathSource = /^https?:\/\//i.test(mediaPathRaw || "")
+			? await downloadRemoteMediaToTemp(mediaPathRaw)
+			: mediaPathRaw;
 		const autoResizeImages = boolFromEnv("PINTEREST_AUTO_RESIZE_IMAGES", true);
-		const preparedMedia = mediaPathRaw
-			? await ensurePinterestImageReady(mediaPathRaw, {
+		const preparedMedia = mediaPathSource
+			? await ensurePinterestImageReady(mediaPathSource, {
 				minWidth: 1000,
 				autoResize: autoResizeImages,
 				targetWidth: 1000,
@@ -531,6 +691,7 @@ export default async function postToPinterest(post, _context = {}) {
 			descriptionLength: description.length,
 			hasLink: Boolean(link),
 			mediaPathRaw,
+			mediaPathSource,
 			mediaPathPrepared: mediaPath,
 			mediaPrepared: preparedMedia,
 		});
@@ -593,14 +754,23 @@ export default async function postToPinterest(post, _context = {}) {
 		await selectBoard(page, board, debug);
 		await publishPin(page, debug);
 		await commitDraftBatchIfPresent(page, debug);
+		await page.waitForLoadState("domcontentloaded").catch(() => {});
+		await page.waitForTimeout(1500);
+		const pinUrl = await findPublishedPinUrl(page, debug);
+		const pinId = extractPinId(pinUrl);
+		const analyticsUrl = buildPinAnalyticsUrl(pinId);
+		await persistPinMapping(post, pinUrl, debug);
 
 		await context.storageState({ path: statePath });
-		await debug.log("post-success", { board, finalUrl: page.url() });
+		await debug.log("post-success", { board, finalUrl: page.url(), pinUrl, pinId });
 		await debug.flush();
 		return {
 			success: true,
 			board,
 			url: page.url(),
+			pinUrl: pinUrl || null,
+			pinId: pinId || null,
+			analyticsUrl: analyticsUrl || null,
 			boardConfigPath,
 			usedMedia: Boolean(mediaPath && fs.existsSync(mediaPath)),
 			sessionStatePath: statePath,

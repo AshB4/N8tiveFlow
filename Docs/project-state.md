@@ -39,6 +39,7 @@ These pieces are built and in active use:
 - retry and failure handling
 - failed-post visibility on the calendar with retry support
 - day-level affiliate markers on the calendar
+- calendar day-post ordering that prioritizes social (`facebook`/`instagram`) above affiliate Amazon/Pinterest pins
 - product profiles
 - platform writing guidance
 - AI SEO generation with product and platform context
@@ -57,7 +58,7 @@ These pieces are built and in active use:
 ## What Is Proven Working
 
 - frontend build passes
-- backend tests pass
+- backend core/unit tests pass; full `npm test` includes live platform checks and can fail when network/auth/browser prerequisites are not available
 - queue save and edit flow works
 - SQLite persistence and JSON mirroring work
 - launchd worker is installed and running on this Mac
@@ -127,8 +128,9 @@ Use the system like this:
 - JSON shape reminder:
   - `/affiliate/builder` expects the grouped affiliate import shape with `productLink`, `board`, optional `publishAt`, and `items[]`
   - PostPunk queue storage uses a different internal post shape with `platforms`, `targets`, `scheduledAt`, `mediaPath`, and `metadata.pinterestBoard`
-  - the copy-pasteable examples for both live in `Docs/code-map.md`
+  - the copy-pasteable examples for both live in `docs/code-map.md`
 - calendar month cells now show a small filled `🛒` badge next to the date number when affiliate posts are scheduled that day, with badge color following workflow state
+- day-detail ordering now prioritizes social posts (`facebook`/`instagram`) before affiliate Amazon/Pinterest pins
 - Meta-related future work should be prioritized in this order:
   - add explicit account targeting defaults so generic `facebook` targets stop guessing between profile and page
   - stabilize Facebook image posting
@@ -213,6 +215,7 @@ If you need to understand the system quickly, check these first:
 - `frontend/UXUI/Pages/SetupPage.jsx`
 - `frontend/UXUI/Pages/TodayQueue.jsx`
 - `backend/scripts/platforms/social/post-to-facebook.js`
+- `backend/scripts/platforms/social/post-to-facebook-browser.js`
 - `backend/scripts/platforms/social/post-to-pinterest.js`
 - `backend/scripts/platforms/social/post-to-substack.js`
 - `backend/scripts/platforms/social/capture-pinterest-state.js`

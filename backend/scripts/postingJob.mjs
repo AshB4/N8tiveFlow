@@ -199,7 +199,8 @@ export async function processQueue() {
 		try {
 			const results = await postToAllPlatforms(payload, targets);
 			const successes = results.filter((r) => r.status === "success");
-			const failures = results.filter((r) => r.status !== "success");
+			const skipped = results.filter((r) => r.status === "skipped");
+			const failures = results.filter((r) => r.status === "error");
 
 			if (successes.length > 0) {
 				postedLog.push(
@@ -266,7 +267,7 @@ export async function processQueue() {
 						queueUpdates.set(post.id, retried);
 					}
 				}
-			} else if (successes.length > 0) {
+			} else if (successes.length > 0 || skipped.length > 0) {
 				processedIds.add(post.id);
 			}
 		} catch (error) {

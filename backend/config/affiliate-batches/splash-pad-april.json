@@ -1,0 +1,54 @@
+{
+  "productLink": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1&tag=ashb4studio0b-20",
+  "board": "Fun Ideas",
+  "items": [
+    {
+      "keyword": "toddler splash pad backyard",
+      "angle": "spring to summer transition",
+      "title": "The easiest backyard win once it gets warm",
+      "description": "If the weather is finally nice and your toddler needs something to do, this splash pad is an easy yes. Quick setup, shallow water, and way less hassle than a pool.",
+      "image": "frontend/assets/easter2026/Splash_pad_top_down.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Baby Shower!"],
+      "tags": [
+        "toddler splash pad",
+        "backyard play",
+        "spring activities",
+        "summer toys",
+        "kids outdoor fun"
+      ]
+    },
+    {
+      "keyword": "safe water play for toddlers",
+      "angle": "parent reassurance",
+      "title": "Safe water play without the full pool setup",
+      "description": "This is the kind of water play parents actually say yes to. Shallow, simple, and easy to pull out when you need outdoor time without a giant production.",
+      "image": "frontend/assets/easter2026/Safe_splash_pad.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Baby Shower!"],
+      "tags": [
+        "toddler safety",
+        "water play",
+        "spring kids",
+        "backyard ideas",
+        "mom hacks"
+      ]
+    },
+    {
+      "keyword": "outdoor toys that tire toddlers out",
+      "angle": "energy burn",
+      "title": "This burns toddler energy fast",
+      "description": "When you need them outside and moving, this works. It keeps toddlers cool, busy, and way less likely to bounce off your walls all afternoon.",
+      "image": "frontend/assets/easter2026/Splash_pad_top_down.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "I Want, I dream."],
+      "tags": [
+        "toddler activities",
+        "energy burner",
+        "outdoor toys",
+        "summer play",
+        "busy toddler"
+      ]
+    }
+  ]
+}

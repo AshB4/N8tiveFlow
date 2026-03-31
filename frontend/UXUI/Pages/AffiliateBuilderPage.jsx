@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import AppTopNav from "../Components/AppTopNav";
 import { useToast } from "@/Components/ui/use-toast";
+import { getAffiliateRowIdentity } from "../utils/productIdentity";
 
 const ANGLE_PRESETS = [
   "beginner",
@@ -118,13 +119,56 @@ function resolvePostsPerDay(dateString, defaultCount, overrides = []) {
   return defaultCount;
 }
 
-function buildSchedulePlan(totalRows, startDate, defaultPostsPerDay, overrides = []) {
+function hashSeed(input) {
+  const text = String(input || "postpunk");
+  let hash = 2166136261;
+  for (let index = 0; index < text.length; index += 1) {
+    hash ^= text.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function seededUnit(seedText) {
+  const value = hashSeed(seedText);
+  return value / 4294967296;
+}
+
+function randomIntInclusive(seedText, min, max) {
+  const safeMin = Math.min(min, max);
+  const safeMax = Math.max(min, max);
+  const unit = seededUnit(seedText);
+  return safeMin + Math.floor(unit * (safeMax - safeMin + 1));
+}
+
+function buildSchedulePlan(
+  totalRows,
+  startDate,
+  defaultPostsPerDay,
+  overrides = [],
+  options = {},
+) {
+  const cadenceMode = options.cadenceMode || "fixed";
+  const randomMin = Number(options.randomMin || 4);
+  const randomMax = Number(options.randomMax || 6);
+  const randomSeed = String(options.randomSeed || "postpunk-4-6");
   const plan = [];
   let cursorDate = startDate;
   let rowIndex = 0;
 
   while (rowIndex < totalRows) {
-    const postsPerDay = resolvePostsPerDay(cursorDate, defaultPostsPerDay, overrides);
+    const hasOverride = overrides.some(
+      (rule) =>
+        rule.startDate &&
+        rule.endDate &&
+        rule.postsPerDay &&
+        cursorDate >= rule.startDate &&
+        cursorDate <= rule.endDate,
+    );
+    const postsPerDay =
+      cadenceMode === "random_4_6" && !hasOverride
+        ? randomIntInclusive(`${randomSeed}:${cursorDate}`, randomMin, randomMax)
+        : resolvePostsPerDay(cursorDate, defaultPostsPerDay, overrides);
     const slots = buildTimesForCount(postsPerDay);
     for (const time of slots) {
       if (rowIndex >= totalRows) break;
@@ -187,11 +231,7 @@ function parseBulkJson(raw) {
 }
 
 function buildMixKey(row) {
-  return (
-    String(row.productLink || "").trim().toLowerCase() ||
-    String(row.keyword || "").trim().toLowerCase() ||
-    row.id
-  );
+  return getAffiliateRowIdentity(row);
 }
 
 function mixRows(rows) {
@@ -235,6 +275,8 @@ export default function AffiliateBuilderPage() {
   ]);
   const [isQueueing, setIsQueueing] = useState(false);
   const [bulkJson, setBulkJson] = useState("");
+  const [cadenceMode, setCadenceMode] = useState("random_4_6");
+  const [randomSeed, setRandomSeed] = useState("spring26-mix");
 
   useEffect(() => {
     try {
@@ -246,6 +288,8 @@ export default function AffiliateBuilderPage() {
       if (Array.isArray(saved.rows) && saved.rows.length) setRows(saved.rows);
       if (saved.startDate) setStartDate(saved.startDate);
       if (saved.defaultPostsPerDay) setDefaultPostsPerDay(saved.defaultPostsPerDay);
+      if (saved.cadenceMode) setCadenceMode(saved.cadenceMode);
+      if (saved.randomSeed) setRandomSeed(saved.randomSeed);
       if (Array.isArray(saved.scheduleOverrides) && saved.scheduleOverrides.length) {
         setScheduleOverrides(saved.scheduleOverrides);
       }
@@ -299,10 +343,22 @@ export default function AffiliateBuilderPage() {
         selectedIds,
         startDate,
         defaultPostsPerDay,
+        cadenceMode,
+        randomSeed,
         scheduleOverrides,
       }),
     );
-  }, [batchLabel, defaultBoard, rows, selectedIds, startDate, defaultPostsPerDay, scheduleOverrides]);
+  }, [
+    batchLabel,
+    defaultBoard,
+    rows,
+    selectedIds,
+    startDate,
+    defaultPostsPerDay,
+    cadenceMode,
+    randomSeed,
+    scheduleOverrides,
+  ]);
 
   const readyRows = useMemo(
     () => rows.filter((row) => row.title && row.description && row.productLink),
@@ -316,8 +372,20 @@ export default function AffiliateBuilderPage() {
   );
 
   const schedulePreview = useMemo(
-    () => buildSchedulePlan(exportableRows.length, startDate, defaultPostsPerDay, scheduleOverrides),
-    [exportableRows.length, startDate, defaultPostsPerDay, scheduleOverrides],
+    () =>
+      buildSchedulePlan(
+        exportableRows.length,
+        startDate,
+        defaultPostsPerDay,
+        scheduleOverrides,
+        {
+          cadenceMode,
+          randomMin: 4,
+          randomMax: 6,
+          randomSeed,
+        },
+      ),
+    [exportableRows.length, startDate, defaultPostsPerDay, scheduleOverrides, cadenceMode, randomSeed],
   );
 
   const updateRow = (id, field, value) => {
@@ -386,7 +454,7 @@ export default function AffiliateBuilderPage() {
           .filter(
             (item) =>
               item.keyword.trim().toLowerCase() === row.keyword.trim().toLowerCase() &&
-              item.productLink.trim() === row.productLink.trim(),
+              getAffiliateRowIdentity(item) === getAffiliateRowIdentity(row),
           )
           .map((item) => item.angle.trim().toLowerCase()),
       );
@@ -508,6 +576,12 @@ export default function AffiliateBuilderPage() {
         startDate,
         defaultPostsPerDay,
         scheduleOverrides,
+        {
+          cadenceMode,
+          randomMin: 4,
+          randomMax: 6,
+          randomSeed,
+        },
       );
 
       for (let index = 0; index < mixedRows.length; index += 1) {
@@ -640,6 +714,26 @@ export default function AffiliateBuilderPage() {
                   max="12"
                   value={defaultPostsPerDay}
                   onChange={(e) => setDefaultPostsPerDay(Number(e.target.value || 1))}
+                  className="mt-2 w-full rounded-xl border border-orange-400/40 bg-black/40 px-4 py-3 text-sm text-orange-100 outline-none focus:border-orange-300"
+                />
+              </label>
+              <label className="block">
+                <span className="text-xs uppercase tracking-[0.3em] text-orange-300">Cadence mode</span>
+                <select
+                  value={cadenceMode}
+                  onChange={(e) => setCadenceMode(e.target.value)}
+                  className="mt-2 w-full rounded-xl border border-orange-400/40 bg-black/40 px-4 py-3 text-sm text-orange-100 outline-none focus:border-orange-300"
+                >
+                  <option value="random_4_6">Randomized 4-6/day</option>
+                  <option value="fixed">Fixed/day</option>
+                </select>
+              </label>
+              <label className="block">
+                <span className="text-xs uppercase tracking-[0.3em] text-orange-300">Random seed</span>
+                <input
+                  value={randomSeed}
+                  onChange={(e) => setRandomSeed(e.target.value)}
+                  placeholder="spring26-mix"
                   className="mt-2 w-full rounded-xl border border-orange-400/40 bg-black/40 px-4 py-3 text-sm text-orange-100 outline-none focus:border-orange-300"
                 />
               </label>

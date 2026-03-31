@@ -1,0 +1,86 @@
+{
+  "productLink": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
+  "board": "Fun Ideas",
+  "items": [
+    {
+      "keyword": "easter basket stuffers toddlers no candy",
+      "angle": "seasonal",
+      "title": "Better than candy. No chaos after.",
+      "description": "These prefilled eggs are way better than sugar. Fun, reusable, and toddlers actually play with them.",
+      "image": "frontend/assets/easter2026/PrincessEggs.jpg",
+      "board": "Baby Shower!",
+      "boards": ["Baby Shower!", "Fun Ideas", "Epic cuteness"],
+      "tags": ["easter basket ideas", "no candy easter", "toddler gift", "easter toys", "kids basket"]
+    },
+    {
+      "keyword": "mess free toddler toys at home",
+      "angle": "problem",
+      "title": "I got 15 minutes of silence with this",
+      "description": "No cleanup. No setup. Just open and play. Perfect when you need something easy that actually works.",
+      "image": "frontend/assets/easter2026/princess04.jpg",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Epic cuteness"],
+      "tags": ["no mess toys", "toddler activities", "easy parenting", "quiet toys", "indoor kids"]
+    },
+    {
+      "keyword": "toys that keep toddlers busy independently",
+      "angle": "problem",
+      "title": "This toy buys you time (no joke)",
+      "description": "If your toddler gets bored in 2 minutes, try this. Simple, satisfying play that actually holds attention.",
+      "image": "frontend/assets/easter2026/Princess03.jpg",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "I Want, I dream.", "Epic cuteness"],
+      "tags": ["busy toddler", "independent play", "toddler toys", "quiet play", "stay busy"]
+    },
+    {
+      "keyword": "travel toys toddlers airplane quiet activities",
+      "angle": "use case",
+      "title": "Toddlers actually sit still for this",
+      "description": "Compact, quiet, and zero screens. Ideal for flights, car rides, or waiting rooms.",
+      "image": "frontend/assets/easter2026/princess04.jpg",
+      "board": "I Want, I dream.",
+      "boards": ["I Want, I dream.", "Fun Ideas", "Epic cuteness"],
+      "tags": ["travel toys toddler", "plane activities", "quiet toys", "road trip kids", "screen free"]
+    },
+    {
+      "keyword": "screen free toddler activities simple toys",
+      "angle": "problem",
+      "title": "No iPad needed. This works.",
+      "description": "Swap the iPad for something hands-on. Keeps kids engaged without the meltdown after.",
+      "image": "frontend/assets/easter2026/Princess03.jpg",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Epic cuteness"],
+      "tags": ["screen free kids", "toddler play", "learning toys", "no ipad", "kids activities"]
+    },
+    {
+      "keyword": "cute toddler gifts that are actually useful",
+      "angle": "best",
+      "title": "Actually useful toddler gift",
+      "description": "Not another toy they ignore. This one gets used over and over again.",
+      "image": "frontend/assets/easter2026/PrincessEggs.jpg",
+      "board": "I Want, I dream.",
+      "boards": ["I Want, I dream.", "Fun Ideas", "Epic cuteness"],
+      "tags": ["toddler gift", "useful toys", "kids gift ideas", "parent win", "best toys"]
+    },
+    {
+      "keyword": "fine motor skill toys toddlers matching eggs",
+      "angle": "benefit",
+      "title": "Builds skills while they play",
+      "description": "Helps with matching, coordination, and focus without feeling like learning.",
+      "image": "frontend/assets/easter2026/princessxmas05.jpg",
+      "board": "Baby Shower!",
+      "boards": ["Baby Shower!", "Fun Ideas", "Epic cuteness"],
+      "tags": ["fine motor skills", "learning toys", "toddler development", "matching game", "educational toys"]
+    },
+    {
+      "keyword": "what to put in toddler easter basket besides candy",
+      "angle": "use case",
+      "title": "This stopped the meltdown instantly",
+      "description": "Easy, no-junk Easter basket idea. Fun, reusable, and way less chaos than candy.",
+      "image": "frontend/assets/easter2026/PrincessEggs.jpg",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "Baby Shower!", "Epic cuteness"],
+      "tags": ["easter basket toddler", "basket fillers", "no sugar easter", "kids gifts", "easter ideas"]
+    }
+  ]
+}

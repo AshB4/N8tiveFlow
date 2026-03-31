@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AppTopNav from "../Components/AppTopNav";
 import { useToast } from "@/Components/ui/use-toast";
 import { productProfiles, getProductProfile } from "../utils/productProfiles";
+import { getPostProductIdentity } from "../utils/productIdentity";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 
@@ -170,11 +171,7 @@ function addDaysToDateOnly(dateValue, daysToAdd) {
 function interleavePostsByProduct(selectedPosts = [], productOrder = []) {
   const buckets = new Map();
   for (const post of selectedPosts) {
-    const key =
-      post?.metadata?.productProfileId ||
-      post?.metadata?.productProfileLabel ||
-      post?.title ||
-      post?.id;
+    const key = getPostProductIdentity(post);
     if (!buckets.has(key)) buckets.set(key, []);
     buckets.get(key).push(post);
   }

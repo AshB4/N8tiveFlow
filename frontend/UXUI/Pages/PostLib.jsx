@@ -10,6 +10,7 @@ import {
 	isAffiliatePost,
 	normalizePostStatus,
 } from "../utils/postStatus";
+import { getPostProductIdentity, getPostProductLink } from "../utils/productIdentity";
 
 const API_BASE = import.meta.env?.VITE_API_BASE || "http://localhost:3001";
 const DEFAULT_ROTATION_SETTINGS = {
@@ -48,12 +49,6 @@ const buildScheduledIso = (dateValue, timeValue, offsetDays) => {
 	const scheduled = new Date(year, month - 1, day + offsetDays, hours || 0, minutes || 0, 0, 0);
 	return scheduled.toISOString();
 };
-
-const getProductLink = (post) =>
-	post?.metadata?.productLinks?.primary ||
-	post?.metadata?.productLinks?.amazon ||
-	post?.metadata?.productLinks?.gumroad ||
-	"";
 
 const getPerformanceMetrics = (post) => ({
 	likes24h: Number(post?.metadata?.performance?.likes24h || 0),
@@ -113,11 +108,7 @@ const addDaysToDateOnly = (dateValue, daysToAdd) => {
 const interleavePostsByProduct = (selectedPosts = [], productOrder = []) => {
 	const buckets = new Map();
 	for (const post of selectedPosts) {
-		const key =
-			post?.metadata?.productProfileId ||
-			post?.metadata?.productProfileLabel ||
-			post?.title ||
-			post?.id;
+		const key = getPostProductIdentity(post);
 		if (!buckets.has(key)) buckets.set(key, []);
 		buckets.get(key).push(post);
 	}

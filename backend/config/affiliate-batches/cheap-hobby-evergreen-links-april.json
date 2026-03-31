@@ -1,0 +1,57 @@
+{
+  "productLink": "https://ashb4.github.io/links?utm_source=pinterest&utm_medium=social&utm_campaign=cheap-hobby-evergreen",
+  "board": "Fun Ideas",
+  "publishAt": "2026-04-09",
+  "items": [
+    {
+      "keyword": "cheap hobbies at home",
+      "angle": "budget hobby discovery",
+      "title": "Cheap Hobby That Feels Expensive",
+      "description": "Looking for cheap hobbies that actually feel luxurious? This one is low cost but high enjoyment. Perfect for relaxing at home without spending much.",
+      "image": "frontend/assets/BuzzingBees/CheapHobbySunflower.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "I Want, I dream.", "Random thoughts"],
+      "tags": ["cheap hobbies", "hobby ideas", "budget lifestyle", "relaxing hobbies", "things to do at home"]
+    },
+    {
+      "keyword": "self care hobbies cheap",
+      "angle": "self care angle",
+      "title": "Low Cost Hobby That Feels Like Self Care",
+      "description": "You don't need expensive routines to relax. This cheap hobby feels like real self care without draining your wallet.",
+      "image": "frontend/assets/BuzzingBees/CheapHobbySunflower.png",
+      "board": "Beautiful me.",
+      "boards": ["Beautiful me.", "Home spa", "Random thoughts"],
+      "tags": ["self care hobby", "cheap self care", "relaxing ideas", "mental wellness", "simple pleasures"]
+    },
+    {
+      "keyword": "aesthetic hobbies cheap",
+      "angle": "aesthetic / pinterest vibe",
+      "title": "Aesthetic Hobby That's Actually Cheap",
+      "description": "This aesthetic hobby looks expensive but costs almost nothing to start. Perfect for cozy, creative time at home.",
+      "image": "frontend/assets/BuzzingBees/CheapHobbySunflower.png",
+      "board": "Art & quotes",
+      "boards": ["Art & quotes", "Epic cuteness", "I'm so Crafty...."],
+      "tags": ["aesthetic hobby", "creative hobby", "cozy hobbies", "art inspiration", "cheap creative ideas"]
+    },
+    {
+      "keyword": "things to do at home cheap",
+      "angle": "boredom killer",
+      "title": "Bored at Home? Try This Cheap Hobby",
+      "description": "If you're bored at home and don't want to spend money, this cheap hobby is surprisingly fun and satisfying.",
+      "image": "frontend/assets/BuzzingBees/CheapHobbySunflower.png",
+      "board": "Fun Ideas",
+      "boards": ["Fun Ideas", "fun committee", "Random thoughts"],
+      "tags": ["bored at home", "things to do", "cheap fun", "home activities", "hobby ideas"]
+    },
+    {
+      "keyword": "creative hobbies for adults cheap",
+      "angle": "adult creative outlet",
+      "title": "Cheap Creative Hobby for Adults",
+      "description": "A creative hobby that doesn't cost much but still feels rewarding. Great for unwinding and making something meaningful.",
+      "image": "frontend/assets/BuzzingBees/CheapHobbySunflower.png",
+      "board": "I'm so Crafty....",
+      "boards": ["I'm so Crafty....", "Make it sew!", "Art & quotes"],
+      "tags": ["creative hobby", "adult hobbies", "diy ideas", "craft hobby", "cheap creativity"]
+    }
+  ]
+}

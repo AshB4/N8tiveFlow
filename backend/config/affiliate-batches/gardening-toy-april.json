@@ -1,0 +1,38 @@
+{
+  "productLink": "https://www.amazon.com/Gardening-Wheelbarrow-Repotting-Watering-Learning/dp/B0G4W77WL6/?tag=ashb4studio0b-20",
+  "board": "Gardening stuff",
+  "items": [
+    {
+      "keyword": "kids gardening tool set",
+      "angle": "spring family activity",
+      "title": "A spring activity that keeps little kids involved",
+      "description": "This gardening set makes kids feel like they are actually helping, which is half the battle. Great for spring weekends, backyard play, and family time outside.",
+      "image": "frontend/assets/easter2026/kids_gardening_helping.png",
+      "board": "Gardening stuff",
+      "boards": ["Gardening stuff", "Fun Ideas", "Baby Shower!"],
+      "tags": [
+        "kids gardening",
+        "spring activities",
+        "family fun",
+        "outdoor kids",
+        "backyard ideas"
+      ]
+    },
+    {
+      "keyword": "gardening toys for toddlers",
+      "angle": "parent win",
+      "title": "A backyard toy that feels useful instead of chaotic",
+      "description": "The wheelbarrow, watering can, and tools make this feel more satisfying than random outdoor toys. Good for kids who want to copy whatever you are doing outside.",
+      "image": "frontend/assets/easter2026/Kids_gardening_hack.png",
+      "board": "Gardening stuff",
+      "boards": ["Gardening stuff", "Fun Ideas", "I Want, I dream."],
+      "tags": [
+        "garden toys",
+        "kids tools",
+        "spring play",
+        "outdoor toys",
+        "parent hacks"
+      ]
+    }
+  ]
+}

@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-async function postToInstagram(post, account) {
-  const { accessToken } = account.credentials;
-  const { accountId } = account.metadata || {};
+async function postToInstagram(post, context = {}) {
+  const account = context?.account || context || {};
+  const accessToken = account?.credentials?.accessToken;
+  const { accountId } = account?.metadata || {};
   if (!accessToken || accessToken === 'TODO_USER_ACCESS_TOKEN') {
     throw new Error('Instagram access token not configured');
   }

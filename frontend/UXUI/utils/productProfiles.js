@@ -188,7 +188,7 @@ export const productProfiles = [
     audience: "nature-loving kids, gift buyers, homeschoolers, and gentle hobby shoppers",
     brandVoice: "friendly, educational, playful, warm",
     primaryGoal: "sell the bee-themed coloring book on Amazon",
-    promotionChannels: ["amazon", "pinterest", "facebook", "instagram"],
+    promotionChannels: ["pinterest", "facebook"],
     links: {
       gumroad: "",
       amazon: "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX",

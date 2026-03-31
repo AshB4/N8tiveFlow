@@ -62,6 +62,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - now also shows failed scheduled posts in red
   - supports retrying failed posts forward by a day
   - shows affiliate day markers in the month grid with a small status-colored `🛒` badge beside the date number
+  - orders day-level posts so `facebook`/`instagram` social posts appear before affiliate Amazon/Pinterest pins
 - `frontend/UXUI/Pages/SetupPage.jsx`
   - owns rotation defaults
   - now also surfaces token/platform health from `/api/platform-health`
@@ -121,15 +122,26 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 ### Per-platform handlers
 
 - Dev.to: `backend/scripts/platforms/dev/post-to-devto.js`
+- Hashnode: `backend/scripts/platforms/dev/post-to-hashnode.js`
+- Product Hunt: `backend/scripts/platforms/dev/post-to-producthunt.js`
 - X: `backend/scripts/platforms/social/post-to-x.js`
 - Facebook: `backend/scripts/platforms/social/post-to-facebook.js`
+- Facebook browser lane: `backend/scripts/platforms/social/post-to-facebook-browser.js`
 - Instagram: `backend/scripts/platforms/social/post-to-instagram.js`
 - LinkedIn: `backend/scripts/platforms/social/post-to-linkedin.js`
 - Pinterest: `backend/scripts/platforms/social/post-to-pinterest.js`
 - Substack: `backend/scripts/platforms/social/post-to-substack.js`
 - Reddit: `backend/scripts/platforms/social/post-to-reddit.js`
 - Threads: `backend/scripts/platforms/social/post-to-threads.js`
+- Tumblr: `backend/scripts/platforms/social/post-to-tumblr.js`
+- Ko-fi: `backend/scripts/platforms/content/post-to-kofi.js`
+- Discord: `backend/scripts/platforms/adult/post-to-discord.js`
+- Amazon: `backend/scripts/platforms/marketplaces/post-to-amazon.js`
 - Pinterest session bootstrap helper: `backend/scripts/platforms/social/capture-pinterest-state.js`
+
+### Adapter files present but not currently dispatched in `post-to-all.js`
+
+- TikTok adapter file exists: `backend/scripts/platforms/social/post-to-tiktok.js`
 
 ### Meta lane notes
 

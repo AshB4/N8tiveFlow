@@ -1,0 +1,197 @@
+{
+  "productLink": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX",
+  "board": "coloring pages",
+  "publishAt": "2026-04-13",
+  "items": [
+    {
+      "keyword": "5 minute relaxation",
+      "angle": "instant relief",
+      "title": "5 Minutes of Calm You Can Start Right Now",
+      "description": "Need a quick reset? This relaxing coloring book gives you an easy way to slow down and start calming your mind in minutes.",
+      "image": "frontend/assets/BuzzingBees/5minsOfCalmBigBee.png",
+      "board": "coloring pages",
+      "boards": [
+        "Beautiful me.",
+        "Random thoughts"
+      ],
+      "tags": [
+        "relaxation",
+        "stress relief",
+        "adult coloring",
+        "calm hobby",
+        "self care"
+      ]
+    },
+    {
+      "keyword": "easy self care ideas",
+      "angle": "low effort self care",
+      "title": "The Easiest Way to Relax After a Long Day",
+      "description": "No complicated routine. Just pick a page and start. A simple, low-effort hobby that actually helps you unwind.",
+      "image": "frontend/assets/BuzzingBees/5minsOfCalmBigBee.png",
+      "board": "Beautiful me.",
+      "boards": [
+        "Home spa",
+        "Random thoughts"
+      ],
+      "tags": [
+        "self care",
+        "easy hobbies",
+        "relaxing ideas",
+        "mental wellness",
+        "coloring book"
+      ]
+    },
+    {
+      "keyword": "quick mental reset",
+      "angle": "time poor",
+      "title": "Only Have 5 Minutes? Do This",
+      "description": "Short on time and mentally fried? This quick creative reset is simple, calming, and easy to start.",
+      "image": "frontend/assets/BuzzingBees/5minsOfCalmBigBee.png",
+      "board": "Random thoughts",
+      "boards": [
+        "Fun Ideas",
+        "Beautiful me."
+      ],
+      "tags": [
+        "mental reset",
+        "quick calm",
+        "stress relief",
+        "adult hobby",
+        "relaxation"
+      ]
+    },
+    {
+      "keyword": "quiet your mind",
+      "angle": "mental health",
+      "title": "A Simple Way to Quiet Your Mind",
+      "description": "No screens. No noise. Just a peaceful, creative activity that helps you slow down and breathe a little easier.",
+      "image": "frontend/assets/BuzzingBees/5minsOfCalmBigBee.png",
+      "board": "Beautiful me.",
+      "boards": [
+        "psychology /sociology",
+        "Random thoughts"
+      ],
+      "tags": [
+        "quiet mind",
+        "mental health",
+        "relaxation",
+        "creative hobby",
+        "adult coloring"
+      ]
+    },
+    {
+      "keyword": "daily calm habits",
+      "angle": "habit builder",
+      "title": "Build a Calm Habit in 5 Minutes a Day",
+      "description": "A tiny habit that feels good and is easy to keep. Start with one page and five calm minutes.",
+      "image": "frontend/assets/BuzzingBees/5minsOfCalmBigBee.png",
+      "board": "Beautiful me.",
+      "boards": [
+        "Home spa",
+        "coloring pages"
+      ],
+      "tags": [
+        "daily habits",
+        "calm routine",
+        "self care",
+        "adult coloring",
+        "simple living"
+      ]
+    },
+    {
+      "keyword": "adult coloring trend",
+      "angle": "trend",
+      "title": "Why Adults Are Coloring Again",
+      "description": "Adult coloring is back because it is calming, creative, and way more relaxing than people expect.",
+      "image": "frontend/assets/BuzzingBees/AdultsColoringAgainBigBee.png",
+      "board": "coloring pages",
+      "boards": [
+        "Art & quotes",
+        "Fun Ideas"
+      ],
+      "tags": [
+        "adult coloring",
+        "coloring trend",
+        "creative hobby",
+        "stress relief",
+        "calming activity"
+      ]
+    },
+    {
+      "keyword": "stress relief hobbies",
+      "angle": "stress proof",
+      "title": "This \"Childish\" Habit Actually Reduces Stress",
+      "description": "It looks simple, but this low-cost hobby can help you slow down, focus, and relax after a hard day.",
+      "image": "frontend/assets/BuzzingBees/AdultsColoringAgainBigBee.png",
+      "board": "Beautiful me.",
+      "boards": [
+        "Home spa",
+        "coloring pages"
+      ],
+      "tags": [
+        "stress relief",
+        "adult hobbies",
+        "self care",
+        "easy hobby",
+        "mental wellness"
+      ]
+    },
+    {
+      "keyword": "burnout recovery ideas",
+      "angle": "anti burnout",
+      "title": "Burnt Out? Try This Instead of Scrolling",
+      "description": "When your brain feels cooked, this is an easy way to step away from screens and reset for a few minutes.",
+      "image": "frontend/assets/BuzzingBees/AdultsColoringAgainBigBee.png",
+      "board": "Random thoughts",
+      "boards": [
+        "Beautiful me.",
+        "Fun Ideas"
+      ],
+      "tags": [
+        "burnout",
+        "digital detox",
+        "mental reset",
+        "relaxing hobby",
+        "adult coloring"
+      ]
+    },
+    {
+      "keyword": "easy hobbies for adults",
+      "angle": "skeptic breaker",
+      "title": "I Thought This Was Stupid... Until I Tried It",
+      "description": "Turns out this simple hobby is relaxing, cheap, and way more satisfying than it sounds.",
+      "image": "frontend/assets/BuzzingBees/AdultsColoringAgainBigBee.png",
+      "board": "Fun Ideas",
+      "boards": [
+        "Random thoughts",
+        "coloring pages"
+      ],
+      "tags": [
+        "easy hobby",
+        "adult hobbies",
+        "cheap hobby",
+        "creative relaxation",
+        "try this"
+      ]
+    },
+    {
+      "keyword": "cheap self care ideas",
+      "angle": "reframed self care",
+      "title": "Not Just for Kids - This Is Real Self Care",
+      "description": "Simple, affordable, and calming. This is one of those self-care habits that actually feels doable.",
+      "image": "frontend/assets/BuzzingBees/AdultsColoringAgainBigBee.png",
+      "board": "Beautiful me.",
+      "boards": [
+        "Home spa",
+        "Art & quotes"
+      ],
+      "tags": [
+        "self care",
+        "cheap self care",
+        "adult coloring",
+        "relaxing hobby",
+        "wellness"
+      ]
+    }
+  ]
+}

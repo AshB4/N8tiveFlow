@@ -1,0 +1,93 @@
+{
+  "productLink": "https://www.amazon.com/dp/B09JFW2ZXC?tag=ashb4studio0b-20",
+  "image": "frontend/assets/spring26/landscapeb4andafter.png",
+  "board": "Dream home",
+  "publishAt": "2026-04-17",
+  "items": [
+    {
+      "keyword": "backyard lighting ideas for night ambiance",
+      "angle": "aesthetic",
+      "title": "Backyard lighting ideas that instantly upgrade your space",
+      "description": "This is how people get that warm, high-end backyard glow at night. Simple lighting, huge difference in vibe.",
+      "boards": [
+        "Dream home",
+        "Diy for the home"
+      ],
+      "tags": [
+        "backyard lighting",
+        "outdoor lighting ideas",
+        "garden lights",
+        "home glow up",
+        "landscape lighting"
+      ]
+    },
+    {
+      "keyword": "how to light up backyard trees at night",
+      "angle": "use case",
+      "title": "How to light up backyard trees (easy setup)",
+      "description": "Point, place, done. These lights make trees and paths look professionally lit without hiring anyone.",
+      "boards": [
+        "Dream home",
+        "Gardening stuff"
+      ],
+      "tags": [
+        "tree lighting",
+        "garden lighting",
+        "yard lights",
+        "outdoor setup",
+        "landscape spotlight"
+      ]
+    },
+    {
+      "keyword": "dark backyard safety lighting ideas",
+      "angle": "problem",
+      "title": "Dark backyard? This fixes it fast",
+      "description": "If your yard disappears at night, this is the easiest way to make it safer and actually usable.",
+      "boards": [
+        "Diy for the home",
+        "Prepping (SHTF)"
+      ],
+      "tags": [
+        "outdoor security lighting",
+        "yard safety",
+        "path lighting",
+        "home improvement",
+        "backyard upgrade"
+      ]
+    },
+    {
+      "keyword": "cozy outdoor lighting setup backyard",
+      "angle": "lifestyle",
+      "title": "Cozy backyard lighting setup you'll actually use",
+      "description": "Turn your backyard into a night hangout spot. Warm lighting, better vibes, zero complicated install.",
+      "boards": [
+        "Dream home",
+        "Beautiful me."
+      ],
+      "tags": [
+        "cozy backyard",
+        "outdoor vibes",
+        "night aesthetic",
+        "home inspo",
+        "warm lighting"
+      ]
+    },
+    {
+      "keyword": "best landscape spotlights for yard 2026",
+      "angle": "best",
+      "title": "Best landscape spotlights for a clean modern yard",
+      "description": "If you want that clean, modern outdoor look-these are the lights people keep using right now.",
+      "boards": [
+        "Dream home",
+        "I Want, I dream."
+      ],
+      "tags": [
+        "best outdoor lights",
+        "modern backyard",
+        "landscape lighting",
+        "yard upgrade",
+        "home exterior"
+      ]
+    }
+  ]
+}

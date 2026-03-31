@@ -77,6 +77,54 @@ const formatTargetsLabel = (targets = [], fallbackPlatforms = []) => {
     .join(", ");
 };
 
+const getPlatformSetForPost = (post) => {
+  const set = new Set();
+  for (const target of normalizeTargetsForPost(post)) {
+    if (target?.platform) {
+      set.add(String(target.platform).toLowerCase());
+    }
+  }
+  return set;
+};
+
+const getCalendarPostPriority = (post) => {
+  const platforms = getPlatformSetForPost(post);
+  const hasFacebookOrInstagram =
+    platforms.has("facebook") || platforms.has("instagram");
+  if (hasFacebookOrInstagram) {
+    return 0;
+  }
+
+  const isAmazonAffiliatePin =
+    isAffiliatePost(post) &&
+    (platforms.has("pinterest") || platforms.has("amazon"));
+  if (isAmazonAffiliatePin) {
+    return 2;
+  }
+
+  return 1;
+};
+
+const compareCalendarPostOrder = (left, right) => {
+  const leftPriority = getCalendarPostPriority(left);
+  const rightPriority = getCalendarPostPriority(right);
+  if (leftPriority !== rightPriority) {
+    return leftPriority - rightPriority;
+  }
+
+  const leftTime = new Date(
+    left.scheduledAt || left.scheduled_at || left.intended_date || left.date || 0
+  ).getTime();
+  const rightTime = new Date(
+    right.scheduledAt || right.scheduled_at || right.intended_date || right.date || 0
+  ).getTime();
+  if (leftTime !== rightTime) {
+    return leftTime - rightTime;
+  }
+
+  return String(left.title || "").localeCompare(String(right.title || ""));
+};
+
 const getAffiliateDayBadgeStyle = (workflowKey) => {
   const styles = {
     failed: { backgroundColor: "#e11d48", color: "#ffffff" },
@@ -172,6 +220,7 @@ export default function PostCalendar() {
               workflow: palette.key,
               affiliate: isAffiliatePost(post),
               originalTitle: post.title,
+              sortRank: getCalendarPostPriority(post),
             },
           };
         })
@@ -229,7 +278,10 @@ export default function PostCalendar() {
       __targets: normalizeTargetsForPost(post),
     }))
     .filter((post) => post.__date && post.__date >= todayIso)
-    .sort((a, b) => (a.__date < b.__date ? -1 : 1));
+    .sort((a, b) => {
+      if (a.__date !== b.__date) return a.__date < b.__date ? -1 : 1;
+      return compareCalendarPostOrder(a, b);
+    });
 
   const pastScheduled = scheduledPosts
     .map((post, idx) => ({
@@ -239,7 +291,10 @@ export default function PostCalendar() {
       __targets: normalizeTargetsForPost(post),
     }))
     .filter((post) => post.__date && post.__date < todayIso)
-    .sort((a, b) => (a.__date > b.__date ? -1 : 1));
+    .sort((a, b) => {
+      if (a.__date !== b.__date) return a.__date > b.__date ? -1 : 1;
+      return compareCalendarPostOrder(a, b);
+    });
 
   if (loading) {
     return (
@@ -279,7 +334,8 @@ export default function PostCalendar() {
         __hasRealId: Boolean(post.id || post._id),
         targets: normalizeTargetsForPost(post),
       }))
-      .filter((post) => getPostDate(post) === isoDate);
+      .filter((post) => getPostDate(post) === isoDate)
+      .sort(compareCalendarPostOrder);
     setSelectedDayPosts(dayPosts);
   };
 
@@ -487,6 +543,18 @@ export default function PostCalendar() {
             height="auto"
             dayMaxEventRows={3}
             eventDisplay="block"
+            eventOrder={(left, right) => {
+              const leftRank = Number(left?.extendedProps?.sortRank ?? 1);
+              const rightRank = Number(right?.extendedProps?.sortRank ?? 1);
+              if (leftRank !== rightRank) return leftRank - rightRank;
+              const leftTitle = String(
+                left?.extendedProps?.originalTitle || left?.title || ""
+              );
+              const rightTitle = String(
+                right?.extendedProps?.originalTitle || right?.title || ""
+              );
+              return leftTitle.localeCompare(rightTitle);
+            }}
             dayCellClassNames={(arg) => {
               const dateStr = toLocalDateKey(arg.date);
               const classes = [];

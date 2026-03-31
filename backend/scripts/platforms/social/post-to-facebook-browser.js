@@ -17,6 +17,8 @@ const DEFAULT_CLONED_PROFILE_DIR = path.join(
 	"facebook-chrome-profile",
 );
 const STEP_TIMEOUT_MS = Number(process.env.FACEBOOK_BROWSER_STEP_TIMEOUT_MS || 15000);
+const CLEANUP_TIMEOUT_MS = Number(process.env.FACEBOOK_BROWSER_CLEANUP_TIMEOUT_MS || 12000);
+const POST_SETTLE_MS = Number(process.env.FACEBOOK_POST_SETTLE_MS || 8000);
 
 function boolFromEnv(name, fallback = true) {
 	const value = process.env[name];
@@ -48,12 +50,57 @@ function resolveProfileConfig() {
 		clonedUserDataDir:
 			process.env.FACEBOOK_CLONED_CHROME_USER_DATA_DIR || DEFAULT_CLONED_PROFILE_DIR,
 		keepOpenOnAuthRequired: boolFromEnv("FACEBOOK_KEEP_OPEN_ON_AUTH_REQUIRED", true),
+		keepOpenOnPostFailure: boolFromEnv("FACEBOOK_KEEP_OPEN_ON_POST_FAILURE", true),
 	};
 }
 
 function logStep(step, detail = "") {
 	const suffix = detail ? ` :: ${detail}` : "";
 	console.log(`[fb-browser] ${step}${suffix}`);
+}
+
+function shouldFallbackToChromium() {
+	return !["0", "false", "off", "no"].includes(
+		String(process.env.FACEBOOK_FALLBACK_TO_CHROMIUM || "false").toLowerCase(),
+	);
+}
+
+function isBrowserLaunchAbortError(error) {
+	const message = String(error?.message || error || "");
+	return (
+		/browsertype\.launchpersistentcontext/i.test(message) &&
+		(/signal=sigabrt/i.test(message) ||
+			/abort trap/i.test(message) ||
+			/hiservices/i.test(message) ||
+			/crashpad/i.test(message) ||
+			/target page, context or browser has been closed/i.test(message))
+	);
+}
+
+async function launchFacebookContextWithFallback(profile, config) {
+	try {
+		return await chromium.launchPersistentContext(profile.launchUserDataDir, {
+			channel: config.channel,
+			executablePath: config.executablePath,
+			headless: config.headless,
+			args: [`--profile-directory=${profile.profileDirectory}`],
+			viewport: { width: 1440, height: 960 },
+		});
+	} catch (error) {
+		if (
+			!shouldFallbackToChromium() ||
+			String(config.channel || "").toLowerCase() !== "chrome" ||
+			!isBrowserLaunchAbortError(error)
+		) {
+			throw error;
+		}
+		logStep("browser:launch:fallback", "chromium");
+		return await chromium.launchPersistentContext(profile.launchUserDataDir, {
+			headless: config.headless,
+			args: [`--profile-directory=${profile.profileDirectory}`],
+			viewport: { width: 1440, height: 960 },
+		});
+	}
 }
 
 async function withStepTimeout(label, task, timeoutMs = STEP_TIMEOUT_MS) {
@@ -66,6 +113,22 @@ async function withStepTimeout(label, task, timeoutMs = STEP_TIMEOUT_MS) {
 			),
 		),
 	]);
+}
+
+async function settleWithTimeout(label, taskPromise, timeoutMs = CLEANUP_TIMEOUT_MS) {
+	try {
+		await Promise.race([
+			taskPromise,
+			new Promise((_, reject) =>
+				setTimeout(
+					() => reject(new Error(`Facebook browser cleanup timed out: ${label}`)),
+					timeoutMs,
+				),
+			),
+		]);
+	} catch (error) {
+		logStep("cleanup-warning", `${label}: ${error?.message || String(error)}`);
+	}
 }
 
 async function connectViaCdp(config) {
@@ -111,14 +174,18 @@ async function prepareChromeProfile(config) {
 		config.profileDirectory,
 	);
 	const sourceLocalState = path.join(config.sourceUserDataDir, "Local State");
-	const clonedRoot = config.clonedUserDataDir;
+	const cloneRootParent = path.dirname(config.clonedUserDataDir);
+	const cloneRootPrefix = `${path.basename(config.clonedUserDataDir)}-`;
+	await mkdir(cloneRootParent, { recursive: true });
+	const clonedRoot = await fs.promises.mkdtemp(
+		path.join(cloneRootParent, cloneRootPrefix),
+	);
 	const clonedProfileDir = path.join(clonedRoot, config.profileDirectory);
 
 	if (!fs.existsSync(sourceProfileDir)) {
 		throw new Error(`Facebook Chrome source profile not found: ${sourceProfileDir}`);
 	}
 
-	await mkdir(clonedRoot, { recursive: true });
 	await copyDirectory(sourceProfileDir, clonedProfileDir);
 	if (fs.existsSync(sourceLocalState)) {
 		await fs.promises.copyFile(sourceLocalState, path.join(clonedRoot, "Local State"));
@@ -128,7 +195,9 @@ async function prepareChromeProfile(config) {
 	return {
 		launchUserDataDir: clonedRoot,
 		profileDirectory: config.profileDirectory,
-		cleanup: async () => {},
+		cleanup: async () => {
+			await fs.promises.rm(clonedRoot, { recursive: true, force: true });
+		},
 	};
 }
 
@@ -136,6 +205,10 @@ function resolveLocalMediaPath(post) {
 	const mediaPath = post?.mediaPath || "";
 	if (!mediaPath) return null;
 	if (path.isAbsolute(mediaPath)) return mediaPath;
+	const workspacePath = path.join(BACKEND_ROOT, "..", mediaPath);
+	if (fs.existsSync(workspacePath)) {
+		return workspacePath;
+	}
 	if (mediaPath.startsWith("/media/")) {
 		return path.join(BACKEND_ROOT, mediaPath.slice(1));
 	}
@@ -170,6 +243,31 @@ async function clickFirst(page, selectors, timeout = 4000) {
 			const locator = page.locator(selector).first();
 			if ((await locator.count()) > 0) {
 				await locator.click({ timeout });
+				return selector;
+			}
+		} catch {
+			// continue
+		}
+	}
+	return null;
+}
+
+async function dismissInterruptivePopups(page) {
+	const dismissSelectors = [
+		'div[role="dialog"] div[role="button"]:has-text("Not now")',
+		'div[role="dialog"] button:has-text("Not now")',
+		'div[role="dialog"] div[role="button"]:has-text("Not Now")',
+		'div[role="dialog"] button:has-text("Not Now")',
+		'div[role="dialog"] div[role="button"]:has-text("Maybe later")',
+		'div[role="dialog"] button:has-text("Maybe later")',
+	];
+	for (const selector of dismissSelectors) {
+		try {
+			const locator = page.locator(selector).first();
+			if ((await locator.count()) > 0 && (await locator.isVisible().catch(() => false))) {
+				await locator.click({ timeout: 2000, force: true });
+				logStep("popup:dismissed", selector);
+				await page.waitForTimeout(500);
 				return selector;
 			}
 		} catch {
@@ -214,38 +312,77 @@ async function fillComposer(page, text) {
 
 async function attachMedia(page, mediaPath) {
 	if (!mediaPath) return null;
-	const selectors = [
-		'input[type="file"]',
+	const allInputSelector =
+		'input[type="file"], input[accept*="image" i], input[accept*="video" i]';
+	const inputSelectors = [
 		'div[role="dialog"] input[type="file"]',
+		'input[type="file"]',
 	];
-
-	for (const selector of selectors) {
-		try {
-			const locator = page.locator(selector).first();
-			if ((await locator.count()) > 0) {
-				await locator.setInputFiles(mediaPath);
-				return selector;
+	const tryKnownInputs = async () => {
+		for (const selector of inputSelectors) {
+			try {
+				const locator = page.locator(selector);
+				const count = await locator.count();
+				for (let index = 0; index < count; index += 1) {
+					try {
+						await locator.nth(index).setInputFiles(mediaPath, { timeout: 6000 });
+						return `${selector}[${index}]`;
+					} catch {
+						// try next file input
+					}
+				}
+			} catch {
+				// continue
 			}
-		} catch {
-			// continue
 		}
-	}
+		return null;
+	};
+
+	const attachedViaKnownInput = await tryKnownInputs();
+	if (attachedViaKnownInput) return attachedViaKnownInput;
 
 	const addPhotoSelectors = [
 		'div[role="button"]:has-text("Photo/video")',
+		'div[role="button"]:has-text("Photo/video") span',
+		'div[role="button"]:has-text("Photo/Video")',
+		'div[role="button"]:has-text("Add photo/video")',
 		'div[role="button"]:has-text("Add photos/videos")',
+		'div[role="button"]:has-text("Add photos")',
+		'div[role="button"]:has-text("Add photo")',
 		'div[aria-label*="Photo/video"]',
+		'div[aria-label*="Add photo"]',
+		'div[aria-label*="photos/videos"]',
 	];
 
-	await clickFirst(page, addPhotoSelectors, 3000);
+	await clickFirst(page, addPhotoSelectors, 4000);
+	await page.waitForTimeout(1200);
 
-	for (const selector of selectors) {
-		try {
-			const locator = page.locator(selector).first();
-			if ((await locator.count()) > 0) {
-				await locator.setInputFiles(mediaPath);
-				return selector;
+	try {
+		const anyInputs = page.locator(allInputSelector);
+		const count = await anyInputs.count();
+		for (let index = 0; index < count; index += 1) {
+			try {
+				await anyInputs.nth(index).setInputFiles(mediaPath, { timeout: 6000 });
+				return `${allInputSelector}[${index}]`;
+			} catch {
+				// keep trying additional inputs
 			}
+		}
+	} catch {
+		// continue
+	}
+
+	const attachedAfterOpen = await tryKnownInputs();
+	if (attachedAfterOpen) return attachedAfterOpen;
+
+	for (const selector of addPhotoSelectors) {
+		try {
+			const chooserPromise = page.waitForEvent("filechooser", { timeout: 3500 });
+			const clicked = await clickFirst(page, [selector], 2000);
+			if (!clicked) continue;
+			const chooser = await chooserPromise;
+			await chooser.setFiles(mediaPath);
+			return `filechooser:${selector}`;
 		} catch {
 			// continue
 		}
@@ -258,18 +395,86 @@ async function confirmPostSubmitted(page) {
 	const dialogLocator = page.locator('div[role="dialog"]').first();
 	const postButtonLocator = page
 		.getByRole("dialog")
-		.getByRole("button", { name: /^Post$/ })
+		.getByRole("button", { name: /^(Post|Post now|Share now)$/i })
 		.last();
+	const ariaSubmitLocator = page.locator(
+		'div[role="dialog"] [aria-label="Post"], div[role="dialog"] [aria-label="Post now"], div[role="dialog"] [aria-label="Share now"]',
+	);
+	const successSignals = [
+		page.locator('text=/Your post is now published/i').first(),
+		page.locator('text=/Your post was shared/i').first(),
+		page.locator('text=/Post published/i').first(),
+		page.locator('text=/Shared successfully/i').first(),
+	];
 
-	for (let attempt = 0; attempt < 12; attempt += 1) {
+	for (let attempt = 0; attempt < 24; attempt += 1) {
+		await dismissInterruptivePopups(page);
 		const dialogVisible = await dialogLocator.isVisible().catch(() => false);
 		const postButtonVisible = await postButtonLocator.isVisible().catch(() => false);
-		if (!dialogVisible || !postButtonVisible) {
+		const ariaSubmitVisible = await ariaSubmitLocator
+			.first()
+			.isVisible()
+			.catch(() => false);
+		for (const signal of successSignals) {
+			if (await signal.isVisible().catch(() => false)) {
+				return true;
+			}
+		}
+		if (!dialogVisible) {
 			return true;
+		}
+		if (postButtonVisible || ariaSubmitVisible) {
+			await clickFacebookFinalPostButton(page).catch(() => null);
+			await page.waitForTimeout(1200);
+			continue;
 		}
 		await page.waitForTimeout(1000);
 	}
 
+	return false;
+}
+
+async function getPublishSignalCount(page) {
+	const signalLocator = page.locator(
+		"text=/Your post is now published|Your post was shared|Post published|Shared successfully/i",
+	);
+	return await signalLocator.count().catch(() => 0);
+}
+
+async function waitForPublishSignal(page, baselineCount = 0) {
+	const signalLocator = page.locator(
+		"text=/Your post is now published|Your post was shared|Post published|Shared successfully/i",
+	);
+	for (let attempt = 0; attempt < 20; attempt += 1) {
+		await dismissInterruptivePopups(page);
+		const visible = await signalLocator.first().isVisible().catch(() => false);
+		const count = await signalLocator.count().catch(() => 0);
+		if (visible && count > baselineCount) return true;
+		await page.waitForTimeout(500);
+	}
+	return false;
+}
+
+async function verifyPostVisibleOnFeed(page, text) {
+	const snippet = String(text || "")
+		.replace(/\s+/g, " ")
+		.trim()
+		.slice(0, 80);
+	if (!snippet) return false;
+	for (let attempt = 0; attempt < 8; attempt += 1) {
+		try {
+			await page.goto(page.url(), { waitUntil: "domcontentloaded", timeout: 45000 });
+		} catch {
+			// continue
+		}
+		const visible = await page
+			.locator(`text=${snippet}`)
+			.first()
+			.isVisible()
+			.catch(() => false);
+		if (visible) return true;
+		await page.waitForTimeout(3000);
+	}
 	return false;
 }
 
@@ -292,7 +497,7 @@ async function clickDialogActionByText(page, label) {
 	for (const locator of containerAttempts) {
 		try {
 			if ((await locator.count()) > 0) {
-				await locator.first().click({ timeout: 4000 });
+				await locator.first().click({ timeout: 4000, force: true });
 				return `dialog-action:${label}`;
 			}
 		} catch {
@@ -340,25 +545,108 @@ async function clickFacebookSubmitButton(page) {
 }
 
 async function clickFacebookFinalPostButton(page) {
+	await dismissInterruptivePopups(page);
+	// Explicit support for FB variants where the visible action is nested in role="none" wrappers.
+	const roleNonePostWrappers = page.locator(
+		'div[role="dialog"] div[role="none"]:has(span:has-text("Post")), div[role="dialog"] div[role="none"]:has(span:has-text("Post now")), div[role="dialog"] div[role="none"]:has(span:has-text("Share now"))',
+	);
+	const wrapperCount = await roleNonePostWrappers.count().catch(() => 0);
+	for (let index = wrapperCount - 1; index >= 0; index -= 1) {
+		try {
+			const wrapper = roleNonePostWrappers.nth(index);
+			await wrapper.click({ timeout: 4000, force: true });
+			await wrapper.dispatchEvent("mousedown").catch(() => {});
+			await wrapper.dispatchEvent("mouseup").catch(() => {});
+			await wrapper.dispatchEvent("click").catch(() => {});
+			const text = await roleNonePostWrappers.nth(index).innerText().catch(() => "");
+			return `role-none-wrapper:${String(text || "").trim().slice(0, 40)}`;
+		} catch {
+			// continue
+		}
+	}
+
+	// Exact fallback for variants where only nested text spans are stable.
+	try {
+		const target = await page.evaluate(() => {
+			const isVisible = (el) => {
+				if (!el) return false;
+				const style = window.getComputedStyle(el);
+				if (!style || style.visibility === "hidden" || style.display === "none") return false;
+				const rect = el.getBoundingClientRect();
+				return rect.width > 0 && rect.height > 0;
+			};
+			const dialogs = Array.from(document.querySelectorAll('div[role="dialog"]'));
+			const spans = dialogs.flatMap((dialog) =>
+				Array.from(dialog.querySelectorAll("span")),
+			).filter(
+				(el) => /^(Post|Post now|Share now)$/i.test((el.textContent || "").trim()),
+			);
+			for (let i = spans.length - 1; i >= 0; i -= 1) {
+				let node = spans[i];
+				while (node && node !== document.body) {
+					if (node instanceof HTMLElement && node.getAttribute("role") === "none" && isVisible(node)) {
+						const rect = node.getBoundingClientRect();
+						return {
+							x: Math.round(rect.left + rect.width / 2),
+							y: Math.round(rect.top + rect.height / 2),
+							label: (spans[i].textContent || "").trim(),
+						};
+					}
+					node = node.parentElement;
+				}
+			}
+			return null;
+		});
+		if (target?.x && target?.y) {
+			await page.mouse.click(target.x, target.y, { delay: 40 });
+			return `exact-span-post-mouse:${target.label || "Post"}`;
+		}
+	} catch {
+		// continue
+	}
+
 	const postButtons = page
 		.getByRole("dialog")
-		.getByRole("button", { name: /^Post$/ });
+		.getByRole("button", { name: /^(Post|Post now|Share now)$/i });
 	const postCount = await postButtons.count().catch(() => 0);
 	if (postCount > 0) {
 		await postButtons.nth(postCount - 1).click({ timeout: 4000 });
-		return 'role=button[name="Post"]';
+		return 'role=button[name~="Post|Post now|Share now"]';
 	}
 
-	const ariaPostButtons = page.locator('div[role="dialog"] [aria-label="Post"]');
+	const ariaPostButtons = page.locator(
+		'div[role="dialog"] [aria-label="Post"], div[role="dialog"] [aria-label="Post now"], div[role="dialog"] [aria-label="Share now"]',
+	);
 	const ariaPostCount = await ariaPostButtons.count().catch(() => 0);
 	if (ariaPostCount > 0) {
 		await ariaPostButtons.nth(ariaPostCount - 1).click({ timeout: 4000 });
-		return 'div[role="dialog"] [aria-label="Post"]';
+		return 'div[role="dialog"] [aria-label~="Post|Post now|Share now"]';
 	}
 
-	const postClicked = await clickDialogActionByText(page, "Post");
-	if (postClicked) {
-		return postClicked;
+	for (const label of ["Post", "Post now", "Share now"]) {
+		const postClicked = await clickDialogActionByText(page, label);
+		if (postClicked) return postClicked;
+	}
+
+	// Last-resort: click any visible submit-like button in dialog.
+	const dialogButtons = page.locator('div[role="dialog"] button, div[role="dialog"] div[role="button"]');
+	const count = await dialogButtons.count().catch(() => 0);
+	for (let index = 0; index < count; index += 1) {
+		const button = dialogButtons.nth(index);
+		const label = (await button.innerText().catch(() => "")).trim();
+		const aria = (await button.getAttribute("aria-label").catch(() => "")) || "";
+		const text = `${label} ${aria}`.toLowerCase();
+		if (!text) continue;
+		if (!/(post|share|publish)/i.test(text)) continue;
+		if (/(boost|schedule|save draft|draft)/i.test(text)) continue;
+		const disabled = await button.getAttribute("aria-disabled").catch(() => null);
+		if (String(disabled || "").toLowerCase() === "true") continue;
+		try {
+			await button.click({ timeout: 3000 });
+			return `dialog-generic:${text}`;
+		} catch {
+			// continue
+		}
 	}
 
 	return null;
@@ -394,16 +682,7 @@ export default async function postToFacebookBrowser(post, context = {}) {
 	} else {
 		const profile = await prepareChromeProfile(config);
 		logStep("browser:launch", profile.launchUserDataDir);
-		browserContext = await chromium.launchPersistentContext(
-			profile.launchUserDataDir,
-			{
-				channel: config.channel,
-				executablePath: config.executablePath,
-				headless: config.headless,
-				args: [`--profile-directory=${profile.profileDirectory}`],
-				viewport: { width: 1440, height: 960 },
-			},
-		);
+		browserContext = await launchFacebookContextWithFallback(profile, config);
 		cleanup = profile.cleanup;
 	}
 
@@ -414,6 +693,7 @@ export default async function postToFacebookBrowser(post, context = {}) {
 			page.goto(targetUrl, { waitUntil: "domcontentloaded", timeout: 45000 }),
 		);
 		await page.waitForTimeout(2500);
+		await dismissInterruptivePopups(page);
 		logStep("page:url", page.url());
 
 		if (pageLooksLikeAuthRequired(page)) {
@@ -428,9 +708,11 @@ export default async function postToFacebookBrowser(post, context = {}) {
 		if (switchSelector) {
 			logStep("page-switch:clicked", switchSelector);
 			logStep("page-switch:url", page.url());
+			await dismissInterruptivePopups(page);
 		}
 
 		logStep("composer:find");
+		await dismissInterruptivePopups(page);
 		const composerSelector = await withStepTimeout("find-composer", () =>
 			clickFirst(page, [
 				'div[role="button"]:has-text("What\'s on your mind")',
@@ -444,12 +726,13 @@ export default async function postToFacebookBrowser(post, context = {}) {
 
 		if (!composerSelector) {
 			logStep("composer:missing");
-			keepWindowOpen = config.keepOpenOnAuthRequired && !config.useCdp;
+			keepWindowOpen = config.keepOpenOnPostFailure && !config.useCdp;
 			throw new Error("Facebook browser fallback could not find the post composer");
 		}
 		logStep("composer:clicked", composerSelector);
 
 		await page.waitForTimeout(1200);
+		await dismissInterruptivePopups(page);
 
 		logStep("composer:fill");
 		const filled = await withStepTimeout("fill-composer", () =>
@@ -472,38 +755,57 @@ export default async function postToFacebookBrowser(post, context = {}) {
 			}
 			logStep("media:attached", attached);
 			await page.waitForTimeout(2500);
+			await dismissInterruptivePopups(page);
 		}
 
 		logStep("post-button:find");
+		const publishSignalBaseline = await getPublishSignalCount(page);
 		const postButtonSelector = await withStepTimeout("find-post-button", () =>
 			clickFacebookSubmitButton(page),
 		);
 
 		if (!postButtonSelector) {
 			logStep("post-button:missing");
-			keepWindowOpen = config.keepOpenOnAuthRequired && !config.useCdp;
+			keepWindowOpen = config.keepOpenOnPostFailure && !config.useCdp;
 			throw new Error("Facebook browser fallback could not find the Post button");
 		}
 		logStep("post-button:clicked", postButtonSelector);
 
 		if (String(postButtonSelector).includes("Next")) {
-			await page.waitForTimeout(3000);
+			await page.waitForTimeout(5000);
+			await dismissInterruptivePopups(page);
 			const finalPostButtonSelector = await withStepTimeout(
 				"find-final-post-button",
 				async () => {
-					for (let attempt = 0; attempt < 8; attempt += 1) {
+					for (let attempt = 0; attempt < 20; attempt += 1) {
 						const clicked = await clickFacebookFinalPostButton(page);
 						if (clicked) return clicked;
-						await page.waitForTimeout(1000);
+						await page.waitForTimeout(1500);
 					}
 					return null;
 				},
+				45000,
 			);
 			if (
 				!finalPostButtonSelector ||
 				String(finalPostButtonSelector).includes("Next")
 			) {
-				keepWindowOpen = config.keepOpenOnAuthRequired && !config.useCdp;
+				// Last-resort keyboard submit in dialog composer
+				const composer = page
+					.locator('div[role="dialog"] [contenteditable="true"], div[role="dialog"] textarea')
+					.first();
+				if ((await composer.count().catch(() => 0)) > 0) {
+					await composer.click({ timeout: 3000 }).catch(() => {});
+					await page.keyboard.press("Meta+Enter").catch(() => {});
+					await page.keyboard.press("Control+Enter").catch(() => {});
+					await page.waitForTimeout(1500);
+				}
+			}
+			if (
+				!finalPostButtonSelector ||
+				String(finalPostButtonSelector).includes("Next")
+			) {
+				keepWindowOpen = config.keepOpenOnPostFailure && !config.useCdp;
 				logStep("post-button:final-missing");
 				throw new Error(
 					"Facebook browser fallback advanced with Next, but could not find the final Post button.",
@@ -512,14 +814,32 @@ export default async function postToFacebookBrowser(post, context = {}) {
 			logStep("post-button:final-clicked", finalPostButtonSelector);
 		}
 
+		await page.waitForTimeout(2000);
 		const submitted = await confirmPostSubmitted(page);
 		if (!submitted) {
-			keepWindowOpen = config.keepOpenOnAuthRequired && !config.useCdp;
+			keepWindowOpen = config.keepOpenOnPostFailure && !config.useCdp;
 			logStep("post-submit:not-confirmed");
 			throw new Error(
 				"Facebook browser fallback clicked Post, but the composer did not close.",
 			);
 		}
+		const publishSeen = await waitForPublishSignal(page, publishSignalBaseline);
+		if (!publishSeen) {
+			keepWindowOpen = config.keepOpenOnPostFailure && !config.useCdp;
+			logStep("post-submit:no-publish-signal");
+			throw new Error(
+				"Facebook browser fallback did not detect a publish confirmation signal.",
+			);
+		}
+		const feedVisible = await verifyPostVisibleOnFeed(page, post.body || post.title || "");
+		if (!feedVisible) {
+			keepWindowOpen = config.keepOpenOnPostFailure && !config.useCdp;
+			logStep("post-submit:not-found-on-feed");
+			throw new Error(
+				"Facebook browser fallback could not verify the new post on feed after publish.",
+			);
+		}
+		await page.waitForTimeout(POST_SETTLE_MS);
 		logStep("done");
 
 		return {
@@ -532,8 +852,8 @@ export default async function postToFacebookBrowser(post, context = {}) {
 	} finally {
 		logStep("cleanup", shouldCloseContext && !keepWindowOpen ? "close" : "keep-open");
 		if (shouldCloseContext && !keepWindowOpen) {
-			await browserContext.close();
+			await settleWithTimeout("context-close", browserContext.close());
 		}
-		await cleanup();
+		await settleWithTimeout("profile-cleanup", cleanup());
 	}
 }

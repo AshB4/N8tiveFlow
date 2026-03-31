@@ -23,6 +23,10 @@ const PRODUCT_MEDIA_POOL_PATH = path.join(
 
 const MAX_ATTEMPTS = Number(process.env.POSTPUNK_MAX_ATTEMPTS || 2);
 const RETRY_DELAY_MINUTES = Number(process.env.POSTPUNK_RETRY_DELAY_MINUTES || 30);
+const DUPLICATE_COOLDOWN_HOURS = Number(
+	process.env.POSTPUNK_DUPLICATE_COOLDOWN_HOURS || 24,
+);
+const FACEBOOK_DAILY_LIMIT = Number(process.env.POSTPUNK_FACEBOOK_DAILY_LIMIT || 1);
 
 const SUPPORTED_PLATFORMS = new Set([
 	"x",
@@ -65,9 +69,25 @@ const PLATFORM_ALIASES = {
 
 async function sendWorkerAlert(message) {
 	const result = await sendPostPunkTelegramAlert(message);
-	if (result?.ok || result?.skipped) return result;
+	if (result?.ok) return result;
+	if (result?.skipped) {
+		console.warn("[telegram] alert skipped", result);
+		return result;
+	}
 	console.warn("[telegram] alert send failed", result);
 	return result;
+}
+
+function sanitizeFailureReason(message) {
+	const raw = String(message || "Unknown error").replace(/\s+/g, " ").trim();
+	if (!raw) return "Unknown error";
+	if (/not now/i.test(raw) && /facebook/i.test(raw)) {
+		return "Facebook interrupted with a popup (Not now prompt). Auto-dismiss is enabled; retrying is recommended.";
+	}
+	if (/chill/i.test(raw) && /facebook/i.test(raw)) {
+		return "Facebook blocked the action with an in-app caution popup. Retry after a short delay.";
+	}
+	return raw;
 }
 
 function toDate(value) {
@@ -164,6 +184,143 @@ function buildPostPayload(post) {
 		platformOverrides: post.platformOverrides ?? {},
 		metadata: post.metadata ?? {},
 	};
+}
+
+function normalizeTextForFingerprint(value) {
+	return String(value || "")
+		.replace(/\s+/g, " ")
+		.trim()
+		.toLowerCase();
+}
+
+function contentFingerprint(post) {
+	const title = normalizeTextForFingerprint(post?.title);
+	const body = normalizeTextForFingerprint(post?.body ?? post?.content);
+	if (!title && !body) return "";
+	return `${title}||${body}`;
+}
+
+function startOfUtcDay(timestampMs) {
+	const day = new Date(timestampMs);
+	day.setUTCHours(0, 0, 0, 0);
+	return day.getTime();
+}
+
+function archiveEntryTargets(entry) {
+	const targets = normalizeTargets(
+		Array.isArray(entry?.targets) && entry.targets.length
+			? entry.targets
+			: Array.isArray(entry?.platforms)
+				? entry.platforms
+				: [],
+	);
+	return targets;
+}
+
+function archiveEntryHasPlatform(entry, platform) {
+	return archiveEntryTargets(entry).some(
+		(target) => String(target?.platform || "").toLowerCase() === platform,
+	);
+}
+
+function archiveEntryProductId(entry) {
+	return (
+		entry?.metadata?.productProfileId ||
+		entry?.productProfileId ||
+		null
+	);
+}
+
+function buildLastPlatformPostByProduct(postedLog = [], platform = "facebook") {
+	const map = new Map();
+	for (const entry of postedLog) {
+		if (!archiveEntryHasPlatform(entry, platform)) continue;
+		const productId = archiveEntryProductId(entry);
+		if (!productId) continue;
+		const timestamp = archiveEntryTimestamp(entry);
+		if (!timestamp) continue;
+		const previous = map.get(productId) || 0;
+		if (timestamp > previous) {
+			map.set(productId, timestamp);
+		}
+	}
+	return map;
+}
+
+function postedCountTodayForPlatform(postedLog = [], platform = "facebook", nowMs = Date.now()) {
+	const dayStart = startOfUtcDay(nowMs);
+	let count = 0;
+	for (const entry of postedLog) {
+		if (!archiveEntryHasPlatform(entry, platform)) continue;
+		const timestamp = archiveEntryTimestamp(entry);
+		if (!timestamp) continue;
+		if (timestamp >= dayStart) count += 1;
+	}
+	return count;
+}
+
+function hasPlatformTarget(post, platform) {
+	const targets = normalizeTargets(
+		Array.isArray(post?.targets) && post.targets.length
+			? post.targets
+			: Array.isArray(post?.platforms)
+				? post.platforms
+				: post?.platform
+					? [post.platform]
+					: [],
+	);
+	return targets.some((target) => String(target?.platform || "").toLowerCase() === platform);
+}
+
+function pickTodaysFacebookPostId(readyPosts, postedLog, nowMs = Date.now()) {
+	const fbCandidates = readyPosts.filter((post) => hasPlatformTarget(post, "facebook"));
+	if (!fbCandidates.length) return null;
+	const lastByProduct = buildLastPlatformPostByProduct(postedLog, "facebook");
+	const sorted = [...fbCandidates].sort((a, b) => {
+		const aProduct = productIdFor(a);
+		const bProduct = productIdFor(b);
+		const aLast = aProduct ? (lastByProduct.get(aProduct) || 0) : 0;
+		const bLast = bProduct ? (lastByProduct.get(bProduct) || 0) : 0;
+		if (aLast !== bLast) return aLast - bLast;
+		return getPostTimestamp(a) - getPostTimestamp(b);
+	});
+	return sorted[0]?.id || null;
+}
+
+function pushToNextUtcDay(post, nowMs = Date.now()) {
+	const nextDayStart = startOfUtcDay(nowMs) + 24 * 60 * 60 * 1000;
+	const nextAttemptAt = new Date(nextDayStart).toISOString();
+	return {
+		...post,
+		nextAttemptAt,
+		lastErrorAt: new Date(nowMs).toISOString(),
+	};
+}
+
+function archiveEntryTimestamp(entry) {
+	const when = toDate(
+		entry?.processedAt ??
+			entry?.postedAt ??
+			entry?.completedAt ??
+			entry?.updatedAt ??
+			null,
+	);
+	return when ? when.getTime() : null;
+}
+
+function buildRecentFingerprintMap(postedLog = []) {
+	const map = new Map();
+	for (const entry of postedLog) {
+		const fingerprint = contentFingerprint(entry);
+		if (!fingerprint) continue;
+		const timestamp = archiveEntryTimestamp(entry);
+		if (!timestamp) continue;
+		const previous = map.get(fingerprint) || 0;
+		if (timestamp > previous) {
+			map.set(fingerprint, timestamp);
+		}
+	}
+	return map;
 }
 
 function hasPinterestTarget(post) {
@@ -381,6 +538,13 @@ export async function processQueue() {
 	queue = rebalanceResult.posts;
 
 	const now = Date.now();
+	const duplicateCooldownMs = Math.max(0, DUPLICATE_COOLDOWN_HOURS) * 60 * 60 * 1000;
+	const recentFingerprintMap = buildRecentFingerprintMap(postedLog);
+	let facebookPostedToday = postedCountTodayForPlatform(postedLog, "facebook", now);
+	const todaysFacebookPostId =
+		facebookPostedToday < FACEBOOK_DAILY_LIMIT
+			? pickTodaysFacebookPostId(readyPosts, postedLog, now)
+			: null;
 	const readyPosts = queue.filter((post) => {
 		if (!isApprovedStatus(post.status)) return false;
 		if (Number(post.attemptCount || 0) >= MAX_ATTEMPTS) return false;
@@ -412,11 +576,55 @@ export async function processQueue() {
 	const queueUpdates = new Map();
 
 	for (const post of readyPosts) {
+		const postFingerprint = contentFingerprint(post);
+		if (duplicateCooldownMs > 0 && postFingerprint) {
+			const lastPostedAt = recentFingerprintMap.get(postFingerprint) || 0;
+			if (lastPostedAt > 0 && now - lastPostedAt < duplicateCooldownMs) {
+				const lastPostedIso = new Date(lastPostedAt).toISOString();
+				console.warn(
+					`Skipping duplicate within cooldown: "${post.title ?? post.id ?? "untitled"}" (last posted ${lastPostedIso}).`,
+				);
+				rejectedLog.push({
+					id: post.id ?? null,
+					title: post.title ?? null,
+					error: `Skipped duplicate content within ${DUPLICATE_COOLDOWN_HOURS}h cooldown window`,
+					reasonCode: "duplicate_cooldown",
+					lastPostedAt: lastPostedIso,
+					processedAt: new Date().toISOString(),
+				});
+				processedIds.add(post.id);
+				continue;
+			}
+		}
+
 		const retryNowAttempt = isRetryNowAttempt(post);
 		const fallbackPlatforms = normalizePlatforms(post);
-		const targets = normalizeTargets(
+		let targets = normalizeTargets(
 			Array.isArray(post.targets) && post.targets.length ? post.targets : fallbackPlatforms,
 		);
+		if (hasPlatformTarget(post, "facebook")) {
+			if (facebookPostedToday >= FACEBOOK_DAILY_LIMIT) {
+				const nonFacebookTargets = targets.filter((t) => t.platform !== "facebook");
+				if (nonFacebookTargets.length === 0) {
+					console.log(
+						`Deferring "${post.title ?? post.id ?? "untitled"}" to tomorrow (Facebook daily limit reached).`,
+					);
+					queueUpdates.set(post.id, pushToNextUtcDay(post, now));
+					continue;
+				}
+				targets = nonFacebookTargets;
+			} else if (todaysFacebookPostId && post.id !== todaysFacebookPostId) {
+				const nonFacebookTargets = targets.filter((t) => t.platform !== "facebook");
+				if (nonFacebookTargets.length === 0) {
+					console.log(
+						`Deferring "${post.title ?? post.id ?? "untitled"}" to tomorrow (reserved FB slot for another product).`,
+					);
+					queueUpdates.set(post.id, pushToNextUtcDay(post, now));
+					continue;
+				}
+				targets = nonFacebookTargets;
+			}
+		}
 		if (targets.length === 0) {
 			console.warn(
 				`Skipping "${post.title ?? post.id ?? "untitled"}" – no supported platforms.`,
@@ -458,6 +666,12 @@ export async function processQueue() {
 				await sendWorkerAlert(
 					`Post succeeded.\nTitle: ${post.title ?? post.id ?? "untitled"}\nPlatforms: ${successSummary}`,
 				);
+				if (successes.some((item) => item.platform === "facebook")) {
+					facebookPostedToday += 1;
+				}
+				if (postFingerprint) {
+					recentFingerprintMap.set(postFingerprint, Date.now());
+				}
 			}
 
 			if (failures.length > 0) {
@@ -479,7 +693,7 @@ export async function processQueue() {
 						const targetLabel = failure.accountId
 							? `${failure.platform} (${failure.accountId})`
 							: failure.platform;
-						return `- ${targetLabel}: ${failure.error || failure.reason || "Unknown error"}`;
+						return `- ${targetLabel}: ${sanitizeFailureReason(failure.error || failure.reason || "Unknown error")}`;
 					})
 					.join("\n");
 				await sendWorkerAlert(

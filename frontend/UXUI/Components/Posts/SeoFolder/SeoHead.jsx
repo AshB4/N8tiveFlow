@@ -56,5 +56,5 @@ export default function SEOHead({ title, description, image, url, price, platfor
 //   title="Post Punk Scheduler – Automate Your Dev Life"
 //   description="Schedule content, automate tasks, and slay your GitHub goals with Post Punk."
 //   url="https://yourdomain.com/postpunk"
-//   image="https://yourdomain.com/assets/postpunk-banner.png"
+//   image="https://yourdomain.com/assets/appImgs/postpunk-banner.png"
 // />

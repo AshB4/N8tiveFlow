@@ -11,7 +11,7 @@ export const seoProducts = {
 		description:
 			"Never miss a green square again. Automate daily Git pushes with stealthy flair.",
 		url: "https://fleurdevie.gumroad.com/l/daily-square",
-		image: "https://yourcdn.com/assets/dailysquare-banner.png",
+		image: "https://yourcdn.com/assets/appImgs/dailysquare-banner.png",
 		price: "10.00",
 	},
 	"prompt-storm": {
@@ -19,7 +19,7 @@ export const seoProducts = {
 		description:
 			"Market better, think faster, and generate content like a boss with this AI prompt bundle.",
 		url: "https://fleurdevie.gumroad.com/l/100prompt-storm",
-		image: "https://yourcdn.com/assets/promptstorm-banner.png",
+		image: "https://yourcdn.com/assets/appImgs/promptstorm-banner.png",
 		price: "25.00",
 	},
 };

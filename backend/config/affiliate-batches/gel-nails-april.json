@@ -8,7 +8,7 @@
       "angle": "beginner setup",
       "title": "At Home Gel Nail Kit Setup (Beginner Friendly)",
       "description": "Everything you need to start doing gel nails at home with salon-level results.",
-      "image": "frontend/assets/spring26/GelNailFlatlay.png",
+      "image": "frontend/assets/spring2026/GelNailFlatlay.png",
       "board": "Home spa",
       "boards": ["Beautiful me.", "Fun Ideas"],
       "tags": ["gel nails", "home spa", "nail kit", "diy nails", "beauty"]
@@ -18,7 +18,7 @@
       "angle": "minimal aesthetic",
       "title": "Minimal Nail Kit Setup Aesthetic",
       "description": "Clean, minimal, and actually useful. The perfect nail setup.",
-      "image": "frontend/assets/spring26/GelNailFlatlay.png",
+      "image": "frontend/assets/spring2026/GelNailFlatlay.png",
       "board": "Beautiful me.",
       "boards": ["Home spa", "I Want, I dream."],
       "tags": ["aesthetic", "minimal", "beauty setup", "clean girl", "nails"]
@@ -28,7 +28,7 @@
       "angle": "organization",
       "title": "Perfectly Organized Nail Kit Setup",
       "description": "Everything laid out clean and ready for the perfect manicure.",
-      "image": "frontend/assets/spring26/GelNailFlatlay.png",
+      "image": "frontend/assets/spring2026/GelNailFlatlay.png",
       "board": "Fun Ideas",
       "boards": ["Home spa", "Beautiful me."],
       "tags": ["organized", "setup", "nail tools", "beauty", "flatlay"]
@@ -38,7 +38,7 @@
       "angle": "value",
       "title": "Salon Nails Without the Salon Price",
       "description": "Skip the appointments and do your nails at home with this full kit.",
-      "image": "frontend/assets/spring26/GelNailFlatlay.png",
+      "image": "frontend/assets/spring2026/GelNailFlatlay.png",
       "board": "I Want, I dream.",
       "boards": ["Fun Ideas", "Home spa"],
       "tags": ["budget beauty", "diy nails", "nail kit", "self care", "save money"]
@@ -48,7 +48,7 @@
       "angle": "luxury vibe",
       "title": "Luxury Nail Kit Flatlay You'll Actually Use",
       "description": "Looks aesthetic, works like a pro kit.",
-      "image": "frontend/assets/spring26/GelNailFlatlay.png",
+      "image": "frontend/assets/spring2026/GelNailFlatlay.png",
       "board": "Beautiful me.",
       "boards": ["Home spa", "Hot,hot,hotties"],
       "tags": ["luxury", "beauty", "flatlay", "nails", "aesthetic"]
@@ -58,7 +58,7 @@
       "angle": "gift idea",
       "title": "Perfect Gift Idea for Nail Lovers \ud83d\udc85",
       "description": "Cute, useful, and actually gets used.",
-      "image": "frontend/assets/spring26/GelKitGift.png",
+      "image": "frontend/assets/spring2026/GelKitGift.png",
       "board": "Fun Ideas",
       "boards": ["Beautiful me.", "I Want, I dream."],
       "tags": ["gift", "beauty", "nails", "self care", "idea"]
@@ -68,7 +68,7 @@
       "angle": "self care",
       "title": "Self Care Gift That Hits Every Time",
       "description": "Turn a gift into a full self-care routine.",
-      "image": "frontend/assets/spring26/GelKitGift.png",
+      "image": "frontend/assets/spring2026/GelKitGift.png",
       "board": "Beautiful me.",
       "boards": ["Home spa", "Fun Ideas"],
       "tags": ["self care", "gift", "routine", "beauty", "relax"]
@@ -78,7 +78,7 @@
       "angle": "wishlist",
       "title": "Add This to Your Wishlist Immediately",
       "description": "One of those things you didn't know you needed.",
-      "image": "frontend/assets/spring26/GelKitGift.png",
+      "image": "frontend/assets/spring2026/GelKitGift.png",
       "board": "I Want, I dream.",
       "boards": ["Fun Ideas", "Beautiful me."],
       "tags": ["wishlist", "beauty", "gift", "nails", "treat"]
@@ -88,7 +88,7 @@
       "angle": "spa vibe",
       "title": "Home Spa Setup in One Box",
       "description": "Everything you need for a full nail spa day at home.",
-      "image": "frontend/assets/spring26/GelKitGift.png",
+      "image": "frontend/assets/spring2026/GelKitGift.png",
       "board": "Home spa",
       "boards": ["Beautiful me.", "Fun Ideas"],
       "tags": ["spa", "home spa", "nails", "self care", "beauty"]
@@ -98,7 +98,7 @@
       "angle": "cute aesthetic",
       "title": "Cute Gift That's Actually Useful",
       "description": "Not just pretty - you'll actually use it.",
-      "image": "frontend/assets/spring26/GelKitGift.png",
+      "image": "frontend/assets/spring2026/GelKitGift.png",
       "board": "Epic cuteness",
       "boards": ["Fun Ideas", "Beautiful me."],
       "tags": ["cute", "gift", "beauty", "nails", "idea"]
@@ -108,7 +108,7 @@
       "angle": "variety",
       "title": "So Many Nail Colors to Choose From \ud83d\ude0d",
       "description": "Every shade you need in one kit.",
-      "image": "frontend/assets/spring26/GelNailsRandomnailcolors.png",
+      "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
       "board": "Beautiful me.",
       "boards": ["Fun Ideas", "Epic cuteness"],
       "tags": ["colors", "gel nails", "beauty", "aesthetic", "nails"]
@@ -118,7 +118,7 @@
       "angle": "inspiration",
       "title": "Nail Color Ideas for Every Mood",
       "description": "From soft to bold - pick your vibe.",
-      "image": "frontend/assets/spring26/GelNailsRandomnailcolors.png",
+      "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
       "board": "Fun Ideas",
       "boards": ["Beautiful me.", "I Want, I dream."],
       "tags": ["inspo", "nails", "colors", "beauty", "ideas"]
@@ -128,7 +128,7 @@
       "angle": "visual satisfaction",
       "title": "Weirdly Satisfying Nail Color Collection",
       "description": "You'll stare at this longer than expected.",
-      "image": "frontend/assets/spring26/GelNailsRandomnailcolors.png",
+      "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
       "board": "Freaking Weird or mild...",
       "boards": ["Fun Ideas", "Beautiful me."],
       "tags": ["satisfying", "colors", "visual", "odd", "aesthetic"]
@@ -138,7 +138,7 @@
       "angle": "full set",
       "title": "Full Gel Polish Set Worth It?",
       "description": "Here's what you actually get.",
-      "image": "frontend/assets/spring26/GelNailsRandomnailcolors.png",
+      "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
       "board": "I Want, I dream.",
       "boards": ["Fun Ideas", "Beautiful me."],
       "tags": ["review", "nails", "set", "beauty", "buy"]
@@ -148,7 +148,7 @@
       "angle": "bold",
       "title": "Bold Nail Colors You'll Want Immediately",
       "description": "These shades are not subtle - in a good way.",
-      "image": "frontend/assets/spring26/GelNailsRandomnailcolors.png",
+      "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
       "board": "Hot,hot,hotties",
       "boards": ["Beautiful me.", "Fun Ideas"],
       "tags": ["bold", "colors", "nails", "beauty", "style"]
@@ -158,7 +158,7 @@
       "angle": "transformation",
       "title": "From Messy to Salon Nails at Home",
       "description": "This kit changes everything.",
-      "image": "frontend/assets/spring26/B4andAfterNails.png",
+      "image": "frontend/assets/spring2026/B4andAfterNails.png",
       "board": "The Queen in me.",
       "boards": ["Beautiful me.", "Home spa"],
       "tags": ["before after", "nails", "glow up", "beauty", "transformation"]
@@ -168,7 +168,7 @@
       "angle": "confidence",
       "title": "Instant Nail Glow Up",
       "description": "Fresh nails = instant confidence.",
-      "image": "frontend/assets/spring26/B4andAfterNails.png",
+      "image": "frontend/assets/spring2026/B4andAfterNails.png",
       "board": "Beautiful me.",
       "boards": ["The Queen in me.", "Fun Ideas"],
       "tags": ["confidence", "beauty", "nails", "glow up", "self love"]
@@ -178,7 +178,7 @@
       "angle": "results",
       "title": "DIY Nails That Look Salon Done",
       "description": "Yes, you can do this at home.",
-      "image": "frontend/assets/spring26/B4andAfterNails.png",
+      "image": "frontend/assets/spring2026/B4andAfterNails.png",
       "board": "Home spa",
       "boards": ["Beautiful me.", "Fun Ideas"],
       "tags": ["diy", "results", "nails", "beauty", "home"]
@@ -188,7 +188,7 @@
       "angle": "fix bad nails",
       "title": "Fix Your Nails Without a Salon",
       "description": "You don't need appointments anymore.",
-      "image": "frontend/assets/spring26/B4andAfterNails.png",
+      "image": "frontend/assets/spring2026/B4andAfterNails.png",
       "board": "Fun Ideas",
       "boards": ["Home spa", "Beautiful me."],
       "tags": ["fix", "nails", "beauty", "diy", "routine"]
@@ -198,7 +198,7 @@
       "angle": "satisfying",
       "title": "The Most Satisfying Nail Transformation",
       "description": "You know you love these.",
-      "image": "frontend/assets/spring26/B4andAfterNails.png",
+      "image": "frontend/assets/spring2026/B4andAfterNails.png",
       "board": "Freaking Weird or mild...",
       "boards": ["Fun Ideas", "Beautiful me."],
       "tags": ["satisfying", "transformation", "nails", "beauty", "before after"]
@@ -208,7 +208,7 @@
       "angle": "cozy",
       "title": "Doing My Nails at Home Just Hits Different",
       "description": "Cozy setup, better results.",
-      "image": "frontend/assets/spring26/NailsAtHome.png",
+      "image": "frontend/assets/spring2026/NailsAtHome.png",
       "board": "Home spa",
       "boards": ["Beautiful me.", "Fun Ideas"],
       "tags": ["cozy", "home nails", "routine", "self care", "beauty"]
@@ -218,7 +218,7 @@
       "angle": "routine",
       "title": "My At Home Nail Routine Setup",
       "description": "Simple, repeatable, works every time.",
-      "image": "frontend/assets/spring26/NailsAtHome.png",
+      "image": "frontend/assets/spring2026/NailsAtHome.png",
       "board": "Beautiful me.",
       "boards": ["Home spa", "Fun Ideas"],
       "tags": ["routine", "nails", "beauty", "setup", "self care"]
@@ -228,7 +228,7 @@
       "angle": "workspace",
       "title": "Perfect Home Manicure Setup",
       "description": "This setup makes it easy.",
-      "image": "frontend/assets/spring26/NailsAtHome.png",
+      "image": "frontend/assets/spring2026/NailsAtHome.png",
       "board": "Fun Ideas",
       "boards": ["Home spa", "Beautiful me."],
       "tags": ["setup", "workspace", "nails", "beauty", "diy"]
@@ -238,7 +238,7 @@
       "angle": "night routine",
       "title": "Self Care Night Nail Routine",
       "description": "Add this to your weekly reset.",
-      "image": "frontend/assets/spring26/NailsAtHome.png",
+      "image": "frontend/assets/spring2026/NailsAtHome.png",
       "board": "Beautiful me.",
       "boards": ["Home spa", "I Want, I dream."],
       "tags": ["self care", "routine", "night", "nails", "beauty"]
@@ -248,7 +248,7 @@
       "angle": "lifestyle",
       "title": "Home Beauty Setup That Actually Works",
       "description": "No fluff, just results.",
-      "image": "frontend/assets/spring26/NailsAtHome.png",
+      "image": "frontend/assets/spring2026/NailsAtHome.png",
       "board": "I Want, I dream.",
       "boards": ["Beautiful me.", "Fun Ideas"],
       "tags": ["beauty", "home", "setup", "nails", "lifestyle"]

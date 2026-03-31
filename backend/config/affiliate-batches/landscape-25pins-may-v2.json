@@ -8,7 +8,7 @@
       "angle": "before after",
       "title": "Backyard Lighting Before and After That Changes Everything",
       "description": "See how a dark yard becomes a warm, inviting outdoor space with simple landscape lighting. Perfect for modern backyard upgrades and nighttime curb appeal.",
-      "image": "frontend/assets/spring26/LandscapeSplitDusk.png",
+      "image": "frontend/assets/spring2026/LandscapeSplitDusk.png",
       "board": "Dream home",
       "boards": ["Dream home", "Diy for the home"],
       "tags": ["backyard lighting", "before and after", "landscape lighting", "outdoor lights", "home upgrade"]
@@ -18,7 +18,7 @@
       "angle": "modern aesthetic",
       "title": "Modern Backyard Lighting Ideas for a Clean Luxury Look",
       "description": "Create a sleek outdoor look with warm pathway lights and tree spotlights that make your backyard feel instantly more polished.",
-      "image": "frontend/assets/spring26/LandscapeSplitDusk.png",
+      "image": "frontend/assets/spring2026/LandscapeSplitDusk.png",
       "board": "Dream home",
       "boards": ["Dream home", "I Want, I dream."],
       "tags": ["modern backyard", "yard lighting", "home inspo", "luxury outdoor", "landscape design"]
@@ -28,7 +28,7 @@
       "angle": "inspiration",
       "title": "Outdoor Lighting Ideas That Make a Backyard Feel Expensive",
       "description": "This kind of lighting setup adds depth, warmth, and a designer feel without a full backyard remodel.",
-      "image": "frontend/assets/spring26/LandscapeSplitDusk.png",
+      "image": "frontend/assets/spring2026/LandscapeSplitDusk.png",
       "board": "Dream home",
       "boards": ["Dream home", "Fun Ideas"],
       "tags": ["outdoor lighting", "backyard ideas", "home glow up", "garden lights", "outdoor decor"]
@@ -38,7 +38,7 @@
       "angle": "glow up",
       "title": "Yard Lighting Makeover You Can Copy",
       "description": "A few well-placed lights can turn a plain backyard into a space that actually looks finished and usable at night.",
-      "image": "frontend/assets/spring26/LandscapeSplitDusk.png",
+      "image": "frontend/assets/spring2026/LandscapeSplitDusk.png",
       "board": "Dream home",
       "boards": ["Dream home", "Gardening stuff"],
       "tags": ["yard makeover", "backyard glow up", "landscape lights", "night yard", "garden inspo"]
@@ -48,7 +48,7 @@
       "angle": "home exterior",
       "title": "Landscape Lighting Ideas for a Better Looking Home Exterior",
       "description": "Use warm lighting to highlight paths, trees, and architecture for a cleaner, safer, more inviting backyard.",
-      "image": "frontend/assets/spring26/LandscapeSplitDusk.png",
+      "image": "frontend/assets/spring2026/LandscapeSplitDusk.png",
       "board": "Dream home",
       "boards": ["Dream home", "Diy for the home"],
       "tags": ["home exterior", "landscape ideas", "outdoor led", "backyard inspo", "night lighting"]
@@ -58,7 +58,7 @@
       "angle": "walkway safety",
       "title": "Outdoor Pathway Lighting Ideas for Safer Walkways",
       "description": "Light up your walkway with warm LED landscape lights that improve visibility and instantly upgrade your outdoor space.",
-      "image": "frontend/assets/spring26/landscapewalkway.png",
+      "image": "frontend/assets/spring2026/landscapewalkway.png",
       "board": "Diy for the home",
       "boards": ["Diy for the home", "Dream home"],
       "tags": ["pathway lighting", "walkway lights", "outdoor safety", "yard lights", "home improvement"]
@@ -68,7 +68,7 @@
       "angle": "garden use case",
       "title": "Garden Path Lighting Ideas That Look Clean and Modern",
       "description": "A lit walkway makes the whole yard feel more intentional, more modern, and easier to enjoy after dark.",
-      "image": "frontend/assets/spring26/landscapewalkway.png",
+      "image": "frontend/assets/spring2026/landscapewalkway.png",
       "board": "Gardening stuff",
       "boards": ["Gardening stuff", "Dream home"],
       "tags": ["garden path", "landscape path", "modern garden", "outdoor lights", "yard design"]
@@ -78,7 +78,7 @@
       "angle": "practical",
       "title": "Backyard Walkway Lighting That Actually Looks Good",
       "description": "Skip the harsh floodlight look. This style of pathway lighting keeps things visible without ruining the vibe.",
-      "image": "frontend/assets/spring26/landscapewalkway.png",
+      "image": "frontend/assets/spring2026/landscapewalkway.png",
       "board": "Diy for the home",
       "boards": ["Diy for the home", "Fun Ideas"],
       "tags": ["backyard walkway", "led pathway", "garden lights", "night yard", "outdoor ideas"]
@@ -88,7 +88,7 @@
       "angle": "problem solution",
       "title": "Safe Backyard Lighting Ideas for Dark Walkways",
       "description": "If your yard gets sketchy after sunset, pathway lighting is one of the fastest ways to fix it and make it usable again.",
-      "image": "frontend/assets/spring26/landscapewalkway.png",
+      "image": "frontend/assets/spring2026/landscapewalkway.png",
       "board": "Diy for the home",
       "boards": ["Diy for the home", "Prepping (SHTF)"],
       "tags": ["safe backyard", "walkway safety", "security lighting", "yard upgrade", "path lights"]
@@ -98,7 +98,7 @@
       "angle": "design detail",
       "title": "Stone Walkway Lighting Ideas for a High-End Yard",
       "description": "Highlight your path with warm lights that make simple pavers and landscaping look dramatically better at night.",
-      "image": "frontend/assets/spring26/landscapewalkway.png",
+      "image": "frontend/assets/spring2026/landscapewalkway.png",
       "board": "Dream home",
       "boards": ["Dream home", "Gardening stuff"],
       "tags": ["stone walkway", "yard design", "path lighting", "outdoor aesthetic", "garden path"]
@@ -108,7 +108,7 @@
       "angle": "cozy lifestyle",
       "title": "Cozy Backyard Lighting Ideas for Relaxing Nights Outside",
       "description": "Warm outdoor lighting can turn even a plain patio into a space that feels calm, cozy, and actually worth using.",
-      "image": "frontend/assets/spring26/landscapePatio.png",
+      "image": "frontend/assets/spring2026/landscapePatio.png",
       "board": "Dream home",
       "boards": ["Dream home", "Home spa"],
       "tags": ["cozy backyard", "patio lights", "warm lighting", "outdoor vibe", "relaxing patio"]
@@ -118,7 +118,7 @@
       "angle": "patio upgrade",
       "title": "Patio Lighting Ideas That Make the Whole Backyard Better",
       "description": "The right landscape lights add instant mood and make a patio feel more inviting without much effort.",
-      "image": "frontend/assets/spring26/landscapePatio.png",
+      "image": "frontend/assets/spring2026/landscapePatio.png",
       "board": "Dream home",
       "boards": ["Dream home", "Diy for the home"],
       "tags": ["patio ideas", "backyard patio", "ambient lights", "outdoor living", "yard glow"]
@@ -128,7 +128,7 @@
       "angle": "evening vibe",
       "title": "Backyard Mood Lighting for a Softer Evening Vibe",
       "description": "Use warm landscape lighting to make your patio feel less dark and dead and more like a place you want to stay.",
-      "image": "frontend/assets/spring26/landscapePatio.png",
+      "image": "frontend/assets/spring2026/landscapePatio.png",
       "board": "Home spa",
       "boards": ["Home spa", "Dream home"],
       "tags": ["mood lighting", "cozy patio", "night backyard", "warm led", "evening outdoors"]
@@ -138,7 +138,7 @@
       "angle": "small space",
       "title": "Small Patio Lighting Ideas That Feel Surprisingly Fancy",
       "description": "Even a smaller backyard setup looks dramatically better with soft lighting around seating and landscaping.",
-      "image": "frontend/assets/spring26/landscapePatio.png",
+      "image": "frontend/assets/spring2026/landscapePatio.png",
       "board": "Dream home",
       "boards": ["Dream home", "Fun Ideas"],
       "tags": ["small patio", "backyard decor", "outdoor style", "cozy lights", "patio inspiration"]
@@ -148,7 +148,7 @@
       "angle": "glow up",
       "title": "Outdoor Patio Glow Up with Warm Landscape Lighting",
       "description": "This is one of those upgrades that makes a backyard feel more finished, more welcoming, and way more expensive.",
-      "image": "frontend/assets/spring26/landscapePatio.png",
+      "image": "frontend/assets/spring2026/landscapePatio.png",
       "board": "Dream home",
       "boards": ["Dream home", "I Want, I dream."],
       "tags": ["patio glow up", "backyard lights", "home inspo", "night patio", "landscape lighting"]
@@ -158,7 +158,7 @@
       "angle": "sleek design",
       "title": "Modern Landscape Lighting Design for a Sleek Outdoor Look",
       "description": "Highlight trees, architecture, and clean lines with warm lights that make the whole yard look more finished.",
-      "image": "frontend/assets/spring26/landscapeSplitView.png",
+      "image": "frontend/assets/spring2026/landscapeSplitView.png",
       "board": "Dream home",
       "boards": ["Dream home", "Diy for the home"],
       "tags": ["modern landscape", "sleek backyard", "yard design", "outdoor lighting", "minimal home"]
@@ -168,7 +168,7 @@
       "angle": "minimalist",
       "title": "Minimalist Backyard Lighting That Still Makes a Statement",
       "description": "You do not need a cluttered setup. A few clean, warm lights can completely change the feel of a yard.",
-      "image": "frontend/assets/spring26/landscapeSplitView.png",
+      "image": "frontend/assets/spring2026/landscapeSplitView.png",
       "board": "Dream home",
       "boards": ["Dream home", "I Want, I dream."],
       "tags": ["minimal backyard", "modern yard", "led spotlight", "clean design", "outdoor upgrade"]
@@ -178,7 +178,7 @@
       "angle": "tree spotlighting",
       "title": "Tree Uplighting Ideas That Make a Backyard Look Custom",
       "description": "Warm spotlights on trees add height, depth, and a high-end look without needing a huge outdoor budget.",
-      "image": "frontend/assets/spring26/landscapeSplitView.png",
+      "image": "frontend/assets/spring2026/landscapeSplitView.png",
       "board": "Gardening stuff",
       "boards": ["Gardening stuff", "Dream home"],
       "tags": ["tree uplighting", "garden spotlight", "backyard trees", "landscape ideas", "night garden"]
@@ -188,7 +188,7 @@
       "angle": "aspirational",
       "title": "Luxury Backyard Lighting Ideas Without a Full Remodel",
       "description": "This style of lighting brings a designer feel to a backyard by highlighting the features that already matter.",
-      "image": "frontend/assets/spring26/landscapeSplitView.png",
+      "image": "frontend/assets/spring2026/landscapeSplitView.png",
       "board": "Dream home",
       "boards": ["Dream home", "I Want, I dream."],
       "tags": ["luxury backyard", "high end yard", "outdoor style", "modern lighting", "designer look"]
@@ -198,7 +198,7 @@
       "angle": "clean aesthetic",
       "title": "Clean Outdoor Lighting Ideas for a Better Looking Yard",
       "description": "Warm landscape lighting helps define paths, trees, and structure so the yard looks intentional instead of flat.",
-      "image": "frontend/assets/spring26/landscapeSplitView.png",
+      "image": "frontend/assets/spring2026/landscapeSplitView.png",
       "board": "Dream home",
       "boards": ["Dream home", "Diy for the home"],
       "tags": ["clean aesthetic", "yard lights", "outdoor design", "modern landscaping", "home glow"]
@@ -208,7 +208,7 @@
       "angle": "dramatic contrast",
       "title": "Backyard Before and After Lighting You Need to See",
       "description": "The difference between a dark yard and a lit one is ridiculous. This kind of upgrade changes everything fast.",
-      "image": "frontend/assets/spring26/landscapeb4andafter.png",
+      "image": "frontend/assets/spring2026/landscapeb4andafter.png",
       "board": "Dream home",
       "boards": ["Dream home", "Fun Ideas"],
       "tags": ["before after yard", "lighting makeover", "backyard transformation", "night yard", "outdoor lights"]
@@ -218,7 +218,7 @@
       "angle": "budget",
       "title": "Yard Makeover Ideas on a Budget That Still Look Great",
       "description": "Landscape lighting is one of the fastest ways to make a yard look upgraded without tearing everything apart.",
-      "image": "frontend/assets/spring26/landscapeb4andafter.png",
+      "image": "frontend/assets/spring2026/landscapeb4andafter.png",
       "board": "Diy for the home",
       "boards": ["Diy for the home", "Dream home"],
       "tags": ["budget backyard", "yard makeover", "outdoor budget", "landscape lights", "home ideas"]
@@ -228,7 +228,7 @@
       "angle": "glow up",
       "title": "Backyard Glow Up Ideas That Actually Feel Worth It",
       "description": "Want a yard that looks better at night without doing a full renovation? Start with lighting.",
-      "image": "frontend/assets/spring26/landscapeb4andafter.png",
+      "image": "frontend/assets/spring2026/landscapeb4andafter.png",
       "board": "Dream home",
       "boards": ["Dream home", "Beautiful me."],
       "tags": ["backyard glow up", "night lighting", "yard inspo", "home aesthetic", "outdoor upgrade"]
@@ -238,7 +238,7 @@
       "angle": "security",
       "title": "Backyard Security Lighting That Still Looks Stylish",
       "description": "You can make a yard safer at night without turning it into a parking lot. Warm pathway lighting does both.",
-      "image": "frontend/assets/spring26/landscapeb4andafter.png",
+      "image": "frontend/assets/spring2026/landscapeb4andafter.png",
       "board": "Prepping (SHTF)",
       "boards": ["Prepping (SHTF)", "Diy for the home"],
       "tags": ["security lighting", "safe backyard", "pathway light", "home safety", "yard visibility"]
@@ -248,7 +248,7 @@
       "angle": "best",
       "title": "Best Landscape Lighting Style for a Better Backyard",
       "description": "If you want a backyard that looks cleaner, safer, and more inviting, this kind of warm lighting is hard to beat.",
-      "image": "frontend/assets/spring26/landscapeb4andafter.png",
+      "image": "frontend/assets/spring2026/landscapeb4andafter.png",
       "board": "Dream home",
       "boards": ["Dream home", "Gardening stuff"],
       "tags": ["best landscape lighting", "backyard lights", "garden lighting", "home exterior", "outdoor led"]

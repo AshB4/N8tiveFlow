@@ -217,7 +217,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
       "angle": "",
       "title": "",
       "description": "",
-      "image": "frontend/assets/easter2026/example.png",
+      "image": "frontend/assets/spring2026/example.png",
       "board": "Fun Ideas",
       "boards": ["Fun Ideas", "Epic cuteness"],
       "tags": ["", "", "", "", ""]
@@ -236,7 +236,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   "targets": [{ "platform": "pinterest", "accountId": null }],
   "scheduledAt": "2026-03-25T15:00:00.000Z",
   "status": "approved",
-  "mediaPath": "frontend/assets/easter2026/example.png",
+  "mediaPath": "frontend/assets/spring2026/example.png",
   "metadata": {
     "contentMode": "affiliate",
     "pinterestBoard": "Fun Ideas",

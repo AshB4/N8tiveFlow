@@ -50,7 +50,7 @@ Only posts in `postQueue.json` that meet **all** of the following are eligible f
   "platform": "Pinterest",
   "status": "approved",
   "title": "Summer Launch Is Live!",
-  "media": "./assets/summer_banner.png",
+  "media": "./assets/appImgs/summer_banner.png",
   "utm_campaign": "launch_2025"
 }
 ```

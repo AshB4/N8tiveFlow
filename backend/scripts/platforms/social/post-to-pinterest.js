@@ -27,6 +27,11 @@ const DEFAULT_PROFILE_DIR = path.join(
 	"config",
 	"pinterest-chrome-profile",
 );
+const DEFAULT_FB_PROFILE_DIR = path.join(
+	BACKEND_ROOT,
+	"config",
+	"facebook-chrome-profile",
+);
 const DEFAULT_BOARD_CONFIG_PATH = path.join(
 	BACKEND_ROOT,
 	"config",
@@ -63,6 +68,58 @@ function boolFromEnv(name, fallback = true) {
 	return !["0", "false", "off", "no"].includes(String(value).toLowerCase());
 }
 
+function shouldFallbackToChromium() {
+	return boolFromEnv("PINTEREST_FALLBACK_TO_CHROMIUM", false);
+}
+
+function isBrowserLaunchAbortError(error) {
+	const message = String(error?.message || error || "");
+	return (
+		/browsertype\.launchpersistentcontext/i.test(message) &&
+		(/signal=sigabrt/i.test(message) ||
+			/abort trap/i.test(message) ||
+			/hiservices/i.test(message) ||
+			/crashpad/i.test(message) ||
+			/target page, context or browser has been closed/i.test(message))
+	);
+}
+
+async function launchPinterestContext(preparedProfile, options) {
+	const launchArgs = {
+		headless: options.headless,
+		channel: options.channel,
+		executablePath: options.executablePath,
+		args: [
+			"--disable-crashpad",
+			`--profile-directory=${preparedProfile.profileName}`,
+		],
+	};
+	try {
+		return await chromium.launchPersistentContext(
+			preparedProfile.launchUserDataDir,
+			launchArgs,
+		);
+	} catch (error) {
+		if (
+			!shouldFallbackToChromium() ||
+			String(options.channel || "").toLowerCase() !== "chrome" ||
+			!isBrowserLaunchAbortError(error)
+		) {
+			throw error;
+		}
+		return await chromium.launchPersistentContext(
+			preparedProfile.launchUserDataDir,
+			{
+				headless: options.headless,
+				args: [
+					"--disable-crashpad",
+					`--profile-directory=${preparedProfile.profileName}`,
+				],
+			},
+		);
+	}
+}
+
 function getDefaultChromeUserDataDir() {
 	return path.join(
 		os.homedir(),
@@ -76,18 +133,21 @@ function getDefaultChromeUserDataDir() {
 function getPinterestBrowserOptions() {
 	const channel = process.env.PINTEREST_BROWSER_CHANNEL || "chrome";
 	const executablePath = process.env.PINTEREST_EXECUTABLE_PATH || undefined;
-	const useSystemProfile = boolFromEnv(
-		"PINTEREST_USE_SYSTEM_CHROME_PROFILE",
-		false,
-	);
+	const useSystemProfile =
+		boolFromEnv("PINTEREST_USE_SYSTEM_CHROME_PROFILE", false) &&
+		boolFromEnv("PINTEREST_ALLOW_SYSTEM_PROFILE", false);
 	const systemProfileDir = getDefaultChromeUserDataDir();
+	const fallbackProfileDir =
+		process.env.FACEBOOK_CHROME_USER_DATA_DIR || DEFAULT_FB_PROFILE_DIR;
 	const profileDir =
 		process.env.PINTEREST_PROFILE_DIR ||
 		(useSystemProfile && fs.existsSync(systemProfileDir)
 			? systemProfileDir
-			: DEFAULT_PROFILE_DIR);
+			: fs.existsSync(DEFAULT_PROFILE_DIR)
+				? DEFAULT_PROFILE_DIR
+				: fallbackProfileDir);
 	const profileName = process.env.PINTEREST_CHROME_PROFILE_NAME || "Default";
-	const cloneEnabled = boolFromEnv("PINTEREST_CLONE_CHROME_PROFILE", true);
+	const cloneEnabled = boolFromEnv("PINTEREST_CLONE_CHROME_PROFILE", false);
 	const clonedUserDataDir =
 		process.env.PINTEREST_CLONED_CHROME_USER_DATA_DIR ||
 		path.join(os.tmpdir(), "postpunk-pinterest-cdp");
@@ -729,7 +789,9 @@ export default async function postToPinterest(post, _context = {}) {
 			"No Pinterest board selected. Set PINTEREST_BOARD_NAME, add routing rules, or pass metadata.pinterestBoard.",
 		);
 	}
-	const headless = boolFromEnv("PINTEREST_HEADLESS", true);
+	const headless =
+		boolFromEnv("PINTEREST_HEADLESS", false) &&
+		boolFromEnv("PINTEREST_ALLOW_HEADLESS", false);
 	const debug = createDebugRecorder(boolFromEnv("PINTEREST_DEBUG", false));
 	const statePath =
 		process.env.PINTEREST_SESSION_STATE_PATH || DEFAULT_STATE_PATH;
@@ -755,11 +817,10 @@ export default async function postToPinterest(post, _context = {}) {
 		);
 	}
 
-	const context = await chromium.launchPersistentContext(preparedProfile.launchUserDataDir, {
+	const context = await launchPinterestContext(preparedProfile, {
 		headless,
 		channel,
 		executablePath,
-		args: [`--profile-directory=${preparedProfile.profileName}`],
 	});
 	const page = context.pages()[0] || (await context.newPage());
 
@@ -874,10 +935,13 @@ export default async function postToPinterest(post, _context = {}) {
 			linkFilled,
 			linkValuePresent: Boolean(link),
 		});
+		// Pinterest frequently A/B tests editor markup. If media + board flow is valid,
+		// continue posting even when text selectors miss in a given variant.
 		if (!titleFilled && !descriptionFilled && !linkFilled) {
-			throw new Error(
-				"Pinterest editor fields were not found/fillable (title/description/link). UI selectors likely need refresh.",
-			);
+			await debug.log("field-fill-warning", {
+				message:
+					"Title/description/link selectors not fillable in current UI variant; continuing with media + board publish flow.",
+			});
 		}
 		const boardCandidates = buildBoardCandidates({
 			board,

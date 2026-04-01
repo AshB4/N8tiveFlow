@@ -659,12 +659,55 @@ function buildBoardCandidates({
 }
 
 async function publishPin(page, debug) {
-	const published = await clickFirst(page, [
+	let published = await clickFirst(page, [
 		'[data-test-id="board-dropdown-save-button"]',
 		'button:has-text("Publish")',
 		'button:has-text("Save")',
 		'button:has-text("Done")',
+		'div[role="button"]:has-text("Publish")',
+		'div[role="button"]:has-text("Save")',
+		'div[role="button"]:has-text("Done")',
+		'div[role="none"]:has-text("Publish")',
+		'div[role="none"]:has-text("Save")',
+		'text=/^Publish$/i',
+		'text=/^Save$/i',
 	], debug, "publish-pin");
+	if (!published) {
+		try {
+			const clicked = await page.evaluate(() => {
+				const isVisible = (el) => {
+					if (!el) return false;
+					const style = window.getComputedStyle(el);
+					if (!style || style.visibility === "hidden" || style.display === "none") return false;
+					const rect = el.getBoundingClientRect();
+					return rect.width > 0 && rect.height > 0;
+				};
+				const labels = ["publish", "save", "done"];
+				const nodes = Array.from(document.querySelectorAll("button, [role='button'], [role='none'], span, div"));
+				for (let i = nodes.length - 1; i >= 0; i -= 1) {
+					const node = nodes[i];
+					const text = String(node.textContent || "").trim().toLowerCase();
+					if (!text) continue;
+					if (!labels.some((label) => text === label)) continue;
+					let target = node;
+					while (target && target !== document.body) {
+						if (target instanceof HTMLElement && isVisible(target)) {
+							target.click();
+							return { ok: true, text };
+						}
+						target = target.parentElement;
+					}
+				}
+				return { ok: false };
+			});
+			if (clicked?.ok) {
+				await debug?.log("publish-pin-fallback", clicked);
+				published = true;
+			}
+		} catch {
+			// continue
+		}
+	}
 	if (!published) {
 		await debug?.screenshot(page, "publish-button-missing");
 		throw new Error("Unable to find Pinterest publish button");

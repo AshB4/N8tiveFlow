@@ -1,22 +1,33 @@
 {
   "ai-powered-grad": [
+    "https://public-files.gumroad.com/kpl9y0d2qn3m29tvmdi5ohudkxne",
     "frontend/assets/appImgs/PostPunkCalenderDesign.png",
     "frontend/assets/appImgs/dailysquare-banner.png",
     "frontend/assets/appImgs/postpunk-banner.png"
   ],
   "goblin-coloring-affirmations": [
-    "frontend/assets/spring2026/tats_01_skipCandy.png",
-    "frontend/assets/spring2026/tats_02_Too_Cute.png",
-    "frontend/assets/spring2026/Tats_03_0EffortWin.png",
-    "frontend/assets/spring2026/Tats_04_under10.png",
-    "frontend/assets/spring2026/Tats05_NoPrep.png"
+    "https://public-files.gumroad.com/nqt0xhulzgedfqgudq4j161nw7cm",
+    "frontend/assets/goblinaffs/ExploringSideQuests.png",
+    "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "frontend/assets/goblinaffs/DisappearHotMess.png",
+    "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+    "frontend/assets/goblinaffs/DrinkWater.png",
+    "frontend/assets/goblinaffs/DeserveTreats.png",
+    "frontend/assets/goblinaffs/DidntSpiral.png",
+    "frontend/assets/goblinaffs/DeserveATreat.png",
+    "frontend/assets/goblinaffs/ProdStandards.png"
   ],
   "goblin-self-care-coloring-book": [
-    "frontend/assets/spring2026/tats_01_skipCandy.png",
-    "frontend/assets/spring2026/tats_02_Too_Cute.png",
-    "frontend/assets/spring2026/Tats_03_0EffortWin.png",
-    "frontend/assets/spring2026/Tats_04_under10.png",
-    "frontend/assets/spring2026/Tats05_NoPrep.png"
+    "https://public-files.gumroad.com/jho0lq8eizmrvaf2bfbbeckhjlh5",
+    "frontend/assets/goblinaffs/ExploringSideQuests.png",
+    "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "frontend/assets/goblinaffs/DisappearHotMess.png",
+    "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+    "frontend/assets/goblinaffs/DrinkWater.png",
+    "frontend/assets/goblinaffs/DeserveTreats.png",
+    "frontend/assets/goblinaffs/DidntSpiral.png",
+    "frontend/assets/goblinaffs/DeserveATreat.png",
+    "frontend/assets/goblinaffs/ProdStandards.png"
   ],
   "buzzing-adventures-coloring-book": [
     "frontend/assets/buzzingbees/5minsOfCalmBigBee.png",
@@ -27,5 +38,14 @@
   "_default": [
     "frontend/assets/appImgs/PostPunkCalenderDesign.png",
     "frontend/assets/appImgs/dailysquare-banner.png"
+  ],
+  "prompt-storm": [
+    "https://public-files.gumroad.com/l60mvt6b4g61gg4svr750ec4ofq3"
+  ],
+  "product-strategy-25": [
+    "https://public-files.gumroad.com/fbbljlbpekuew2rdaal9ghrtasaj"
+  ],
+  "passover-seder-survival-kit": [
+    "https://public-files.gumroad.com/wlfkbjar8uin6e15nq7lspvgabnl"
   ]
 }

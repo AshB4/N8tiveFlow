@@ -540,11 +540,6 @@ export async function processQueue() {
 	const now = Date.now();
 	const duplicateCooldownMs = Math.max(0, DUPLICATE_COOLDOWN_HOURS) * 60 * 60 * 1000;
 	const recentFingerprintMap = buildRecentFingerprintMap(postedLog);
-	let facebookPostedToday = postedCountTodayForPlatform(postedLog, "facebook", now);
-	const todaysFacebookPostId =
-		facebookPostedToday < FACEBOOK_DAILY_LIMIT
-			? pickTodaysFacebookPostId(readyPosts, postedLog, now)
-			: null;
 	const readyPosts = queue.filter((post) => {
 		if (!isApprovedStatus(post.status)) return false;
 		if (Number(post.attemptCount || 0) >= MAX_ATTEMPTS) return false;
@@ -554,6 +549,11 @@ export async function processQueue() {
 		const retryReady = !retryAt || retryAt.getTime() <= now;
 		return scheduleReady && retryReady;
 	});
+	let facebookPostedToday = postedCountTodayForPlatform(postedLog, "facebook", now);
+	const todaysFacebookPostId =
+		facebookPostedToday < FACEBOOK_DAILY_LIMIT
+			? pickTodaysFacebookPostId(readyPosts, postedLog, now)
+			: null;
 
 	if (readyPosts.length === 0) {
 		if (rebalanceResult.changedCount > 0) {

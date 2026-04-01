@@ -27,6 +27,13 @@ const DUPLICATE_COOLDOWN_HOURS = Number(
 	process.env.POSTPUNK_DUPLICATE_COOLDOWN_HOURS || 24,
 );
 const FACEBOOK_DAILY_LIMIT = Number(process.env.POSTPUNK_FACEBOOK_DAILY_LIMIT || 1);
+const ACTIVE_PLATFORM_LIST = String(
+	process.env.POSTPUNK_ACTIVE_PLATFORMS || "facebook,pinterest",
+)
+	.split(",")
+	.map((item) => String(item || "").trim().toLowerCase())
+	.filter(Boolean);
+const ACTIVE_PLATFORM_SET = new Set(ACTIVE_PLATFORM_LIST);
 
 const SUPPORTED_PLATFORMS = new Set([
 	"x",
@@ -602,6 +609,11 @@ export async function processQueue() {
 		let targets = normalizeTargets(
 			Array.isArray(post.targets) && post.targets.length ? post.targets : fallbackPlatforms,
 		);
+		if (ACTIVE_PLATFORM_SET.size > 0) {
+			targets = targets.filter((target) =>
+				ACTIVE_PLATFORM_SET.has(String(target.platform || "").toLowerCase()),
+			);
+		}
 		if (hasPlatformTarget(post, "facebook")) {
 			if (facebookPostedToday >= FACEBOOK_DAILY_LIMIT) {
 				const nonFacebookTargets = targets.filter((t) => t.platform !== "facebook");
@@ -626,10 +638,10 @@ export async function processQueue() {
 			}
 		}
 		if (targets.length === 0) {
-			console.warn(
-				`Skipping "${post.title ?? post.id ?? "untitled"}" – no supported platforms.`,
+			console.log(
+				`Ignoring "${post.title ?? post.id ?? "untitled"}" – no active platforms (${ACTIVE_PLATFORM_LIST.join(", ")}).`,
 			);
-			queueUpdates.set(post.id, scheduleRetry(post));
+			processedIds.add(post.id);
 			continue;
 		}
 		const platforms = Array.from(

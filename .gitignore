@@ -82,6 +82,12 @@ backend/queue/rejections.json
 frontend/assets/goblinposts/
 frontend/assets/BuzzingBees/
 frontend/assets/spring26/
+frontend/assets/pinMetrics/
+frontend/assets/kawiiHalloween/
+backend/data/pin-metrics/
+backend/queue/*.bak-*
+!frontend/assets/buzzingbees/
+!frontend/assets/buzzingbees/**
 
 #assets
 frontend/assets/easter2026/*

@@ -1,0 +1,135 @@
+{
+  "name": "openclaw-content-row",
+  "version": 1,
+  "purpose": "Structured discovery output that can feed N8tiveFlow batch and affiliate flows.",
+  "rules": [
+    "Every item must have a keyword with clear intent.",
+    "Every item must map to a real productId or productCategory.",
+    "Every item must be visually representable.",
+    "Angles must come from angles.md patterns.",
+    "Titles should naturally include the keyword or its closest high-intent variant.",
+    "Descriptions must support the click, not just describe the product.",
+    "Reject generic, vague, or non-monetizable outputs.",
+    "board is optional but should be filled for Pinterest-first ideas when a clear board fit exists.",
+    "tags should be short, reusable labels rather than full hashtags."
+  ],
+  "items": [
+    {
+      "keyword": "",
+      "angle": "",
+      "hook": "",
+      "title": "",
+      "description": "",
+      "platform": "pinterest",
+      "monetizationType": "amazon",
+      "productId": "",
+      "productCategory": "",
+      "targetAudience": "",
+      "useCase": "",
+      "visualConcept": "",
+      "imagePrompt": "",
+      "board": "",
+      "tags": [],
+      "cta": "",
+      "linkType": "direct"
+    }
+  ],
+  "examples": [
+    {
+      "keyword": "funny self care coloring pages",
+      "angle": "chaotic self care",
+      "hook": "Self-care content for people who are too tired for perfect routines.",
+      "title": "Funny Self Care Coloring Pages for Burned-Out Adults",
+      "description": "Low-effort creative self-care with humor and a little goblin energy. Built for stressed adults who want comfort without fake wellness fluff.",
+      "platform": "pinterest",
+      "monetizationType": "owned_product",
+      "productId": "goblin-self-care-coloring-book",
+      "productCategory": "Digital Download",
+      "targetAudience": "stressed adults and chaotic self-care people",
+      "useCase": "relaxing and humor coping",
+      "visualConcept": "A funny goblin-themed coloring page shown as a printable preview with cozy chaotic styling.",
+      "imagePrompt": "Funny goblin self-care coloring page preview, cozy chaotic vibe, printable layout, warm lighting, playful but tired energy.",
+      "board": "Beautiful me.",
+      "tags": ["self care", "funny coloring", "goblin", "stress relief"],
+      "cta": "See the full coloring pack.",
+      "linkType": "direct"
+    },
+    {
+      "keyword": "cheap desk gadgets that actually work",
+      "angle": "under $25",
+      "hook": "Budget desk upgrades that solve real annoyances instead of just looking good.",
+      "title": "Cheap Desk Gadgets That Actually Work",
+      "description": "A practical roundup for remote workers and developers who want comfort or productivity upgrades without wasting money on junk.",
+      "platform": "pinterest",
+      "monetizationType": "amazon",
+      "productId": "",
+      "productCategory": "Desk Setup Gadgets",
+      "targetAudience": "remote workers and developers",
+      "useCase": "productivity and comfort upgrade",
+      "visualConcept": "Clean desk flatlay with 3-5 affordable gadgets highlighted as useful upgrades.",
+      "imagePrompt": "Clean desk setup flatlay with affordable productivity gadgets, modern workspace, practical not flashy, clear product grouping.",
+      "board": "Learn computer coding",
+      "tags": ["desk setup", "cheap gadgets", "productivity", "amazon finds"],
+      "cta": "Save this for your next desk upgrade.",
+      "linkType": "direct"
+    },
+    {
+      "keyword": "kawaii halloween coloring book",
+      "angle": "spooky-cute",
+      "hook": "Halloween coloring that feels cute first and scary second.",
+      "title": "Kawaii Halloween Coloring Book That Is Cute, Not Creepy",
+      "description": "A spooky-cute coloring book angle built around adorable Halloween pages, giftability, and early seasonal discovery.",
+      "platform": "pinterest",
+      "monetizationType": "owned_product",
+      "productId": "kawaii-coloring-series",
+      "productCategory": "Physical products",
+      "targetAudience": "kawaii fans, cute-aesthetic shoppers, and seasonal gift buyers",
+      "useCase": "cute seasonal coloring and giftable hobby content",
+      "visualConcept": "Colorful spooky-cute book cover or sample pages with ghosts, pumpkins, bats, and kawaii styling.",
+      "imagePrompt": "Spooky cute kawaii Halloween coloring book cover, pastel pumpkins, adorable ghosts and bats, playful seasonal art, cozy Halloween vibe.",
+      "board": "Kawaii Coloring",
+      "tags": ["kawaii", "halloween", "coloring book", "spooky cute"],
+      "cta": "Check out the sample pages.",
+      "linkType": "direct"
+    }
+  ],
+  "fieldNotes": {
+    "keyword": "Primary search phrase or intent phrase.",
+    "angle": "Conversion angle from angles.md, such as 'best', 'worth it', 'cheap upgrades', or 'problem -> solution'.",
+    "hook": "Short click-driving framing line or content promise.",
+    "title": "Platform-ready working title, especially useful for Pinterest and article ideas.",
+    "description": "One to three sentence summary of the content angle.",
+    "platform": "Default output platform. Usually pinterest unless another platform is clearly a better fit.",
+    "monetizationType": "Use one of: amazon, owned_product, funnel_entry.",
+    "productId": "Preferred internal product identifier when known.",
+    "productCategory": "Fallback category if productId is not known yet.",
+    "targetAudience": "Who this idea is for in plain language.",
+    "useCase": "What job the content or product helps with.",
+    "visualConcept": "Describe what the image should clearly show.",
+    "imagePrompt": "Optional image generation prompt if visual needs to be created.",
+    "board": "Pinterest board suggestion if obvious.",
+    "tags": "Short reusable content labels, not sentence fragments.",
+    "cta": "Soft click instruction or action request.",
+    "linkType": "Usually direct, but can be soft_sell or funnel when needed."
+  },
+  "allowedValues": {
+    "platform": [
+      "pinterest",
+      "facebook",
+      "devto",
+      "instagram",
+      "reddit",
+      "x"
+    ],
+    "monetizationType": [
+      "amazon",
+      "owned_product",
+      "funnel_entry"
+    ],
+    "linkType": [
+      "direct",
+      "soft_sell",
+      "funnel"
+    ]
+  }
+}

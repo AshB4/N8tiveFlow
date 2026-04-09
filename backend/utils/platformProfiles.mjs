@@ -179,18 +179,6 @@ export const platformProfiles = {
     ctaStyle: "Buy, compare, learn more.",
     avoid: ["social-style chaos", "inside jokes"],
   },
-  onlyfans: {
-    label: "OnlyFans",
-    audienceExpectation: "exclusivity, boundary clarity, relationship and reward",
-    voice: "brand-specific",
-    structureRules: [
-      "Customize heavily per creator brand.",
-      "Keep boundaries explicit.",
-      "Use relationship cues intentionally.",
-    ],
-    ctaStyle: "Subscribe, unlock, message, view.",
-    avoid: ["generic default prompts"],
-  },
 };
 
 export function getPlatformPromptProfiles(platformIds = []) {

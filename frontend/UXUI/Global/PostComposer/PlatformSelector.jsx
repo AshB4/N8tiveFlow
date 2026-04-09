@@ -8,7 +8,6 @@ const DEFAULT_PLATFORMS = [
 	"substack",
 	"reddit",
 	"tumblr",
-	"onlyfans",
 	"kofi",
 	"discord",
 	"devto",

@@ -365,30 +365,6 @@ export const platformProfiles = {
     notes: ["This is not a social voice."],
     sourceNotes: ["Marketplace-intent inference."],
   },
-  onlyfans: {
-    id: "onlyfans",
-    label: "OnlyFans",
-    audienceExpectation: "exclusivity, boundary clarity, relationship and reward",
-    voice: "brand-specific",
-    bestFormats: ["teaser", "reward framing", "membership offer"],
-    structureRules: [
-      "Customize heavily per creator brand.",
-      "Keep boundaries explicit.",
-      "Use relationship cues intentionally.",
-    ],
-    ctaStyle: "Subscribe, unlock, message, view.",
-    linkTolerance: "high",
-    emojiTolerance: "medium",
-    humorTolerance: "medium",
-    avoid: ["generic default prompts"],
-    openerPatterns: [
-      "A custom teaser line",
-      "A reward-led opener",
-      "A direct exclusive-content hook",
-    ],
-    notes: ["Should remain highly customized."],
-    sourceNotes: ["Creator-specific workflow rather than generic automation."],
-  },
 };
 
 export function getPlatformProfile(platformId) {

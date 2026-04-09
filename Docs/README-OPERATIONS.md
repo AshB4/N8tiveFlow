@@ -9,7 +9,8 @@
 
 ## What this app does
 - You create and schedule posts in Composer.
-- Posts are stored in queue JSON files.
+- Posts are stored in SQLite through `backend/utils/localDb.mjs`.
+- Queue JSON files are compatibility mirrors, not the primary store.
 - Worker script publishes approved posts when scheduled.
 - Telegram alerts notify success/failure.
 - Optional affiliate Amazon tagging and media uploads are supported.
@@ -29,6 +30,14 @@ cd ../frontend && npm install
 - `TELEGRAM_CHAT_ID`
 - Optional:
   - `POSTPUNK_TELEGRAM_ALERTS_ENABLED=true`
+  - Inventory/holiday alerts (Telegram, once per day when triggered):
+    - `POSTPUNK_INVENTORY_ALERTS_ENABLED=true`
+    - `POSTPUNK_LOW_RUNWAY_DAYS_FACEBOOK=7`
+    - `POSTPUNK_LOW_RUNWAY_DAYS_PINTEREST=14`
+    - `POSTPUNK_LOW_RUNWAY_DAYS_DEVTO=21`
+    - `POSTPUNK_DEVTO_POSTS_PER_DAY=0.142857` (1 per week)
+    - `POSTPUNK_PINTEREST_HOLIDAY_LEAD_DAYS=60`
+    - `POSTPUNK_PINTEREST_HOLIDAY_MIN_PINS=5`
   - `AMAZON_PARTNER_TAG=ashb4studio0b-20`
   - `AMAZON_USE_CREATORS_API=true`
   - `AMAZON_CREATORS_CLIENT_ID=...`
@@ -77,7 +86,7 @@ npm run worker
 2. Write/paste post content, pick targets, upload media.
 3. Set `scheduledAt`.
 4. Keep post `status` as `approved` when ready to autopost.
-5. Worker picks it up at scheduled window.
+5. Worker picks it up at scheduled window if the machine is awake, the queue is intact, and the target lane is healthy.
 
 ## Useful backend commands
 ```bash
@@ -163,6 +172,8 @@ tail -f /opt/postpunk/backend/backup.log
 - Backup runs nightly at `02:05` (Linux timer).
 
 ## Queue and media paths
+- Primary store:
+  - `backend/data/postpunk.sqlite`
 - Queue files:
   - `backend/queue/postQueue.json`
   - `backend/queue/postedLog.json`
@@ -177,6 +188,8 @@ tail -f /opt/postpunk/backend/backup.log
 - Always-on machine required for consistent posting windows.
 - Telegram alerts should stay enabled for immediate failure visibility.
 - Run `npm run health:tokens` regularly to catch expired/missing credentials.
+- The worker can be installed and still miss expected output if the machine sleeps, a lane crashes, or the queue itself has been rewritten incorrectly. Treat `worker.log`, `worker.err.log`, and the SQLite-backed queue as the operational truth.
+- Use `npm run summary:daily -- --send` and `npm run queue:dry-run` as active checks instead of assuming scheduled days are populated.
 - Amazon Creators migration flag:
   - `AMAZON_USE_CREATORS_API=true` enables Creators API for Amazon lookup in posting flow.
   - Keep it `false` to use legacy PA-API path.

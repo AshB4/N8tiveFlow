@@ -20,7 +20,6 @@ const platformUrls = {
   substack: "https://substack.com/",
   reddit: "https://www.reddit.com/submit",
   tumblr: "https://www.tumblr.com/new/text",
-  onlyfans: "https://onlyfans.com/posts/create",
   kofi: "https://ko-fi.com/manage/posts",
   discord: "https://discord.com/channels/@me",
   devto: "https://dev.to/new",

@@ -35,7 +35,6 @@ async function runScriptForPost(post) {
 		hashnode: "post-to-hashnode.sh",
 		producthunt: "post-to-producthunt.sh",
 		discord: "post-to-discord.sh",
-		onlyfans: "post-to-onlyfans.sh",
 		amazon: "post-to-amazon.sh",
 	};
 

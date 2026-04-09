@@ -12,7 +12,6 @@ const availablePlatforms = [
   "substack",
   "reddit",
   "tumblr",
-  "onlyfans",
   "kofi",
   "discord",
   "devto",

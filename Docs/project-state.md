@@ -17,6 +17,7 @@ PostPunk is currently:
 - a proven automatic `Pinterest` lane for single pins
 - an affiliate planning and batch-building system for Amazon-to-Pinterest workflows
 - a local-first app using SQLite as the real store
+- a JSON-mirrored system where `backend/queue/*.json` exists for compatibility, not as the primary source of truth
 - an import-first workflow for AI-written content via `/batch`
 
 It is not yet a fully automatic multi-platform autoposter.
@@ -53,6 +54,7 @@ These pieces are built and in active use:
 - product link injection for punch posts
 - Amazon affiliate tagging for Amazon product links
 - Telegram success and failure alerts
+- Telegram inventory/runway alerts and schedule-gap alerting are now wired into the worker
 - token-health visibility on `/setup`
 
 ## What Is Proven Working
@@ -61,7 +63,7 @@ These pieces are built and in active use:
 - backend core/unit tests pass; full `npm test` includes live platform checks and can fail when network/auth/browser prerequisites are not available
 - queue save and edit flow works
 - SQLite persistence and JSON mirroring work
-- launchd worker is installed and running on this Mac
+- launchd worker files exist and the worker can run successfully on this Mac
 - `Dev.to` automatic posting has been proven live
 - `Facebook` page posting has been proven live for text and image posts
 - `Pinterest` posting has been proven live for single pins through Playwright + saved session
@@ -69,6 +71,7 @@ These pieces are built and in active use:
 - affiliate builder now understands a primary board plus alternate boards per row and suggests saved Pinterest board names from config
 - Product profile lifecycle status is now tracked. The shipped Gumroad/Amazon products are marked `live`, while `PostPunk Core` is `in-progress` and the memoir/Reddit product remain `planned`.
 - Telegram alerts fire for both success and failure
+- the worker now emits inventory and schedule-gap alerts when the queue has empty near-term days
 
 ## What Is Not Reliable Yet
 
@@ -81,6 +84,7 @@ These pieces are built and in active use:
 - `Amazon` now has a usable planning/builder workflow, but it is not a proven unattended posting lane yet
 - built-in AI generation is not a trusted daily workflow yet; external GPT output + `/batch` import is the practical path
 - `Facebook Stories` and `Facebook video` are not wired yet; they are a future Meta lane worth adding because Stories likely matter for reach, but current focus should remain on regular image posts first
+- schedule integrity is still not fully trustworthy; the worker can be healthy while the queue itself is missing expected days or was rewritten incorrectly
 
 ## Current Operating Model
 
@@ -100,7 +104,7 @@ Use the system like this:
 
 ## Current System Notes
 
-- Scheduling is intentionally one post per day by default.
+- Scheduling defaults are conservative in some UI flows, but live usage is mixed. Affiliate and Pinterest scheduling often run at `3/day`, and specific windows can be denser.
 - Product mixing is now supported so batches from multiple products can be interleaved across days.
 - `/lib` now separates "approved" from "scheduled" more clearly:
   - `approved` means ready
@@ -109,11 +113,13 @@ Use the system like this:
 - Batch imports can be saved, approved, and chained after the current last scheduled date.
 - Archive entries now store full post bodies going forward.
 - `/setup` now shows platform token/credential health so auth failures are visible before they become mysteries.
+- `/setup` reflects platform/account health from `/api/platform-health`, but health visibility does not guarantee that a queue day is populated.
 - Facebook browser posting is now proven live against:
   - the personal profile (`SanguineQueen`)
   - the `Color With Ash` page
 - Facebook page posting for `Color With Ash` now uses a two-step composer flow where the page submit path is `Next -> Post`.
 - Pinterest Playwright posting is now proven for single live pins using the saved Pinterest session/profile.
+- Pinterest queueing is now actively used for multi-day scheduled runs, but publish-later inside Pinterest itself is still not wired.
 - OpenAI is the practical in-app AI default. Ollama remains optional but is not the trusted path on this Mac.
 - `/affiliate` now holds the working Amazon affiliate framework, including signal rules, sale-mode reminders, angle-stack logic, and GPT research prompts.
 - `/affiliate/builder` now supports:
@@ -157,7 +163,7 @@ What matters operationally:
 
 - the queue is real, not fake seed content
 - scheduling currently stretches into May 2026
-- one-post-per-day cadence is the current default
+- cadence is mixed by workflow: some lanes remain sparse, while Pinterest/affiliate runs can be `3/day` or higher
 - the app now supports multiple live products in one rotating schedule
 - affiliate scheduling can now be built separately with its own cadence defaults inside `/affiliate/builder`
 
@@ -194,6 +200,14 @@ Current product profiles include:
 - `Reddit Product`
 
 The memoir exists as a placeholder profile but is not an active promotion focus yet.
+The currently active digital-product promotion set is effectively:
+
+- `AI Powered Grad`
+- `100 Prompt Storm`
+- `Product Strategy 25`
+- `Goblin Core Coloring Affirmations`
+
+The currently active visual/product Pinterest set also includes `Kawaii Coloring Series`.
 
 ## Important Files To Check First
 

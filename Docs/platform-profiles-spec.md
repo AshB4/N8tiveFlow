@@ -29,6 +29,12 @@ composer and AI generation flow.
   - last checked timestamp
 - If the platform has multiple accounts, the user should see status per account, not just per platform.
 
+Current implementation note:
+
+- backend account/platform health is already exposed through `/api/platform-health`
+- `/setup` surfaces that health today
+- the composer-side UX described below is still partially aspirational and not fully enforced end-to-end
+
 ### Example messages
 
 - `Facebook • Main Profile`
@@ -379,23 +385,6 @@ where the official material is more operational than stylistic.
   - social-style chaos
 - Source notes:
   - Marketplace intent is transactional rather than conversational.
-
-### OnlyFans
-
-- Audience expectation: exclusivity, boundary clarity, relationship and reward.
-- Voice: highly brand-specific.
-- Best formats:
-  - teasers
-  - reward framing
-  - membership offers
-- Structure rules:
-  - customize per creator brand
-  - keep consent and boundaries explicit
-- CTA style: subscribe, unlock, message, view.
-- Avoid:
-  - generic default prompts
-- Source notes:
-  - Should remain custom, not purely automated.
 
 ## Implementation Order
 

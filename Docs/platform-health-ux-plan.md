@@ -84,8 +84,15 @@ Also extract numeric codes when present:
 
 ## Rollout order
 
-1. Add backend health endpoint for frontend use.
-2. Add status badges to platform selectors.
-3. Add click-to-explain detail panel.
-4. Block failed selections by default.
-5. Add manual refresh button.
+Current state:
+
+1. Backend health endpoint exists at `/api/platform-health`.
+2. `/setup` already uses platform/account health visibility.
+3. Composer-facing health UX is still only partially aligned with this plan.
+
+Remaining work:
+
+1. make composer account/target rows show status directly
+2. add clearer click-to-explain detail in the composer itself
+3. decide whether error-state lanes should be hard-blocked or manually overridable
+4. keep the health view separate from schedule-integrity checks, because a healthy lane does not mean the queue actually has posts due

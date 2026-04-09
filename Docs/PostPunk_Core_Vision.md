@@ -26,6 +26,13 @@ More than a scheduler — it's a ritual daemon:
 * Hooks into APIs, Playwright, tracking
 * Runs while you sleep
 
+Current reality:
+
+* SQLite is now the real store
+* JSON queue files still exist, but only as mirrors
+* The product already has a working queue, worker, archive, affiliate builder, and browser-assisted posting lanes
+* The main gap is operational trust, not basic scaffolding
+
 ---
 
 ## 💻 Old Laptop = PostDaemon
@@ -34,8 +41,8 @@ More than a scheduler — it's a ritual daemon:
 
 Turn an old Linux-capable laptop into a headless automation daemon.
 
-* Runs: cron, pm2, Node.js scripts
-* Queue: JSON (for now), SQLite (optional), Postgres later
+* Runs: systemd/launchd timers, Node.js scripts
+* Queue: SQLite first, JSON mirrors for compatibility, Postgres later if ever needed
 * Storage: Dropbox, Git-pull folder
 * Metric sync: Gumroad, Reddit, Pinterest scraping
 
@@ -58,7 +65,7 @@ Runs PostPunk rituals daily without manual effort.
 | Layer   | Tech                   |
 | ------- | ---------------------- |
 | Runtime | Node.js + cron + pm2   |
-| Queue   | JSON → SQLite          |
+| Queue   | SQLite + JSON mirrors  |
 | Hosting | Linux box → VPS        |
 | Metrics | UTM + API fetch/scrape |
 
@@ -77,11 +84,11 @@ Runs PostPunk rituals daily without manual effort.
 
 ## ✅ Next Steps
 
-* Scaffold `post-queue.json` + `logWriter.js`
-* Set up cron runner for `post-from-queue.js`
-* Add SQLite fallback (optional)
-* Auto-rotate content by platform + tone
-* Build “Choose Your Path” landing page for product vibes
+* tighten schedule integrity so empty scheduled days trigger obvious alarms
+* keep the SQLite queue and JSON mirrors from drifting unexpectedly
+* make Pinterest batch behavior more trustworthy
+* continue using the affiliate/digital-product queue as the live proving ground
+* add stronger operational visibility before adding more fragile lanes
 
 ---
 

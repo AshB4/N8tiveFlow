@@ -1,15 +1,22 @@
 /** @format */
 
 import "dotenv/config";
-import fs from "fs";
 import os from "os";
 import path from "path";
-import { cp, mkdir } from "fs/promises";
 import { fileURLToPath } from "url";
+import fs from "fs";
+import { cp, mkdir } from "fs/promises";
 import { chromium } from "playwright";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Re-load .env with correct path to ensure it's loaded
+try {
+  const dotenv = require("dotenv");
+  dotenv.config({ path: path.join(__dirname, "../../../.env") });
+} catch (e) {}
+
 const BACKEND_ROOT = path.join(__dirname, "../../..");
 const DEFAULT_CLONED_PROFILE_DIR = path.join(
 	BACKEND_ROOT,
@@ -230,11 +237,69 @@ function resolveTargetUrl(account = {}) {
 
 function pageLooksLikeAuthRequired(page) {
 	const url = String(page?.url?.() || "");
-	return (
-		/facebook\.com\/login/i.test(url) ||
+	const isLoginUrl = /facebook\.com\/login/i.test(url) ||
 		/facebook\.com\/checkpoint/i.test(url) ||
-		/facebook\.com\/accounts/i.test(url)
-	);
+		/facebook\.com\/accounts/i.test(url);
+	
+	// Also check for login form elements on the page
+	const hasLoginForm = page.locator('input[name="email"], input[id="email"], input[type="text"]').count() > 0 &&
+		page.locator('input[name="pass"], input[id="pass"], input[type="password"]').count() > 0;
+	
+	logStep("auth-check:url", url);
+	logStep("auth-check:isLoginUrl", isLoginUrl);
+	logStep("auth-check:hasLoginForm", hasLoginForm);
+	
+	return isLoginUrl || hasLoginForm;
+}
+
+async function ensureFacebookLoggedIn(page) {
+	const username = process.env.FACEBOOK_LOGIN_USERNAME;
+	const password = process.env.FACEBOOK_LOGIN_PASSWORD;
+	
+	if (!username || !password) {
+		throw new Error("Facebook login credentials not configured. Set FACEBOOK_LOGIN_USERNAME and FACEBOOK_LOGIN_PASSWORD in .env");
+	}
+	
+	logStep("facebook:login:start");
+	
+	for (const selector of ['input[name="email"]', 'input[id="email"]', 'input[type="text"]']) {
+		try {
+			const locator = page.locator(selector).first();
+			if ((await locator.count()) > 0) {
+				await locator.fill(username);
+				logStep("facebook:login:email-filled");
+				break;
+			}
+		} catch {}
+	}
+	
+	for (const selector of ['input[name="pass"]', 'input[id="pass"]', 'input[type="password"]']) {
+		try {
+			const locator = page.locator(selector).first();
+			if ((await locator.count()) > 0) {
+				await locator.fill(password);
+				logStep("facebook:login:password-filled");
+				break;
+			}
+		} catch {}
+	}
+	
+	const loginClicked = await clickFirst(page, [
+		'button[type="submit"]',
+		'button[name="login"]',
+		'a[role="button"]',
+		'div[role="button"]',
+	]);
+	
+	if (!loginClicked) {
+		throw new Error("Unable to find Facebook login button");
+	}
+	
+	await page.waitForURL((url) => !url.toString().includes("/login"), {
+		timeout: 30000,
+	});
+	
+	logStep("facebook:login:success");
 }
 
 async function clickFirst(page, selectors, timeout = 4000) {
@@ -697,11 +762,10 @@ export default async function postToFacebookBrowser(post, context = {}) {
 		logStep("page:url", page.url());
 
 		if (pageLooksLikeAuthRequired(page)) {
-			logStep("auth-required", page.url());
-			keepWindowOpen = config.keepOpenOnAuthRequired && !config.useCdp;
-			throw new Error(
-				"Facebook browser session needs login/account selection. Complete it in the opened browser window and retry.",
-			);
+			logStep("auth-required:auto-login", page.url());
+			await ensureFacebookLoggedIn(page);
+			await dismissInterruptivePopups(page);
+			logStep("auth-required:resolved", page.url());
 		}
 
 		const switchSelector = await handlePageIdentitySwitch(page);
@@ -721,6 +785,10 @@ export default async function postToFacebookBrowser(post, context = {}) {
 				'button:has-text("Create post")',
 				'div[aria-label="Create a post"]',
 				'div[role="button"][aria-label*="What\'s on your mind"]',
+				'div[role="button"]:has-text("Post")',
+				'a[role="button"]:has-text("Post")',
+				'h2:has-text("Create post")',
+				'div[data-pagelet="FeedComposer"]',
 			]),
 		);
 

@@ -2,6 +2,7 @@
   "defaultBoard": "Random thoughts",
   "boards": [
     "AI is Neat and Scary",
+    "Actually useful",
     "Angel's",
     "Aquaponics",
     "Art & quotes",
@@ -15,13 +16,14 @@
     "Diy for the home",
     "Dream home",
     "Epic cuteness",
-    "Father’s Day Gift Ideas",
+    "Father's Day Gift Ideas",
     "Firefly/Space...",
     "Freaking Weird or mild...",
     "fun committee",
     "Fun Ideas",
     "Funny Stuff",
     "Gardening stuff",
+    "Gifts that aren't basic",
     "Get your Worship on.",
     "Halloween",
     "hemp farming",
@@ -45,6 +47,7 @@
     "More Nerdy Goodness...",
     "Mythic Code & Dark...",
     "Nerdcore",
+    "Not the usual bs",
     "Only the best Jobs",
     "origami",
     "Out of the Loom",
@@ -58,12 +61,29 @@
     "The Queen in me.",
     "Ui ux design",
     "Vacation Ideas",
+    "Viral Stuff That Works",
     "Your Pinterest Likes"
   ],
   "rules": [
     {
       "board": "coloring pages",
-      "keywords": ["coloring", "coloring book", "printable", "worksheet"]
+      "keywords": ["coloring", "coloring book", "printable", "worksheet", "goblin", "affirmation"]
+    },
+    {
+      "board": "Gifts that aren't basic",
+      "keywords": ["gift", "gifts", "gift ideas", "present", "for her", "for him", "unique gift", "quirky gift"]
+    },
+    {
+      "board": "Actually useful",
+      "keywords": ["useful", "practical", "actually good", "worth it", "not wasteful"]
+    },
+    {
+      "board": "Not the usual bs",
+      "keywords": ["not basic", "not the usual", "actually useful", "real recommendations", "honest"]
+    },
+    {
+      "board": "I'm so Crafty....",
+      "keywords": ["diy", "craft", "handmade", "tutorial", "crochet", "sew"]
     },
     {
       "board": "Kawaii Coloring",

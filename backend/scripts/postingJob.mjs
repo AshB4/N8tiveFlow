@@ -9,7 +9,17 @@ import { normalizeTargets, postToAllPlatforms } from "./platforms/post-to-all.js
 import { sendPostPunkTelegramAlert } from "../utils/telegramAlerts.mjs";
 import { isApprovedStatus } from "../utils/postStatus.mjs";
 import { buildArchiveEntry } from "../utils/archiveEntry.mjs";
-import { initLocalDb, readStoreSnapshot, replaceStoreSnapshot } from "../utils/localDb.mjs";
+import {
+	buildScheduleHealth,
+	getScheduleTimezone,
+} from "../utils/scheduleHealth.mjs";
+import {
+	initLocalDb,
+	readStoreSnapshot,
+	replaceStoreSnapshot,
+	getSetting,
+	setSetting,
+} from "../utils/localDb.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +37,36 @@ const DUPLICATE_COOLDOWN_HOURS = Number(
 	process.env.POSTPUNK_DUPLICATE_COOLDOWN_HOURS || 24,
 );
 const FACEBOOK_DAILY_LIMIT = Number(process.env.POSTPUNK_FACEBOOK_DAILY_LIMIT || 1);
+const PINTEREST_DAILY_LIMIT = Number(process.env.POSTPUNK_PINTEREST_DAILY_LIMIT || 6);
+const PINTEREST_GOBLIN_DAILY_LIMIT = Number(
+	process.env.POSTPUNK_PINTEREST_GOBLIN_DAILY_LIMIT || 2,
+);
+const PINTEREST_AVOID_CONSECUTIVE_MEDIA = !["0", "false", "off", "no"].includes(
+	String(process.env.POSTPUNK_PINTEREST_AVOID_CONSECUTIVE_MEDIA || "true").toLowerCase(),
+);
+const INVENTORY_ALERT_ENABLED = !["0", "false", "off", "no"].includes(
+	String(process.env.POSTPUNK_INVENTORY_ALERTS_ENABLED || "true").toLowerCase(),
+);
+const INVENTORY_ALERT_KEY = "inventory_alert_last_sent_v1";
+const INVENTORY_ALERT_LEAD_DAYS = Number(
+	process.env.POSTPUNK_PINTEREST_HOLIDAY_LEAD_DAYS || 60,
+);
+const INVENTORY_ALERT_MIN_HOLIDAY_PINS = Number(
+	process.env.POSTPUNK_PINTEREST_HOLIDAY_MIN_PINS || 5,
+);
+const SCHEDULE_GAP_LOOKAHEAD_DAYS = Number(
+	process.env.POSTPUNK_SCHEDULE_GAP_LOOKAHEAD_DAYS || 3,
+);
+const INVENTORY_RUNWAY_THRESHOLD_FACEBOOK = Number(
+	process.env.POSTPUNK_LOW_RUNWAY_DAYS_FACEBOOK || 7,
+);
+const INVENTORY_RUNWAY_THRESHOLD_PINTEREST = Number(
+	process.env.POSTPUNK_LOW_RUNWAY_DAYS_PINTEREST || 14,
+);
+const INVENTORY_RUNWAY_THRESHOLD_DEVTO = Number(
+	process.env.POSTPUNK_LOW_RUNWAY_DAYS_DEVTO || 21,
+);
+const DEVTO_DAILY_RATE = Number(process.env.POSTPUNK_DEVTO_POSTS_PER_DAY || 1 / 7);
 const ACTIVE_PLATFORM_LIST = String(
 	process.env.POSTPUNK_ACTIVE_PLATFORMS || "facebook,pinterest",
 )
@@ -73,6 +113,49 @@ const PLATFORM_ALIASES = {
 	instagram: "instagram",
 	ig: "instagram",
 };
+
+const PINTEREST_HOLIDAY_CALENDAR = [
+	{
+		name: "Passover",
+		date: "2026-04-01T00:00:00.000Z",
+		keywords: ["passover", "seder", "matzah"],
+	},
+	{
+		name: "Easter",
+		date: "2026-04-05T00:00:00.000Z",
+		keywords: ["easter", "egg", "bunny", "basket"],
+	},
+	{
+		name: "Mother's Day",
+		date: "2026-05-10T00:00:00.000Z",
+		keywords: ["mother", "mom", "mothers day"],
+	},
+	{
+		name: "Father's Day",
+		date: "2026-06-21T00:00:00.000Z",
+		keywords: ["father", "dad", "fathers day"],
+	},
+	{
+		name: "Back to School",
+		date: "2026-08-15T00:00:00.000Z",
+		keywords: ["back to school", "school", "classroom", "teacher"],
+	},
+	{
+		name: "Halloween",
+		date: "2026-10-31T00:00:00.000Z",
+		keywords: ["halloween", "spooky", "pumpkin", "costume"],
+	},
+	{
+		name: "Black Friday",
+		date: "2026-11-27T00:00:00.000Z",
+		keywords: ["black friday", "gift", "deal", "shopping"],
+	},
+	{
+		name: "Christmas",
+		date: "2026-12-25T00:00:00.000Z",
+		keywords: ["christmas", "holiday", "xmas", "stocking"],
+	},
+];
 
 async function sendWorkerAlert(message) {
 	const result = await sendPostPunkTelegramAlert(message);
@@ -264,6 +347,349 @@ function postedCountTodayForPlatform(postedLog = [], platform = "facebook", nowM
 		if (timestamp >= dayStart) count += 1;
 	}
 	return count;
+}
+
+function normalizeArrayText(value) {
+	if (!value) return [];
+	if (Array.isArray(value)) return value.map((item) => String(item || ""));
+	return [String(value)];
+}
+
+function postTextBlob(post) {
+	return [
+		post?.title,
+		post?.body,
+		post?.content,
+		post?.caption,
+		post?.metadata?.campaign,
+		post?.metadata?.productName,
+		post?.metadata?.productProfileId,
+		post?.mediaPath,
+		post?.image,
+		post?.canonicalUrl,
+		post?.affiliateUrl,
+		...normalizeArrayText(post?.hashtags),
+		...normalizeArrayText(post?.tags),
+		...normalizeArrayText(post?.metadata?.tags),
+		...normalizeArrayText(post?.metadata?.pinterestTags),
+	]
+		.map((value) => String(value || "").toLowerCase())
+		.filter(Boolean)
+		.join(" ");
+}
+
+function postMatchesKeywords(post, keywords = []) {
+	const haystack = postTextBlob(post);
+	if (!haystack) return false;
+	return keywords.some((keyword) => haystack.includes(String(keyword || "").toLowerCase()));
+}
+
+function hasScheduledDate(post, nowMs) {
+	const when = toDate(post?.scheduledAt ?? post?.scheduled_at);
+	if (!when) return false;
+	return when.getTime() >= nowMs;
+}
+
+function platformInventoryStats(posts = [], platform = "facebook", nowMs = Date.now()) {
+	const approved = posts.filter((post) => isApprovedStatus(post?.status));
+	const targeted = approved.filter((post) => hasPlatformTarget(post, platform));
+	const scheduled = targeted.filter((post) => hasScheduledDate(post, nowMs));
+	const unscheduled = targeted.filter(
+		(post) => !toDate(post?.scheduledAt ?? post?.scheduled_at),
+	);
+	const nextScheduled = scheduled
+		.map((post) => toDate(post?.scheduledAt ?? post?.scheduled_at))
+		.filter(Boolean)
+		.sort((a, b) => a - b)[0];
+
+	return {
+		platform,
+		totalApproved: targeted.length,
+		scheduledCount: scheduled.length,
+		unscheduledCount: unscheduled.length,
+		nextScheduled: nextScheduled ? nextScheduled.toISOString() : null,
+	};
+}
+
+function computeRunwayDays(stats, postsPerDay) {
+	const safeRate = Number(postsPerDay || 0);
+	if (safeRate <= 0) return Number.POSITIVE_INFINITY;
+	return stats.scheduledCount / safeRate;
+}
+
+function formatRunway(days) {
+	if (!Number.isFinite(days)) return "n/a";
+	if (days >= 7) return `${Math.floor(days/7)}w`;
+	return `${Math.floor(days)}d`;
+}
+
+function buildHolidayReminders(posts = [], nowMs = Date.now()) {
+	const reminders = [];
+	for (const holiday of PINTEREST_HOLIDAY_CALENDAR) {
+		const holidayDate = toDate(holiday.date);
+		if (!holidayDate) continue;
+		const deltaDays = Math.floor((holidayDate.getTime() - nowMs) / (24 * 60 * 60 * 1000));
+		if (deltaDays < 0 || deltaDays > INVENTORY_ALERT_LEAD_DAYS) continue;
+		const matchingPins = posts.filter((post) => {
+			if (!isApprovedStatus(post?.status)) return false;
+			if (!hasPlatformTarget(post, "pinterest")) return false;
+			const when = toDate(post?.scheduledAt ?? post?.scheduled_at);
+			if (!when) return false;
+			if (when.getTime() < nowMs || when.getTime() > holidayDate.getTime()) return false;
+			return postMatchesKeywords(post, holiday.keywords);
+		});
+		if (matchingPins.length < INVENTORY_ALERT_MIN_HOLIDAY_PINS) {
+			reminders.push({
+				name: holiday.name,
+				daysOut: deltaDays,
+				scheduledPins: matchingPins.length,
+				targetPins: INVENTORY_ALERT_MIN_HOLIDAY_PINS,
+			});
+		}
+	}
+	return reminders;
+}
+
+async function maybeSendInventoryRunwayAlert(posts = []) {
+	if (!INVENTORY_ALERT_ENABLED) return;
+	const nowMs = Date.now();
+	const todayKey = new Date(nowMs).toISOString().slice(0, 10);
+	const scheduleHealth = buildScheduleHealth(posts, {
+		nowMs,
+		timezone: getScheduleTimezone(),
+		lookaheadDays: SCHEDULE_GAP_LOOKAHEAD_DAYS,
+	});
+
+	const facebookStats = platformInventoryStats(posts, "facebook", nowMs);
+	const pinterestStats = platformInventoryStats(posts, "pinterest", nowMs);
+	const devtoStats = platformInventoryStats(posts, "devto", nowMs);
+
+	const runway = {
+		facebook: computeRunwayDays(facebookStats, Math.max(FACEBOOK_DAILY_LIMIT, 1)),
+		pinterest: computeRunwayDays(pinterestStats, Math.max(PINTEREST_DAILY_LIMIT, 1)),
+		devto: computeRunwayDays(devtoStats, Math.max(DEVTO_DAILY_RATE, 0.14)),
+	};
+
+	const lowRunwayLines = [];
+	if (runway.facebook < INVENTORY_RUNWAY_THRESHOLD_FACEBOOK) {
+		lowRunwayLines.push(
+			`- facebook low runway: ${formatRunway(runway.facebook)} (${facebookStats.scheduledCount} scheduled, ${facebookStats.unscheduledCount} unscheduled approved)`,
+		);
+	}
+	if (runway.pinterest < INVENTORY_RUNWAY_THRESHOLD_PINTEREST) {
+		lowRunwayLines.push(
+			`- pinterest low runway: ${formatRunway(runway.pinterest)} (${pinterestStats.scheduledCount} scheduled, ${pinterestStats.unscheduledCount} unscheduled approved)`,
+		);
+	}
+	if (runway.devto < INVENTORY_RUNWAY_THRESHOLD_DEVTO) {
+		lowRunwayLines.push(
+			`- devto low runway: ${formatRunway(runway.devto)} (${devtoStats.scheduledCount} scheduled, ${devtoStats.unscheduledCount} unscheduled approved)`,
+		);
+	}
+
+	const holidayReminders = buildHolidayReminders(posts, nowMs);
+	const holidayLines = holidayReminders.map(
+		(entry) =>
+			`- holiday reminder (${entry.daysOut}d): ${entry.name} has ${entry.scheduledPins}/${entry.targetPins} themed Pinterest posts scheduled`,
+	);
+	const scheduleLines = [];
+	if (scheduleHealth.todayScheduledCount === 0) {
+		scheduleLines.push(
+			`- no approved posts scheduled for ${scheduleHealth.todayKey} (${scheduleHealth.timezone})`,
+		);
+	}
+	for (const gapDay of scheduleHealth.gapDays.filter(
+		(day) => day !== scheduleHealth.todayKey,
+	)) {
+		scheduleLines.push(`- no approved posts scheduled for ${gapDay} (${scheduleHealth.timezone})`);
+	}
+	if (scheduleHealth.overdueApprovedCount > 0) {
+		scheduleLines.push(
+			`- ${scheduleHealth.overdueApprovedCount} approved post(s) are overdue and should have been processed already`,
+		);
+	}
+
+	if (!lowRunwayLines.length && !holidayLines.length && !scheduleLines.length) return;
+
+	const digest = JSON.stringify({
+		date: todayKey,
+		lowRunwayLines,
+		holidayLines,
+		scheduleLines,
+	});
+	const sentState = (await getSetting(INVENTORY_ALERT_KEY, {})) || {};
+	if (sentState?.date === todayKey && sentState?.digest === digest) {
+		return;
+	}
+
+	const headline = `Inventory runway check (${todayKey})`;
+	const detail = [
+		`Facebook: ${formatRunway(runway.facebook)} left (${facebookStats.scheduledCount} posts, posts 4x/week MWF+Sat)`,
+		`Pinterest: ${formatRunway(runway.pinterest)} left (${pinterestStats.scheduledCount} posts, posts daily)`,
+		`Dev.to: ${formatRunway(runway.devto)} left (${devtoStats.scheduledCount} posts, posts weekly Mon)`,
+		``,
+		`Next posts: FB ${facebookStats.nextScheduled || "none"} | Pin ${pinterestStats.nextScheduled || "none"} | Devto ${devtoStats.nextScheduled || "none"}`,
+	];
+	const message = [
+		headline,
+		...detail,
+		...(scheduleLines.length ? ["", "Schedule alerts:", ...scheduleLines] : []),
+		...(lowRunwayLines.length ? ["", "Low runway alerts:", ...lowRunwayLines] : []),
+		...(holidayLines.length ? ["", "Pinterest holiday lead alerts:", ...holidayLines] : []),
+		"",
+		"Action: add/schedule new posts before runway hits zero.",
+	].join("\n");
+
+	const result = await sendWorkerAlert(message);
+	if (result?.ok) {
+		await setSetting(INVENTORY_ALERT_KEY, {
+			date: todayKey,
+			digest,
+			sentAt: new Date().toISOString(),
+		});
+	}
+}
+
+function postLooksGoblin(post) {
+	const chunks = [
+		post?.title,
+		post?.body,
+		post?.content,
+		post?.mediaPath,
+		post?.image,
+		post?.canonicalUrl,
+		post?.affiliateUrl,
+		post?.metadata?.campaign,
+		post?.metadata?.productProfileId,
+		post?.metadata?.productName,
+		...normalizeArrayText(post?.hashtags),
+		...normalizeArrayText(post?.tags),
+		...normalizeArrayText(post?.metadata?.tags),
+	]
+		.map((value) => String(value || "").toLowerCase())
+		.filter(Boolean)
+		.join(" ");
+
+	return (
+		chunks.includes("goblin") ||
+		chunks.includes("goblinaffs") ||
+		chunks.includes("goblin-core-coloring-affirmations")
+	);
+}
+
+function archiveEntryLooksGoblin(entry) {
+	const chunks = [
+		entry?.title,
+		entry?.body,
+		entry?.content,
+		entry?.mediaPath,
+		entry?.image,
+		entry?.canonicalUrl,
+		entry?.affiliateUrl,
+		entry?.metadata?.campaign,
+		entry?.metadata?.productProfileId,
+		entry?.metadata?.productName,
+		...normalizeArrayText(entry?.hashtags),
+		...normalizeArrayText(entry?.tags),
+		...normalizeArrayText(entry?.metadata?.tags),
+	]
+		.map((value) => String(value || "").toLowerCase())
+		.filter(Boolean)
+		.join(" ");
+
+	return (
+		chunks.includes("goblin") ||
+		chunks.includes("goblinaffs") ||
+		chunks.includes("goblin-core-coloring-affirmations")
+	);
+}
+
+function postedGoblinCountTodayForPlatform(
+	postedLog = [],
+	platform = "pinterest",
+	nowMs = Date.now(),
+) {
+	const dayStart = startOfUtcDay(nowMs);
+	let count = 0;
+	for (const entry of postedLog) {
+		if (!archiveEntryHasPlatform(entry, platform)) continue;
+		if (!archiveEntryLooksGoblin(entry)) continue;
+		const timestamp = archiveEntryTimestamp(entry);
+		if (!timestamp) continue;
+		if (timestamp >= dayStart) count += 1;
+	}
+	return count;
+}
+
+function basenameWithoutExt(value) {
+	const raw = String(value || "").trim();
+	if (!raw) return "";
+	let candidate = raw;
+	if (/^https?:\/\//i.test(raw)) {
+		try {
+			const parsed = new URL(raw);
+			candidate = parsed.pathname || raw;
+		} catch {
+			candidate = raw;
+		}
+	}
+	const base = path.basename(candidate);
+	return base.replace(/\.[a-z0-9]+$/i, "");
+}
+
+function mediaFamilyFromPath(value) {
+	const base = basenameWithoutExt(value);
+	if (!base) return "";
+	const noPinterestSuffix = base.replace(/_pinterest_\d+x\d+$/i, "");
+	const expandedCamel = noPinterestSuffix.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+	const tokens = expandedCamel
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, " ")
+		.split(/\s+/)
+		.filter(Boolean)
+		.filter((token) => !["a", "an", "the"].includes(token))
+		.map((token) =>
+			token.length > 3 && token.endsWith("s") ? token.slice(0, -1) : token,
+		);
+	let key = tokens.join(" ").trim();
+	// Handle known same-meme variants.
+	if (/^deserve(?:a)? treat/.test(key)) {
+		key = "deserve treat";
+	}
+	return key;
+}
+
+function postMediaFamily(post) {
+	return (
+		mediaFamilyFromPath(post?.mediaPath) ||
+		mediaFamilyFromPath(post?.image) ||
+		mediaFamilyFromPath(post?.metadata?.mediaPath) ||
+		""
+	);
+}
+
+function entryMediaFamily(entry) {
+	return (
+		mediaFamilyFromPath(entry?.mediaPath) ||
+		mediaFamilyFromPath(entry?.image) ||
+		mediaFamilyFromPath(entry?.metadata?.mediaPath) ||
+		""
+	);
+}
+
+function latestPinterestMediaFamily(postedLog = []) {
+	let latest = 0;
+	let family = "";
+	for (const entry of postedLog) {
+		if (!archiveEntryHasPlatform(entry, "pinterest")) continue;
+		const ts = archiveEntryTimestamp(entry);
+		if (!ts || ts < latest) continue;
+		const maybeFamily = entryMediaFamily(entry);
+		if (!maybeFamily) continue;
+		latest = ts;
+		family = maybeFamily;
+	}
+	return family;
 }
 
 function hasPlatformTarget(post, platform) {
@@ -557,6 +983,13 @@ export async function processQueue() {
 		return scheduleReady && retryReady;
 	});
 	let facebookPostedToday = postedCountTodayForPlatform(postedLog, "facebook", now);
+	let pinterestPostedToday = postedCountTodayForPlatform(postedLog, "pinterest", now);
+	let pinterestGoblinPostedToday = postedGoblinCountTodayForPlatform(
+		postedLog,
+		"pinterest",
+		now,
+	);
+	let lastPinterestMediaFamily = latestPinterestMediaFamily(postedLog);
 	const todaysFacebookPostId =
 		facebookPostedToday < FACEBOOK_DAILY_LIMIT
 			? pickTodaysFacebookPostId(readyPosts, postedLog, now)
@@ -569,11 +1002,13 @@ export async function processQueue() {
 				postedLog,
 				rejections: rejectedLog,
 			});
+			await maybeSendInventoryRunwayAlert(queue);
 			console.log(
 				`No posts ready for processing. Rebalanced Pinterest media on ${rebalanceResult.changedCount} queued post(s).`,
 			);
 			return;
 		}
+		await maybeSendInventoryRunwayAlert(queue);
 		console.log("No posts ready for processing.");
 		return;
 	}
@@ -637,6 +1072,54 @@ export async function processQueue() {
 				targets = nonFacebookTargets;
 			}
 		}
+		if (hasPlatformTarget(post, "pinterest")) {
+			const isGoblinPost = postLooksGoblin(post);
+			if (pinterestPostedToday >= PINTEREST_DAILY_LIMIT) {
+				const nonPinterestTargets = targets.filter((t) => t.platform !== "pinterest");
+				if (nonPinterestTargets.length === 0) {
+					console.log(
+						`Deferring "${post.title ?? post.id ?? "untitled"}" to tomorrow (Pinterest daily limit reached).`,
+					);
+					queueUpdates.set(post.id, pushToNextUtcDay(post, now));
+					continue;
+				}
+				targets = nonPinterestTargets;
+			} else if (
+				isGoblinPost &&
+				pinterestGoblinPostedToday >= PINTEREST_GOBLIN_DAILY_LIMIT
+			) {
+				const nonPinterestTargets = targets.filter((t) => t.platform !== "pinterest");
+				if (nonPinterestTargets.length === 0) {
+					console.log(
+						`Deferring "${post.title ?? post.id ?? "untitled"}" to tomorrow (Pinterest goblin spread limit reached).`,
+					);
+					queueUpdates.set(post.id, pushToNextUtcDay(post, now));
+					continue;
+				}
+				targets = nonPinterestTargets;
+			}
+		}
+		if (
+			PINTEREST_AVOID_CONSECUTIVE_MEDIA &&
+			!Boolean(post?.metadata?.allowConsecutivePinterestMedia) &&
+			targets.some((target) => target.platform === "pinterest")
+		) {
+			const currentFamily = postMediaFamily(post);
+			if (currentFamily && lastPinterestMediaFamily && currentFamily === lastPinterestMediaFamily) {
+				const nonPinterestTargets = targets.filter((t) => t.platform !== "pinterest");
+				if (nonPinterestTargets.length === 0) {
+					console.log(
+						`Deferring "${post.title ?? post.id ?? "untitled"}" to tomorrow (avoid consecutive Pinterest media family: ${currentFamily}).`,
+					);
+					queueUpdates.set(post.id, pushToNextUtcDay(post, now));
+					continue;
+				}
+				console.log(
+					`Skipping Pinterest for "${post.title ?? post.id ?? "untitled"}" this run (avoid consecutive Pinterest media family: ${currentFamily}).`,
+				);
+				targets = nonPinterestTargets;
+			}
+		}
 		if (targets.length === 0) {
 			console.log(
 				`Ignoring "${post.title ?? post.id ?? "untitled"}" – no active platforms (${ACTIVE_PLATFORM_LIST.join(", ")}).`,
@@ -680,6 +1163,16 @@ export async function processQueue() {
 				);
 				if (successes.some((item) => item.platform === "facebook")) {
 					facebookPostedToday += 1;
+				}
+				if (successes.some((item) => item.platform === "pinterest")) {
+					pinterestPostedToday += 1;
+					if (postLooksGoblin(post)) {
+						pinterestGoblinPostedToday += 1;
+					}
+					const postedFamily = postMediaFamily(post);
+					if (postedFamily) {
+						lastPinterestMediaFamily = postedFamily;
+					}
 				}
 				if (postFingerprint) {
 					recentFingerprintMap.set(postFingerprint, Date.now());
@@ -768,6 +1261,7 @@ export async function processQueue() {
 		postedLog,
 		rejections: rejectedLog,
 	});
+	await maybeSendInventoryRunwayAlert(remainingQueue);
 
 	console.log(
 		`Worker finished: ${processedIds.size} processed, ${remainingQueue.length} remaining.`,

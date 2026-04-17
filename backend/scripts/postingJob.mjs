@@ -962,6 +962,7 @@ export async function rebalanceQueueMediaOnly() {
 
 export async function processQueue() {
 	await initLocalDb();
+	console.log("ACTIVE_PLATFORMS:", ACTIVE_PLATFORM_LIST);
 	const snapshot = await readStoreSnapshot();
 	let queue = snapshot.posts;
 	const postedLog = snapshot.postedLog;

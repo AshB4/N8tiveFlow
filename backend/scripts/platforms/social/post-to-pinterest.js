@@ -614,16 +614,158 @@ function knownBoardsFromConfig(config) {
 		.filter(Boolean);
 }
 
+function buildAllowedBoardLookup(config) {
+	const allowedBoards = knownBoardsFromConfig(config);
+	const byNormalized = new Map();
+	for (const board of allowedBoards) {
+		const key = normalizeBoardLabel(board);
+		if (!key || byNormalized.has(key)) continue;
+		byNormalized.set(key, board);
+	}
+	return {
+		allowedBoards,
+		byNormalized,
+	};
+}
+
+function resolveAllowedBoardName(name, lookup) {
+	const key = normalizeBoardLabel(name);
+	if (!key) return "";
+	return lookup?.byNormalized?.get(key) || "";
+}
+
 function splitBoardValues(value) {
 	if (Array.isArray(value)) {
 		return value.flatMap((item) => splitBoardValues(item));
 	}
 	const raw = String(value || "").trim();
 	if (!raw) return [];
-	return raw
-		.split(",")
-		.map((item) => item.trim())
+	return [raw];
+}
+
+function splitTagValues(value) {
+	if (Array.isArray(value)) {
+		return value.flatMap((item) => splitTagValues(item));
+	}
+	const raw = String(value || "").trim();
+	if (!raw) return [];
+	const hashtagMatches = raw.match(/#[\p{L}\p{N}_-]+/gu) || [];
+	const parsedHashtags = hashtagMatches.map((token) => token.replace(/^#+/, "").trim());
+	const parsedDelimited = raw
+		.split(/[,;\n|]/g)
+		.map((item) => item.trim().replace(/^#+/, ""))
 		.filter(Boolean);
+	return [...parsedHashtags, ...parsedDelimited];
+}
+
+function collectPinterestTags(post) {
+	const sources = [
+		post?.metadata?.pinterestTags,
+		post?.platformOverrides?.pinterest?.tags,
+		post?.metadata?.tags,
+		post?.tags,
+		post?.hashtags,
+	];
+	const maxTags = Math.max(1, Number(process.env.PINTEREST_MAX_TAGS || 10));
+	const collected = [];
+	for (const source of sources) {
+		for (const tag of splitTagValues(source)) {
+			const normalized = String(tag || "")
+				.toLowerCase()
+				.replace(/\s+/g, " ")
+				.trim();
+			if (!normalized) continue;
+			if (collected.some((entry) => entry.normalized === normalized)) continue;
+			collected.push({
+				normalized,
+				raw: String(tag || "").replace(/\s+/g, " ").trim(),
+			});
+			if (collected.length >= maxTags) {
+				return collected.map((entry) => entry.raw);
+			}
+		}
+	}
+	return collected.map((entry) => entry.raw);
+}
+
+async function resolvePinterestTopicInput(page) {
+	for (const selector of [
+		'input[placeholder*="tagged topics" i]',
+		'input[aria-label*="tagged topics" i]',
+		'input[placeholder*="topic" i]',
+		'input[aria-label*="topic" i]',
+		'[data-test-id*="topic"] input',
+	]) {
+		const locator = page.locator(selector).first();
+		try {
+			if ((await locator.count()) > 0) return locator;
+		} catch {
+			// continue
+		}
+	}
+	return null;
+}
+
+async function fillPinterestTopics(page, tags, debug) {
+	if (!Array.isArray(tags) || tags.length === 0) {
+		await debug?.log("fill-pin-topics", { skipped: true, reason: "no-tags-provided" });
+		return { attempted: 0, added: 0, inputFound: false };
+	}
+
+	let topicInput = await resolvePinterestTopicInput(page);
+	if (!topicInput) {
+		await clickFirst(
+			page,
+			[
+				'text=/Tagged topics/i',
+				'button:has-text("Tagged topics")',
+				'div[role="button"]:has-text("Tagged topics")',
+				'text=/Topics/i',
+			],
+			debug,
+			"open-tagged-topics",
+		);
+		await page.waitForTimeout(250);
+		topicInput = await resolvePinterestTopicInput(page);
+	}
+	if (!topicInput) {
+		await debug?.log("fill-pin-topics", {
+			skipped: true,
+			reason: "topics-input-not-found",
+			tagsAttempted: tags,
+		});
+		return { attempted: tags.length, added: 0, inputFound: false };
+	}
+
+	let added = 0;
+	for (const tag of tags) {
+		const cleanTag = String(tag || "")
+			.replace(/^#+/, "")
+			.replace(/\s+/g, " ")
+			.trim();
+		if (!cleanTag) continue;
+		try {
+			await topicInput.click({ timeout: 2500 });
+			await topicInput.fill(cleanTag, { timeout: 2500 });
+			await page.keyboard.press("Enter");
+			await page.waitForTimeout(180);
+			added += 1;
+			await debug?.log("fill-pin-topic-item", { tag: cleanTag, ok: true });
+		} catch (error) {
+			await debug?.log("fill-pin-topic-item", {
+				tag: cleanTag,
+				ok: false,
+				error: error?.message || String(error),
+			});
+		}
+	}
+
+	await debug?.log("fill-pin-topics", {
+		attempted: tags.length,
+		added,
+		tags,
+	});
+	return { attempted: tags.length, added, inputFound: true };
 }
 
 function isContextClosedError(error) {
@@ -639,8 +781,10 @@ function buildBoardCandidates({
 	metadataBoards = [],
 }) {
 	const maxCandidates = Number(process.env.PINTEREST_MAX_BOARD_CANDIDATES || 8);
-	const configBoards = knownBoardsFromConfig(config).slice(0, Math.max(maxCandidates, 8));
+	const lookup = buildAllowedBoardLookup(config);
+	const configBoards = lookup.allowedBoards.slice(0, Math.max(maxCandidates, 8));
 	const resolved = [];
+
 	for (const source of [
 		board,
 		boardOverride,
@@ -648,13 +792,23 @@ function buildBoardCandidates({
 		routedBoard,
 		config?.defaultBoard || "",
 		...metadataBoards,
-		"Fun Ideas",
 		...configBoards,
 	]) {
 		for (const name of splitBoardValues(source)) {
-			resolved.push(name);
+			const allowed = resolveAllowedBoardName(name, lookup);
+			if (allowed) resolved.push(allowed);
 		}
 	}
+
+	if (resolved.length === 0) {
+		const fallbackBoard = resolveAllowedBoardName(config?.defaultBoard || "", lookup);
+		if (fallbackBoard) {
+			resolved.push(fallbackBoard);
+		} else if (lookup.allowedBoards.length > 0) {
+			resolved.push(lookup.allowedBoards[0]);
+		}
+	}
+
 	return Array.from(new Set(resolved)).slice(0, Math.max(1, maxCandidates));
 }
 
@@ -816,6 +970,12 @@ export default async function postToPinterest(post, _context = {}) {
 	const boardConfigPath =
 		process.env.PINTEREST_BOARD_CONFIG_PATH || DEFAULT_BOARD_CONFIG_PATH;
 	const boardConfig = await loadBoardConfig(boardConfigPath);
+	const boardLookup = buildAllowedBoardLookup(boardConfig);
+	if (boardLookup.allowedBoards.length === 0) {
+		throw new Error(
+			"Pinterest board list is empty. Add boards to config/pinterest-boards.json before posting.",
+		);
+	}
 	const boardOverride =
 		post?.metadata?.pinterestBoard ||
 		post?.platformOverrides?.pinterest?.board ||
@@ -830,6 +990,12 @@ export default async function postToPinterest(post, _context = {}) {
 	if (!board) {
 		throw new Error(
 			"No Pinterest board selected. Set PINTEREST_BOARD_NAME, add routing rules, or pass metadata.pinterestBoard.",
+		);
+	}
+	const boardFromAllowList = resolveAllowedBoardName(board, boardLookup);
+	if (!boardFromAllowList) {
+		throw new Error(
+			`Resolved Pinterest board "${board}" is not in config/pinterest-boards.json allow-list.`,
 		);
 	}
 	const headless =
@@ -894,6 +1060,7 @@ export default async function postToPinterest(post, _context = {}) {
 		const title = post?.title || "";
 		const description = post?.body || "";
 		const link = post?.canonicalUrl || post?.affiliateUrl || "";
+		const pinterestTags = collectPinterestTags(post);
 		const mediaPathRaw = resolveLocalMediaPath(post);
 		const mediaPathSource = /^https?:\/\//i.test(mediaPathRaw || "")
 			? await downloadRemoteMediaToTemp(mediaPathRaw)
@@ -917,6 +1084,7 @@ export default async function postToPinterest(post, _context = {}) {
 			titleLength: title.length,
 			descriptionLength: description.length,
 			hasLink: Boolean(link),
+			pinterestTags,
 			mediaPathRaw,
 			mediaPathSource,
 			mediaPathPrepared: mediaPath,
@@ -978,6 +1146,7 @@ export default async function postToPinterest(post, _context = {}) {
 			linkFilled,
 			linkValuePresent: Boolean(link),
 		});
+		await fillPinterestTopics(page, pinterestTags, debug);
 		// Pinterest frequently A/B tests editor markup. If media + board flow is valid,
 		// continue posting even when text selectors miss in a given variant.
 		if (!titleFilled && !descriptionFilled && !linkFilled) {

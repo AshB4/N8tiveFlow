@@ -3,7 +3,7 @@
 import { readStoreSnapshot, replaceStoreSnapshot } from "../../utils/localDb.mjs";
 
 const DEFAULT_SLOTS_UTC = ["15:00", "15:20", "15:40", "16:00"];
-const DEFAULT_DAILY_PLAN = ["amazon-beauty", "amazon-kids", "digital", "wildcard"];
+const DEFAULT_DAILY_PLAN = ["amazon", "amazon", "digital", "wildcard"];
 const DEFAULT_MAX_SAME_PRODUCT_PER_DAY = 2;
 
 function parseArgs(argv = process.argv.slice(2)) {
@@ -136,6 +136,11 @@ function categoryForPost(post) {
 	return "wildcard";
 }
 
+function categoryMatches(category, preferred) {
+	if (preferred === "amazon") return category.startsWith("amazon-");
+	return category === preferred;
+}
+
 function scheduledMs(post) {
 	const ms = Date.parse(post?.scheduledAt || post?.scheduled_at || "");
 	return Number.isFinite(ms) ? ms : Number.MAX_SAFE_INTEGER;
@@ -181,7 +186,10 @@ function takeFrom(queues, preferred, dayCounts, lastGroup, maxSameProductPerDay)
 	const categories =
 		preferred === "wildcard"
 			? queueKeys
-			: [preferred, ...queueKeys.filter((key) => key !== preferred)];
+			: [
+				...queueKeys.filter((key) => categoryMatches(key, preferred)),
+				...queueKeys.filter((key) => !categoryMatches(key, preferred)),
+			];
 	const choices = [];
 
 	for (const category of categories) {
@@ -192,7 +200,7 @@ function takeFrom(queues, preferred, dayCounts, lastGroup, maxSameProductPerDay)
 				category,
 				post,
 				group,
-				preferredMatch: category === preferred,
+				preferredMatch: categoryMatches(category, preferred),
 			});
 		}
 		if (choices.some((choice) => choice.preferredMatch)) break;

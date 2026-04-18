@@ -1,0 +1,52 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+  "platforms": ["pinterest"],
+  "board": "Learn computer coding",
+  "items": [
+    {
+      "keyword": "content prompts for creators",
+      "angle": "beat blank page",
+      "title": "When Your Brain Is Empty, Prompts Beat Motivation",
+      "description": "Creator block is usually a starting problem, not a talent problem. Use 100 Prompt Storm to get moving fast.",
+      "image": "frontend/assets/appImgs/dailysquare-banner.png",
+      "boards": ["Learn computer coding", "Ui ux design", "Random thoughts"],
+      "tags": ["content prompts", "creator tools", "creative block", "productivity", "digital products"]
+    },
+    {
+      "keyword": "creative block help",
+      "angle": "systems over mood",
+      "title": "Good Systems Beat Mood Every Time",
+      "description": "Stop waiting for inspiration. Start with structured prompts that give you hooks, angles, and momentum.",
+      "image": "frontend/assets/appImgs/dailysquare-banner.png",
+      "boards": ["Ui ux design", "Learn computer coding"],
+      "tags": ["creative block", "systems thinking", "content strategy", "creator workflow", "prompt pack"]
+    },
+    {
+      "keyword": "prompt pack for content creators",
+      "angle": "practical workflow",
+      "title": "A Prompt Pack Is Not Magic. It Is Momentum.",
+      "description": "100 Prompt Storm gives you practical starting points so you can publish instead of overthinking.",
+      "image": "frontend/assets/appImgs/dailysquare-banner.png",
+      "boards": ["Learn computer coding", "Nerdcore"],
+      "tags": ["prompt pack", "content creation", "workflow", "creator economy", "momentum"]
+    },
+    {
+      "keyword": "idea generation prompts",
+      "angle": "idea engine",
+      "title": "Use Prompt Angles To Turn One Idea Into Ten Posts",
+      "description": "Build an idea engine with reusable prompt angles for hooks, frameworks, and content direction.",
+      "image": "frontend/assets/appImgs/dailysquare-banner.png",
+      "boards": ["Ui ux design", "Learn computer coding", "Art & quotes"],
+      "tags": ["idea generation", "content prompts", "hooks", "marketing ideas", "creator tools"]
+    },
+    {
+      "keyword": "digital product for creators",
+      "angle": "offer spotlight",
+      "title": "100 Prompt Storm: The Creator Reset Button",
+      "description": "If you are stuck, this gives you 100 clean starting points so you can make and ship faster.",
+      "image": "frontend/assets/appImgs/dailysquare-banner.png",
+      "boards": ["Learn computer coding", "Only the best Jobs"],
+      "tags": ["digital product", "creator resources", "productivity", "prompt system", "ship faster"]
+    }
+  ]
+}

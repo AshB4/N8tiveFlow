@@ -1,0 +1,52 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+  "platforms": ["pinterest"],
+  "board": "Art & quotes",
+  "items": [
+    {
+      "keyword": "slow progress affirmation",
+      "angle": "anti hustle validation",
+      "title": "You Are Allowed To Move Slowly (And Still Be Winning)",
+      "description": "Slow progress is still progress. This goblin reminder hits different when you're tired of hustle culture.",
+      "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+      "boards": ["Art & quotes", "Beautiful me.", "Random thoughts"],
+      "tags": ["slow progress", "anti hustle", "mental health", "self care", "burnout"]
+    },
+    {
+      "keyword": "burnout recovery quote",
+      "angle": "permission to rest",
+      "title": "Moving Slowly Isn’t Failure — It’s Recovery",
+      "description": "If you're exhausted, slowing down is survival — not failure.",
+      "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+      "boards": ["Beautiful me.", "psychology /sociology"],
+      "tags": ["burnout recovery", "rest", "healing", "mental health", "self compassion"]
+    },
+    {
+      "keyword": "anti productivity affirmation",
+      "angle": "rebellion against hustle",
+      "title": "You Don’t Owe The World Speed",
+      "description": "You are allowed to move at your own pace. Hustle culture can wait.",
+      "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+      "boards": ["Random thoughts", "Funny Stuff"],
+      "tags": ["anti productivity", "slow living", "self worth", "mindset", "balance"]
+    },
+    {
+      "keyword": "adhd affirmation slow pace",
+      "angle": "ND validation",
+      "title": "Your Pace Is Valid — Even If It’s Slower",
+      "description": "For brains that don’t sprint. You’re not behind — you’re pacing differently.",
+      "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+      "boards": ["Infj memes", "psychology /sociology"],
+      "tags": ["adhd", "neurodivergent", "focus", "validation", "self acceptance"]
+    },
+    {
+      "keyword": "gentle affirmation art",
+      "angle": "soft comfort",
+      "title": "Slow Is Safe. Slow Is Allowed.",
+      "description": "A gentle reminder: you don’t have to rush to be worthy.",
+      "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+      "boards": ["Art & quotes"],
+      "tags": ["gentle reminder", "self care", "healing", "cozy", "mental health"]
+    }
+  ]
+}

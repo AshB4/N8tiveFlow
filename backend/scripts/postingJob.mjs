@@ -270,7 +270,7 @@ function buildPostPayload(post) {
 		image: post.image ?? post.media ?? null,
 		mediaPath: post.mediaPath ?? null,
 		mediaType: post.mediaType ?? null,
-		hashtags: post.hashtags ?? post.tags ?? [],
+		hashtags: normalizeHashtags(post.hashtags ?? post.tags ?? []),
 		platformOverrides: post.platformOverrides ?? {},
 		metadata: post.metadata ?? {},
 	};
@@ -351,8 +351,17 @@ function postedCountTodayForPlatform(postedLog = [], platform = "facebook", nowM
 
 function normalizeArrayText(value) {
 	if (!value) return [];
-	if (Array.isArray(value)) return value.map((item) => String(item || ""));
-	return [String(value)];
+	if (Array.isArray(value)) return value.flatMap((item) => normalizeArrayText(item));
+	return String(value)
+		.split(/[\s,]+/)
+		.map((item) => item.trim())
+		.filter(Boolean);
+}
+
+function normalizeHashtags(value) {
+	return normalizeArrayText(value).map((tag) =>
+		tag.startsWith("#") ? tag : `#${tag}`,
+	);
 }
 
 function postTextBlob(post) {
@@ -1032,6 +1041,14 @@ export async function processQueue() {
 					title: post.title ?? null,
 					error: `Skipped duplicate content within ${DUPLICATE_COOLDOWN_HOURS}h cooldown window`,
 					reasonCode: "duplicate_cooldown",
+					body: post.body ?? post.content ?? "",
+					platforms: normalizePlatforms(post),
+					targets: archiveEntryTargets(post),
+					hashtags: normalizeHashtags(post.hashtags ?? post.tags ?? []),
+					mediaPath: post.mediaPath ?? null,
+					mediaType: post.mediaType ?? null,
+					image: post.image ?? post.media ?? null,
+					metadata: post.metadata ?? {},
 					lastPostedAt: lastPostedIso,
 					processedAt: new Date().toISOString(),
 				});
@@ -1184,10 +1201,17 @@ export async function processQueue() {
 				rejectedLog.push({
 					id: post.id ?? null,
 					title: post.title ?? null,
+					body: post.body ?? post.content ?? "",
+					platforms,
 					targets: failures.map((f) => ({
 						platform: f.platform,
 						accountId: f.accountId ?? null,
 					})),
+					hashtags: normalizeHashtags(post.hashtags ?? post.tags ?? []),
+					mediaPath: post.mediaPath ?? null,
+					mediaType: post.mediaType ?? null,
+					image: post.image ?? post.media ?? null,
+					metadata: post.metadata ?? {},
 					results: failures,
 					processedAt: timestamp,
 				});
@@ -1229,8 +1253,15 @@ export async function processQueue() {
 			rejectedLog.push({
 				id: post.id ?? null,
 				title: post.title ?? null,
+				body: post.body ?? post.content ?? "",
 				error: error?.message ?? "Unknown worker error",
+				platforms,
 				targets,
+				hashtags: normalizeHashtags(post.hashtags ?? post.tags ?? []),
+				mediaPath: post.mediaPath ?? null,
+				mediaType: post.mediaType ?? null,
+				image: post.image ?? post.media ?? null,
+				metadata: post.metadata ?? {},
 				processedAt: timestamp,
 			});
 			console.error(

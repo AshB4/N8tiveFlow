@@ -1,0 +1,57 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+  "platforms": ["pinterest"],
+  "board": "coloring pages",
+  "items": [
+    {
+      "keyword": "mental health coloring page printable",
+      "angle": "validation / survival",
+      "title": "Mental Health Coloring Page (Some Days This Is Enough)",
+      "description": "If all you did today was exist… that counts. Printable goblin-style coloring page for hard days, burnout, and quiet survival wins.",
+      "image": "frontend/assets/goblinaffs/Existing-stubbornly.png",
+      "board": "Beautiful me.",
+      "boards": ["Beautiful me.", "coloring pages"],
+      "tags": ["mental health", "self care printable", "coloring page", "burnout recovery", "healing"]
+    },
+    {
+      "keyword": "burnout recovery printable art",
+      "angle": "burnout audience",
+      "title": "Burnout Recovery Printable (Low Energy Days Count)",
+      "description": "For the days when doing nothing was actually doing everything. Relatable goblin-core printable for burnout, exhaustion, and slow recovery.",
+      "image": "frontend/assets/goblinaffs/Existing-stubbornly.png",
+      "board": "psychology /sociology",
+      "boards": ["psychology /sociology", "coloring pages"],
+      "tags": ["burnout", "mental health support", "printable art", "self care", "relatable"]
+    },
+    {
+      "keyword": "goblin core affirmation printable",
+      "angle": "aesthetic affirmation",
+      "title": "Goblin Core Affirmation Coloring Page (Soft but Real)",
+      "description": "Not toxic positivity. Just real survival energy. Cozy goblin-core affirmation printable for people doing their best in messy ways.",
+      "image": "frontend/assets/goblinaffs/Existing-stubbornly.png",
+      "board": "coloring pages",
+      "boards": ["coloring pages", "Freaking Weird or mild..."],
+      "tags": ["goblin core", "affirmation", "coloring printable", "dark cozy", "self care"]
+    },
+    {
+      "keyword": "depression support coloring page",
+      "angle": "deeper struggle",
+      "title": "Depression Support Coloring Page (You’re Still Here)",
+      "description": "Existing is not nothing. This printable coloring page is for the days when everything feels heavy but you’re still here anyway.",
+      "image": "frontend/assets/goblinaffs/Existing-stubbornly.png",
+      "board": "Beautiful me.",
+      "boards": ["Beautiful me.", "psychology /sociology"],
+      "tags": ["depression support", "mental health", "coloring page", "healing art", "self care"]
+    },
+    {
+      "keyword": "motivational quote printable realistic",
+      "angle": "anti-toxic motivation",
+      "title": "Motivational Quote Printable (But Actually Honest)",
+      "description": "Not “rise and grind.” More like “you survived and that counts.” A realistic motivational printable for people tired of fake positivity.",
+      "image": "frontend/assets/goblinaffs/Existing-stubbornly.png",
+      "board": "Art & quotes",
+      "boards": ["Art & quotes", "coloring pages"],
+      "tags": ["motivational quote", "realistic self care", "printable art", "mental health", "honest quotes"]
+    }
+  ]
+}

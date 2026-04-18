@@ -1,0 +1,57 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+  "platforms": ["pinterest"],
+  "board": "coloring pages",
+  "items": [
+    {
+      "keyword": "avoidance humor coloring page",
+      "angle": "relatable avoidance",
+      "title": "Avoidance Humor Coloring Page (It’s Self Care Now)",
+      "description": "If avoiding your problems feels like a strategy… you’re not alone. Funny goblin coloring page for chaotic self-care logic.",
+      "image": "frontend/assets/goblinaffs/CallItSelfCare.png",
+      "board": "Funny Stuff",
+      "boards": ["Funny Stuff", "coloring pages"],
+      "tags": ["avoidance humor", "relatable meme", "coloring page", "printable", "goblin energy"]
+    },
+    {
+      "keyword": "self care meme printable funny",
+      "angle": "self-care parody",
+      "title": "Self Care Meme Coloring Page (Questionable Choices 😂)",
+      "description": "Not all self care is productive… and that’s fine. Printable goblin meme for people doing their best in weird ways.",
+      "image": "frontend/assets/goblinaffs/CallItSelfCare.png",
+      "board": "Beautiful me.",
+      "boards": ["Beautiful me.", "Funny Stuff"],
+      "tags": ["self care meme", "mental health humor", "coloring printable", "relatable", "funny"]
+    },
+    {
+      "keyword": "goblin core chaotic printable",
+      "angle": "aesthetic chaos",
+      "title": "Chaotic Goblin Core Coloring Page (Embrace the Mess)",
+      "description": "Messy, chaotic, and somehow still comforting. A goblin-core printable for embracing imperfect coping habits.",
+      "image": "frontend/assets/goblinaffs/CallItSelfCare.png",
+      "board": "Freaking Weird or mild...",
+      "boards": ["Freaking Weird or mild...", "coloring pages"],
+      "tags": ["goblin core", "chaotic energy", "coloring page", "printable", "dark cozy"]
+    },
+    {
+      "keyword": "procrastination meme printable",
+      "angle": "procrastination crowd",
+      "title": "Procrastination Coloring Page (I’ll Deal With It Later)",
+      "description": "A perfect printable for chronic procrastinators. Goblin-style humor for putting things off… again.",
+      "image": "frontend/assets/goblinaffs/CallItSelfCare.png",
+      "board": "Random thoughts",
+      "boards": ["Random thoughts", "Funny Stuff"],
+      "tags": ["procrastination", "funny meme", "coloring printable", "relatable", "humor"]
+    },
+    {
+      "keyword": "funny printable wall art chaotic quote",
+      "angle": "decor humor",
+      "title": "Chaotic Funny Printable Wall Art (Bad Decisions Energy)",
+      "description": "Print it, hang it, and fully commit to your questionable life choices. Goblin quote art for chaos-friendly spaces.",
+      "image": "frontend/assets/goblinaffs/CallItSelfCare.png",
+      "board": "Art & quotes",
+      "boards": ["Art & quotes", "Funny Stuff"],
+      "tags": ["funny wall art", "printable quote", "chaotic humor", "goblin core", "decor"]
+    }
+  ]
+}

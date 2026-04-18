@@ -1,29 +1,16 @@
 /** @format */
 
-import { readFile } from "fs/promises";
-import path from "path";
-import { fileURLToPath } from "url";
 import { sendPostPunkTelegramAlert } from "../../utils/telegramAlerts.mjs";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const QUEUE_FILE = path.join(__dirname, "../../queue/postQueue.json");
-const POSTED_FILE = path.join(__dirname, "../../queue/postedLog.json");
-const REJECTED_FILE = path.join(__dirname, "../../queue/rejections.json");
+import { initLocalDb, readStoreSnapshot } from "../../utils/localDb.mjs";
+import {
+	buildScheduleHealth,
+	getScheduleTimezone,
+} from "../../utils/scheduleHealth.mjs";
 
 const toDate = (value) => {
 	const date = new Date(value);
 	return Number.isNaN(date.getTime()) ? null : date;
 };
-
-async function readJson(file, fallback) {
-	try {
-		const raw = await readFile(file, "utf-8");
-		return JSON.parse(raw);
-	} catch {
-		return fallback;
-	}
-}
 
 function buildSummary({ queue, posted, rejected }) {
 	const since = new Date(Date.now() - 24 * 60 * 60 * 1000);
@@ -45,6 +32,9 @@ function buildSummary({ queue, posted, rejected }) {
 		failed24Count: failed24.length,
 		queueCount: queue.length,
 		approvedQueued,
+		scheduleHealth: buildScheduleHealth(queue, {
+			timezone: getScheduleTimezone(),
+		}),
 		nextScheduled: queue
 			.map((row) => toDate(row?.scheduledAt ?? row?.scheduled_at))
 			.filter(Boolean)
@@ -54,15 +44,15 @@ function buildSummary({ queue, posted, rejected }) {
 
 async function main() {
 	const shouldSend = process.argv.includes("--send");
-	const [queue, posted, rejected] = await Promise.all([
-		readJson(QUEUE_FILE, []),
-		readJson(POSTED_FILE, []),
-		readJson(REJECTED_FILE, []),
-	]);
+	await initLocalDb();
+	const snapshot = await readStoreSnapshot();
+	const queue = Array.isArray(snapshot?.posts) ? snapshot.posts : [];
+	const posted = Array.isArray(snapshot?.postedLog) ? snapshot.postedLog : [];
+	const rejected = Array.isArray(snapshot?.rejections) ? snapshot.rejections : [];
 	const summary = buildSummary({
-		queue: Array.isArray(queue) ? queue : [],
-		posted: Array.isArray(posted) ? posted : [],
-		rejected: Array.isArray(rejected) ? rejected : [],
+		queue,
+		posted,
+		rejected,
 	});
 
 	const message = [
@@ -71,6 +61,8 @@ async function main() {
 		`Failed: ${summary.failed24Count}`,
 		`Queue total: ${summary.queueCount}`,
 		`Approved queued: ${summary.approvedQueued}`,
+		`Scheduled today (${summary.scheduleHealth.timezone}): ${summary.scheduleHealth.todayScheduledCount}`,
+		`Gap days: ${summary.scheduleHealth.gapDays.join(", ") || "none"}`,
 		`Next scheduled: ${summary.nextScheduled ? summary.nextScheduled.toISOString() : "none"}`,
 	].join("\n");
 
@@ -88,4 +80,3 @@ main().catch((error) => {
 	console.error("Daily summary failed:", error?.message || error);
 	process.exitCode = 1;
 });
-

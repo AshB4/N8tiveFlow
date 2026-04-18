@@ -73,6 +73,9 @@ export const normalizeProductLink = (post, partnerTag = "") => {
 	const candidate =
 		post?.canonicalUrl ||
 		post?.affiliateUrl ||
+		post?.metadata?.productLink ||
+		post?.metadata?.canonicalUrl ||
+		post?.metadata?.affiliateUrl ||
 		links.primary ||
 		links.amazon ||
 		links.gumroad ||
@@ -100,11 +103,26 @@ export const isAffiliatePost = (post) => {
 	const affiliateUrl =
 		post?.affiliateUrl ||
 		post?.canonicalUrl ||
+		post?.metadata?.productLink ||
 		post?.metadata?.affiliateUrl ||
 		post?.metadata?.productLinks?.amazon ||
 		post?.metadata?.productLinks?.primary ||
 		"";
 	return contentMode === "affiliate" || /amazon\./i.test(String(affiliateUrl));
+};
+
+export const normalizeHashtags = (value) => {
+	if (!value) return [];
+	if (Array.isArray(value)) {
+		return value
+			.flatMap((item) => normalizeHashtags(item))
+			.filter(Boolean);
+	}
+	return String(value)
+		.split(/[\s,]+/)
+		.map((tag) => tag.trim())
+		.filter(Boolean)
+		.map((tag) => (tag.startsWith("#") ? tag : `#${tag}`));
 };
 
 export const ensureAffiliateDisclosure = (body, disclosure = AFFILIATE_DISCLOSURE) => {
@@ -277,7 +295,7 @@ export const postToAllPlatforms = async (post, targetsInput) => {
 				mediaPath: post.mediaPath ?? null,
 				mediaType: post.mediaType ?? null,
 				saveAsDraft: Boolean(post.saveAsDraft),
-				hashtags: post.hashtags,
+				hashtags: normalizeHashtags(post.hashtags),
 				platformOverrides: post.platformOverrides ?? {},
 				metadata: post.metadata ?? {},
 				tags: post.tags ?? [],

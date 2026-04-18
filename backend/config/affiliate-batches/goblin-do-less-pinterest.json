@@ -1,0 +1,57 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+  "platforms": ["pinterest"],
+  "board": "coloring pages",
+  "items": [
+    {
+      "keyword": "lazy day coloring page printable",
+      "angle": "low energy humor",
+      "title": "Lazy Day Coloring Page (No Productivity Required)",
+      "description": "For the days when doing less is the plan. Funny goblin-style printable coloring page for low-energy days and zero guilt.",
+      "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+      "board": "coloring pages",
+      "boards": ["coloring pages", "Funny Stuff"],
+      "tags": ["lazy day", "coloring page", "printable", "relatable humor", "goblin energy"]
+    },
+    {
+      "keyword": "anti productivity meme printable",
+      "angle": "anti-hustle",
+      "title": "Anti Productivity Coloring Page (Opting Out Today)",
+      "description": "Not every day needs to be optimized. This goblin-core printable is for rejecting hustle culture and choosing peace instead.",
+      "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+      "board": "psychology /sociology",
+      "boards": ["psychology /sociology", "coloring pages"],
+      "tags": ["anti hustle", "productivity burnout", "printable art", "self care", "relatable"]
+    },
+    {
+      "keyword": "goblin core cozy coloring page",
+      "angle": "cozy aesthetic",
+      "title": "Cozy Goblin Coloring Page (Slow Living Energy)",
+      "description": "Slow, cozy, slightly chaotic. A goblin-core printable for embracing quiet days, soft routines, and not rushing anything.",
+      "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+      "board": "coloring pages",
+      "boards": ["coloring pages", "Freaking Weird or mild..."],
+      "tags": ["goblin core", "cozy aesthetic", "coloring printable", "slow living", "fantasy art"]
+    },
+    {
+      "keyword": "introvert rest day printable",
+      "angle": "introvert targeting",
+      "title": "Introvert Rest Day Coloring Page (Recharge Mode)",
+      "description": "If your ideal plan is doing absolutely nothing in peace… this one’s for you. Printable goblin meme for introvert recharge days.",
+      "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+      "board": "Infj memes",
+      "boards": ["Infj memes", "coloring pages"],
+      "tags": ["introvert", "rest day", "coloring page", "printable", "relatable meme"]
+    },
+    {
+      "keyword": "funny relatable wall art printable",
+      "angle": "decor humor",
+      "title": "Funny Relatable Printable Wall Art (Do Less Energy)",
+      "description": "A gentle reminder to not try so hard. Print, frame, and embrace doing less without guilt.",
+      "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+      "board": "Art & quotes",
+      "boards": ["Art & quotes", "Funny Stuff"],
+      "tags": ["funny wall art", "printable quote", "relatable humor", "goblin core", "decor"]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+  "platforms": ["pinterest"],
+  "board": "Funny Stuff",
+  "items": [
+    {
+      "keyword": "hot mess affirmation",
+      "angle": "defiant self worth",
+      "title": "Hot Mess And Still Here",
+      "description": "You don’t have to be perfect to be unstoppable.",
+      "image": "frontend/assets/goblinaffs/DisappearHotMess.png",
+      "boards": ["Funny Stuff", "Beautiful me."],
+      "tags": ["hot mess", "confidence", "self worth", "relatable", "mental health"]
+    },
+    {
+      "keyword": "self acceptance imperfect",
+      "angle": "acceptance",
+      "title": "You Can Be A Mess And Still Matter",
+      "description": "Existence is not conditional on perfection.",
+      "image": "frontend/assets/goblinaffs/DisappearHotMess.png",
+      "boards": ["Beautiful me."],
+      "tags": ["self acceptance", "imperfect", "mental health", "growth", "confidence"]
+    },
+    {
+      "keyword": "funny goblin affirmation",
+      "angle": "chaotic humor",
+      "title": "A Hot Mess… But A Persistent One",
+      "description": "Refusing to disappear is a personality trait now.",
+      "image": "frontend/assets/goblinaffs/DisappearHotMess.png",
+      "boards": ["Funny Stuff"],
+      "tags": ["funny", "chaos", "goblin", "relatable", "meme"]
+    },
+    {
+      "keyword": "mental health survival quote",
+      "angle": "resilience",
+      "title": "Still Here. Still Fighting.",
+      "description": "Even messy survival is still survival.",
+      "image": "frontend/assets/goblinaffs/DisappearHotMess.png",
+      "boards": ["psychology /sociology"],
+      "tags": ["resilience", "mental health", "strength", "survival", "healing"]
+    },
+    {
+      "keyword": "anti perfection quote",
+      "angle": "reject perfection",
+      "title": "Perfection Is Not Required To Exist",
+      "description": "You don’t need to fix everything to be valid.",
+      "image": "frontend/assets/goblinaffs/DisappearHotMess.png",
+      "boards": ["Art & quotes"],
+      "tags": ["anti perfection", "self worth", "mindset", "confidence", "growth"]
+    }
+  ]
+}

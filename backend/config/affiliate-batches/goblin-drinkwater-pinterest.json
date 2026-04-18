@@ -1,0 +1,57 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+  "platforms": ["pinterest"],
+  "board": "coloring pages",
+  "items": [
+    {
+      "keyword": "funny coloring page adult humor",
+      "angle": "relatable humor",
+      "title": "Funny Goblin Coloring Page (This Is Too Real 😂)",
+      "description": "If you’ve ever side-eyed someone for drinking plain water… this one hits. Printable goblin coloring page with chaotic relatable humor.",
+      "image": "frontend/assets/goblinaffs/DrinkWater.png",
+      "board": "coloring pages",
+      "boards": ["coloring pages", "Funny Stuff"],
+      "tags": ["funny coloring page", "adult coloring", "goblin core", "relatable humor", "printable"]
+    },
+    {
+      "keyword": "goblin core coloring printable",
+      "angle": "aesthetic niche",
+      "title": "Goblin Core Coloring Page Printable (Cozy Chaos)",
+      "description": "Dark cozy goblin vibes with painfully accurate humor. Perfect printable for goblin-core lovers and chaotic self-care energy.",
+      "image": "frontend/assets/goblinaffs/DrinkWater.png",
+      "board": "Freaking Weird or mild...",
+      "boards": ["Freaking Weird or mild...", "coloring pages"],
+      "tags": ["goblin core", "dark cozy", "coloring printable", "fantasy art", "cozy aesthetic"]
+    },
+    {
+      "keyword": "self care humor printable",
+      "angle": "self-care parody",
+      "title": "Self Care Coloring Page (Not the Pinterest Kind)",
+      "description": "Forget perfect routines. This printable is for real-life chaotic self-care and questionable life choices.",
+      "image": "frontend/assets/goblinaffs/DrinkWater.png",
+      "board": "Beautiful me.",
+      "boards": ["Beautiful me.", "Funny Stuff"],
+      "tags": ["self care humor", "mental health meme", "coloring page", "printable", "relatable"]
+    },
+    {
+      "keyword": "introvert meme coloring page",
+      "angle": "personality targeting",
+      "title": "Introvert Humor Coloring Page (We Are Not the Same)",
+      "description": "For people who don’t relate to overly functional humans. Printable goblin meme for introverts and chaos enjoyers.",
+      "image": "frontend/assets/goblinaffs/DrinkWater.png",
+      "board": "Infj memes",
+      "boards": ["Infj memes", "Funny Stuff"],
+      "tags": ["introvert meme", "infj humor", "coloring printable", "goblin energy", "relatable meme"]
+    },
+    {
+      "keyword": "funny printable wall art weird quote",
+      "angle": "decor",
+      "title": "Weird Funny Printable Wall Art (Goblin Energy)",
+      "description": "Print it, frame it, confuse your guests. Chaotic goblin quote art for people who refuse to be normal.",
+      "image": "frontend/assets/goblinaffs/DrinkWater.png",
+      "board": "Art & quotes",
+      "boards": ["Art & quotes", "Freaking Weird or mild..."],
+      "tags": ["funny wall art", "printable quote", "weird decor", "goblin core", "humor art"]
+    }
+  ]
+}

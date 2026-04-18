@@ -5,6 +5,7 @@ import {
   withAffiliateTag,
   normalizeProductLink,
   ensureProductLink,
+  normalizeHashtags,
   isConfiguredValue,
   isThreadsConfigured,
 } from "../scripts/platforms/post-to-all.js";
@@ -63,10 +64,25 @@ test("normalizeProductLink tags amazon product links", () => {
   assert.match(result, /amazon\.com\/example-product\?tag=ashb4studio0b-20/);
 });
 
+test("normalizeProductLink accepts legacy metadata productLink", () => {
+  const result = normalizeProductLink({
+    metadata: {
+      productLink: "https://example.com/product",
+    },
+  });
+
+  assert.equal(result, "https://example.com/product");
+});
+
 test("ensureProductLink appends missing product link", () => {
   const result = ensureProductLink("Helpful punch post", "https://example.com/product");
   assert.match(result, /Helpful punch post/);
   assert.match(result, /https:\/\/example\.com\/product/);
+});
+
+test("normalizeHashtags normalizes arrays and strings", () => {
+  assert.deepEqual(normalizeHashtags("#one two,three"), ["#one", "#two", "#three"]);
+  assert.deepEqual(normalizeHashtags(["one", "#two"]), ["#one", "#two"]);
 });
 
 test("isConfiguredValue rejects placeholders", () => {

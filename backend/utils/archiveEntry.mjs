@@ -1,3 +1,18 @@
+function normalizeArrayText(value) {
+  if (!value) return [];
+  if (Array.isArray(value)) return value.flatMap((item) => normalizeArrayText(item));
+  return String(value)
+    .split(/[\s,]+/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function normalizeHashtags(value) {
+  return normalizeArrayText(value).map((tag) =>
+    tag.startsWith("#") ? tag : `#${tag}`,
+  );
+}
+
 export function buildArchiveEntry(post = {}, extras = {}) {
   return {
     id: post?.id ?? null,
@@ -10,7 +25,7 @@ export function buildArchiveEntry(post = {}, extras = {}) {
       : Array.isArray(post?.targets)
       ? post.targets
       : [],
-    hashtags: Array.isArray(post?.hashtags) ? post.hashtags : [],
+    hashtags: normalizeHashtags(post?.hashtags ?? post?.tags ?? []),
     mediaPath: post?.mediaPath ?? null,
     mediaType: post?.mediaType ?? null,
     image: post?.image ?? post?.media ?? null,

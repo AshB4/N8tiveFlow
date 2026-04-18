@@ -101,6 +101,11 @@ npm run product-finder    # generate product finder candidates
 npm run product-finder -- --source creators --dry-run  # test Creators API source
 ```
 
+For a Linux always-on deployment checklist, see:
+
+- `Docs/server-setup-linux.md`
+- `Docs/server-setup-linux-cheatsheet.md`
+
 ## Keep it running on macOS (terminal-free)
 Use `launchd` files included in `backend/launchd/`.
 

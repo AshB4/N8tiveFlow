@@ -1,0 +1,52 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/passover-seder-survival-kit",
+  "platforms": ["pinterest"],
+  "board": "Fun Ideas",
+  "items": [
+    {
+      "keyword": "passover activities for kids",
+      "angle": "busy kids at seder",
+      "title": "Passover Activities That Keep Kids Engaged At The Seder",
+      "description": "Printable, kid-friendly Passover pages to keep little hands busy while everyone actually finishes the Seder.",
+      "image": "frontend/assets/passover/PassoverForKids.png",
+      "boards": ["Fun Ideas", "Baby Shower!", "Learn hebrew"],
+      "tags": ["passover", "seder", "kids activities", "printable", "jewish holidays"]
+    },
+    {
+      "keyword": "passover coloring pages printable",
+      "angle": "easy printable",
+      "title": "Printable Passover Coloring Pages For Calm Seder Nights",
+      "description": "Simple Passover coloring pages for kids who need something to do during long holiday dinners.",
+      "image": "frontend/assets/passover/PassoverColoring.png",
+      "boards": ["Fun Ideas", "Kawaii Coloring", "Learn hebrew"],
+      "tags": ["passover coloring", "printable activities", "seder kids", "holiday printable", "family traditions"]
+    },
+    {
+      "keyword": "how to run passover with kids",
+      "angle": "parent help",
+      "title": "How To Make Passover Easier With Kids At The Table",
+      "description": "Use this kid-focused Seder survival kit to reduce chaos and keep everyone involved.",
+      "image": "frontend/assets/passover/HowToUse.png",
+      "boards": ["Fun Ideas", "Random thoughts", "Learn hebrew"],
+      "tags": ["passover tips", "seder with kids", "parent hacks", "holiday planning", "printables"]
+    },
+    {
+      "keyword": "passover seder guide kids",
+      "angle": "beginner",
+      "title": "Beginner-Friendly Passover Seder Printables For Families",
+      "description": "If you are new to leading Seder with children, this print-and-go kit gives you structure fast.",
+      "image": "frontend/assets/passover/PassoverLandscape.png",
+      "boards": ["Fun Ideas", "Learn hebrew", "Art & quotes"],
+      "tags": ["passover seder", "family guide", "beginner friendly", "kids printable", "holiday resources"]
+    },
+    {
+      "keyword": "passover printable kit",
+      "angle": "product spotlight",
+      "title": "Passover Seder Survival Kit (Print And Go)",
+      "description": "A practical Passover printable kit for families who want less stress and better flow during Seder night.",
+      "image": "frontend/assets/passover/PassoverPortait.png",
+      "boards": ["Fun Ideas", "Learn hebrew", "Baby Shower!"],
+      "tags": ["passover printable", "seder kit", "jewish family", "holiday prep", "kids table"]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+  "platforms": ["pinterest"],
+  "board": "Random thoughts",
+  "items": [
+    {
+      "keyword": "life path not linear",
+      "angle": "reframing direction",
+      "title": "You’re Not Behind — You’re On A Side Quest",
+      "description": "Not everything has to be the main path to matter.",
+      "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
+      "boards": ["Random thoughts", "Art & quotes"],
+      "tags": ["life path", "exploration", "growth", "mindset", "journey"]
+    },
+    {
+      "keyword": "feeling behind in life",
+      "angle": "comfort",
+      "title": "You’re Not Late — Just Exploring",
+      "description": "Different timelines are still valid timelines.",
+      "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
+      "boards": ["Beautiful me."],
+      "tags": ["not behind", "self acceptance", "life journey", "confidence", "growth"]
+    },
+    {
+      "keyword": "adhd life path meme",
+      "angle": "ND humor",
+      "title": "Main Quest Optional. Side Quests Mandatory.",
+      "description": "Some brains are built for exploration, not straight lines.",
+      "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
+      "boards": ["Infj memes"],
+      "tags": ["adhd", "neurodivergent", "funny", "life path", "relatable"]
+    },
+    {
+      "keyword": "nonlinear success quote",
+      "angle": "redefinition",
+      "title": "Progress Doesn’t Always Look Like Progress",
+      "description": "Exploration is still forward movement.",
+      "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
+      "boards": ["psychology /sociology"],
+      "tags": ["success", "growth", "mindset", "progress", "life"]
+    },
+    {
+      "keyword": "fantasy life metaphor",
+      "angle": "game framing",
+      "title": "Side Quests Count Too",
+      "description": "Every detour builds your character.",
+      "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
+      "boards": ["Art & quotes"],
+      "tags": ["fantasy", "life metaphor", "growth", "exploration", "mindset"]
+    }
+  ]
+}

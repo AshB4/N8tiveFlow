@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.mjs",
     "worker": "node scripts/postingJob.mjs",
-    "test": "node --test",
+    "test": "node --test test/*.test.mjs",
     "product-finder": "node scripts/productFinder/run-product-finder.js",
     "health:tokens": "node scripts/health/check-tokens.mjs",
     "x:capture-session": "node scripts/capture-x-session.mjs",

@@ -1,0 +1,52 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+  "platforms": ["pinterest"],
+  "board": "Funny Stuff",
+  "items": [
+    {
+      "keyword": "anti productivity quote",
+      "angle": "defiance",
+      "title": "I Don’t Trust Productivity Standards Either",
+      "description": "Made-up rules by people who don’t live in your brain? Hard pass.",
+      "image": "frontend/assets/goblinaffs/ProdStandards.png",
+      "boards": ["Funny Stuff", "Random thoughts"],
+      "tags": ["anti productivity", "relatable", "burnout", "mindset", "humor"]
+    },
+    {
+      "keyword": "adhd productivity meme",
+      "angle": "ND humor",
+      "title": "Productivity Rules Were Not Designed For My Brain",
+      "description": "If your brain works differently, so should your standards.",
+      "image": "frontend/assets/goblinaffs/ProdStandards.png",
+      "boards": ["Infj memes", "psychology /sociology"],
+      "tags": ["adhd", "neurodivergent", "productivity", "mental health", "relatable"]
+    },
+    {
+      "keyword": "burnout culture critique",
+      "angle": "system rejection",
+      "title": "Maybe The System Is The Problem",
+      "description": "You’re not broken. The expectations might be.",
+      "image": "frontend/assets/goblinaffs/ProdStandards.png",
+      "boards": ["psychology /sociology"],
+      "tags": ["burnout", "system critique", "work culture", "mental health", "awareness"]
+    },
+    {
+      "keyword": "funny affirmation goblin",
+      "angle": "chaotic humor",
+      "title": "My Brain Didn’t Agree To These Rules",
+      "description": "Goblin logic: reject unrealistic standards immediately.",
+      "image": "frontend/assets/goblinaffs/ProdStandards.png",
+      "boards": ["Funny Stuff"],
+      "tags": ["funny", "goblin mode", "chaos", "relatable", "meme"]
+    },
+    {
+      "keyword": "self acceptance affirmation",
+      "angle": "identity validation",
+      "title": "Different Brain. Different Rules.",
+      "description": "You don’t have to follow systems that weren’t built for you.",
+      "image": "frontend/assets/goblinaffs/ProdStandards.png",
+      "boards": ["Beautiful me."],
+      "tags": ["self acceptance", "mental health", "confidence", "identity", "growth"]
+    }
+  ]
+}

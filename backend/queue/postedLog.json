@@ -1,1 +1,2809 @@
-[]
+[
+  {
+    "id": "p_20260330_01",
+    "title": "What Building a Social Scheduler Taught Me About Reliability",
+    "body": "Most automation tools feel impressive right up until you have to trust them.\n\nIt is easy to demo a scheduler.\n\nIt is much harder to build one that survives real life:\n- expired tokens\n- flaky platform APIs\n- posts that need review\n- queues that drift out of sync\n- failures that happen while you are asleep\n\nThat gap changed how I think about automation.\n\nI have been building a project called PostPunk, and I thought the hard part would be generating content and wiring platform APIs together. That turned out to be the easy part.\n\nThe real work was operational trust.\n\nA useful scheduler needs a few things that demos usually skip:\n\n## 1. Approval states matter\n\nNot every post should go straight from draft to published.\n\nSome posts are written by you and are ready immediately. Some are AI-assisted and need a second look. If your system does not distinguish that clearly, you end up either babysitting everything or accidentally posting junk.\n\nSo I ended up treating post states as part of the core workflow, not just metadata:\n- draft\n- approved\n- posted\n- failed\n\nThat sounds simple, but it changes everything.\n\n## 2. Failure is not an edge case\n\nIn scheduling systems, failure is normal.\n\nA platform token expires.\nAn API rate-limits you.\nA platform changes a field name.\nAn account is misconfigured.\nA browser fallback stops matching the UI.\n\nIf the whole system falls apart the moment one target fails, you do not have automation. You have a fragile demo.\n\nSo the system needs:\n- retries\n- visible failure states\n- alerts\n- manual assist when automation is not trustworthy\n\n## 3. Automatic is not the same as unattended\n\nA lot of posting tools sell the dream of full autopilot. In practice, a better model is often:\n- automate what is stable\n- assist where platforms are hostile\n- keep the queue and schedule as the source of truth\n\nThat still saves a huge amount of time, and more importantly, it is honest.\n\n## 4. Scheduling is really an operations problem\n\nThe UI part is not enough.\n\nYou also need:\n- a worker that checks for due posts\n- logs\n- retry logic\n- success and failure alerts\n- a clear what is due today view\n\nWithout those, the schedule is just decorative.\n\n## What I learned\n\nThe hardest part of automation is not getting software to do something once.\n\nIt is getting it to behave predictably enough that you stop worrying about it.\n\nThat is the part I care about now.\n\nIf you are building internal tools, creator tools, or any kind of scheduler, reliability is the actual feature. Everything else is packaging.\n\nPostPunk is still a project I am actively working on, but building it has made me much less interested in shiny automation promises and much more interested in boring operational trust.",
+    "platform": null,
+    "platforms": [
+      "devto"
+    ],
+    "targets": [
+      {
+        "platform": "devto",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": null,
+    "mediaType": null,
+    "image": null,
+    "metadata": {
+      "productProfileId": "postpunk-core",
+      "productProfileLabel": "PostPunk Core",
+      "productCategory": "Devtools",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "",
+        "primary": ""
+      },
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Editorial dashboard scene showing a stressed creator queue and missed schedule alert.",
+      "imagePrompt": "Editorial product mockup of a creator scheduling dashboard, dark interface with neon pink and teal highlights, missed post alert, queue cards, moody but sharp, high-detail UI scene, no watermarks, modern devtool aesthetic.",
+      "contentTags": [
+        "automation",
+        "reliability",
+        "scheduler"
+      ],
+      "distributionTags": [
+        "post:devto"
+      ],
+      "approvalSource": "devto-weekly",
+      "requiresReview": false,
+      "retryNowAttempt": true
+    },
+    "productProfileId": "postpunk-core",
+    "results": [
+      {
+        "platform": "devto",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "articleId": 3437945,
+          "url": "https://dev.to/ashb4/what-building-a-social-scheduler-taught-me-about-reliability-4m8o"
+        }
+      }
+    ],
+    "processedAt": "2026-03-31T21:15:43.041Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260322_01",
+    "title": "Goblin self-care is still self-care.",
+    "body": "Not everybody wants wellness content that sounds like it was written by a beige candle.\n\nGoblin Ritual Coloring Kit is for the people who are exhausted, a little unhinged, and still trying to take care of themselves anyway.\n\nIt is funny on purpose. That is part of the medicine.",
+    "platform": null,
+    "platforms": [
+      "facebook",
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "facebook",
+        "accountId": null
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/tats_01_skipCandy.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "goblin-self-care-coloring-book",
+      "productProfileLabel": "Goblin Self-Care Coloring Book",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-ritual-coloring-kit",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-ritual-coloring-kit"
+      },
+      "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Goblin-mode self-care illustration with humor and a tired-but-trying energy.",
+      "imagePrompt": "Funny goblin self-care illustration, chaotic but lovable goblin with tea, blanket, messy journal, candles, burnout humor, dark cute color palette, giftable product vibe, high detail.",
+      "contentTags": [
+        "goblin",
+        "self-care",
+        "burnout"
+      ],
+      "distributionTags": [
+        "post:facebook",
+        "post:instagram",
+        "post:pinterest"
+      ],
+      "approvalSource": "composer",
+      "requiresReview": false,
+      "retryNowAttempt": true,
+      "pinterestBoard": "Fun Ideas"
+    },
+    "productProfileId": "goblin-self-care-coloring-book",
+    "results": [
+      {
+        "platform": "facebook",
+        "accountId": null,
+        "status": "error",
+        "error": "Facebook browser fallback could not attach media"
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-03-31T22:00:58.199Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260328_01",
+    "title": "A bee coloring book is a deeply good idea, actually.",
+    "body": "Buzzing Adventures Coloring Book is soft, playful, and easy to gift.\n\nIt is the kind of book that works for kids, classrooms, gentle weekend activities, and people who just want something sweet instead of loud.\n\nSometimes wholesome wins.",
+    "platform": null,
+    "platforms": [
+      "pinterest",
+      "facebook"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      },
+      {
+        "platform": "facebook",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/buzzingbees/5minsOfCalmBigBee.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "buzzing-adventures-coloring-book",
+      "productProfileLabel": "Buzzing Adventures Coloring Book",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX",
+        "primary": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX"
+      },
+      "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Bee and flower coloring book mockup with wholesome classroom-friendly feel.",
+      "imagePrompt": "Wholesome bee-themed coloring book mockup, flowers, hive patterns, playful educational tone, warm family-friendly style, Amazon-ready product image feel, high detail, bright but gentle.",
+      "contentTags": [
+        "bees",
+        "nature",
+        "family-friendly"
+      ],
+      "distributionTags": [
+        "post:amazon",
+        "post:pinterest",
+        "post:facebook",
+        "post:instagram"
+      ],
+      "approvalSource": "composer",
+      "requiresReview": false,
+      "retryNowAttempt": true,
+      "pinterestBoard": "Fun Ideas"
+    },
+    "productProfileId": "buzzing-adventures-coloring-book",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      },
+      {
+        "platform": "facebook",
+        "accountId": null,
+        "status": "error",
+        "error": "Facebook browser fallback could not attach media"
+      }
+    ],
+    "processedAt": "2026-03-31T22:07:41.443Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260320_01",
+    "title": "Graduation season is chaotic enough without fake productivity hacks.",
+    "body": "AI Powered Grad is for people who want practical help, not vague advice.\n\nIf you are trying to write faster, organize better, or get through graduation season without losing your mind, this was made for that exact pressure.\n\nUseful beats clever.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/appImgs/PostPunkCalenderDesign.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "ai-powered-grad",
+      "productProfileLabel": "AI Powered Grad",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/ai-powered-grad",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/ai-powered-grad"
+      },
+      "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Graduate-focused productivity visual with laptop, cap, checklist, and AI helper vibe.",
+      "imagePrompt": "Modern graduation productivity scene, laptop, graduation cap, checklist, smart AI assistant vibe, clean and practical aesthetic, encouraging, bright but grounded, high detail, editorial digital product promo.",
+      "contentTags": [
+        "graduation",
+        "ai",
+        "students"
+      ],
+      "distributionTags": [
+        "post:facebook",
+        "post:pinterest",
+        "post:x"
+      ],
+      "approvalSource": "composer",
+      "requiresReview": false,
+      "pinterestBoard": "Fun Ideas"
+    },
+    "productProfileId": "ai-powered-grad",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-01T01:21:32.572Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260325_01",
+    "title": "Affirmations, but make them goblin.",
+    "body": "Goblin Core Coloring Affirmations is what happens when self-talk gets tired of pretending to be polished.\n\nIt is weird, printable, funny, and honestly a lot more comforting than another perfect morning-routine graphic.\n\nSome people heal in a straight line. Some of us need goblin stationery.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "https://public-files.gumroad.com/nqt0xhulzgedfqgudq4j161nw7cm",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "goblin-coloring-affirmations",
+      "productProfileLabel": "Goblin Core Coloring Affirmations",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Printable affirmation pack with chaotic cute goblin charm and sarcastic comfort.",
+      "imagePrompt": "Printable goblin-core affirmation pack spread, sarcastic but comforting aesthetic, dark-cute color palette, playful stationery, layered paper textures, quirky and giftable, high detail.",
+      "contentTags": [
+        "goblin",
+        "affirmations",
+        "printable"
+      ],
+      "distributionTags": [
+        "post:facebook",
+        "post:instagram",
+        "post:pinterest"
+      ],
+      "approvalSource": "composer",
+      "requiresReview": false,
+      "pinterestBoard": "Fun Ideas"
+    },
+    "productProfileId": "goblin-coloring-affirmations",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "coloring pages",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-01T01:30:00.236Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260401_01",
+    "title": "Weird affirmations work better for me than polished ones.",
+    "body": "Not everybody wants healing language that sounds like it came from a luxury retreat.\n\nGoblin Core Coloring Affirmations is for people who want something funny, printable, and weirdly comforting.\n\nThat still counts as self-care.",
+    "platform": null,
+    "platforms": [
+      "facebook",
+      "instagram",
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "facebook",
+        "accountId": null
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "goblin-coloring-affirmations",
+      "productProfileLabel": "Goblin Core Coloring Affirmations",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "includeProductLink": true,
+      "imageStatus": "prompt-needed",
+      "imageConcept": "Whimsical goblin-themed printable affirmations page with messy cozy desk vibe.",
+      "imagePrompt": "Goblin-core printable affirmation sheet on a messy cozy desk, dark cute aesthetic, forest green and pink accents, playful hand-lettered affirmations, whimsical stationery look, warm lighting, highly detailed, no text artifacts if possible.",
+      "contentTags": [
+        "goblin",
+        "affirmations",
+        "self-care"
+      ],
+      "distributionTags": [
+        "post:facebook",
+        "post:instagram",
+        "post:pinterest"
+      ],
+      "approvalSource": "recycled-queue",
+      "requiresReview": false
+    },
+    "productProfileId": "goblin-coloring-affirmations",
+    "results": [
+      {
+        "platform": "facebook",
+        "accountId": null,
+        "status": "error",
+        "error": "Facebook browser fallback clicked Post, but the composer did not close."
+      },
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Random thoughts",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-01T15:01:27.503Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0001",
+    "title": "best toddler easter basket bath toys (no candy idea) 🐰",
+    "body": "Skip the candy this year and build a toddler Easter basket they’ll actually use. These soft pastel bath toys are cute, safe, and perfect for everyday play.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/bath_toys_01.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [
+        "easter basket ideas toddler",
+        "bath toys toddlers",
+        "easter basket fillers",
+        "toddler gifts no candy",
+        "baby bath toys safe",
+        "toddler easter ideas",
+        "bath time toys kids"
+      ],
+      "keyword": "toddler easter basket bath toys aesthetic",
+      "angle": "best",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": "https://www.pinterest.com/pin/376472850121851506/",
+          "pinId": "376472850121851506",
+          "analyticsUrl": "https://www.pinterest.com/pin/376472850121851506/analytics?content_type=all&device_type=all&source_type=all&aggregation=last30d",
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-01T15:37:50.493Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0004",
+    "title": "turn bath time into playtime (easter edition) 🐣",
+    "body": "These adorable bath toys make everyday routines fun. Perfect for toddlers who need a little extra motivation to enjoy bath time.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/bath_toys_04.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [
+        "bath time routine toddler",
+        "toddler activities easy",
+        "sensory bath play",
+        "baby bath toys ideas",
+        "toddler engagement toys"
+      ],
+      "keyword": "toddler easter basket bath toys aesthetic",
+      "angle": "use case",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-01T17:31:38.580Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0002",
+    "title": "tired of bath time tantrums? try this 🛁",
+    "body": "If bath time is a struggle, these squeezable Easter bath toys make it fun again. Easy to hold, cute, and actually keep toddlers engaged.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/bath_toys_02.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [
+        "toddler bath time struggle",
+        "bath toys that work",
+        "toddler routine help",
+        "baby bath toys fun",
+        "parenting hacks toddler",
+        "bath toys amazon"
+      ],
+      "keyword": "toddler easter basket bath toys aesthetic",
+      "angle": "problem",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "AI is Neat and Scary",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-01T18:31:27.227Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0003",
+    "title": "the cutest pastel easter toys for toddlers 🌸",
+    "body": "Soft colors, cozy vibes, and actually useful. These aesthetic bath toys double as the perfect Easter basket filler.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/bath_toys_03.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [
+        "aesthetic baby toys",
+        "pastel toys toddler",
+        "cute toddler gifts",
+        "easter aesthetic ideas",
+        "cozy baby vibe",
+        "spring toys kids"
+      ],
+      "keyword": "toddler easter basket bath toys aesthetic",
+      "angle": "aesthetic",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true,
+      "retryNowAttempt": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-02T05:02:32.078Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0005",
+    "title": "easy toddler easter basket idea (no stress) 🧺",
+    "body": "Not sure what to put in a toddler Easter basket? Start with these safe, simple bath toys that parents actually love.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/appImgs/PostPunkCalenderDesign.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [
+        "easy easter basket toddler",
+        "beginner easter ideas",
+        "simple toddler gifts",
+        "easter basket fillers kids",
+        "baby gift ideas"
+      ],
+      "keyword": "toddler easter basket bath toys aesthetic",
+      "angle": "beginner",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "AI is Neat and Scary",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-02T15:00:00.278Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0007",
+    "title": "Mess-free Easter basket ideas for toddlers",
+    "body": "Skip the candy. These Easter basket fillers keep toddlers busy without the mess. Perfect for parents who want easy, no-stress activities.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/skipcandywatercolor.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Essentials-Activities/dp/B0FPNT8S8Q?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Essentials-Activities/dp/B0FPNT8S8Q?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [
+        "easter basket ideas",
+        "toddler easter basket",
+        "mess free toddler activities",
+        "easter basket fillers",
+        "no candy easter basket"
+      ],
+      "keyword": "mess-free Easter basket ideas for toddlers",
+      "angle": "problem",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "AI is Neat and Scary",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-02T16:00:00.500Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0008",
+    "title": "What to put in a toddler Easter basket (no junk)",
+    "body": "Easy Easter basket ideas toddlers will actually use. No sugar overload, just fun and simple activities.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/nomesswatercolor.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Essentials-Activities/dp/B0FPNT8S8Q?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Essentials-Activities/dp/B0FPNT8S8Q?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [
+        "toddler easter basket",
+        "what to put in easter basket",
+        "no junk easter basket",
+        "easter basket ideas for toddlers",
+        "simple toddler activities"
+      ],
+      "keyword": "what to put in a toddler Easter basket no junk",
+      "angle": "use case",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Angel's",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-02T16:00:49.665Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0009",
+    "title": "Easter basket fillers that keep toddlers busy",
+    "body": "If you need toddler Easter ideas that actually last longer than 5 minutes, this is one of the best no-mess options.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/watercolorbook.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Essentials-Activities/dp/B0FPNT8S8Q?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Essentials-Activities/dp/B0FPNT8S8Q?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [
+        "easter basket fillers",
+        "toddler busy activities",
+        "quiet activities for toddlers",
+        "easter ideas for toddlers",
+        "activity book for toddlers"
+      ],
+      "keyword": "easter basket fillers that keep toddlers busy",
+      "angle": "problem",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Baby Shower!",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-03T15:01:47.213Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0011",
+    "title": "These Easter Tattoos Are Way Too Cute to Ignore",
+    "body": "Bunnies, eggs, bright colors everywhere. Kids go straight for these before anything else in the basket.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/tats_02_Too_Cute.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen",
+        "primary": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [],
+      "keyword": "easter tattoos for kids",
+      "angle": "visual",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-05T19:49:48.551Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0012",
+    "title": "Easy Easter Basket Filler Kids Actually Use",
+    "body": "Simple, fun, and zero effort. Perfect filler that keeps toddlers entertained longer than candy ever does.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/Tats_03_0EffortWin.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen",
+        "primary": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [],
+      "keyword": "easter basket ideas for toddlers",
+      "angle": "use case",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-05T19:50:08.001Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0013",
+    "title": "Cheap Easter Basket Fillers That Don’t Feel Cheap",
+    "body": "Low-cost, high-fun. These stickers and tattoos stretch your basket without looking like filler junk.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/Tats_04_under10.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen",
+        "primary": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [],
+      "keyword": "cheap easter basket stuffers",
+      "angle": "budget",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-05T19:50:55.622Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0014",
+    "title": "The Easiest Easter Party Favor Idea for Kids",
+    "body": "Hand these out and you’re done. Instant hit for Easter parties, classrooms, or egg hunts.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/Tats05_NoPrep.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen",
+        "primary": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [],
+      "keyword": "kids easter party favors",
+      "angle": "event",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-05T19:51:43.203Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0015",
+    "title": "Skip the Sugar This Easter",
+    "body": "Trying to avoid the sugar crash? These Easter basket fillers keep kids excited without the candy overload. Fun, easy, and way less messy.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/cars01.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-cars-evergreen",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen",
+        "primary": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Baby Shower!"
+      ],
+      "pinterestTags": [
+        "easter basket stuffers",
+        "no candy easter ideas",
+        "kids easter gifts",
+        "easter basket fillers",
+        "parent hacks"
+      ],
+      "keyword": "easter basket stuffers for kids no candy",
+      "angle": "problem",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-05T19:52:29.203Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0016",
+    "title": "You Forgot Easter Baskets... Didn't You?",
+    "body": "No stuffing, no prep, no stress. These easy Easter fillers make last-minute baskets feel done without the scramble.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/cars02.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-cars-evergreen",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen",
+        "primary": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen"
+      },
+      "pinterestBoard": "I Want, I dream.",
+      "pinterestBoards": [
+        "I Want, I dream.",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "easy easter basket ideas",
+        "last minute easter",
+        "kids easter fillers",
+        "easter prep",
+        "busy parent ideas"
+      ],
+      "keyword": "easy easter basket fillers for kids",
+      "angle": "use case",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-05T19:53:16.279Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0020",
+    "title": "12 Easter Favors for Kids (No Candy Needed)",
+    "body": "Looking for Easter egg fillers that are not candy? These pre-filled eggs with plush toys are perfect for classrooms, parties, and stress-free Easter prep. Easy, fun, and ready to go.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/easter_grass_favors_01.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-plush-eggs-evergreen",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Baby Shower!",
+      "pinterestBoards": [
+        "Baby Shower!",
+        "Fun Ideas",
+        "Epic cuteness"
+      ],
+      "pinterestTags": [
+        "easter favors",
+        "easter egg fillers",
+        "kids easter ideas",
+        "classroom easter gifts",
+        "non candy easter",
+        "toddler easter",
+        "easter party favors"
+      ],
+      "keyword": "easter favors for kids no candy",
+      "angle": "bulk / party / classroom win",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Baby Shower!",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-06T18:56:23.840Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0021",
+    "title": "Done-for-You Easter Eggs for Kids",
+    "body": "Skip the prep this year. These Easter eggs come ready with cute plush toys inside. No stuffing, no mess, just hide and go. Perfect for busy parents.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/pastel_clean_product_02.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-plush-eggs-evergreen",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Baby Shower!",
+        "Epic cuteness"
+      ],
+      "pinterestTags": [
+        "easter eggs prefilled",
+        "easy easter ideas",
+        "easter basket fillers",
+        "no prep easter",
+        "kids easter gifts",
+        "busy mom hacks",
+        "easter toys"
+      ],
+      "keyword": "prefilled easter eggs for kids",
+      "angle": "instant easter basket hack",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Epic cuteness",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-06T18:57:10.487Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0023",
+    "title": "Cheap Easter Fillers That Feel Premium",
+    "body": "Affordable Easter egg fillers that do not feel cheap. These plush-filled eggs are fun, reusable, and perfect for under-25 Easter gift ideas.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/minimal_beige_clean_04.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-plush-eggs-evergreen",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "I Want, I dream.",
+      "pinterestBoards": [
+        "I Want, I dream.",
+        "Fun Ideas",
+        "Epic cuteness"
+      ],
+      "pinterestTags": [
+        "cheap easter ideas",
+        "budget easter basket",
+        "easter gifts under 25",
+        "affordable kids gifts",
+        "non candy easter ideas",
+        "easter deals",
+        "parent hacks"
+      ],
+      "keyword": "cheap easter fillers for kids",
+      "angle": "budget",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "I Want, I dream.",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-06T19:00:39.531Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0024",
+    "title": "Skip Candy This Easter (Try This Instead)",
+    "body": "Candy overload? Try these plush-filled Easter eggs instead. Kids love the surprise toys, and parents love the no-sugar chaos.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/pastel_gradient_skip_candy_05.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-plush-eggs-evergreen",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Baby Shower!",
+        "Epic cuteness"
+      ],
+      "pinterestTags": [
+        "no candy easter",
+        "healthy easter ideas",
+        "kids easter alternatives",
+        "easter egg ideas",
+        "parenting hacks",
+        "toddler easter basket",
+        "spring toys"
+      ],
+      "keyword": "no candy easter ideas for kids",
+      "angle": "candy alternative",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Baby Shower!",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-06T19:00:58.506Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0010",
+    "title": "Skip the Sugar — Kids Actually Love These Instead",
+    "body": "Trying to avoid candy overload? These Easter tattoos + stickers keep kids busy without the sugar crash.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/tats_01_skipCandy.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "easter-2026-affiliate-master",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen",
+        "primary": "https://www.amazon.com/JCFIRE-Stuffers-Temporary-Tattoos-Stickers/dp/B0GDXT44LS?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-tattoos-evergreen"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [],
+      "pinterestTags": [],
+      "keyword": "easter basket stuffers for kids no candy",
+      "angle": "problem",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-06T19:01:43.911Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260408_digipin_01",
+    "title": "Stop waiting for motivation. Start with a better prompt.",
+    "body": "If the blank page is the problem, use a starting point that actually moves you. Prompt Storm is built for momentum, not perfection.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "https://public-files.gumroad.com/l60mvt6b4g61gg4svr750ec4ofq3",
+    "mediaType": "image",
+    "image": "https://public-files.gumroad.com/l60mvt6b4g61gg4svr750ec4ofq3",
+    "metadata": {
+      "productProfileId": "prompt-storm",
+      "productProfileLabel": "100 Prompt Storm",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
+      },
+      "pinterestBoard": "Learn computer coding",
+      "pinterestBoards": [
+        "Learn computer coding",
+        "Ui ux design",
+        "Random thoughts"
+      ],
+      "pinterestTags": [
+        "prompts",
+        "creative workflow",
+        "content ideas",
+        "productivity",
+        "digital product"
+      ],
+      "keyword": "content prompts for creators",
+      "angle": "momentum",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "codex-manual-fill",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "prompt-storm",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Ui ux design",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-08T15:00:59.233Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260408_digipin_03",
+    "title": "Cute spooky coloring pages, but make them actually adorable.",
+    "body": "If you want Halloween coloring pages that feel more cute than creepy, the Kawaii Coloring line hits that sweet spot.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/kawaiiHalloween/FrankinCutie.webp",
+    "mediaType": "image",
+    "image": "frontend/assets/kawaiiHalloween/FrankinCutie.webp",
+    "metadata": {
+      "productProfileId": "kawaii-coloring-series",
+      "productProfileLabel": "Kawaii Coloring Series",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/-/es/Scary-Kawaii-Halloween-Coloring-Book/dp/B0DHDNTW87",
+        "primary": "https://www.amazon.com/-/es/Scary-Kawaii-Halloween-Coloring-Book/dp/B0DHDNTW87"
+      },
+      "pinterestBoard": "Kawaii Coloring",
+      "pinterestBoards": [
+        "Kawaii Coloring",
+        "Halloween",
+        "Epic cuteness"
+      ],
+      "pinterestTags": [
+        "kawaii coloring",
+        "cute halloween",
+        "coloring book",
+        "spooky cute",
+        "amazon find"
+      ],
+      "keyword": "kawaii halloween coloring book",
+      "angle": "spooky cute",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "codex-manual-fill",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "kawaii-coloring-series",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Kawaii Coloring",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-08T18:17:48.993Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260408_digipin_02",
+    "title": "Founders do not need more ideas. They need sharper filters.",
+    "body": "A good product strategy saves you from spending a week on every exciting idea. Product Strategy 25 is built for faster, clearer decisions.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "https://public-files.gumroad.com/fbbljlbpekuew2rdaal9ghrtasaj",
+    "mediaType": "image",
+    "image": "https://public-files.gumroad.com/fbbljlbpekuew2rdaal9ghrtasaj",
+    "metadata": {
+      "productProfileId": "product-strategy-25",
+      "productProfileLabel": "Product Strategy 25",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/product-strategy-25",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/product-strategy-25"
+      },
+      "pinterestBoard": "Be a Better Leader",
+      "pinterestBoards": [
+        "Be a Better Leader",
+        "Learn computer coding",
+        "Random thoughts"
+      ],
+      "pinterestTags": [
+        "founder strategy",
+        "product thinking",
+        "decision making",
+        "indie hacker",
+        "digital product"
+      ],
+      "keyword": "product strategy for founders",
+      "angle": "clarity",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "codex-manual-fill",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "product-strategy-25",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Be a Better Leader",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-09T00:30:00.236Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260409_digipin_01",
+    "title": "Self-care for people who hate polished self-care language.",
+    "body": "Goblin Core Coloring Affirmations sells because it is weird, funny, printable, and still comforting. That combination matters.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "image": "frontend/assets/goblinaffs/ProdStandards.png",
+    "metadata": {
+      "productProfileId": "goblin-coloring-affirmations",
+      "productProfileLabel": "Goblin Core Coloring Affirmations",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "coloring pages",
+      "pinterestBoards": [
+        "coloring pages",
+        "Funny Stuff",
+        "Beautiful me."
+      ],
+      "pinterestTags": [
+        "goblin core",
+        "printable self care",
+        "funny affirmations",
+        "chaotic comfort",
+        "digital product"
+      ],
+      "keyword": "funny affirmation printable",
+      "angle": "anti polished",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "codex-manual-fill",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "goblin-coloring-affirmations",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "coloring pages",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-09T15:46:57.360Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260409_digipin_02",
+    "title": "Graduation content gets easier when the prompts are already done.",
+    "body": "AI Powered Grad is for people who want practical graduation help without starting from scratch every single time.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "https://public-files.gumroad.com/kpl9y0d2qn3m29tvmdi5ohudkxne",
+    "mediaType": "image",
+    "image": "https://public-files.gumroad.com/kpl9y0d2qn3m29tvmdi5ohudkxne",
+    "metadata": {
+      "productProfileId": "ai-powered-grad",
+      "productProfileLabel": "AI Powered Grad",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/ai-powered-grad",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/ai-powered-grad"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Only the best Jobs",
+        "Random thoughts"
+      ],
+      "pinterestTags": [
+        "graduation ideas",
+        "ai prompts",
+        "grad prep",
+        "digital download",
+        "student help"
+      ],
+      "keyword": "graduation ai prompts",
+      "angle": "practical help",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "codex-manual-fill",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "ai-powered-grad",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "AI is Neat and Scary",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-09T16:30:00.271Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260409_digipin_03",
+    "title": "A Halloween coloring book gift that feels playful, not cheap.",
+    "body": "This one works when you want a cute seasonal gift that is creative and actually fun to keep using.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/kawaiiHalloween/KwaiiVamp.webp",
+    "mediaType": "image",
+    "image": "frontend/assets/kawaiiHalloween/KwaiiVamp.webp",
+    "metadata": {
+      "productProfileId": "kawaii-coloring-series",
+      "productProfileLabel": "Kawaii Coloring Series",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/-/es/Scary-Kawaii-Halloween-Coloring-Book/dp/B0DHDNTW87",
+        "primary": "https://www.amazon.com/-/es/Scary-Kawaii-Halloween-Coloring-Book/dp/B0DHDNTW87"
+      },
+      "pinterestBoard": "Epic cuteness",
+      "pinterestBoards": [
+        "Epic cuteness",
+        "Kawaii Coloring",
+        "Halloween"
+      ],
+      "pinterestTags": [
+        "halloween gift idea",
+        "kawaii art",
+        "cute coloring book",
+        "spooky season",
+        "giftable"
+      ],
+      "keyword": "cute halloween coloring book gift",
+      "angle": "giftable",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "codex-manual-fill",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "kawaii-coloring-series",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Epic cuteness",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-09T16:30:19.724Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260410_digipin_01",
+    "title": "One prompt can unblock an entire content week.",
+    "body": "Prompt Storm is not magic. It is a fast way to stop overthinking and turn one idea into actual posts.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "https://public-files.gumroad.com/l60mvt6b4g61gg4svr750ec4ofq3",
+    "mediaType": "image",
+    "image": "frontend/assets/appImgs/promptstorm-banner.png",
+    "metadata": {
+      "productProfileId": "prompt-storm",
+      "productProfileLabel": "100 Prompt Storm",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
+      },
+      "pinterestBoard": "Ui ux design",
+      "pinterestBoards": [
+        "Ui ux design",
+        "Learn computer coding",
+        "Art & quotes"
+      ],
+      "pinterestTags": [
+        "content prompts",
+        "creator tools",
+        "idea generation",
+        "ship faster",
+        "digital product"
+      ],
+      "keyword": "idea generation prompts",
+      "angle": "ship faster",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "codex-manual-fill",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "prompt-storm",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Ui ux design",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-10T15:01:27.628Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260410_digipin_03",
+    "title": "Spooky-cute sample pages that make Halloween feel cozy.",
+    "body": "The Kawaii Coloring series leans playful and collectible, which is exactly why these sample pages land so well.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/kawaiiHalloween/AshTxWitch.webp",
+    "mediaType": "image",
+    "image": "frontend/assets/kawaiiHalloween/AshTxWitch.webp",
+    "metadata": {
+      "productProfileId": "kawaii-coloring-series",
+      "productProfileLabel": "Kawaii Coloring Series",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/-/es/Scary-Kawaii-Halloween-Coloring-Book/dp/B0DHDNTW87",
+        "primary": "https://www.amazon.com/-/es/Scary-Kawaii-Halloween-Coloring-Book/dp/B0DHDNTW87"
+      },
+      "pinterestBoard": "Halloween",
+      "pinterestBoards": [
+        "Halloween",
+        "Kawaii Coloring",
+        "coloring pages"
+      ],
+      "pinterestTags": [
+        "cozy halloween",
+        "kawaii coloring",
+        "cute spooky art",
+        "coloring pages",
+        "fall vibes"
+      ],
+      "keyword": "cute spooky coloring pages",
+      "angle": "cozy aesthetic",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "codex-manual-fill",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "kawaii-coloring-series",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Halloween",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-10T15:42:55.677Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260410_digipin_02",
+    "title": "If your backlog feels like a junk drawer, fix the filter first.",
+    "body": "Product Strategy 25 helps you sort ideas by what matters now instead of letting every good idea compete for today.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "https://public-files.gumroad.com/fbbljlbpekuew2rdaal9ghrtasaj",
+    "mediaType": "image",
+    "image": "frontend/assets/devto/Chaos2clarity.png",
+    "metadata": {
+      "productProfileId": "product-strategy-25",
+      "productProfileLabel": "Product Strategy 25",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/product-strategy-25",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/product-strategy-25"
+      },
+      "pinterestBoard": "Be a Better Leader",
+      "pinterestBoards": [
+        "Be a Better Leader",
+        "Random thoughts",
+        "Learn computer coding"
+      ],
+      "pinterestTags": [
+        "product roadmap",
+        "founder systems",
+        "prioritization",
+        "strategy",
+        "build in public"
+      ],
+      "keyword": "product prioritization framework",
+      "angle": "roadmap clarity",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "codex-manual-fill",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "product-strategy-25",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Be a Better Leader",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-10T16:38:20.707Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260411_digipin_01",
+    "title": "Funny printable affirmations for people in goblin mode.",
+    "body": "Some self-care products work because they are honest about the mood. This one is for weird comfort, not polished perfection.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/goblinaffs/DisappearHotMess.png",
+    "mediaType": "image",
+    "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+    "metadata": {
+      "productProfileId": "goblin-coloring-affirmations",
+      "productProfileLabel": "Goblin Core Coloring Affirmations",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Funny Stuff",
+      "pinterestBoards": [
+        "Funny Stuff",
+        "coloring pages",
+        "Art & quotes"
+      ],
+      "pinterestTags": [
+        "goblin mode",
+        "relatable humor",
+        "printable art",
+        "self care meme",
+        "digital product"
+      ],
+      "keyword": "goblin self care printable",
+      "angle": "funny comfort",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "codex-manual-fill",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "goblin-coloring-affirmations",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Funny Stuff",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-11T15:03:14.276Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260411_digipin_03",
+    "title": "If you like cute Halloween art, this one is an easy yes.",
+    "body": "These sample pages make the Kawaii Coloring book easy to save early if you already know spooky-cute is your thing.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/kawaiiHalloween/Gargoyle.webp",
+    "mediaType": "image",
+    "image": "frontend/assets/kawaiiHalloween/Gargoyle.webp",
+    "metadata": {
+      "productProfileId": "kawaii-coloring-series",
+      "productProfileLabel": "Kawaii Coloring Series",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/-/es/Scary-Kawaii-Halloween-Coloring-Book/dp/B0DHDNTW87",
+        "primary": "https://www.amazon.com/-/es/Scary-Kawaii-Halloween-Coloring-Book/dp/B0DHDNTW87"
+      },
+      "pinterestBoard": "Kawaii Coloring",
+      "pinterestBoards": [
+        "Kawaii Coloring",
+        "Epic cuteness",
+        "Halloween"
+      ],
+      "pinterestTags": [
+        "kawaii halloween",
+        "cute spooky",
+        "coloring book amazon",
+        "save for later",
+        "seasonal art"
+      ],
+      "keyword": "cute halloween coloring book worth buying",
+      "angle": "easy yes",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "codex-manual-fill",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "kawaii-coloring-series",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Kawaii Coloring",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-11T18:06:26.039Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0049",
+    "title": "An outdoor toy that actually gets them off the couch",
+    "body": "This bubble mower is one of those rare toddler toys that instantly gets used. Push, walk, bubbles everywhere. Easy spring and summer outside time.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/toddler_bubble_mower_angle1.png.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "bubble-mower-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Sloosh-Bubble-Lawn-Mower-Toddler/dp/B0BZXNZZ67?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=bubblemower-april",
+        "primary": "https://www.amazon.com/Sloosh-Bubble-Lawn-Mower-Toddler/dp/B0BZXNZZ67?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=bubblemower-april"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "I Want, I dream."
+      ],
+      "pinterestTags": [
+        "toddler outdoor toy",
+        "screen free play",
+        "spring kids",
+        "summer fun",
+        "parent hacks"
+      ],
+      "keyword": "outdoor toy for toddlers spring",
+      "angle": "screen-free hook",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-14T00:29:51.377Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0050",
+    "title": "This turns the yard into instant fun",
+    "body": "Toddlers push it once and the whole vibe changes. Bubbles, movement, and zero convincing needed. Great for a quick backyard reset.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/toddler_bubble_mower_angle2.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "bubble-mower-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Sloosh-Bubble-Lawn-Mower-Toddler/dp/B0BZXNZZ67?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=bubblemower-april",
+        "primary": "https://www.amazon.com/Sloosh-Bubble-Lawn-Mower-Toddler/dp/B0BZXNZZ67?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=bubblemower-april"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Your Pinterest Likes"
+      ],
+      "pinterestTags": [
+        "bubble toy",
+        "backyard fun",
+        "toddler activities",
+        "kids play",
+        "outdoor toys"
+      ],
+      "keyword": "bubble mower toy toddler",
+      "angle": "visual fun",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-14T00:30:12.940Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0051",
+    "title": "This buys you a little peace and quiet",
+    "body": "If you need a low-effort way to burn toddler energy, this is a strong option. It gets them moving fast without needing a whole activity plan.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/toddler_bubble_mower_angle3..png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "bubble-mower-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Sloosh-Bubble-Lawn-Mower-Toddler/dp/B0BZXNZZ67?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=bubblemower-april",
+        "primary": "https://www.amazon.com/Sloosh-Bubble-Lawn-Mower-Toddler/dp/B0BZXNZZ67?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=bubblemower-april"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "I Want, I dream."
+      ],
+      "pinterestTags": [
+        "busy toddler",
+        "easy parenting",
+        "toddler energy",
+        "spring toys",
+        "outdoor play"
+      ],
+      "keyword": "toys that tire out toddlers",
+      "angle": "parent relief",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Ui ux design",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-14T00:30:32.559Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0052",
+    "title": "One of the few toddler toys that keeps getting used",
+    "body": "Not another toy that gets ignored by next week. This one is active, simple, and easy for toddlers to love right away.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/spring2026/toddler_bubble_mower_angle4.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "bubble-mower-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Sloosh-Bubble-Lawn-Mower-Toddler/dp/B0BZXNZZ67?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=bubblemower-april",
+        "primary": "https://www.amazon.com/Sloosh-Bubble-Lawn-Mower-Toddler/dp/B0BZXNZZ67?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=bubblemower-april"
+      },
+      "pinterestBoard": "I Want, I dream.",
+      "pinterestBoards": [
+        "I Want, I dream.",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "toddler gifts",
+        "best toys",
+        "outdoor kids",
+        "family fun",
+        "parent approved"
+      ],
+      "keyword": "best toddler outdoor toys",
+      "angle": "practical gift",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "I Want, I dream.",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-14T00:30:52.830Z",
+    "manualArchived": false
+  }
+]

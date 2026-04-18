@@ -1,0 +1,57 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+  "platforms": ["pinterest"],
+  "board": "coloring pages",
+  "items": [
+    {
+      "keyword": "mental health progress coloring page",
+      "angle": "small wins",
+      "title": "Mental Health Progress Coloring Page (This Counts)",
+      "description": "Not spiraling today? That’s progress. Printable goblin coloring page celebrating small wins and quiet victories.",
+      "image": "frontend/assets/goblinaffs/DidntSpiral.png",
+      "board": "Beautiful me.",
+      "boards": ["Beautiful me.", "coloring pages"],
+      "tags": ["mental health", "small wins", "coloring page", "self care", "healing"]
+    },
+    {
+      "keyword": "anxiety recovery printable art",
+      "angle": "anxiety audience",
+      "title": "Anxiety Recovery Printable (Calm Is Progress)",
+      "description": "For the days when nothing went wrong—and that’s everything. Relatable goblin printable for anxiety recovery and grounding.",
+      "image": "frontend/assets/goblinaffs/DidntSpiral.png",
+      "board": "psychology /sociology",
+      "boards": ["psychology /sociology", "coloring pages"],
+      "tags": ["anxiety", "mental health support", "printable art", "calm", "self care"]
+    },
+    {
+      "keyword": "goblin core affirmation printable",
+      "angle": "aesthetic affirmation",
+      "title": "Goblin Core Affirmation (Peaceful Chaos Edition)",
+      "description": "Soft, quiet, slightly feral healing. A cozy goblin-core printable reminding you that not spiraling is enough.",
+      "image": "frontend/assets/goblinaffs/DidntSpiral.png",
+      "board": "coloring pages",
+      "boards": ["coloring pages", "Freaking Weird or mild..."],
+      "tags": ["goblin core", "affirmation", "coloring printable", "cozy dark", "self care"]
+    },
+    {
+      "keyword": "relatable mental health meme printable",
+      "angle": "relatable humor",
+      "title": "Relatable Mental Health Meme Coloring Page (Too Real)",
+      "description": "When your biggest accomplishment today was not falling apart. Printable goblin meme for real-life mental health moments.",
+      "image": "frontend/assets/goblinaffs/DidntSpiral.png",
+      "board": "Funny Stuff",
+      "boards": ["Funny Stuff", "coloring pages"],
+      "tags": ["mental health meme", "relatable humor", "coloring page", "printable", "goblin energy"]
+    },
+    {
+      "keyword": "motivational quote realistic printable",
+      "angle": "anti-toxic motivation",
+      "title": "Realistic Motivation Printable (No Spiral = Win)",
+      "description": "Forget toxic positivity. This printable celebrates staying stable, even when that’s the only goal.",
+      "image": "frontend/assets/goblinaffs/DidntSpiral.png",
+      "board": "Art & quotes",
+      "boards": ["Art & quotes", "coloring pages"],
+      "tags": ["motivational quote", "realistic self care", "printable art", "mental health", "honest"]
+    }
+  ]
+}

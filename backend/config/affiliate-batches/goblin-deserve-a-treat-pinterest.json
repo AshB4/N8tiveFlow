@@ -1,0 +1,52 @@
+{
+  "productLink": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+  "platforms": ["pinterest"],
+  "board": "Beautiful me.",
+  "items": [
+    {
+      "keyword": "self reward affirmation",
+      "angle": "earned comfort",
+      "title": "You Deserve A Little Treat (Yes, You)",
+      "description": "Surviving hard things counts. Treat yourself accordingly.",
+      "image": "frontend/assets/goblinaffs/DeserveATreat.png",
+      "boards": ["Beautiful me.", "Art & quotes"],
+      "tags": ["self reward", "self care", "comfort", "mental health", "validation"]
+    },
+    {
+      "keyword": "trauma survival affirmation",
+      "angle": "deep validation",
+      "title": "You Survived Things No One Saw",
+      "description": "That alone deserves kindness — even if no one else noticed.",
+      "image": "frontend/assets/goblinaffs/DeserveATreat.png",
+      "boards": ["psychology /sociology"],
+      "tags": ["trauma", "healing", "mental health", "validation", "support"]
+    },
+    {
+      "keyword": "cozy self care quote",
+      "angle": "comfort aesthetic",
+      "title": "Soft Rewards For Hard Days",
+      "description": "Not everything needs to be earned the hard way.",
+      "image": "frontend/assets/goblinaffs/DeserveTreats.png",
+      "boards": ["Beautiful me."],
+      "tags": ["cozy", "self care", "gentle", "comfort", "healing"]
+    },
+    {
+      "keyword": "mental health affirmation gentle",
+      "angle": "permission",
+      "title": "You Don’t Need Permission To Be Kind To Yourself",
+      "description": "Kindness is not a reward. It’s a baseline.",
+      "image": "frontend/assets/goblinaffs/DeserveTreats.png",
+      "boards": ["Art & quotes"],
+      "tags": ["self kindness", "mental health", "affirmation", "healing", "care"]
+    },
+    {
+      "keyword": "funny goblin self care",
+      "angle": "goblin humor",
+      "title": "Tiny Treat. Massive Emotional Victory.",
+      "description": "Sometimes the smallest reward carries the biggest weight.",
+      "image": "frontend/assets/goblinaffs/DeserveATreat.png",
+      "boards": ["Funny Stuff"],
+      "tags": ["funny", "goblin", "self care", "reward", "relatable"]
+    }
+  ]
+}

@@ -41,6 +41,7 @@ These pieces are built and in active use:
 - failed-post visibility on the calendar with retry support
 - day-level affiliate markers on the calendar
 - calendar day-post ordering that prioritizes social (`facebook`/`instagram`) above affiliate Amazon/Pinterest pins
+- calendar-side Pinterest queue remixing through the `Remix Pinterest` button
 - product profiles
 - platform writing guidance
 - AI SEO generation with product and platform context
@@ -72,6 +73,8 @@ These pieces are built and in active use:
 - Product profile lifecycle status is now tracked. The shipped Gumroad/Amazon products are marked `live`, while `PostPunk Core` is `in-progress` and the memoir/Reddit product remain `planned`.
 - Telegram alerts fire for both success and failure
 - the worker now emits inventory and schedule-gap alerts when the queue has empty near-term days
+- Pinterest queue remixing has been proven through the backend route and calendar button path
+- current Pinterest queue mix supports `amazon-a`, `amazon-b`, `digital`, and `wildcard` daily slots, with a max of 2 posts from the same product group per day
 
 ## What Is Not Reliable Yet
 
@@ -106,6 +109,9 @@ Use the system like this:
 
 - Scheduling defaults are conservative in some UI flows, but live usage is mixed. Affiliate and Pinterest scheduling often run at `3/day`, and specific windows can be denser.
 - Product mixing is now supported so batches from multiple products can be interleaved across days.
+- Pinterest queue remixing is now available from the calendar. It calls the backend rebalance route and refreshes the queue after it runs.
+- The active Pinterest rebalance plan is `amazon-a`, `amazon-b`, `digital`, `wildcard`. The two Amazon slots are flexible labels and can pull from any `amazon-*` category, not only beauty/kids.
+- The Montessori egg / Easter-stuffer product was removed from the future approved Pinterest queue. Future approved Easter/stuffer/Montessori egg matches were verified at `0` after cleanup.
 - `/lib` now separates "approved" from "scheduled" more clearly:
   - `approved` means ready
   - `scheduledAt` means it will appear on the calendar
@@ -120,6 +126,8 @@ Use the system like this:
 - Facebook page posting for `Color With Ash` now uses a two-step composer flow where the page submit path is `Next -> Post`.
 - Pinterest Playwright posting is now proven for single live pins using the saved Pinterest session/profile.
 - Pinterest queueing is now actively used for multi-day scheduled runs, but publish-later inside Pinterest itself is still not wired.
+- `backend/scripts/queue/rebalance-pinterest-mix.mjs` owns the current Pinterest queue remix logic.
+- `POST /api/queue/rebalance-pinterest` exposes that remix logic to the app. It supports a `startDate` body field and optional `dryRun`.
 - OpenAI is the practical in-app AI default. Ollama remains optional but is not the trusted path on this Mac.
 - `/affiliate` now holds the working Amazon affiliate framework, including signal rules, sale-mode reminders, angle-stack logic, and GPT research prompts.
 - `/affiliate/builder` now supports:
@@ -149,6 +157,7 @@ Use the system like this:
   - the remaining blocker is auth: the Substack automation profile has not been fully signed in yet
   - resume point: open the dedicated Substack automation browser, complete email login there once, then rerun `backend/test-substack.js` to continue editor selector work
 - Pinterest near-term next step:
+  - keep using the calendar `Remix Pinterest` button after adding/removing product batches
   - support sequential batch pin posting in one reused Pinterest session instead of one pin per run
   - then add Pinterest-specific fields like topics/tags, alt text, and publish-later scheduling
 - Affiliate near-term next step:
@@ -166,6 +175,8 @@ What matters operationally:
 - cadence is mixed by workflow: some lanes remain sparse, while Pinterest/affiliate runs can be `3/day` or higher
 - the app now supports multiple live products in one rotating schedule
 - affiliate scheduling can now be built separately with its own cadence defaults inside `/affiliate/builder`
+- Pinterest schedule is currently balanced by the remix script/button with no more than 2 posts from the same product group per day
+- Easter-specific approved Pinterest content should stay out of the queue unless intentionally re-added for a future seasonal window
 
 ## Dev.to Plan
 
@@ -283,6 +294,21 @@ Check platform health:
 ```bash
 cd backend
 npm run health:tokens -- --live
+```
+
+Preview the next 24 hours of approved queue items:
+
+```bash
+cd backend
+npm run queue:dry-run
+```
+
+Remix the Pinterest queue from the command line:
+
+```bash
+cd backend
+npm run queue:rebalance-pinterest -- --start-date 2026-04-19 --dry-run
+npm run queue:rebalance-pinterest -- --start-date 2026-04-19
 ```
 
 Inspect SQLite directly:

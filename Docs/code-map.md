@@ -16,6 +16,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - Posted history archive UI: `frontend/UXUI/Pages/ArchivePage.jsx`
 - Backend API: `backend/server.mjs`
 - Scheduled worker: `backend/scripts/postingJob.mjs`
+- Pinterest queue remix/rebalance logic: `backend/scripts/queue/rebalance-pinterest-mix.mjs`
 - Platform dispatch: `backend/scripts/platforms/post-to-all.js`
 
 ## Single Sources Of Truth
@@ -61,6 +62,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - shows scheduled approved posts
   - now also shows failed scheduled posts in red
   - supports retrying failed posts forward by a day
+  - owns the `Remix Pinterest` button, which calls `/api/queue/rebalance-pinterest` and reloads posts
   - shows affiliate day markers in the month grid with a small status-colored `🛒` badge beside the date number
   - orders day-level posts so `facebook`/`instagram` social posts appear before affiliate Amazon/Pinterest pins
 - `frontend/UXUI/Pages/SetupPage.jsx`
@@ -101,6 +103,7 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 - AI SEO generation API: `backend/server.mjs`
 - AI campaign generation API: `backend/server.mjs`
 - Media upload API: `backend/server.mjs`
+- Pinterest queue remix API: `backend/server.mjs`
 
 ### Important backend behavior notes
 
@@ -108,9 +111,15 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - moving a post to `status: "posted"` appends it to archive history
   - `/api/platform-health` powers the `/setup` token-health panel
   - `/api/pinterest-boards` exposes saved Pinterest board names and default board for the affiliate builder
+  - `/api/queue/rebalance-pinterest` runs the Pinterest queue rebalance against SQLite-backed posts and refreshes JSON mirrors through `localDb.mjs`
 - `backend/scripts/postingJob.mjs`
   - fully failed posts stay in the queue as `failed` after max attempts instead of disappearing
   - partially successful posts now remain in the queue for the failed targets only, so they do not vanish after mixed success
+- `backend/scripts/queue/rebalance-pinterest-mix.mjs`
+  - owns the daily Pinterest mix plan: `amazon-a`, `amazon-b`, `digital`, `wildcard`
+  - treats `amazon-a` and `amazon-b` as flexible aliases for any `amazon-*` category
+  - enforces max 2 posts from the same product group per day by default
+  - supports CLI use with `--start-date`, `--dry-run`, `--slots`, `--plan`, and `--max-same-product`
 
 ## Posting Pipeline
 
@@ -171,6 +180,11 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - draft-rail handling for single-pin publish flows
 - Supporting helper:
   - `capture-pinterest-state.js` creates/saves the Pinterest automation session
+- Queue remix support:
+  - backend logic lives in `backend/scripts/queue/rebalance-pinterest-mix.mjs`
+  - API route lives in `backend/server.mjs` at `POST /api/queue/rebalance-pinterest`
+  - calendar button lives in `frontend/UXUI/Pages/PostCalendar.jsx`
+  - default schedule slots are `15:00`, `15:20`, `15:40`, and `16:00` UTC
 - Not wired yet:
   - publish-later scheduling
   - alt text

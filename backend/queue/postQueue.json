@@ -196,67 +196,6 @@
     "lastErrorAt": "2026-03-31T19:30:13.993Z"
   },
   {
-    "id": "p_2026R_0067",
-    "title": "Home Spa Setup in One Box",
-    "body": "Everything you need for a full nail spa day at home.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-17T15:40:00.000Z",
-    "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:23.759Z",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#spa",
-      "#homespa",
-      "#nails",
-      "#selfcare",
-      "#beauty"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Home spa",
-      "pinterestBoards": [
-        "Beautiful me.",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "spa",
-        "home spa",
-        "nails",
-        "self care",
-        "beauty"
-      ],
-      "keyword": "home spa kit",
-      "angle": "spa vibe",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-01T04:00:00.250Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
-  },
-  {
     "id": "p_20260420_01",
     "title": "How I Turn One Idea Into 10 Posts Without AI Slop",
     "body": "## The Problem\n\nI used to treat ideas like single-use objects.\n\nOne idea -> one post -> done.\n\nThen I'd sit there the next day like:\n\n> \"cool... now what?\"\n\nRepeat that enough times and you end up doing one of two things:\n\n- overthinking everything\n- or not posting at all\n\nNeither one scales.\n\n## Where My Ideas Actually Come From\n\nNothing fancy.\n\n- random thoughts\n- things I've built\n- frustrations\n- \"this sucks, there should be a better way\"\n\nThat last one is the goldmine.\n\nIf I feel friction, odds are someone else does too.\n\n## What Changed\n\nI stopped treating ideas like finished products.\n\nNow I treat them like **raw input**.\n\nAnd instead of asking:\n\n> \"is this a good post?\"\n\nI ask:\n\n> \"how many angles can I squeeze out of this?\"\n\n## The Actual System (Not Pretty, But It Works)\n\n### Step 1: Rant first\n\nI don't start structured.\n\nI just dump everything:\n\n- what's annoying me\n- what I think is broken\n- what I wish existed\n\nNo filter. No polish.\n\n### Step 2: Extract angles\n\nFrom one rant, I usually get:\n\n- a blunt take\n- a practical tip\n- a story\n- a system\n- a question\n\nSame idea. Different surfaces.\n\n### Step 3: Map to platforms\n\nEach angle becomes a different format:\n\n- short punch -> social post\n- structured idea -> Dev.to\n- repeatable idea -> Pinterest\n- casual version -> Facebook\n\nSame core idea, different packaging.\n\n### Step 4: Store everything (this is the real unlock)\n\nThe biggest change wasn't AI.\n\nIt was having a place to dump everything.\n\nI built a simple system (DB + queue) where I can:\n\n- drop ideas\n- expand them later\n- schedule without thinking\n\nThat removed the \"what do I post today?\" problem entirely.\n\n## Where AI Actually Helps (and Where It Doesn't)\n\nI use AI a lot.\n\nProbably too much.\n\n### Where it helps:\n\n- generating variations\n- breaking writer's block\n- speeding up structure\n\n### Where it fails hard:\n\nWhen you try to force *voice* out of it.\n\n## What \"AI Slop\" Actually Is\n\nAI slop isn't just bad writing.\n\nIt's this loop:\n\n> you ask -> it gives something generic -> you tweak -> it gets worse -> repeat\n\nYou end up with content that:\n\n- sounds like everyone else\n- says nothing new\n- feels safe and useless\n\nEspecially if you want something:\n\n- edgy\n- opinionated\n- slightly unhinged\n\nAI struggles there.\n\n## The Fix\n\nI stopped asking AI to create from scratch.\n\nNow I:\n\n1. start messy (my input)\n2. use AI to expand, not invent\n3. keep the tone mine\n\nAI is a tool, not the source.\n\n## The Real Outcome\n\nThis changed two things:\n\n### 1. Consistency\n\nI don't rely on \"feeling like posting\" anymore.\n\nI already have:\n\n- ideas\n- drafts\n- scheduled content\n\n### 2. Output without burnout\n\nInstead of forcing new ideas daily:\n\nI reuse the same idea multiple times.\n\nWhich means:\n\n- less pressure\n- more content\n- better ideas over time\n\n## The Simple Version\n\nIf you do nothing else:\n\n- stop writing one post per idea\n- start extracting multiple angles\n- store everything\n\nThat alone will outpace most people.\n\n## Final Thought\n\nYou don't need more ideas.\n\nYou need to stop wasting the ones you already have.",
@@ -412,48 +351,6 @@
     "nextAttemptAt": null
   },
   {
-    "id": "p_20260415_goblinfb_09",
-    "title": "Unexpectedly Validated Today",
-    "body": "I didn’t expect to be validated like this today.",
-    "status": "approved",
-    "platforms": [
-      "facebook"
-    ],
-    "targets": [
-      {
-        "platform": "facebook",
-        "accountId": null
-      }
-    ],
-    "mediaPath": "frontend/assets/goblinaffs/DeserveTreats.png",
-    "mediaType": "image",
-    "scheduledAt": "2026-04-18T15:00:00.000Z",
-    "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:21.823Z",
-    "metadata": {
-      "contentTags": [
-        "goblin",
-        "meme"
-      ],
-      "distributionTags": [
-        "post:facebook"
-      ],
-      "approvalSource": "manual-json",
-      "requiresReview": false,
-      "productProfileId": "goblin-coloring-affirmations",
-      "productProfileLabel": "Goblin Core Affirmations",
-      "productCategory": "Digital products",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      }
-    },
-    "createdAt": "2026-04-01T01:36:18.164Z",
-    "updatedAt": "2026-04-01T05:36:10.424Z",
-    "image": "frontend/assets/goblinaffs/DeserveTreats.png"
-  },
-  {
     "id": "p_20260417_goblinfb_10",
     "title": "A Little Too Accurate",
     "body": "Yeah… this one is a little too accurate.",
@@ -494,51 +391,6 @@
     },
     "createdAt": "2026-04-01T01:36:18.164Z",
     "updatedAt": "2026-04-01T05:36:10.424Z"
-  },
-  {
-    "id": "p_20260418_buzzfb_01",
-    "title": "Low-energy day? Color one page and call it a win.",
-    "body": "Buzzing Adventures is my go-to when I need something gentle and offline.\n\nOne page, no pressure, and your brain gets a reset.",
-    "mediaPath": "frontend/assets/buzzingbees/5minsOfCalmBigBee.png",
-    "tags": [
-      "bees",
-      "calm",
-      "coloring"
-    ],
-    "hashtags": [
-      "coloringbook",
-      "selfcare",
-      "bees"
-    ],
-    "scheduledAt": "2026-04-17T15:00:00.000Z",
-    "platforms": [
-      "facebook"
-    ],
-    "targets": [
-      {
-        "platform": "facebook",
-        "accountId": null
-      }
-    ],
-    "status": "approved",
-    "mediaType": "image",
-    "metadata": {
-      "productProfileId": "buzzing-adventures-coloring-book",
-      "productProfileLabel": "Buzzing Adventures Coloring Book",
-      "productCategory": "Physical products",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX",
-        "primary": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX"
-      },
-      "includeProductLink": true,
-      "approvalSource": "manual-buzzing-fb",
-      "requiresReview": false
-    },
-    "createdAt": "2026-04-01T05:37:44.004Z",
-    "updatedAt": "2026-04-01T05:37:44.005Z",
-    "lastErrorAt": "2026-04-18T19:44:25.496Z",
-    "attemptCount": 1
   },
   {
     "id": "p_20260419_buzzfb_02",
@@ -996,189 +848,6 @@
     },
     "createdAt": "2026-04-01T01:36:18.164Z",
     "updatedAt": "2026-04-05T19:46:35.439Z"
-  },
-  {
-    "id": "p_2026R_0060",
-    "title": "Minimal Nail Kit Setup Aesthetic",
-    "body": "Clean, minimal, and actually useful. The perfect nail setup.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-15T16:00:00.000Z",
-    "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:26.026Z",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#aesthetic",
-      "#minimal",
-      "#beautysetup",
-      "#cleangirl",
-      "#nails"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Beautiful me.",
-      "pinterestBoards": [
-        "Home spa",
-        "I Want, I dream."
-      ],
-      "pinterestTags": [
-        "aesthetic",
-        "minimal",
-        "beauty setup",
-        "clean girl",
-        "nails"
-      ],
-      "keyword": "nail kit aesthetic",
-      "angle": "minimal aesthetic",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-05T19:47:50.660Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
-  },
-  {
-    "id": "p_2026R_0058",
-    "title": "This burns toddler energy fast",
-    "body": "When you need them outside and moving, this works. It keeps toddlers cool, busy, and way less likely to bounce off your walls all afternoon.",
-    "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-15T15:20:00.000Z",
-    "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:26.547Z",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#toddleractivities",
-      "#energyburner",
-      "#outdoortoys",
-      "#summerplay",
-      "#busytoddler"
-    ],
-    "canonicalUrl": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1&tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1&tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "splash-pad-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1&tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1&tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "I Want, I dream."
-      ],
-      "pinterestTags": [
-        "toddler activities",
-        "energy burner",
-        "outdoor toys",
-        "summer play",
-        "busy toddler"
-      ],
-      "keyword": "outdoor toys that tire toddlers out",
-      "angle": "energy burn",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-06T19:30:00.362Z",
-    "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
-  },
-  {
-    "id": "p_2026R_0062",
-    "title": "Salon Nails Without the Salon Price",
-    "body": "Skip the appointments and do your nails at home with this full kit.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-16T15:20:00.000Z",
-    "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:27.081Z",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#budgetbeauty",
-      "#diynails",
-      "#nailkit",
-      "#selfcare",
-      "#savemoney"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "I Want, I dream.",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "Home spa"
-      ],
-      "pinterestTags": [
-        "budget beauty",
-        "diy nails",
-        "nail kit",
-        "self care",
-        "save money"
-      ],
-      "keyword": "diy manicure kit",
-      "angle": "value",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-06T19:30:00.363Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
   },
   {
     "id": "p_20260414_kawaiifb_02",
@@ -1866,128 +1535,6 @@
     },
     "createdAt": "2026-04-14T01:28:35.717Z",
     "updatedAt": "2026-04-14T01:28:35.717Z"
-  },
-  {
-    "id": "p_2026R_0061",
-    "title": "Perfectly Organized Nail Kit Setup",
-    "body": "Everything laid out clean and ready for the perfect manicure.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-16T15:00:00.000Z",
-    "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:31.232Z",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#organized",
-      "#setup",
-      "#nailtools",
-      "#beauty",
-      "#flatlay"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Home spa",
-        "Beautiful me."
-      ],
-      "pinterestTags": [
-        "organized",
-        "setup",
-        "nail tools",
-        "beauty",
-        "flatlay"
-      ],
-      "keyword": "nail tools layout",
-      "angle": "organization",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T19:44:21.817Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
-  },
-  {
-    "id": "p_2026R_0065",
-    "title": "Self Care Gift That Hits Every Time",
-    "body": "Turn a gift into a full self-care routine.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-17T15:00:00.000Z",
-    "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:23.218Z",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#selfcare",
-      "#gift",
-      "#routine",
-      "#beauty",
-      "#relax"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Beautiful me.",
-      "pinterestBoards": [
-        "Home spa",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "self care",
-        "gift",
-        "routine",
-        "beauty",
-        "relax"
-      ],
-      "keyword": "self care gift",
-      "angle": "self care",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T19:44:21.818Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
   },
   {
     "id": "p_2026R_0069",
@@ -7700,9 +7247,9 @@
     "mediaPath": "frontend/assets/spring2026/toddler_bubble_mower_angle4.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-14T15:00:00.000Z",
+    "scheduledAt": "2026-05-23T15:00:00.000Z",
     "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:27.613Z",
+    "lastErrorAt": null,
     "platforms": [
       "pinterest"
     ],
@@ -7752,7 +7299,9 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "image": "frontend/assets/spring2026/toddler_bubble_mower_angle4.png"
+    "image": "frontend/assets/spring2026/toddler_bubble_mower_angle4.png",
+    "nextAttemptAt": null,
+    "updatedAt": "2026-04-18T22:06:17.283Z"
   },
   {
     "id": "p_2026R_0054",
@@ -7761,9 +7310,9 @@
     "mediaPath": "frontend/assets/spring2026/kids_gardening_helping.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-14T15:20:00.000Z",
+    "scheduledAt": "2026-05-23T15:20:00.000Z",
     "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:28.140Z",
+    "lastErrorAt": null,
     "platforms": [
       "pinterest"
     ],
@@ -7812,7 +7361,9 @@
       "approvalSource": "restore-to-db",
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
-    }
+    },
+    "nextAttemptAt": null,
+    "updatedAt": "2026-04-18T22:06:17.283Z"
   },
   {
     "id": "p_2026R_0055",
@@ -7821,9 +7372,9 @@
     "mediaPath": "frontend/assets/spring2026/Kids_gardening_hack.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-14T15:40:00.000Z",
+    "scheduledAt": "2026-05-23T15:40:00.000Z",
     "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:28.720Z",
+    "lastErrorAt": null,
     "platforms": [
       "pinterest"
     ],
@@ -7872,7 +7423,9 @@
       "approvalSource": "restore-to-db",
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
-    }
+    },
+    "nextAttemptAt": null,
+    "updatedAt": "2026-04-18T22:06:17.283Z"
   },
   {
     "id": "p_2026R_0056",
@@ -7881,9 +7434,9 @@
     "mediaPath": "frontend/assets/spring2026/Splash_pad_top_down.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-14T16:00:00.000Z",
+    "scheduledAt": "2026-05-23T16:00:00.000Z",
     "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:29.270Z",
+    "lastErrorAt": null,
     "platforms": [
       "pinterest"
     ],
@@ -7931,7 +7484,9 @@
       "approvalSource": "restore-to-db",
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
-    }
+    },
+    "nextAttemptAt": null,
+    "updatedAt": "2026-04-18T22:06:17.283Z"
   },
   {
     "id": "p_2026R_0057",
@@ -7940,9 +7495,9 @@
     "mediaPath": "frontend/assets/spring2026/Safe_splash_pad.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-15T15:00:00.000Z",
+    "scheduledAt": "2026-05-24T15:00:00.000Z",
     "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:29.866Z",
+    "lastErrorAt": null,
     "platforms": [
       "pinterest"
     ],
@@ -7990,7 +7545,71 @@
       "approvalSource": "restore-to-db",
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
-    }
+    },
+    "nextAttemptAt": null,
+    "updatedAt": "2026-04-18T22:06:17.283Z"
+  },
+  {
+    "id": "p_2026R_0058",
+    "title": "This burns toddler energy fast",
+    "body": "When you need them outside and moving, this works. It keeps toddlers cool, busy, and way less likely to bounce off your walls all afternoon.",
+    "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-24T15:20:00.000Z",
+    "attemptCount": 0,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#toddleractivities",
+      "#energyburner",
+      "#outdoortoys",
+      "#summerplay",
+      "#busytoddler"
+    ],
+    "canonicalUrl": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1&tag=ashb4studio0b-20",
+    "affiliateUrl": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1&tag=ashb4studio0b-20",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "splash-pad-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1&tag=ashb4studio0b-20",
+        "primary": "https://www.amazon.com/SplashEZ-Sprinkler-Splash-Wading-Learning/dp/B07MNMT3M7/?th=1&tag=ashb4studio0b-20"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "I Want, I dream."
+      ],
+      "pinterestTags": [
+        "toddler activities",
+        "energy burner",
+        "outdoor toys",
+        "summer play",
+        "busy toddler"
+      ],
+      "keyword": "outdoor toys that tire toddlers out",
+      "angle": "energy burn",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:06:17.283Z",
+    "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
+    "nextAttemptAt": null
   },
   {
     "id": "p_2026R_0059",
@@ -7999,9 +7618,9 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-15T15:40:00.000Z",
+    "scheduledAt": "2026-05-24T15:40:00.000Z",
     "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:30.403Z",
+    "lastErrorAt": null,
     "platforms": [
       "pinterest"
     ],
@@ -8050,7 +7669,195 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null,
+    "updatedAt": "2026-04-18T22:06:17.283Z"
+  },
+  {
+    "id": "p_2026R_0060",
+    "title": "Minimal Nail Kit Setup Aesthetic",
+    "body": "Clean, minimal, and actually useful. The perfect nail setup.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-24T16:00:00.000Z",
+    "attemptCount": 0,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#aesthetic",
+      "#minimal",
+      "#beautysetup",
+      "#cleangirl",
+      "#nails"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Home spa",
+        "I Want, I dream."
+      ],
+      "pinterestTags": [
+        "aesthetic",
+        "minimal",
+        "beauty setup",
+        "clean girl",
+        "nails"
+      ],
+      "keyword": "nail kit aesthetic",
+      "angle": "minimal aesthetic",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:06:17.283Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null
+  },
+  {
+    "id": "p_2026R_0061",
+    "title": "Perfectly Organized Nail Kit Setup",
+    "body": "Everything laid out clean and ready for the perfect manicure.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-25T15:00:00.000Z",
+    "attemptCount": 0,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#organized",
+      "#setup",
+      "#nailtools",
+      "#beauty",
+      "#flatlay"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Home spa",
+        "Beautiful me."
+      ],
+      "pinterestTags": [
+        "organized",
+        "setup",
+        "nail tools",
+        "beauty",
+        "flatlay"
+      ],
+      "keyword": "nail tools layout",
+      "angle": "organization",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:06:17.283Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null
+  },
+  {
+    "id": "p_2026R_0062",
+    "title": "Salon Nails Without the Salon Price",
+    "body": "Skip the appointments and do your nails at home with this full kit.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-25T15:20:00.000Z",
+    "attemptCount": 0,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#budgetbeauty",
+      "#diynails",
+      "#nailkit",
+      "#selfcare",
+      "#savemoney"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "I Want, I dream.",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Home spa"
+      ],
+      "pinterestTags": [
+        "budget beauty",
+        "diy nails",
+        "nail kit",
+        "self care",
+        "save money"
+      ],
+      "keyword": "diy manicure kit",
+      "angle": "value",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:06:17.283Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null
   },
   {
     "id": "p_2026R_0063",
@@ -8059,9 +7866,9 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-16T15:40:00.000Z",
+    "scheduledAt": "2026-05-25T15:40:00.000Z",
     "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:31.820Z",
+    "lastErrorAt": null,
     "platforms": [
       "pinterest"
     ],
@@ -8110,7 +7917,9 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null,
+    "updatedAt": "2026-04-18T22:06:17.283Z"
   },
   {
     "id": "p_2026R_0064",
@@ -8119,9 +7928,9 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-16T16:00:00.000Z",
+    "scheduledAt": "2026-05-25T16:00:00.000Z",
     "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:32.362Z",
+    "lastErrorAt": null,
     "platforms": [
       "pinterest"
     ],
@@ -8170,7 +7979,117 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null,
+    "updatedAt": "2026-04-18T22:06:17.283Z"
+  },
+  {
+    "id": "p_20260418_buzzfb_01",
+    "title": "Low-energy day? Color one page and call it a win.",
+    "body": "Buzzing Adventures is my go-to when I need something gentle and offline.\n\nOne page, no pressure, and your brain gets a reset.",
+    "mediaPath": "frontend/assets/buzzingbees/5minsOfCalmBigBee.png",
+    "tags": [
+      "bees",
+      "calm",
+      "coloring"
+    ],
+    "hashtags": [
+      "coloringbook",
+      "selfcare",
+      "bees"
+    ],
+    "scheduledAt": "2026-05-26T15:00:00.000Z",
+    "platforms": [
+      "facebook"
+    ],
+    "targets": [
+      {
+        "platform": "facebook",
+        "accountId": null
+      }
+    ],
+    "status": "approved",
+    "mediaType": "image",
+    "metadata": {
+      "productProfileId": "buzzing-adventures-coloring-book",
+      "productProfileLabel": "Buzzing Adventures Coloring Book",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX",
+        "primary": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX"
+      },
+      "includeProductLink": true,
+      "approvalSource": "manual-buzzing-fb",
+      "requiresReview": false
+    },
+    "createdAt": "2026-04-01T05:37:44.004Z",
+    "updatedAt": "2026-04-18T22:06:17.283Z",
+    "lastErrorAt": null,
+    "attemptCount": 0,
+    "nextAttemptAt": null
+  },
+  {
+    "id": "p_2026R_0065",
+    "title": "Self Care Gift That Hits Every Time",
+    "body": "Turn a gift into a full self-care routine.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-26T15:20:00.000Z",
+    "attemptCount": 0,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#selfcare",
+      "#gift",
+      "#routine",
+      "#beauty",
+      "#relax"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Home spa",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "self care",
+        "gift",
+        "routine",
+        "beauty",
+        "relax"
+      ],
+      "keyword": "self care gift",
+      "angle": "self care",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:06:17.283Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null
   },
   {
     "id": "p_2026R_0066",
@@ -8179,9 +8098,9 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-17T15:20:00.000Z",
+    "scheduledAt": "2026-05-26T15:40:00.000Z",
     "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:32.938Z",
+    "lastErrorAt": null,
     "platforms": [
       "pinterest"
     ],
@@ -8230,7 +8149,71 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null,
+    "updatedAt": "2026-04-18T22:06:17.283Z"
+  },
+  {
+    "id": "p_2026R_0067",
+    "title": "Home Spa Setup in One Box",
+    "body": "Everything you need for a full nail spa day at home.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-26T16:00:00.000Z",
+    "attemptCount": 0,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#spa",
+      "#homespa",
+      "#nails",
+      "#selfcare",
+      "#beauty"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Home spa",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "spa",
+        "home spa",
+        "nails",
+        "self care",
+        "beauty"
+      ],
+      "keyword": "home spa kit",
+      "angle": "spa vibe",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:06:17.283Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null
   },
   {
     "id": "p_2026R_0068",
@@ -8239,9 +8222,9 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-17T16:00:00.000Z",
+    "scheduledAt": "2026-05-27T15:00:00.000Z",
     "attemptCount": 0,
-    "lastErrorAt": "2026-04-18T19:44:33.459Z",
+    "lastErrorAt": null,
     "platforms": [
       "pinterest"
     ],
@@ -8290,6 +8273,51 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null,
+    "updatedAt": "2026-04-18T22:06:17.283Z"
+  },
+  {
+    "id": "p_20260415_goblinfb_09",
+    "title": "Unexpectedly Validated Today",
+    "body": "I didn’t expect to be validated like this today.",
+    "status": "approved",
+    "platforms": [
+      "facebook"
+    ],
+    "targets": [
+      {
+        "platform": "facebook",
+        "accountId": null
+      }
+    ],
+    "mediaPath": "frontend/assets/goblinaffs/DeserveTreats.png",
+    "mediaType": "image",
+    "scheduledAt": "2026-05-27T15:20:00.000Z",
+    "attemptCount": 0,
+    "lastErrorAt": null,
+    "metadata": {
+      "contentTags": [
+        "goblin",
+        "meme"
+      ],
+      "distributionTags": [
+        "post:facebook"
+      ],
+      "approvalSource": "manual-json",
+      "requiresReview": false,
+      "productProfileId": "goblin-coloring-affirmations",
+      "productProfileLabel": "Goblin Core Affirmations",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      }
+    },
+    "createdAt": "2026-04-01T01:36:18.164Z",
+    "updatedAt": "2026-04-18T22:06:17.283Z",
+    "image": "frontend/assets/goblinaffs/DeserveTreats.png",
+    "nextAttemptAt": null
   }
 ]

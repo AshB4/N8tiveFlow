@@ -13,6 +13,7 @@
     "pinterest:metrics": "node scripts/pinterest/capture-pin-analytics.mjs",
     "pinterest:metrics:batch": "node scripts/pinterest/capture-pin-analytics-batch.mjs",
     "queue:dry-run": "node scripts/queue/dry-run-next24h.mjs",
+    "queue:rebalance-pinterest": "node scripts/queue/rebalance-pinterest-mix.mjs",
     "summary:daily": "node scripts/health/daily-summary.mjs",
     "backup:snapshot": "node scripts/backup/snapshot.mjs",
     "revenue:export": "node scripts/revenue/export-template.mjs",

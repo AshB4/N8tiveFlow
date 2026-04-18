@@ -2044,7 +2044,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.245Z"
+    "updatedAt": "2026-04-18T20:45:12.924Z"
   },
   {
     "id": "p_2026R_0069",
@@ -2105,7 +2105,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.245Z"
+    "updatedAt": "2026-04-18T20:45:12.924Z"
   },
   {
     "id": "p_startanyway_001",
@@ -2167,7 +2167,7 @@
       ]
     },
     "createdAt": "2026-04-17T18:38:45.773Z",
-    "updatedAt": "2026-04-18T20:41:13.245Z",
+    "updatedAt": "2026-04-18T20:45:12.924Z",
     "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/",
     "image": "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/"
@@ -2231,7 +2231,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.250Z",
+    "updatedAt": "2026-04-18T20:45:12.925Z",
     "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
   },
   {
@@ -2289,7 +2289,68 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.250Z"
+    "updatedAt": "2026-04-18T20:45:12.925Z"
+  },
+  {
+    "id": "p_2026R_0071",
+    "title": "Weirdly Satisfying Nail Color Collection",
+    "body": "You'll stare at this longer than expected.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-04-20T15:00:00.000Z",
+    "attemptCount": 1,
+    "nextAttemptAt": "2026-04-18T20:14:34.545Z",
+    "lastErrorAt": "2026-04-18T19:44:34.545Z",
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#satisfying",
+      "#colors",
+      "#visual",
+      "#odd",
+      "#aesthetic"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Freaking Weird or mild...",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Beautiful me."
+      ],
+      "pinterestTags": [
+        "satisfying",
+        "colors",
+        "visual",
+        "odd",
+        "aesthetic"
+      ],
+      "keyword": "satisfying colors",
+      "angle": "visual satisfaction",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T20:45:12.925Z"
   },
   {
     "id": "p_startanyway_002",
@@ -2353,71 +2414,10 @@
       ]
     },
     "createdAt": "2026-04-17T18:38:45.777Z",
-    "updatedAt": "2026-04-18T20:41:13.250Z",
+    "updatedAt": "2026-04-18T20:45:12.926Z",
     "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/apparel",
     "image": "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/apparel"
-  },
-  {
-    "id": "p_2026R_0071",
-    "title": "Weirdly Satisfying Nail Color Collection",
-    "body": "You'll stare at this longer than expected.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-20T15:00:00.000Z",
-    "attemptCount": 1,
-    "nextAttemptAt": "2026-04-18T20:14:34.545Z",
-    "lastErrorAt": "2026-04-18T19:44:34.545Z",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#satisfying",
-      "#colors",
-      "#visual",
-      "#odd",
-      "#aesthetic"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Freaking Weird or mild...",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "Beautiful me."
-      ],
-      "pinterestTags": [
-        "satisfying",
-        "colors",
-        "visual",
-        "odd",
-        "aesthetic"
-      ],
-      "keyword": "satisfying colors",
-      "angle": "visual satisfaction",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.250Z"
   },
   {
     "id": "p_2026R_0072",
@@ -2478,7 +2478,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.251Z",
+    "updatedAt": "2026-04-18T20:45:12.926Z",
     "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
   },
   {
@@ -2538,7 +2538,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.251Z"
+    "updatedAt": "2026-04-18T20:45:12.926Z"
   },
   {
     "id": "p_2026R_0033",
@@ -2597,7 +2597,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.251Z"
+    "updatedAt": "2026-04-18T20:45:12.926Z"
   },
   {
     "id": "p_startanyway_003",
@@ -2659,7 +2659,7 @@
       ]
     },
     "createdAt": "2026-04-17T18:38:45.777Z",
-    "updatedAt": "2026-04-18T20:41:13.251Z",
+    "updatedAt": "2026-04-18T20:45:12.926Z",
     "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/",
     "image": "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/"
@@ -2721,7 +2721,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.252Z"
+    "updatedAt": "2026-04-18T20:45:12.927Z"
   },
   {
     "id": "p_2026R_0035",
@@ -2780,7 +2780,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.252Z"
+    "updatedAt": "2026-04-18T20:45:12.927Z"
   },
   {
     "id": "p_2026R_0036",
@@ -2839,7 +2839,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.252Z"
+    "updatedAt": "2026-04-18T20:45:12.927Z"
   },
   {
     "id": "p_2026R_0075",
@@ -2900,7 +2900,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.252Z",
+    "updatedAt": "2026-04-18T20:45:12.927Z",
     "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
   },
   {
@@ -2962,7 +2962,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.252Z"
+    "updatedAt": "2026-04-18T20:45:12.927Z"
   },
   {
     "id": "p_2026R_0074",
@@ -3024,7 +3024,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "updatedAt": "2026-04-18T20:41:13.252Z"
+    "updatedAt": "2026-04-18T20:45:12.927Z"
   },
   {
     "id": "p_startanyway_004",
@@ -3088,7 +3088,7 @@
       ]
     },
     "createdAt": "2026-04-17T18:38:45.777Z",
-    "updatedAt": "2026-04-18T20:41:13.252Z",
+    "updatedAt": "2026-04-18T20:45:12.927Z",
     "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/apparel",
     "image": "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/apparel"
@@ -3152,7 +3152,7 @@
       ]
     },
     "createdAt": "2026-04-17T18:38:45.777Z",
-    "updatedAt": "2026-04-18T20:41:13.252Z",
+    "updatedAt": "2026-04-18T20:45:12.927Z",
     "image": "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg",
     "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt"
@@ -3216,7 +3216,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.253Z",
+    "updatedAt": "2026-04-18T20:45:12.928Z",
     "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
   },
   {
@@ -3276,70 +3276,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.253Z"
-  },
-  {
-    "id": "p_2026R_0041",
-    "title": "Better than candy. No chaos after.",
-    "body": "These prefilled eggs are way better than sugar. Fun, reusable, and toddlers actually play with them.",
-    "mediaPath": "frontend/assets/spring2026/PrincessEggs.jpg",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-24T16:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#easterbasketideas",
-      "#nocandyeaster",
-      "#toddlergift",
-      "#eastertoys",
-      "#kidsbasket"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "princess-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Baby Shower!",
-      "pinterestBoards": [
-        "Baby Shower!",
-        "Fun Ideas",
-        "Epic cuteness"
-      ],
-      "pinterestTags": [
-        "easter basket ideas",
-        "no candy easter",
-        "toddler gift",
-        "easter toys",
-        "kids basket"
-      ],
-      "keyword": "easter basket stuffers toddlers no candy",
-      "angle": "seasonal",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "lastError": null,
-    "updatedAt": "2026-04-18T20:41:13.253Z"
+    "updatedAt": "2026-04-18T20:45:12.928Z"
   },
   {
     "id": "p_startanyway_006",
@@ -3402,7 +3339,7 @@
       ]
     },
     "createdAt": "2026-04-17T18:38:45.777Z",
-    "updatedAt": "2026-04-18T20:41:13.253Z",
+    "updatedAt": "2026-04-18T20:45:12.928Z",
     "image": "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
     "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/apparel",
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/apparel"
@@ -3467,7 +3404,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "updatedAt": "2026-04-18T20:41:13.253Z"
+    "updatedAt": "2026-04-18T20:45:12.928Z"
   },
   {
     "id": "p_2026R_0078",
@@ -3476,7 +3413,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-25T15:00:00.000Z",
+    "scheduledAt": "2026-04-24T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -3529,71 +3466,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "updatedAt": "2026-04-18T20:41:13.253Z"
-  },
-  {
-    "id": "p_2026R_0048",
-    "title": "This stopped the meltdown instantly",
-    "body": "Easy, no-junk Easter basket idea. Fun, reusable, and way less chaos than candy.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-25T16:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#easterbaskettoddler",
-      "#basketfillers",
-      "#nosugareaster",
-      "#kidsgifts",
-      "#easterideas"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "princess-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "Baby Shower!",
-        "Epic cuteness"
-      ],
-      "pinterestTags": [
-        "easter basket toddler",
-        "basket fillers",
-        "no sugar easter",
-        "kids gifts",
-        "easter ideas"
-      ],
-      "keyword": "what to put in toddler easter basket besides candy",
-      "angle": "use case",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.254Z",
-    "lastError": null,
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
+    "updatedAt": "2026-04-18T20:45:12.928Z"
   },
   {
     "id": "p_2026R_0038",
@@ -3652,7 +3525,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.254Z",
+    "updatedAt": "2026-04-18T20:45:12.928Z",
     "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
   },
   {
@@ -3715,7 +3588,7 @@
       ]
     },
     "createdAt": "2026-04-17T18:38:45.777Z",
-    "updatedAt": "2026-04-18T20:41:13.254Z",
+    "updatedAt": "2026-04-18T20:45:12.928Z",
     "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/",
     "image": "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/"
@@ -3727,7 +3600,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-26T15:20:00.000Z",
+    "scheduledAt": "2026-04-25T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -3777,7 +3650,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.254Z",
+    "updatedAt": "2026-04-18T20:45:12.928Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   },
   {
@@ -3787,7 +3660,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-26T15:00:00.000Z",
+    "scheduledAt": "2026-04-25T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -3840,7 +3713,69 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "updatedAt": "2026-04-18T20:41:13.254Z"
+    "updatedAt": "2026-04-18T20:45:12.928Z"
+  },
+  {
+    "id": "p_2026R_0080",
+    "title": "My At Home Nail Routine Setup",
+    "body": "Simple, repeatable, works every time.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-04-26T15:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#routine",
+      "#nails",
+      "#beauty",
+      "#setup",
+      "#selfcare"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Home spa",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "routine",
+        "nails",
+        "beauty",
+        "setup",
+        "self care"
+      ],
+      "keyword": "nail routine",
+      "angle": "routine",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T20:45:12.928Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
   },
   {
     "id": "p_2026R_0109",
@@ -3902,69 +3837,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "updatedAt": "2026-04-18T20:41:13.254Z"
-  },
-  {
-    "id": "p_2026R_0042",
-    "title": "I got 15 minutes of silence with this",
-    "body": "No cleanup. No setup. Just open and play. Perfect when you need something easy that actually works.",
-    "mediaPath": "frontend/assets/spring2026/princess04.jpg",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-26T16:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#nomesstoys",
-      "#toddleractivities",
-      "#easyparenting",
-      "#quiettoys",
-      "#indoorkids"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "princess-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "Epic cuteness"
-      ],
-      "pinterestTags": [
-        "no mess toys",
-        "toddler activities",
-        "easy parenting",
-        "quiet toys",
-        "indoor kids"
-      ],
-      "keyword": "mess free toddler toys at home",
-      "angle": "problem",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.255Z",
-    "lastError": null
+    "updatedAt": "2026-04-18T20:45:12.929Z"
   },
   {
     "id": "p_2026R_0114",
@@ -3973,7 +3846,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-27T16:00:00.000Z",
+    "scheduledAt": "2026-04-27T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -4026,7 +3899,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "updatedAt": "2026-04-18T20:41:13.255Z"
+    "updatedAt": "2026-04-18T20:45:12.929Z"
   },
   {
     "id": "p_2026R_0129",
@@ -4035,7 +3908,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-27T15:40:00.000Z",
+    "scheduledAt": "2026-04-26T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -4088,7 +3961,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T20:41:13.255Z"
+    "updatedAt": "2026-04-18T20:45:12.929Z"
   },
   {
     "id": "p_2026R_0139",
@@ -4097,7 +3970,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-28T15:40:00.000Z",
+    "scheduledAt": "2026-04-27T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -4150,69 +4023,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "updatedAt": "2026-04-18T20:41:13.255Z"
-  },
-  {
-    "id": "p_2026R_0080",
-    "title": "My At Home Nail Routine Setup",
-    "body": "Simple, repeatable, works every time.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-27T15:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#routine",
-      "#nails",
-      "#beauty",
-      "#setup",
-      "#selfcare"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Beautiful me.",
-      "pinterestBoards": [
-        "Home spa",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "routine",
-        "nails",
-        "beauty",
-        "setup",
-        "self care"
-      ],
-      "keyword": "nail routine",
-      "angle": "routine",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.255Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+    "updatedAt": "2026-04-18T20:45:12.929Z"
   },
   {
     "id": "p_2026R_0040",
@@ -4221,7 +4032,7 @@
     "mediaPath": "frontend/assets/spring2026/montessori_learning_play_02.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-27T15:20:00.000Z",
+    "scheduledAt": "2026-04-26T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -4271,70 +4082,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.255Z"
-  },
-  {
-    "id": "p_2026R_0043",
-    "title": "This toy buys you time (no joke)",
-    "body": "If your toddler gets bored in 2 minutes, try this. Simple, satisfying play that actually holds attention.",
-    "mediaPath": "frontend/assets/spring2026/Princess03.jpg",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-28T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#busytoddler",
-      "#independentplay",
-      "#toddlertoys",
-      "#quietplay",
-      "#staybusy"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "princess-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "I Want, I dream.",
-        "Epic cuteness"
-      ],
-      "pinterestTags": [
-        "busy toddler",
-        "independent play",
-        "toddler toys",
-        "quiet play",
-        "stay busy"
-      ],
-      "keyword": "toys that keep toddlers busy independently",
-      "angle": "problem",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.255Z",
-    "lastError": null
+    "updatedAt": "2026-04-18T20:45:12.929Z"
   },
   {
     "id": "p_2026R_0081",
@@ -4343,7 +4091,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-28T15:00:00.000Z",
+    "scheduledAt": "2026-04-27T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -4396,131 +4144,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "updatedAt": "2026-04-18T20:41:13.255Z"
-  },
-  {
-    "id": "p_2026R_0094",
-    "title": "Funny Goblin Coloring Page (This Is Too Real 😂)",
-    "body": "If you’ve ever side-eyed someone for drinking plain water… this one hits. Printable goblin coloring page with chaotic relatable humor.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-29T15:40:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#funnycoloringpage",
-      "#adultcoloring",
-      "#goblincore",
-      "#relatablehumor",
-      "#printable"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-drinkwater-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "coloring pages",
-      "pinterestBoards": [
-        "coloring pages",
-        "Funny Stuff"
-      ],
-      "pinterestTags": [
-        "funny coloring page",
-        "adult coloring",
-        "goblin core",
-        "relatable humor",
-        "printable"
-      ],
-      "keyword": "funny coloring page adult humor",
-      "angle": "relatable humor",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T20:41:13.256Z"
-  },
-  {
-    "id": "p_2026R_0099",
-    "title": "Mental Health Coloring Page (Some Days This Is Enough)",
-    "body": "If all you did today was exist… that counts. Printable goblin-style coloring page for hard days, burnout, and quiet survival wins.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-29T16:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#mentalhealth",
-      "#selfcareprintable",
-      "#coloringpage",
-      "#burnoutrecovery",
-      "#healing"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-existing-stubbornly-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "Beautiful me.",
-      "pinterestBoards": [
-        "Beautiful me.",
-        "coloring pages"
-      ],
-      "pinterestTags": [
-        "mental health",
-        "self care printable",
-        "coloring page",
-        "burnout recovery",
-        "healing"
-      ],
-      "keyword": "mental health coloring page printable",
-      "angle": "validation / survival",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T20:41:13.256Z"
+    "updatedAt": "2026-04-18T20:45:12.929Z"
   },
   {
     "id": "p_2026R_0104",
@@ -4529,7 +4153,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-28T16:00:00.000Z",
+    "scheduledAt": "2026-04-27T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -4582,7 +4206,193 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T20:41:13.256Z"
+    "updatedAt": "2026-04-18T20:45:12.929Z"
+  },
+  {
+    "id": "p_2026R_0082",
+    "title": "Self Care Night Nail Routine",
+    "body": "Add this to your weekly reset.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-04-28T15:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#selfcare",
+      "#routine",
+      "#night",
+      "#nails",
+      "#beauty"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Home spa",
+        "I Want, I dream."
+      ],
+      "pinterestTags": [
+        "self care",
+        "routine",
+        "night",
+        "nails",
+        "beauty"
+      ],
+      "keyword": "self care night",
+      "angle": "night routine",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T20:45:12.929Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+  },
+  {
+    "id": "p_2026R_0094",
+    "title": "Funny Goblin Coloring Page (This Is Too Real 😂)",
+    "body": "If you’ve ever side-eyed someone for drinking plain water… this one hits. Printable goblin coloring page with chaotic relatable humor.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-04-28T15:20:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#funnycoloringpage",
+      "#adultcoloring",
+      "#goblincore",
+      "#relatablehumor",
+      "#printable"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-drinkwater-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "coloring pages",
+      "pinterestBoards": [
+        "coloring pages",
+        "Funny Stuff"
+      ],
+      "pinterestTags": [
+        "funny coloring page",
+        "adult coloring",
+        "goblin core",
+        "relatable humor",
+        "printable"
+      ],
+      "keyword": "funny coloring page adult humor",
+      "angle": "relatable humor",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "updatedAt": "2026-04-18T20:45:12.930Z"
+  },
+  {
+    "id": "p_2026R_0099",
+    "title": "Mental Health Coloring Page (Some Days This Is Enough)",
+    "body": "If all you did today was exist… that counts. Printable goblin-style coloring page for hard days, burnout, and quiet survival wins.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-04-28T15:40:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#mentalhealth",
+      "#selfcareprintable",
+      "#coloringpage",
+      "#burnoutrecovery",
+      "#healing"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-existing-stubbornly-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "coloring pages"
+      ],
+      "pinterestTags": [
+        "mental health",
+        "self care printable",
+        "coloring page",
+        "burnout recovery",
+        "healing"
+      ],
+      "keyword": "mental health coloring page printable",
+      "angle": "validation / survival",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "updatedAt": "2026-04-18T20:45:12.930Z"
   },
   {
     "id": "p_2026R_0119",
@@ -4591,7 +4401,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-30T16:00:00.000Z",
+    "scheduledAt": "2026-04-29T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -4645,7 +4455,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "updatedAt": "2026-04-18T20:41:13.256Z"
+    "updatedAt": "2026-04-18T20:45:12.930Z"
   },
   {
     "id": "p_2026R_0134",
@@ -4654,7 +4464,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-30T15:40:00.000Z",
+    "scheduledAt": "2026-04-29T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -4707,192 +4517,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T20:41:13.256Z"
-  },
-  {
-    "id": "p_2026R_0044",
-    "title": "Toddlers actually sit still for this",
-    "body": "Compact, quiet, and zero screens. Ideal for flights, car rides, or waiting rooms.",
-    "mediaPath": "frontend/assets/spring2026/princess04.jpg",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-30T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#traveltoystoddler",
-      "#planeactivities",
-      "#quiettoys",
-      "#roadtripkids",
-      "#screenfree"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "princess-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "I Want, I dream.",
-      "pinterestBoards": [
-        "I Want, I dream.",
-        "Fun Ideas",
-        "Epic cuteness"
-      ],
-      "pinterestTags": [
-        "travel toys toddler",
-        "plane activities",
-        "quiet toys",
-        "road trip kids",
-        "screen free"
-      ],
-      "keyword": "travel toys toddlers airplane quiet activities",
-      "angle": "use case",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.256Z",
-    "lastError": null
-  },
-  {
-    "id": "p_2026R_0026",
-    "title": "Montessori Easter Eggs for Toddlers",
-    "body": "These matching eggs help toddlers learn colors and shapes while they play. Perfect Easter basket filler that is actually educational.",
-    "mediaPath": "frontend/assets/spring2026/Montessori_easy_gift.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-29T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#montessoritoys",
-      "#toddlereasterideas",
-      "#learningtoys",
-      "#eastereggfillerstoddler"
-    ],
-    "canonicalUrl": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "montessori-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Baby Shower!",
-      "pinterestBoards": [
-        "Baby Shower!",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "montessori toys",
-        "toddler easter ideas",
-        "learning toys",
-        "easter egg fillers toddler"
-      ],
-      "keyword": "montessori easter eggs for toddlers",
-      "angle": "educational easter filler",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.256Z",
-    "lastError": null
-  },
-  {
-    "id": "p_2026R_0082",
-    "title": "Self Care Night Nail Routine",
-    "body": "Add this to your weekly reset.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-04-29T15:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#selfcare",
-      "#routine",
-      "#night",
-      "#nails",
-      "#beauty"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Beautiful me.",
-      "pinterestBoards": [
-        "Home spa",
-        "I Want, I dream."
-      ],
-      "pinterestTags": [
-        "self care",
-        "routine",
-        "night",
-        "nails",
-        "beauty"
-      ],
-      "keyword": "self care night",
-      "angle": "night routine",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.256Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+    "updatedAt": "2026-04-18T20:45:12.930Z"
   },
   {
     "id": "p_2026R_0083",
@@ -4901,7 +4526,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-30T15:00:00.000Z",
+    "scheduledAt": "2026-04-28T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -4954,131 +4579,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "updatedAt": "2026-04-18T20:41:13.256Z"
-  },
-  {
-    "id": "p_2026R_0017",
-    "title": "This Makes Egg Hunts 10x More Exciting",
-    "body": "Not just candy inside. These fun Easter fillers make egg hunts feel bigger, better, and way more memorable for kids.",
-    "mediaPath": "frontend/assets/spring2026/cars03.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-01T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#easteregghuntideas",
-      "#egghuntprizes",
-      "#kidseasterfun",
-      "#easterpartyideas",
-      "#eastertoys"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen",
-    "affiliateUrl": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "easter-cars-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen",
-        "primary": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "Your Pinterest Likes"
-      ],
-      "pinterestTags": [
-        "easter egg hunt ideas",
-        "egg hunt prizes",
-        "kids easter fun",
-        "easter party ideas",
-        "easter toys"
-      ],
-      "keyword": "easter egg hunt prizes for kids",
-      "angle": "experience",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.257Z",
-    "lastError": null
-  },
-  {
-    "id": "p_2026R_0084",
-    "title": "Passover Activities That Keep Kids Engaged At The Seder",
-    "body": "Printable, kid-friendly Passover pages to keep little hands busy while everyone actually finishes the Seder.",
-    "mediaPath": "frontend/assets/passover/PassoverForKids.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-01T15:40:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#passover",
-      "#seder",
-      "#kidsactivities",
-      "#printable",
-      "#jewishholidays"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/passover-seder-survival-kit",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/passover-seder-survival-kit",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "passover-seder-survival-kit-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/passover-seder-survival-kit",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/passover-seder-survival-kit"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "Baby Shower!",
-        "Learn hebrew"
-      ],
-      "pinterestTags": [
-        "passover",
-        "seder",
-        "kids activities",
-        "printable",
-        "jewish holidays"
-      ],
-      "keyword": "passover activities for kids",
-      "angle": "busy kids at seder",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.257Z"
+    "updatedAt": "2026-04-18T20:45:12.930Z"
   },
   {
     "id": "p_2026R_0124",
@@ -5087,7 +4588,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-01T15:00:00.000Z",
+    "scheduledAt": "2026-04-29T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -5140,7 +4641,69 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T20:41:13.257Z"
+    "updatedAt": "2026-04-18T20:45:12.930Z"
+  },
+  {
+    "id": "p_2026R_0084",
+    "title": "Passover Activities That Keep Kids Engaged At The Seder",
+    "body": "Printable, kid-friendly Passover pages to keep little hands busy while everyone actually finishes the Seder.",
+    "mediaPath": "frontend/assets/passover/PassoverForKids.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-04-29T16:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#passover",
+      "#seder",
+      "#kidsactivities",
+      "#printable",
+      "#jewishholidays"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/passover-seder-survival-kit",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/passover-seder-survival-kit",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "passover-seder-survival-kit-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/passover-seder-survival-kit",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/passover-seder-survival-kit"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Baby Shower!",
+        "Learn hebrew"
+      ],
+      "pinterestTags": [
+        "passover",
+        "seder",
+        "kids activities",
+        "printable",
+        "jewish holidays"
+      ],
+      "keyword": "passover activities for kids",
+      "angle": "busy kids at seder",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T20:45:12.931Z"
   },
   {
     "id": "p_2026R_0110",
@@ -5149,7 +4712,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-02T15:40:00.000Z",
+    "scheduledAt": "2026-04-30T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -5201,7 +4764,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.258Z",
+    "updatedAt": "2026-04-18T20:45:12.931Z",
     "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
   },
   {
@@ -5211,7 +4774,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-02T16:00:00.000Z",
+    "scheduledAt": "2026-04-30T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -5262,7 +4825,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.258Z",
+    "updatedAt": "2026-04-18T20:45:12.931Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   },
   {
@@ -5280,7 +4843,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-05-02T15:00:00.000Z",
+    "scheduledAt": "2026-04-30T15:20:00.000Z",
     "status": "approved",
     "hashtags": [
       "#frog",
@@ -5328,7 +4891,7 @@
       ]
     },
     "createdAt": "2026-04-17T18:38:45.777Z",
-    "updatedAt": "2026-04-18T20:41:13.258Z",
+    "updatedAt": "2026-04-18T20:45:12.931Z",
     "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/apparel",
     "image": "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/apparel"
@@ -5340,7 +4903,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-01T16:00:00.000Z",
+    "scheduledAt": "2026-04-30T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -5393,66 +4956,8 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.258Z",
+    "updatedAt": "2026-04-18T20:45:12.931Z",
     "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
-  },
-  {
-    "id": "p_2026R_0027",
-    "title": "Easter Eggs That Teach Kids While Playing",
-    "body": "Skip junk toys. These matching eggs build fine motor skills and keep toddlers engaged longer than candy.",
-    "mediaPath": "frontend/assets/spring2026/montessori_learning_play_02.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-02T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#toddlerlearningtoys",
-      "#finemotorskillstoy",
-      "#easterbasketideastoddler"
-    ],
-    "canonicalUrl": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "montessori-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "Baby Shower!"
-      ],
-      "pinterestTags": [
-        "toddler learning toys",
-        "fine motor skills toy",
-        "easter basket ideas toddler"
-      ],
-      "keyword": "easter eggs that teach kids while playing",
-      "angle": "problem solution",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.258Z",
-    "lastError": null
   },
   {
     "id": "p_2026R_0105",
@@ -5461,7 +4966,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-03T16:00:00.000Z",
+    "scheduledAt": "2026-05-01T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -5513,7 +5018,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.259Z",
+    "updatedAt": "2026-04-18T20:45:12.932Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   },
   {
@@ -5523,7 +5028,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-03T15:00:00.000Z",
+    "scheduledAt": "2026-05-01T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -5575,7 +5080,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.259Z",
+    "updatedAt": "2026-04-18T20:45:12.932Z",
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png"
   },
   {
@@ -5585,7 +5090,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-04T16:00:00.000Z",
+    "scheduledAt": "2026-05-02T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -5636,7 +5141,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.259Z",
+    "updatedAt": "2026-04-18T20:45:12.932Z",
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png"
   },
   {
@@ -5646,7 +5151,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-03T15:40:00.000Z",
+    "scheduledAt": "2026-05-01T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -5697,7 +5202,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.259Z",
+    "updatedAt": "2026-04-18T20:45:12.932Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   },
   {
@@ -5707,7 +5212,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-04T15:00:00.000Z",
+    "scheduledAt": "2026-05-01T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -5759,7 +5264,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.259Z",
+    "updatedAt": "2026-04-18T20:45:12.932Z",
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png"
   },
   {
@@ -5769,7 +5274,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-04T15:40:00.000Z",
+    "scheduledAt": "2026-05-02T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -5821,323 +5326,8 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.259Z",
+    "updatedAt": "2026-04-18T20:45:12.932Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
-  },
-  {
-    "id": "p_2026R_0045",
-    "title": "No iPad needed. This works.",
-    "body": "Swap the iPad for something hands-on. Keeps kids engaged without the meltdown after.",
-    "mediaPath": "frontend/assets/spring2026/Princess03.jpg",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-03T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#screenfreekids",
-      "#toddlerplay",
-      "#learningtoys",
-      "#noipad",
-      "#kidsactivities"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "princess-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "Epic cuteness"
-      ],
-      "pinterestTags": [
-        "screen free kids",
-        "toddler play",
-        "learning toys",
-        "no ipad",
-        "kids activities"
-      ],
-      "keyword": "screen free toddler activities simple toys",
-      "angle": "problem",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.259Z",
-    "lastError": null
-  },
-  {
-    "id": "p_2026R_0018",
-    "title": "Finally... Easter Stuff Boys Actually Want",
-    "body": "If you are tired of Easter filler that misses the mark, this is a better pick. Fun, simple, and way more exciting than more candy.",
-    "mediaPath": "frontend/assets/spring2026/cars04.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-04T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#eastergiftsboys",
-      "#boyeasterbasketideas",
-      "#kidstoygifts",
-      "#easterbasketforboys",
-      "#funeasterstuffers"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen",
-    "affiliateUrl": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "easter-cars-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen",
-        "primary": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen"
-      },
-      "pinterestBoard": "Your Pinterest Likes",
-      "pinterestBoards": [
-        "Your Pinterest Likes",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "easter gifts boys",
-        "boy easter basket ideas",
-        "kids toy gifts",
-        "easter basket for boys",
-        "fun easter stuffers"
-      ],
-      "keyword": "easter gifts boys love",
-      "angle": "underserved segment",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.259Z",
-    "lastError": null
-  },
-  {
-    "id": "p_2026R_0125",
-    "title": "Productivity Rules Were Not Designed For My Brain",
-    "body": "If your brain works differently, so should your standards.",
-    "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-05T15:40:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#adhd",
-      "#neurodivergent",
-      "#productivity",
-      "#mentalhealth",
-      "#relatable"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-prod-standards-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "Funny Stuff",
-      "pinterestBoards": [
-        "Infj memes",
-        "psychology /sociology"
-      ],
-      "pinterestTags": [
-        "adhd",
-        "neurodivergent",
-        "productivity",
-        "mental health",
-        "relatable"
-      ],
-      "keyword": "adhd productivity meme",
-      "angle": "ND humor",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.260Z",
-    "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png"
-  },
-  {
-    "id": "p_2026R_0090",
-    "title": "Good Systems Beat Mood Every Time",
-    "body": "Stop waiting for inspiration. Start with structured prompts that give you hooks, angles, and momentum.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-06T15:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#creativeblock",
-      "#systemsthinking",
-      "#contentstrategy",
-      "#creatorworkflow",
-      "#promptpack"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/100prompt-storm",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/100prompt-storm",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "prompt-storm-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
-      },
-      "pinterestBoard": "Learn computer coding",
-      "pinterestBoards": [
-        "Ui ux design",
-        "Learn computer coding"
-      ],
-      "pinterestTags": [
-        "creative block",
-        "systems thinking",
-        "content strategy",
-        "creator workflow",
-        "prompt pack"
-      ],
-      "keyword": "creative block help",
-      "angle": "systems over mood",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.260Z",
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
-  },
-  {
-    "id": "p_startanyway_009",
-    "title": "Soft Motivation > Hustle Culture",
-    "body": "No pressure. No grind. Just... start anyway.",
-    "mediaPath": "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
-    "mediaType": "image",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "scheduledAt": "2026-05-06T15:40:00.000Z",
-    "status": "approved",
-    "hashtags": [
-      "#soft",
-      "#motivation",
-      "#mental",
-      "#health",
-      "#slow",
-      "#living"
-    ],
-    "tags": [
-      "soft motivation",
-      "mental health",
-      "slow living"
-    ],
-    "metadata": {
-      "productProfileId": "start-anyway-frog",
-      "productProfileLabel": "Start Anyway Frog",
-      "productLink": "https://my-store-10fedc5.creator-spring.com/",
-      "pinterestBoard": "psychology /sociology",
-      "pinterestTags": [
-        "soft motivation",
-        "mental health",
-        "slow living"
-      ],
-      "approvalSource": "manual",
-      "requiresReview": false,
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "productCategory": "Creator Spring products",
-      "productLinks": {
-        "primary": "https://my-store-10fedc5.creator-spring.com/",
-        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
-        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
-        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
-      },
-      "imagePool": [
-        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
-        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
-      ]
-    },
-    "createdAt": "2026-04-17T18:38:45.778Z",
-    "updatedAt": "2026-04-18T20:41:13.260Z",
-    "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/",
-    "image": "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
-    "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/"
   },
   {
     "id": "p_2026R_0120",
@@ -6146,7 +5336,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-05T15:00:00.000Z",
+    "scheduledAt": "2026-05-02T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -6198,8 +5388,199 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.260Z",
+    "updatedAt": "2026-04-18T20:45:12.932Z",
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png"
+  },
+  {
+    "id": "p_2026R_0125",
+    "title": "Productivity Rules Were Not Designed For My Brain",
+    "body": "If your brain works differently, so should your standards.",
+    "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-02T16:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#adhd",
+      "#neurodivergent",
+      "#productivity",
+      "#mentalhealth",
+      "#relatable"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-prod-standards-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Funny Stuff",
+      "pinterestBoards": [
+        "Infj memes",
+        "psychology /sociology"
+      ],
+      "pinterestTags": [
+        "adhd",
+        "neurodivergent",
+        "productivity",
+        "mental health",
+        "relatable"
+      ],
+      "keyword": "adhd productivity meme",
+      "angle": "ND humor",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T20:45:12.933Z",
+    "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png"
+  },
+  {
+    "id": "p_2026R_0090",
+    "title": "Good Systems Beat Mood Every Time",
+    "body": "Stop waiting for inspiration. Start with structured prompts that give you hooks, angles, and momentum.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-03T15:20:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#creativeblock",
+      "#systemsthinking",
+      "#contentstrategy",
+      "#creatorworkflow",
+      "#promptpack"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "prompt-storm-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
+      },
+      "pinterestBoard": "Learn computer coding",
+      "pinterestBoards": [
+        "Ui ux design",
+        "Learn computer coding"
+      ],
+      "pinterestTags": [
+        "creative block",
+        "systems thinking",
+        "content strategy",
+        "creator workflow",
+        "prompt pack"
+      ],
+      "keyword": "creative block help",
+      "angle": "systems over mood",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T20:45:12.933Z",
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
+  },
+  {
+    "id": "p_startanyway_009",
+    "title": "Soft Motivation > Hustle Culture",
+    "body": "No pressure. No grind. Just... start anyway.",
+    "mediaPath": "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+    "mediaType": "image",
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "scheduledAt": "2026-05-03T15:40:00.000Z",
+    "status": "approved",
+    "hashtags": [
+      "#soft",
+      "#motivation",
+      "#mental",
+      "#health",
+      "#slow",
+      "#living"
+    ],
+    "tags": [
+      "soft motivation",
+      "mental health",
+      "slow living"
+    ],
+    "metadata": {
+      "productProfileId": "start-anyway-frog",
+      "productProfileLabel": "Start Anyway Frog",
+      "productLink": "https://my-store-10fedc5.creator-spring.com/",
+      "pinterestBoard": "psychology /sociology",
+      "pinterestTags": [
+        "soft motivation",
+        "mental health",
+        "slow living"
+      ],
+      "approvalSource": "manual",
+      "requiresReview": false,
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "productCategory": "Creator Spring products",
+      "productLinks": {
+        "primary": "https://my-store-10fedc5.creator-spring.com/",
+        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
+        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
+        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
+      },
+      "imagePool": [
+        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
+        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
+      ]
+    },
+    "createdAt": "2026-04-17T18:38:45.778Z",
+    "updatedAt": "2026-04-18T20:45:12.933Z",
+    "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/",
+    "image": "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+    "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/"
   },
   {
     "id": "p_2026R_0085",
@@ -6208,7 +5589,7 @@
     "mediaPath": "frontend/assets/passover/PassoverColoring.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-05T16:00:00.000Z",
+    "scheduledAt": "2026-05-03T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -6261,7 +5642,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.260Z"
+    "updatedAt": "2026-04-18T20:45:12.933Z"
   },
   {
     "id": "p_2026R_0111",
@@ -6270,7 +5651,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-06T16:00:00.000Z",
+    "scheduledAt": "2026-05-03T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -6323,7 +5704,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "updatedAt": "2026-04-18T20:41:13.260Z"
+    "updatedAt": "2026-04-18T20:45:12.933Z"
   },
   {
     "id": "p_2026R_0116",
@@ -6332,7 +5713,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-07T15:40:00.000Z",
+    "scheduledAt": "2026-05-04T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -6385,7 +5766,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "updatedAt": "2026-04-18T20:41:13.260Z"
+    "updatedAt": "2026-04-18T20:45:12.933Z"
   },
   {
     "id": "p_2026R_0131",
@@ -6394,7 +5775,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-07T15:00:00.000Z",
+    "scheduledAt": "2026-05-04T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -6446,16 +5827,16 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "updatedAt": "2026-04-18T20:41:13.260Z"
+    "updatedAt": "2026-04-18T20:45:12.933Z"
   },
   {
-    "id": "p_2026R_0046",
-    "title": "Actually useful toddler gift",
-    "body": "Not another toy they ignore. This one gets used over and over again.",
-    "mediaPath": "frontend/assets/spring2026/PrincessEggs.jpg",
+    "id": "p_2026R_0106",
+    "title": "Cozy Goblin Coloring Page (Slow Living Energy)",
+    "body": "Slow, cozy, slightly chaotic. A goblin-core printable for embracing quiet days, soft routines, and not rushing anything.",
+    "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-07T15:20:00.000Z",
+    "scheduledAt": "2026-05-04T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -6469,38 +5850,37 @@
       }
     ],
     "hashtags": [
-      "#toddlergift",
-      "#usefultoys",
-      "#kidsgiftideas",
-      "#parentwin",
-      "#besttoys"
+      "#goblincore",
+      "#cozyaesthetic",
+      "#coloringprintable",
+      "#slowliving",
+      "#fantasyart"
     ],
-    "canonicalUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
     "metadata": {
       "productProfileId": "restored-batch",
-      "productProfileLabel": "princess-eggs-evergreen",
+      "productProfileLabel": "goblin-do-less-pinterest",
       "productCategory": "Seasonal",
       "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20"
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
       },
-      "pinterestBoard": "I Want, I dream.",
+      "pinterestBoard": "coloring pages",
       "pinterestBoards": [
-        "I Want, I dream.",
-        "Fun Ideas",
-        "Epic cuteness"
+        "coloring pages",
+        "Freaking Weird or mild..."
       ],
       "pinterestTags": [
-        "toddler gift",
-        "useful toys",
-        "kids gift ideas",
-        "parent win",
-        "best toys"
+        "goblin core",
+        "cozy aesthetic",
+        "coloring printable",
+        "slow living",
+        "fantasy art"
       ],
-      "keyword": "cute toddler gifts that are actually useful",
-      "angle": "best",
+      "keyword": "goblin core cozy coloring page",
+      "angle": "cozy aesthetic",
       "distributionTags": [
         "post:pinterest"
       ],
@@ -6508,17 +5888,16 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.260Z",
-    "lastError": null
+    "updatedAt": "2026-04-18T20:45:12.933Z"
   },
   {
-    "id": "p_2026R_0022",
-    "title": "Cutest Easter Basket Idea Kids Love",
-    "body": "These tiny plush animals inside Easter eggs are the cutest basket idea this year. Kids get a surprise toy instead of candy, and they actually keep them.",
-    "mediaPath": "frontend/assets/spring2026/pink_cute_bunny_pin_03.png",
+    "id": "p_2026R_0141",
+    "title": "A Hot Mess… But A Persistent One",
+    "body": "Refusing to disappear is a personality trait now.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-05T15:20:00.000Z",
+    "scheduledAt": "2026-05-04T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -6532,41 +5911,36 @@
       }
     ],
     "hashtags": [
-      "#easterbasketideas",
-      "#cuteeastergifts",
-      "#kidseasterbasket",
-      "#plushtoysforkids",
-      "#easterbunnytheme",
-      "#toddlergiftideas",
-      "#springgifts"
+      "#funny",
+      "#chaos",
+      "#goblin",
+      "#relatable",
+      "#meme"
     ],
-    "canonicalUrl": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20",
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
     "metadata": {
       "productProfileId": "restored-batch",
-      "productProfileLabel": "easter-plush-eggs-evergreen",
+      "productProfileLabel": "goblin-disappear-hot-mess-pinterest",
       "productCategory": "Seasonal",
       "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20"
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
       },
-      "pinterestBoard": "Epic cuteness",
+      "pinterestBoard": "Funny Stuff",
       "pinterestBoards": [
-        "Epic cuteness",
-        "Fun Ideas"
+        "Funny Stuff"
       ],
       "pinterestTags": [
-        "easter basket ideas",
-        "cute easter gifts",
-        "kids easter basket",
-        "plush toys for kids",
-        "easter bunny theme",
-        "toddler gift ideas",
-        "spring gifts"
+        "funny",
+        "chaos",
+        "goblin",
+        "relatable",
+        "meme"
       ],
-      "keyword": "cute easter basket idea for kids",
-      "angle": "cute / visual",
+      "keyword": "funny goblin affirmation",
+      "angle": "chaotic humor",
       "distributionTags": [
         "post:pinterest"
       ],
@@ -6574,66 +5948,8 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.260Z",
-    "lastError": null
-  },
-  {
-    "id": "p_2026R_0028",
-    "title": "Best No-Candy Easter Gift for Toddlers",
-    "body": "A simple Easter alternative kids actually use. These matching eggs teach and entertain at the same time.",
-    "mediaPath": "frontend/assets/spring2026/Montessori_easy_gift.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-06T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#nocandyeaster",
-      "#toddlergifts",
-      "#educationaltoystoddler"
-    ],
-    "canonicalUrl": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "montessori-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Baby Shower!",
-      "pinterestBoards": [
-        "Baby Shower!",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "no candy easter",
-        "toddler gifts",
-        "educational toys toddler"
-      ],
-      "keyword": "best no candy easter gift for toddlers",
-      "angle": "no candy alternative",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.260Z",
-    "lastError": null
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "updatedAt": "2026-04-18T20:45:12.933Z"
   },
   {
     "id": "p_2026R_0096",
@@ -6642,7 +5958,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-08T15:40:00.000Z",
+    "scheduledAt": "2026-05-05T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -6695,7 +6011,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "updatedAt": "2026-04-18T20:41:13.261Z"
+    "updatedAt": "2026-04-18T20:45:12.934Z"
   },
   {
     "id": "p_2026R_0101",
@@ -6704,7 +6020,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-08T16:00:00.000Z",
+    "scheduledAt": "2026-05-05T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -6757,68 +6073,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "updatedAt": "2026-04-18T20:41:13.261Z"
-  },
-  {
-    "id": "p_2026R_0106",
-    "title": "Cozy Goblin Coloring Page (Slow Living Energy)",
-    "body": "Slow, cozy, slightly chaotic. A goblin-core printable for embracing quiet days, soft routines, and not rushing anything.",
-    "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-08T15:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#goblincore",
-      "#cozyaesthetic",
-      "#coloringprintable",
-      "#slowliving",
-      "#fantasyart"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-do-less-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "coloring pages",
-      "pinterestBoards": [
-        "coloring pages",
-        "Freaking Weird or mild..."
-      ],
-      "pinterestTags": [
-        "goblin core",
-        "cozy aesthetic",
-        "coloring printable",
-        "slow living",
-        "fantasy art"
-      ],
-      "keyword": "goblin core cozy coloring page",
-      "angle": "cozy aesthetic",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.261Z"
+    "updatedAt": "2026-04-18T20:45:12.934Z"
   },
   {
     "id": "p_2026R_0121",
@@ -6827,7 +6082,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-09T15:40:00.000Z",
+    "scheduledAt": "2026-05-05T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -6880,7 +6135,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "updatedAt": "2026-04-18T20:41:13.261Z"
+    "updatedAt": "2026-04-18T20:45:12.934Z"
   },
   {
     "id": "p_2026R_0126",
@@ -6889,7 +6144,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-09T16:00:00.000Z",
+    "scheduledAt": "2026-05-06T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -6941,7 +6196,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "updatedAt": "2026-04-18T20:41:13.261Z"
+    "updatedAt": "2026-04-18T20:45:12.934Z"
   },
   {
     "id": "p_2026R_0136",
@@ -6950,7 +6205,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-09T15:00:00.000Z",
+    "scheduledAt": "2026-05-05T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -7002,68 +6257,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "updatedAt": "2026-04-18T20:41:13.261Z"
-  },
-  {
-    "id": "p_2026R_0141",
-    "title": "A Hot Mess… But A Persistent One",
-    "body": "Refusing to disappear is a personality trait now.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-07T16:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#funny",
-      "#chaos",
-      "#goblin",
-      "#relatable",
-      "#meme"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-disappear-hot-mess-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "Funny Stuff",
-      "pinterestBoards": [
-        "Funny Stuff"
-      ],
-      "pinterestTags": [
-        "funny",
-        "chaos",
-        "goblin",
-        "relatable",
-        "meme"
-      ],
-      "keyword": "funny goblin affirmation",
-      "angle": "chaotic humor",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T20:41:13.261Z"
+    "updatedAt": "2026-04-18T20:45:12.934Z"
   },
   {
     "id": "p_2026R_0091",
@@ -7072,7 +6266,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-10T15:40:00.000Z",
+    "scheduledAt": "2026-05-06T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -7124,197 +6318,8 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.261Z",
+    "updatedAt": "2026-04-18T20:45:12.934Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
-  },
-  {
-    "id": "p_2026R_0006",
-    "title": "cheap easter basket idea that still feels cute 💸",
-    "body": "Affordable, adorable, and useful. These budget-friendly bath toys are perfect for building a cute Easter basket without overspending.",
-    "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-08T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#cheapeasterbasketideas",
-      "#budgettoddlergifts",
-      "#affordablebabytoys",
-      "#easterideasonabudget",
-      "#cheapkidstoys"
-    ],
-    "canonicalUrl": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "easter-2026-affiliate-master",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/ArtCreativity-Stuffers-Toddlers-Squeezable-Bathtub/dp/B0FPDGXVB9?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [],
-      "pinterestTags": [
-        "cheap easter basket ideas",
-        "budget toddler gifts",
-        "affordable baby toys",
-        "easter ideas on a budget",
-        "cheap kids toys"
-      ],
-      "keyword": "toddler easter basket bath toys aesthetic",
-      "angle": "budget",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.261Z",
-    "lastError": null,
-    "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
-  },
-  {
-    "id": "p_2026R_0019",
-    "title": "12 Easter Favors. Done.",
-    "body": "Need a bunch of Easter favors fast? These are easy to hand out for parties, classrooms, or egg hunts without extra prep.",
-    "mediaPath": "frontend/assets/spring2026/cars05.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-09T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#bulkeasterfavors",
-      "#classroomeastergifts",
-      "#easterpartyfavors",
-      "#kidspartyfillers",
-      "#easyeasterideas"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen",
-    "affiliateUrl": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "easter-cars-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen",
-        "primary": "https://www.amazon.com/Shemira-Prefilled-Die-cast-Stuffers-Toddlers/dp/B0CLLTXLJW?tag=ashb4studio0b-20&utm_source=pinterest&utm_medium=social&utm_campaign=easter-cars-evergreen"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "Baby Shower!"
-      ],
-      "pinterestTags": [
-        "bulk easter favors",
-        "classroom easter gifts",
-        "easter party favors",
-        "kids party fillers",
-        "easy easter ideas"
-      ],
-      "keyword": "bulk easter favors for kids",
-      "angle": "bulk",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.261Z",
-    "lastError": null
-  },
-  {
-    "id": "p_2026R_0025",
-    "title": "Best Easter Egg Fillers for Toddlers",
-    "body": "Safe, fun, and actually useful Easter egg fillers for toddlers. These plush toys fit perfectly inside eggs and keep kids entertained longer than candy.",
-    "mediaPath": "frontend/assets/spring2026/clean_flatlay_product_06.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-10T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#toddlereasterideas",
-      "#eastereggfillerstoddler",
-      "#safekidstoys",
-      "#eastergiftsfortoddlers",
-      "#preschooleaster",
-      "#smalltoysforeggs",
-      "#kidspartyfavors"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "easter-plush-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/Easter-Stuffers-Toddler-3-4Inch-Plastic/dp/B0BM7449MN?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Baby Shower!",
-      "pinterestBoards": [
-        "Baby Shower!",
-        "Fun Ideas",
-        "Epic cuteness"
-      ],
-      "pinterestTags": [
-        "toddler easter ideas",
-        "easter egg fillers toddler",
-        "safe kids toys",
-        "easter gifts for toddlers",
-        "preschool easter",
-        "small toys for eggs",
-        "kids party favors"
-      ],
-      "keyword": "best easter egg fillers for toddlers",
-      "angle": "toddler fit",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.261Z",
-    "lastError": null
   },
   {
     "id": "p_startanyway_010",
@@ -7331,7 +6336,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-05-10T16:00:00.000Z",
+    "scheduledAt": "2026-05-06T16:00:00.000Z",
     "status": "approved",
     "hashtags": [
       "#introvert",
@@ -7377,7 +6382,7 @@
       ]
     },
     "createdAt": "2026-04-17T18:38:45.778Z",
-    "updatedAt": "2026-04-18T20:41:13.261Z",
+    "updatedAt": "2026-04-18T20:45:12.934Z",
     "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/apparel",
     "image": "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/apparel"
@@ -7389,7 +6394,7 @@
     "mediaPath": "frontend/assets/passover/HowToUse.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-10T15:00:00.000Z",
+    "scheduledAt": "2026-05-06T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -7442,7 +6447,130 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.261Z"
+    "updatedAt": "2026-04-18T20:45:12.934Z"
+  },
+  {
+    "id": "p_2026R_0132",
+    "title": "You Don’t Need Permission To Be Kind To Yourself",
+    "body": "Kindness is not a reward. It’s a baseline.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-07T15:20:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#selfkindness",
+      "#mentalhealth",
+      "#affirmation",
+      "#healing",
+      "#care"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-deserve-a-treat-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Art & quotes"
+      ],
+      "pinterestTags": [
+        "self kindness",
+        "mental health",
+        "affirmation",
+        "healing",
+        "care"
+      ],
+      "keyword": "mental health affirmation gentle",
+      "angle": "permission",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T20:45:12.934Z",
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
+  },
+  {
+    "id": "p_2026R_0112",
+    "title": "Procrastination Coloring Page (I’ll Deal With It Later)",
+    "body": "A perfect printable for chronic procrastinators. Goblin-style humor for putting things off… again.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-07T15:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#procrastination",
+      "#funnymeme",
+      "#coloringprintable",
+      "#relatable",
+      "#humor"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-callitselfcare-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Random thoughts",
+      "pinterestBoards": [
+        "Random thoughts",
+        "Funny Stuff"
+      ],
+      "pinterestTags": [
+        "procrastination",
+        "funny meme",
+        "coloring printable",
+        "relatable",
+        "humor"
+      ],
+      "keyword": "procrastination meme printable",
+      "angle": "procrastination crowd",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T20:45:12.934Z",
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
   },
   {
     "id": "p_2026R_0107",
@@ -7451,7 +6579,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-12T15:40:00.000Z",
+    "scheduledAt": "2026-05-08T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -7503,7 +6631,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   },
   {
@@ -7513,7 +6641,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-11T16:00:00.000Z",
+    "scheduledAt": "2026-05-07T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -7565,7 +6693,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   },
   {
@@ -7575,7 +6703,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-13T15:40:00.000Z",
+    "scheduledAt": "2026-05-09T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -7627,68 +6755,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
-  },
-  {
-    "id": "p_2026R_0132",
-    "title": "You Don’t Need Permission To Be Kind To Yourself",
-    "body": "Kindness is not a reward. It’s a baseline.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-11T15:40:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#selfkindness",
-      "#mentalhealth",
-      "#affirmation",
-      "#healing",
-      "#care"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-deserve-a-treat-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "Beautiful me.",
-      "pinterestBoards": [
-        "Art & quotes"
-      ],
-      "pinterestTags": [
-        "self kindness",
-        "mental health",
-        "affirmation",
-        "healing",
-        "care"
-      ],
-      "keyword": "mental health affirmation gentle",
-      "angle": "permission",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
   },
   {
@@ -7698,7 +6765,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-12T15:00:00.000Z",
+    "scheduledAt": "2026-05-07T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -7749,7 +6816,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   },
   {
@@ -7781,7 +6848,7 @@
       }
     ],
     "status": "approved",
-    "scheduledAt": "2026-05-15T15:00:00.000Z",
+    "scheduledAt": "2026-05-10T15:40:00.000Z",
     "hashtags": [
       "#coloringbook",
       "#bees",
@@ -7821,7 +6888,7 @@
     },
     "createdAt": "2026-03-15T02:23:00.000Z",
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "mediaType": "image",
     "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
   },
@@ -7832,7 +6899,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DisappearHotMess.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-14T15:20:00.000Z",
+    "scheduledAt": "2026-05-09T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -7885,7 +6952,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "frontend/assets/goblinaffs/DisappearHotMess.png"
   },
   {
@@ -7895,7 +6962,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-12T16:00:00.000Z",
+    "scheduledAt": "2026-05-08T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -7947,7 +7014,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   },
   {
@@ -7957,7 +7024,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-13T15:00:00.000Z",
+    "scheduledAt": "2026-05-08T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -8009,69 +7076,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
-  },
-  {
-    "id": "p_2026R_0112",
-    "title": "Procrastination Coloring Page (I’ll Deal With It Later)",
-    "body": "A perfect printable for chronic procrastinators. Goblin-style humor for putting things off… again.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-11T15:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#procrastination",
-      "#funnymeme",
-      "#coloringprintable",
-      "#relatable",
-      "#humor"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-callitselfcare-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "Random thoughts",
-      "pinterestBoards": [
-        "Random thoughts",
-        "Funny Stuff"
-      ],
-      "pinterestTags": [
-        "procrastination",
-        "funny meme",
-        "coloring printable",
-        "relatable",
-        "humor"
-      ],
-      "keyword": "procrastination meme printable",
-      "angle": "procrastination crowd",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
   },
   {
@@ -8081,7 +7086,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-13T16:00:00.000Z",
+    "scheduledAt": "2026-05-09T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -8132,7 +7137,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   },
   {
@@ -8142,7 +7147,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-13T15:20:00.000Z",
+    "scheduledAt": "2026-05-08T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -8193,7 +7198,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   },
   {
@@ -8212,7 +7217,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-05-14T16:00:00.000Z",
+    "scheduledAt": "2026-05-10T15:20:00.000Z",
     "status": "approved",
     "hashtags": [
       "#graduationplanning",
@@ -8263,7 +7268,7 @@
       "note": "Previous image was too small (<200x300), switched to goblin image"
     },
     "createdAt": "2026-04-07T22:33:21.355Z",
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "attemptCount": 1,
     "nextAttemptAt": "2026-04-11T19:32:13.650Z",
     "lastErrorAt": "2026-04-11T19:02:13.650Z"
@@ -8283,7 +7288,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-05-14T15:40:00.000Z",
+    "scheduledAt": "2026-05-10T15:00:00.000Z",
     "status": "approved",
     "hashtags": [
       "#cozy",
@@ -8329,7 +7334,7 @@
       ]
     },
     "createdAt": "2026-04-17T18:38:45.778Z",
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
     "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/apparel",
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/apparel"
@@ -8341,7 +7346,7 @@
     "mediaPath": "frontend/assets/passover/PassoverLandscape.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-14T15:00:00.000Z",
+    "scheduledAt": "2026-05-09T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -8394,7 +7399,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_2026R_0108",
@@ -8403,7 +7408,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-16T15:20:00.000Z",
+    "scheduledAt": "2026-05-11T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -8455,7 +7460,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_2026R_0113",
@@ -8464,7 +7469,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-15T15:20:00.000Z",
+    "scheduledAt": "2026-05-10T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -8517,7 +7522,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_2026R_0118",
@@ -8526,7 +7531,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-15T16:00:00.000Z",
+    "scheduledAt": "2026-05-11T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -8579,7 +7584,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_2026R_0133",
@@ -8588,7 +7593,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-15T15:40:00.000Z",
+    "scheduledAt": "2026-05-11T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -8640,7 +7645,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_2026R_0143",
@@ -8649,7 +7654,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-16T15:00:00.000Z",
+    "scheduledAt": "2026-05-11T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -8701,7 +7706,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_20260402_pinterest_retry_20260402_050819",
@@ -8716,7 +7721,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-05-18T15:20:00.000Z",
+    "scheduledAt": "2026-05-13T16:00:00.000Z",
     "status": "approved",
     "hashtags": [
       "#prompts",
@@ -8773,7 +7778,7 @@
     "mediaPath": "https://public-files.gumroad.com/l60mvt6b4g61gg4svr750ec4ofq3",
     "canonicalUrl": "https://fleurdevie.gumroad.com/l/100prompt-storm",
     "affiliateUrl": "https://fleurdevie.gumroad.com/l/100prompt-storm",
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_20260405_01",
@@ -8799,7 +7804,7 @@
       }
     ],
     "status": "approved",
-    "scheduledAt": "2026-05-17T16:00:00.000Z",
+    "scheduledAt": "2026-05-13T15:20:00.000Z",
     "hashtags": [
       "#goblinmode",
       "#selfcare",
@@ -8838,132 +7843,9 @@
     },
     "createdAt": "2026-03-15T02:24:00.000Z",
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "mediaType": "image",
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png"
-  },
-  {
-    "id": "p_2026R_0047",
-    "title": "Builds skills while they play",
-    "body": "Helps with matching, coordination, and focus without feeling like learning.",
-    "mediaPath": "frontend/assets/spring2026/princessxmas05.jpg",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-12T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#finemotorskills",
-      "#learningtoys",
-      "#toddlerdevelopment",
-      "#matchinggame",
-      "#educationaltoys"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "princess-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/Princess-Deformation-Prefilled-Stuffers-Kids%EF%BC%8CEaster/dp/B0BX7QX6MK?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Baby Shower!",
-      "pinterestBoards": [
-        "Baby Shower!",
-        "Fun Ideas",
-        "Epic cuteness"
-      ],
-      "pinterestTags": [
-        "fine motor skills",
-        "learning toys",
-        "toddler development",
-        "matching game",
-        "educational toys"
-      ],
-      "keyword": "fine motor skill toys toddlers matching eggs",
-      "angle": "benefit",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
-    "lastError": null
-  },
-  {
-    "id": "p_2026R_0031",
-    "title": "Skip the Candy This Easter",
-    "body": "Toddlers actually learn while they play with these matching eggs. A smarter Easter basket idea that keeps them engaged.",
-    "mediaPath": "frontend/assets/spring2026/montessori_no_candy_01.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-11T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#easterbaskettoddler",
-      "#nocandyeaster",
-      "#toddlertoys",
-      "#montessoritoys"
-    ],
-    "canonicalUrl": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-    "affiliateUrl": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "montessori-eggs-evergreen",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20",
-        "primary": "https://www.amazon.com/kecristv-Toddlers-Stuffers-Montessori-Matching/dp/B0CQWZVRBP?tag=ashb4studio0b-20"
-      },
-      "pinterestBoard": "Baby Shower!",
-      "pinterestBoards": [
-        "Baby Shower!",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "easter basket toddler",
-        "no candy easter",
-        "toddler toys",
-        "montessori toys"
-      ],
-      "keyword": "skip the candy this easter toddler toy",
-      "angle": "no candy alternative",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
-    "lastError": null
   },
   {
     "id": "p_2026R_0093",
@@ -8972,7 +7854,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-18T15:40:00.000Z",
+    "scheduledAt": "2026-05-14T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -9024,7 +7906,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   },
   {
@@ -9034,7 +7916,7 @@
     "mediaPath": "frontend/assets/passover/PassoverPortait.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-18T15:00:00.000Z",
+    "scheduledAt": "2026-05-13T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -9087,7 +7969,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_2026R_0098",
@@ -9096,7 +7978,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-16T15:40:00.000Z",
+    "scheduledAt": "2026-05-12T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -9149,7 +8031,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_2026R_0103",
@@ -9158,7 +8040,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-16T16:00:00.000Z",
+    "scheduledAt": "2026-05-12T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -9211,7 +8093,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_2026R_0123",
@@ -9220,7 +8102,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-17T15:20:00.000Z",
+    "scheduledAt": "2026-05-12T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -9271,7 +8153,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_2026R_0128",
@@ -9280,7 +8162,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-17T15:40:00.000Z",
+    "scheduledAt": "2026-05-13T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -9332,7 +8214,7 @@
       "allowConsecutivePinterestMedia": true
     },
     "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_2026R_0138",
@@ -9341,7 +8223,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-05-17T15:00:00.000Z",
+    "scheduledAt": "2026-05-12T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -9392,7 +8274,7 @@
       "requiresReview": false,
       "allowConsecutivePinterestMedia": true
     },
-    "updatedAt": "2026-04-18T20:41:13.262Z"
+    "updatedAt": "2026-04-18T20:45:12.935Z"
   },
   {
     "id": "p_startanyway_012",
@@ -9409,7 +8291,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-05-18T16:00:00.000Z",
+    "scheduledAt": "2026-05-14T15:20:00.000Z",
     "status": "approved",
     "hashtags": [
       "#funny",
@@ -9453,7 +8335,7 @@
       ]
     },
     "createdAt": "2026-04-17T18:38:45.778Z",
-    "updatedAt": "2026-04-18T20:41:13.263Z",
+    "updatedAt": "2026-04-18T20:45:12.935Z",
     "image": "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg",
     "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt"

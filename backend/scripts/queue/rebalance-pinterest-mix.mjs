@@ -3,7 +3,7 @@
 import { readStoreSnapshot, replaceStoreSnapshot } from "../../utils/localDb.mjs";
 
 const DEFAULT_SLOTS_UTC = ["15:00", "15:20", "15:40", "16:00"];
-const DEFAULT_DAILY_PLAN = ["amazon", "amazon", "digital", "wildcard"];
+const DEFAULT_DAILY_PLAN = ["amazon-a", "amazon-b", "digital", "wildcard"];
 const DEFAULT_MAX_SAME_PRODUCT_PER_DAY = 2;
 
 function parseArgs(argv = process.argv.slice(2)) {
@@ -137,7 +137,9 @@ function categoryForPost(post) {
 }
 
 function categoryMatches(category, preferred) {
-	if (preferred === "amazon") return category.startsWith("amazon-");
+	if (preferred === "amazon" || preferred === "amazon-a" || preferred === "amazon-b") {
+		return category.startsWith("amazon-");
+	}
 	return category === preferred;
 }
 

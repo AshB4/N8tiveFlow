@@ -10,6 +10,7 @@ import { postToAllPlatforms, normalizeTargets } from "./scripts/platforms/post-t
 import authRouter from "./routes/auth.js";
 import contentRouter from "./routes/content/index.js";
 import { processQueue } from "./scripts/postingJob.mjs";
+import { rebalancePinterestMix } from "./scripts/queue/rebalance-pinterest-mix.mjs";
 import { getPublicAccounts } from "./utils/accountStore.mjs";
 import { getAccounts } from "./utils/accountStore.mjs";
 import { findDuplicatePost } from "./utils/queueGuard.mjs";
@@ -26,6 +27,7 @@ import {
 	clearPostedPostsFromQueue,
 	createPost,
 	deletePost as deletePostFromDb,
+	readStoreSnapshot,
 	getRotationSettings,
 	getLocalDbPath,
 	initLocalDb,
@@ -34,6 +36,7 @@ import {
 	listPinterestMetricsSnapshots,
 	listPostedLog,
 	savePinterestPinMappings,
+	replaceStoreSnapshot,
 	updateRotationSettings,
 	updatePost as updatePostInDb,
 } from "./utils/localDb.mjs";
@@ -645,6 +648,42 @@ app.delete("/api/posts/:id", async (req, res) => {
 		res.json(removed);
 	} catch (e) {
 		res.status(500).json({ error: "Failed to delete post", detail: String(e) });
+	}
+});
+
+app.post("/api/queue/rebalance-pinterest", async (req, res) => {
+	try {
+		const {
+			startDate = new Date().toISOString().slice(0, 10),
+			dryRun = false,
+		} = req.body ?? {};
+		if (!/^\d{4}-\d{2}-\d{2}$/.test(String(startDate))) {
+			return res.status(400).json({ error: "startDate must use YYYY-MM-DD" });
+		}
+
+		const snapshot = await readStoreSnapshot();
+		const { posts, summary } = rebalancePinterestMix(snapshot.posts, {
+			startDate: String(startDate),
+		});
+
+		if (!dryRun) {
+			await replaceStoreSnapshot({
+				posts,
+				postedLog: snapshot.postedLog,
+				rejections: snapshot.rejections,
+			});
+		}
+
+		return res.json({
+			ok: true,
+			dryRun: Boolean(dryRun),
+			...summary,
+		});
+	} catch (e) {
+		res.status(500).json({
+			error: "Failed to rebalance Pinterest queue",
+			detail: String(e),
+		});
 	}
 });
 

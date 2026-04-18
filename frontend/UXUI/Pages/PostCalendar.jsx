@@ -144,20 +144,26 @@ export default function PostCalendar() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedDayPosts, setSelectedDayPosts] = useState([]);
   const [workingPostId, setWorkingPostId] = useState(null);
+  const [remixingQueue, setRemixingQueue] = useState(false);
+  const [remixResult, setRemixResult] = useState(null);
   const navigate = useNavigate();
 
-  // Fetch posts from the backend queue
+  const loadPosts = async () => {
+    const res = await fetch(`${API_BASE}/api/posts`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data?.error || `Failed to load posts: ${res.status}`);
+    const normalizedPosts = data.map((post) => ({
+      ...post,
+      status: normalizePostStatus(post.status),
+    }));
+    setPostQueue(normalizedPosts);
+    return normalizedPosts;
+  };
+
   useEffect(() => {
-    async function loadPosts() {
+    async function loadInitialPosts() {
       try {
-        const res = await fetch(`${API_BASE}/api/posts`);
-        const data = await res.json();
-        setPostQueue(
-          data.map((post) => ({
-            ...post,
-            status: normalizePostStatus(post.status),
-          })),
-        );
+        await loadPosts();
       } catch (err) {
         console.error("Failed to load posts", err);
       } finally {
@@ -165,7 +171,7 @@ export default function PostCalendar() {
       }
     }
 
-    loadPosts();
+    loadInitialPosts();
   }, []);
 
   const scheduledPosts = postQueue.filter((post) => isApprovedStatus(post.status));
@@ -349,6 +355,56 @@ export default function PostCalendar() {
     setSelectedDate(null);
     setSelectedDayPosts([]);
     navigate("/lab", { state: { date: selectedDate, posts: postsForDay } });
+  };
+
+  const handleRemixPinterestQueue = async () => {
+    const start = new Date();
+    start.setDate(start.getDate() + 1);
+    const startDate = selectedDate && selectedDate >= todayIso
+      ? selectedDate
+      : toLocalDateKey(start);
+
+    setRemixingQueue(true);
+    setRemixResult(null);
+    try {
+      const res = await fetch(`${API_BASE}/api/queue/rebalance-pinterest`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ startDate }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.error || `Remix failed: ${res.status}`);
+      }
+      const refreshedPosts = await loadPosts();
+      if (selectedDate) {
+        const dayPosts = refreshedPosts
+          .map((post, idx) => ({
+            ...post,
+            id: post.id || post._id || `queue-${idx}`,
+            __queueIndex: idx,
+            __hasRealId: Boolean(post.id || post._id),
+            targets: normalizeTargetsForPost(post),
+          }))
+          .filter((post) => getPostDate(post) === selectedDate)
+          .sort(compareCalendarPostOrder);
+        setSelectedDayPosts(dayPosts);
+      }
+      setRemixResult({
+        ok: true,
+        startDate,
+        moved: data.moved || 0,
+        daysUsed: data.daysUsed || 0,
+      });
+    } catch (error) {
+      console.error("Failed to remix Pinterest queue", error);
+      setRemixResult({
+        ok: false,
+        message: error?.message || "Remix failed",
+      });
+    } finally {
+      setRemixingQueue(false);
+    }
   };
 
   const retryFailedPost = async (post) => {
@@ -610,6 +666,22 @@ export default function PostCalendar() {
         </main>
 
         <div className="w-full flex flex-col gap-4 text-teal-300 text-sm">
+          <button
+            type="button"
+            onClick={handleRemixPinterestQueue}
+            disabled={remixingQueue}
+            className="border border-cyan-400 p-3 rounded bg-black text-left hover:border-pink-500 hover:shadow-[0_0_12px_rgba(34,211,238,0.35)] transition disabled:cursor-wait disabled:opacity-60"
+          >
+            <h3 className="text-pink-400 text-lg mb-1">↻ Remix Pinterest</h3>
+            <p>
+              {remixingQueue
+                ? "Remixing..."
+                : remixResult?.ok
+                ? `Moved ${remixResult.moved} posts from ${remixResult.startDate}`
+                : remixResult?.message || "amazon-a / amazon-b / digital / wildcard"}
+            </p>
+          </button>
+
           <button
             type="button"
             onClick={() => handleViewCharts("overview")}

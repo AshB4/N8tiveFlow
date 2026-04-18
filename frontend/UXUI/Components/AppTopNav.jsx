@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../assets/appImgs/PostPunkTransparentLogo.png";
+import logo from "../../assets/InteralAssets/PostPunkTransparentLogo.png";
 
 const navItems = [
   {

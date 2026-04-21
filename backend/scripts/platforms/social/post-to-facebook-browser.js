@@ -775,6 +775,17 @@ export default async function postToFacebookBrowser(post, context = {}) {
 			await dismissInterruptivePopups(page);
 		}
 
+		const feedText = post.body || post.title || "";
+		if (await verifyPostVisibleOnFeed(page, feedText)) {
+			logStep("already-visible");
+			return {
+				type: "browser-post",
+				via: config.useCdp ? "playwright-cdp" : "playwright",
+				targetUrl,
+				alreadyVisible: true,
+			};
+		}
+
 		logStep("composer:find");
 		await dismissInterruptivePopups(page);
 		const composerSelector = await withStepTimeout("find-composer", () =>
@@ -893,6 +904,21 @@ export default async function postToFacebookBrowser(post, context = {}) {
 		}
 		const publishSeen = await waitForPublishSignal(page, publishSignalBaseline);
 		if (!publishSeen) {
+			const feedVisibleWithoutSignal = await verifyPostVisibleOnFeed(
+				page,
+				post.body || post.title || "",
+			);
+			if (feedVisibleWithoutSignal) {
+				await page.waitForTimeout(POST_SETTLE_MS);
+				logStep("done:feed-visible-no-signal");
+				return {
+					type: "browser-post",
+					via: config.useCdp ? "playwright-cdp" : "playwright",
+					targetUrl,
+					composerSelector,
+					postButtonSelector,
+				};
+			}
 			keepWindowOpen = config.keepOpenOnPostFailure && !config.useCdp;
 			logStep("post-submit:no-publish-signal");
 			throw new Error(

@@ -1,5 +1,13 @@
 import axios from 'axios';
 
+function normalizeDevtoTags(tags = []) {
+  return tags
+    .map((tag) => String(tag || '').trim().replace(/^#+/, ''))
+    .map((tag) => tag.replace(/[^a-zA-Z0-9]/g, ''))
+    .filter(Boolean)
+    .slice(0, 4);
+}
+
 async function postToDevto(post, account) {
   const apiKey = account?.credentials?.apiKey || process.env.DEVTO_API_KEY;
   if (!apiKey) {
@@ -12,7 +20,7 @@ async function postToDevto(post, account) {
       title: post.title,
       body_markdown: post.body,
       published: true,
-      tags: post.hashtags || [],
+      tags: normalizeDevtoTags(post.hashtags || post.tags || []),
       canonical_url: post.canonicalUrl,
       cover_image: post.image,
       // Note: Dev.to doesn't support header/banner colors directly in API

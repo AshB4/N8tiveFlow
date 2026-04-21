@@ -2805,5 +2805,1096 @@
     ],
     "processedAt": "2026-04-14T00:30:52.830Z",
     "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0069",
+    "title": "So Many Nail Colors to Choose From 😍",
+    "body": "Every shade you need in one kit.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#colors",
+      "#gelnails",
+      "#beauty",
+      "#aesthetic",
+      "#nails"
+    ],
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Epic cuteness"
+      ],
+      "pinterestTags": [
+        "colors",
+        "gel nails",
+        "beauty",
+        "aesthetic",
+        "nails"
+      ],
+      "keyword": "gel nail colors",
+      "angle": "variety",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Beautiful me.",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-19T22:13:41.440Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0070",
+    "title": "Nail Color Ideas for Every Mood",
+    "body": "From soft to bold - pick your vibe.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#inspo",
+      "#nails",
+      "#colors",
+      "#beauty",
+      "#ideas"
+    ],
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "I Want, I dream."
+      ],
+      "pinterestTags": [
+        "inspo",
+        "nails",
+        "colors",
+        "beauty",
+        "ideas"
+      ],
+      "keyword": "nail color ideas",
+      "angle": "inspiration",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-19T22:14:31.508Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_startanyway_001",
+    "title": "For People Who Overthink Everything",
+    "body": "If you have been waiting for the right time... this is it. start anyway. minimal frog design for quiet chaos brains.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#overthinking",
+      "#motivation",
+      "#frog",
+      "#aesthetic"
+    ],
+    "mediaPath": "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
+    "mediaType": "image",
+    "image": "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
+    "metadata": {
+      "productProfileId": "start-anyway-frog",
+      "productProfileLabel": "Start Anyway Frog",
+      "productLink": "https://my-store-10fedc5.creator-spring.com/",
+      "pinterestBoard": "Fun Ideas",
+      "pinterestTags": [
+        "overthinking",
+        "motivation",
+        "frog aesthetic"
+      ],
+      "approvalSource": "manual",
+      "requiresReview": false,
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "productCategory": "Creator Spring products",
+      "productLinks": {
+        "primary": "https://my-store-10fedc5.creator-spring.com/",
+        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
+        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
+        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
+      },
+      "imagePool": [
+        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
+        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
+      ]
+    },
+    "productProfileId": "start-anyway-frog",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Ui ux design",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-19T22:14:49.817Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0109",
+    "title": "Avoidance Humor Coloring Page (It’s Self Care Now)",
+    "body": "If avoiding your problems feels like a strategy… you’re not alone. Funny goblin coloring page for chaotic self-care logic.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#avoidancehumor",
+      "#relatablememe",
+      "#coloringpage",
+      "#printable",
+      "#goblinenergy"
+    ],
+    "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+    "mediaType": "image",
+    "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-callitselfcare-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Funny Stuff",
+      "pinterestBoards": [
+        "Funny Stuff",
+        "coloring pages"
+      ],
+      "pinterestTags": [
+        "avoidance humor",
+        "relatable meme",
+        "coloring page",
+        "printable",
+        "goblin energy"
+      ],
+      "keyword": "avoidance humor coloring page",
+      "angle": "relatable avoidance",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "coloring pages",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-19T22:15:08.813Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0071",
+    "title": "Weirdly Satisfying Nail Color Collection",
+    "body": "You'll stare at this longer than expected.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#satisfying",
+      "#colors",
+      "#visual",
+      "#odd",
+      "#aesthetic"
+    ],
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Freaking Weird or mild...",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Beautiful me."
+      ],
+      "pinterestTags": [
+        "satisfying",
+        "colors",
+        "visual",
+        "odd",
+        "aesthetic"
+      ],
+      "keyword": "satisfying colors",
+      "angle": "visual satisfaction",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "AI is Neat and Scary",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-21T18:27:04.607Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0072",
+    "title": "Full Gel Polish Set Worth It?",
+    "body": "Here's what you actually get.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#review",
+      "#nails",
+      "#set",
+      "#beauty",
+      "#buy"
+    ],
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "I Want, I dream.",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Beautiful me."
+      ],
+      "pinterestTags": [
+        "review",
+        "nails",
+        "set",
+        "beauty",
+        "buy"
+      ],
+      "keyword": "gel polish set",
+      "angle": "full set",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "I Want, I dream.",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-21T18:27:52.199Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0073",
+    "title": "Bold Nail Colors You'll Want Immediately",
+    "body": "These shades are not subtle - in a good way.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#bold",
+      "#colors",
+      "#nails",
+      "#beauty",
+      "#style"
+    ],
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "image": null,
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Hot,hot,hotties",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "bold",
+        "colors",
+        "nails",
+        "beauty",
+        "style"
+      ],
+      "keyword": "bright nail colors",
+      "angle": "bold",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Hot,hot,hotties",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-21T18:33:12.418Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0074",
+    "title": "From Messy to Salon Nails at Home",
+    "body": "This kit changes everything.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#beforeafter",
+      "#nails",
+      "#glowup",
+      "#beauty",
+      "#transformation"
+    ],
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "The Queen in me.",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "Home spa"
+      ],
+      "pinterestTags": [
+        "before after",
+        "nails",
+        "glow up",
+        "beauty",
+        "transformation"
+      ],
+      "keyword": "before after nails",
+      "angle": "transformation",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "The Queen in me.",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-21T18:33:59.762Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0114",
+    "title": "Mental Health Progress Coloring Page (This Counts)",
+    "body": "Not spiraling today? That’s progress. Printable goblin coloring page celebrating small wins and quiet victories.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#mentalhealth",
+      "#smallwins",
+      "#coloringpage",
+      "#selfcare",
+      "#healing"
+    ],
+    "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+    "mediaType": "image",
+    "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-didnt-spiral-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "coloring pages"
+      ],
+      "pinterestTags": [
+        "mental health",
+        "small wins",
+        "coloring page",
+        "self care",
+        "healing"
+      ],
+      "keyword": "mental health progress coloring page",
+      "angle": "small wins",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Beautiful me.",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-21T18:34:45.513Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_2026R_0129",
+    "title": "You Deserve A Little Treat (Yes, You)",
+    "body": "Surviving hard things counts. Treat yourself accordingly.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#selfreward",
+      "#selfcare",
+      "#comfort",
+      "#mentalhealth",
+      "#validation"
+    ],
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-deserve-a-treat-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "Art & quotes"
+      ],
+      "pinterestTags": [
+        "self reward",
+        "self care",
+        "comfort",
+        "mental health",
+        "validation"
+      ],
+      "keyword": "self reward affirmation",
+      "angle": "earned comfort",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "productProfileId": "restored-batch",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Beautiful me.",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-21T18:35:31.393Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260420_01",
+    "title": "How I Turn One Idea Into 10 Posts Without AI Slop",
+    "body": "## The Problem\n\nI used to treat ideas like single-use objects.\n\nOne idea -> one post -> done.\n\nThen I'd sit there the next day like:\n\n> \"cool... now what?\"\n\nRepeat that enough times and you end up doing one of two things:\n\n- overthinking everything\n- or not posting at all\n\nNeither one scales.\n\n## Where My Ideas Actually Come From\n\nNothing fancy.\n\n- random thoughts\n- things I've built\n- frustrations\n- \"this sucks, there should be a better way\"\n\nThat last one is the goldmine.\n\nIf I feel friction, odds are someone else does too.\n\n## What Changed\n\nI stopped treating ideas like finished products.\n\nNow I treat them like **raw input**.\n\nAnd instead of asking:\n\n> \"is this a good post?\"\n\nI ask:\n\n> \"how many angles can I squeeze out of this?\"\n\n## The Actual System (Not Pretty, But It Works)\n\n### Step 1: Rant first\n\nI don't start structured.\n\nI just dump everything:\n\n- what's annoying me\n- what I think is broken\n- what I wish existed\n\nNo filter. No polish.\n\n### Step 2: Extract angles\n\nFrom one rant, I usually get:\n\n- a blunt take\n- a practical tip\n- a story\n- a system\n- a question\n\nSame idea. Different surfaces.\n\n### Step 3: Map to platforms\n\nEach angle becomes a different format:\n\n- short punch -> social post\n- structured idea -> Dev.to\n- repeatable idea -> Pinterest\n- casual version -> Facebook\n\nSame core idea, different packaging.\n\n### Step 4: Store everything (this is the real unlock)\n\nThe biggest change wasn't AI.\n\nIt was having a place to dump everything.\n\nI built a simple system (DB + queue) where I can:\n\n- drop ideas\n- expand them later\n- schedule without thinking\n\nThat removed the \"what do I post today?\" problem entirely.\n\n## Where AI Actually Helps (and Where It Doesn't)\n\nI use AI a lot.\n\nProbably too much.\n\n### Where it helps:\n\n- generating variations\n- breaking writer's block\n- speeding up structure\n\n### Where it fails hard:\n\nWhen you try to force *voice* out of it.\n\n## What \"AI Slop\" Actually Is\n\nAI slop isn't just bad writing.\n\nIt's this loop:\n\n> you ask -> it gives something generic -> you tweak -> it gets worse -> repeat\n\nYou end up with content that:\n\n- sounds like everyone else\n- says nothing new\n- feels safe and useless\n\nEspecially if you want something:\n\n- edgy\n- opinionated\n- slightly unhinged\n\nAI struggles there.\n\n## The Fix\n\nI stopped asking AI to create from scratch.\n\nNow I:\n\n1. start messy (my input)\n2. use AI to expand, not invent\n3. keep the tone mine\n\nAI is a tool, not the source.\n\n## The Real Outcome\n\nThis changed two things:\n\n### 1. Consistency\n\nI don't rely on \"feeling like posting\" anymore.\n\nI already have:\n\n- ideas\n- drafts\n- scheduled content\n\n### 2. Output without burnout\n\nInstead of forcing new ideas daily:\n\nI reuse the same idea multiple times.\n\nWhich means:\n\n- less pressure\n- more content\n- better ideas over time\n\n## The Simple Version\n\nIf you do nothing else:\n\n- stop writing one post per idea\n- start extracting multiple angles\n- store everything\n\nThat alone will outpace most people.\n\n## Final Thought\n\nYou don't need more ideas.\n\nYou need to stop wasting the ones you already have.",
+    "platform": null,
+    "platforms": [
+      "devto"
+    ],
+    "targets": [
+      {
+        "platform": "devto",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#contentcreation",
+      "#productivity",
+      "#devtools",
+      "#buildinpublic"
+    ],
+    "mediaPath": "frontend/assets/devto/IDeasPostsPins.png",
+    "mediaType": "image",
+    "image": "https://raw.githubusercontent.com/AshB4/N8tiveFlow/main/frontend/assets/devto/IDeasPostsPins.png",
+    "metadata": {
+      "productProfileId": "prompt-storm",
+      "productProfileLabel": "100 Prompt Storm",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
+      },
+      "includeProductLink": true,
+      "imageStatus": "ready",
+      "imageConcept": "One idea node branching into multiple post formats in a dark workflow UI.",
+      "imagePrompt": "dark workspace with developer notes scattered across screen, one central idea node branching into multiple connected nodes labeled post, thread, article, pin, rant, graph visualization style, glowing connections, cyberpunk dev aesthetic, dark mode UI, high contrast, clean but slightly chaotic",
+      "contentTags": [
+        "repurposing",
+        "workflow",
+        "prompt systems"
+      ],
+      "distributionTags": [
+        "post:devto"
+      ],
+      "approvalSource": "devto-weekly",
+      "requiresReview": false
+    },
+    "productProfileId": "prompt-storm",
+    "results": [
+      {
+        "platform": "devto",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "articleId": 3533124,
+          "url": "https://dev.to/ashb4/how-i-turn-one-idea-into-10-posts-without-ai-slop-ek"
+        }
+      }
+    ],
+    "processedAt": "2026-04-21T18:40:11.519Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260420_devto_01",
+    "title": "The Creator Block Debugger: Still Fixing It But It Works",
+    "body": "Creator block is usually not a talent problem. It is a starting problem.\n\nI built a system that works when motivation is zero. Here is how:\n\n1. Have a queue of 30 ready-to-post pieces\n2. Use prompts instead of waiting for ideas\n3. Batch create when feeling creative\n4. Schedule and forget\n\nThe goal is to never face a blank page.",
+    "platform": null,
+    "platforms": [
+      "devto"
+    ],
+    "targets": [
+      {
+        "platform": "devto",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#creators",
+      "#productivity",
+      "#buildinpublic"
+    ],
+    "mediaPath": null,
+    "mediaType": null,
+    "image": null,
+    "metadata": {
+      "approvalSource": "manual",
+      "requiresReview": false,
+      "distributionTags": [
+        "post:devto"
+      ]
+    },
+    "productProfileId": null,
+    "results": [
+      {
+        "platform": "devto",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "articleId": 3533127,
+          "url": "https://dev.to/ashb4/the-creator-block-debugger-still-fixing-it-but-it-works-39p"
+        }
+      }
+    ],
+    "processedAt": "2026-04-21T18:40:55.529Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_startanyway_002",
+    "title": "Goblin Core Frog Shirt Aesthetic",
+    "body": "Frogs, mushrooms, and subtle forest chaos. Looks deep. Is not. Just start anyway.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#goblin",
+      "#core",
+      "#frog",
+      "#aesthetic",
+      "#forest",
+      "#vibe"
+    ],
+    "mediaPath": "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
+    "mediaType": "image",
+    "image": "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+    "metadata": {
+      "productProfileId": "start-anyway-frog",
+      "productProfileLabel": "Start Anyway Frog",
+      "productLink": "https://my-store-10fedc5.creator-spring.com/apparel",
+      "pinterestBoard": "Fun Ideas",
+      "pinterestTags": [
+        "goblin core",
+        "frog aesthetic",
+        "forest vibe"
+      ],
+      "approvalSource": "manual",
+      "requiresReview": false,
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "productCategory": "Creator Spring products",
+      "productLinks": {
+        "primary": "https://my-store-10fedc5.creator-spring.com/apparel",
+        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
+        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
+        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
+      },
+      "imagePool": [
+        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
+        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
+      ]
+    },
+    "productProfileId": "start-anyway-frog",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Fun Ideas",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-21T18:40:56.284Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_startanyway_003",
+    "title": "Motivation Without the Cringe",
+    "body": "No yelling. No hustle culture. Just a quiet reminder: start anyway.",
+    "platform": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#minimalism",
+      "#motivation",
+      "#simple",
+      "#life"
+    ],
+    "mediaPath": "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
+    "mediaType": "image",
+    "image": "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
+    "metadata": {
+      "productProfileId": "start-anyway-frog",
+      "productProfileLabel": "Start Anyway Frog",
+      "productLink": "https://my-store-10fedc5.creator-spring.com/",
+      "pinterestBoard": "Art & quotes",
+      "pinterestTags": [
+        "minimalism",
+        "motivation",
+        "simple life"
+      ],
+      "approvalSource": "manual",
+      "requiresReview": false,
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "productCategory": "Creator Spring products",
+      "productLinks": {
+        "primary": "https://my-store-10fedc5.creator-spring.com/",
+        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
+        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
+        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
+      },
+      "imagePool": [
+        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
+        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
+      ]
+    },
+    "productProfileId": "start-anyway-frog",
+    "results": [
+      {
+        "platform": "pinterest",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "success": true,
+          "board": "Ui ux design",
+          "url": "https://www.pinterest.com/pin-creation-tool/",
+          "pinUrl": null,
+          "pinId": null,
+          "analyticsUrl": null,
+          "boardConfigPath": "config/pinterest-boards.json",
+          "usedMedia": true,
+          "sessionStatePath": "config/pinterest-state.json",
+          "debugSessionDir": null
+        }
+      }
+    ],
+    "processedAt": "2026-04-21T18:55:35.447Z",
+    "manualArchived": false
+  },
+  {
+    "id": "p_20260416_kawaiifb_03",
+    "title": "Scary Kawaii Halloween Coloring Book",
+    "body": "Kawaii + Halloween is such a good combo when you want spooky without full horror. These are sample pages from my Scary Kawaii Halloween coloring book. https://www.amazon.com/dp/B0DHDNTW87",
+    "platform": null,
+    "platforms": [
+      "facebook"
+    ],
+    "targets": [
+      {
+        "platform": "facebook",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/kawaiiHalloween/Gargoyle.webp",
+    "mediaType": null,
+    "image": null,
+    "metadata": {
+      "productProfileId": "kawaii-coloring-series",
+      "productProfileLabel": "Kawaii Coloring Series",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/dp/B0DHDNTW87",
+        "primary": "https://www.amazon.com/dp/B0DHDNTW87"
+      },
+      "imageStatus": "ready",
+      "contentTags": [
+        "kawaii",
+        "halloween",
+        "sample-pages"
+      ],
+      "distributionTags": [
+        "post:facebook"
+      ],
+      "approvalSource": "manual-json",
+      "requiresReview": false,
+      "note": "Uses sample pages from the Scary Kawaii Halloween coloring book."
+    },
+    "productProfileId": "kawaii-coloring-series",
+    "results": [
+      {
+        "platform": "facebook",
+        "accountId": null,
+        "status": "success",
+        "result": {
+          "type": "browser-post",
+          "via": "playwright",
+          "targetUrl": "https://www.facebook.com/ColorWithAshB",
+          "alreadyVisible": true
+        }
+      }
+    ],
+    "processedAt": "2026-04-21T19:00:08.727Z",
+    "manualArchived": false
   }
 ]

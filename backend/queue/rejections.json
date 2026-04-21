@@ -3387,5 +3387,197 @@
       }
     ],
     "processedAt": "2026-04-18T19:44:34.004Z"
+  },
+  {
+    "id": "p_20260420_01",
+    "title": "How I Turn One Idea Into 10 Posts Without AI Slop",
+    "body": "## The Problem\n\nI used to treat ideas like single-use objects.\n\nOne idea -> one post -> done.\n\nThen I'd sit there the next day like:\n\n> \"cool... now what?\"\n\nRepeat that enough times and you end up doing one of two things:\n\n- overthinking everything\n- or not posting at all\n\nNeither one scales.\n\n## Where My Ideas Actually Come From\n\nNothing fancy.\n\n- random thoughts\n- things I've built\n- frustrations\n- \"this sucks, there should be a better way\"\n\nThat last one is the goldmine.\n\nIf I feel friction, odds are someone else does too.\n\n## What Changed\n\nI stopped treating ideas like finished products.\n\nNow I treat them like **raw input**.\n\nAnd instead of asking:\n\n> \"is this a good post?\"\n\nI ask:\n\n> \"how many angles can I squeeze out of this?\"\n\n## The Actual System (Not Pretty, But It Works)\n\n### Step 1: Rant first\n\nI don't start structured.\n\nI just dump everything:\n\n- what's annoying me\n- what I think is broken\n- what I wish existed\n\nNo filter. No polish.\n\n### Step 2: Extract angles\n\nFrom one rant, I usually get:\n\n- a blunt take\n- a practical tip\n- a story\n- a system\n- a question\n\nSame idea. Different surfaces.\n\n### Step 3: Map to platforms\n\nEach angle becomes a different format:\n\n- short punch -> social post\n- structured idea -> Dev.to\n- repeatable idea -> Pinterest\n- casual version -> Facebook\n\nSame core idea, different packaging.\n\n### Step 4: Store everything (this is the real unlock)\n\nThe biggest change wasn't AI.\n\nIt was having a place to dump everything.\n\nI built a simple system (DB + queue) where I can:\n\n- drop ideas\n- expand them later\n- schedule without thinking\n\nThat removed the \"what do I post today?\" problem entirely.\n\n## Where AI Actually Helps (and Where It Doesn't)\n\nI use AI a lot.\n\nProbably too much.\n\n### Where it helps:\n\n- generating variations\n- breaking writer's block\n- speeding up structure\n\n### Where it fails hard:\n\nWhen you try to force *voice* out of it.\n\n## What \"AI Slop\" Actually Is\n\nAI slop isn't just bad writing.\n\nIt's this loop:\n\n> you ask -> it gives something generic -> you tweak -> it gets worse -> repeat\n\nYou end up with content that:\n\n- sounds like everyone else\n- says nothing new\n- feels safe and useless\n\nEspecially if you want something:\n\n- edgy\n- opinionated\n- slightly unhinged\n\nAI struggles there.\n\n## The Fix\n\nI stopped asking AI to create from scratch.\n\nNow I:\n\n1. start messy (my input)\n2. use AI to expand, not invent\n3. keep the tone mine\n\nAI is a tool, not the source.\n\n## The Real Outcome\n\nThis changed two things:\n\n### 1. Consistency\n\nI don't rely on \"feeling like posting\" anymore.\n\nI already have:\n\n- ideas\n- drafts\n- scheduled content\n\n### 2. Output without burnout\n\nInstead of forcing new ideas daily:\n\nI reuse the same idea multiple times.\n\nWhich means:\n\n- less pressure\n- more content\n- better ideas over time\n\n## The Simple Version\n\nIf you do nothing else:\n\n- stop writing one post per idea\n- start extracting multiple angles\n- store everything\n\nThat alone will outpace most people.\n\n## Final Thought\n\nYou don't need more ideas.\n\nYou need to stop wasting the ones you already have.",
+    "platforms": [
+      "devto"
+    ],
+    "targets": [
+      {
+        "platform": "devto",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#contentcreation",
+      "#productivity",
+      "#devtools",
+      "#buildinpublic"
+    ],
+    "mediaPath": "frontend/assets/devto/IDeasPostsPins.png",
+    "mediaType": "image",
+    "image": "https://raw.githubusercontent.com/AshB4/N8tiveFlow/main/frontend/assets/devto/IDeasPostsPins.png",
+    "metadata": {
+      "productProfileId": "prompt-storm",
+      "productProfileLabel": "100 Prompt Storm",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
+      },
+      "includeProductLink": true,
+      "imageStatus": "ready",
+      "imageConcept": "One idea node branching into multiple post formats in a dark workflow UI.",
+      "imagePrompt": "dark workspace with developer notes scattered across screen, one central idea node branching into multiple connected nodes labeled post, thread, article, pin, rant, graph visualization style, glowing connections, cyberpunk dev aesthetic, dark mode UI, high contrast, clean but slightly chaotic",
+      "contentTags": [
+        "repurposing",
+        "workflow",
+        "prompt systems"
+      ],
+      "distributionTags": [
+        "post:devto"
+      ],
+      "approvalSource": "devto-weekly",
+      "requiresReview": false
+    },
+    "results": [
+      {
+        "platform": "devto",
+        "accountId": null,
+        "status": "error",
+        "error": "Failed to post to Dev.to"
+      }
+    ],
+    "processedAt": "2026-04-21T18:27:00.630Z"
+  },
+  {
+    "id": "p_20260416_kawaiifb_03",
+    "title": "Scary Kawaii Halloween Coloring Book",
+    "body": "Kawaii + Halloween is such a good combo when you want spooky without full horror. These are sample pages from my Scary Kawaii Halloween coloring book. https://www.amazon.com/dp/B0DHDNTW87",
+    "platforms": [
+      "facebook"
+    ],
+    "targets": [
+      {
+        "platform": "facebook",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/kawaiiHalloween/Gargoyle.webp",
+    "mediaType": null,
+    "image": null,
+    "metadata": {
+      "productProfileId": "kawaii-coloring-series",
+      "productProfileLabel": "Kawaii Coloring Series",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/dp/B0DHDNTW87",
+        "primary": "https://www.amazon.com/dp/B0DHDNTW87"
+      },
+      "imageStatus": "ready",
+      "contentTags": [
+        "kawaii",
+        "halloween",
+        "sample-pages"
+      ],
+      "distributionTags": [
+        "post:facebook"
+      ],
+      "approvalSource": "manual-json",
+      "requiresReview": false,
+      "note": "Uses sample pages from the Scary Kawaii Halloween coloring book."
+    },
+    "results": [
+      {
+        "platform": "facebook",
+        "accountId": null,
+        "status": "error",
+        "error": "browserType.launchPersistentContext: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AutoExpandDetailsElement,AvoidUnnecessaryBeforeUnloadCheckSync,CertificateTransparencyComponentUpdater,DeferRendererTasksAfterInput,DestroyProfileOnBrowserClose,DialMediaRouteProvider,ExtensionManifestV2Disabled,GlobalMediaControls,HttpsUpgrades,ImprovedCookieControls,LazyFrameLoading,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --enable-automation --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-use-zoom-for-dsf=false --no-sandbox --profile-directory=Default --user-data-dir=/Users/ash/Desktop/N8tiveFlow/backend/config/facebook-chrome-profile --remote-debugging-pipe about:blank\n<launched> pid=83154\n[pid=83154][err] [83154:26252438:0421/132703.771197:ERROR:chrome/browser/process_singleton_posix.cc:345] Failed to create /Users/ash/Desktop/N8tiveFlow/backend/config/facebook-chrome-profile/SingletonLock: File exists (17)\n[pid=83154][err] [83154:26252438:0421/132703.774472:ERROR:chrome/app/chrome_main_delegate.cc:515] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.\nCall log:\n\u001b[2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AutoExpandDetailsElement,AvoidUnnecessaryBeforeUnloadCheckSync,CertificateTransparencyComponentUpdater,DeferRendererTasksAfterInput,DestroyProfileOnBrowserClose,DialMediaRouteProvider,ExtensionManifestV2Disabled,GlobalMediaControls,HttpsUpgrades,ImprovedCookieControls,LazyFrameLoading,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --enable-automation --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-use-zoom-for-dsf=false --no-sandbox --profile-directory=Default --user-data-dir=/Users/ash/Desktop/N8tiveFlow/backend/config/facebook-chrome-profile --remote-debugging-pipe about:blank\u001b[22m\n\u001b[2m  - <launched> pid=83154\u001b[22m\n\u001b[2m  - [pid=83154][err] [83154:26252438:0421/132703.771197:ERROR:chrome/browser/process_singleton_posix.cc:345] Failed to create /Users/ash/Desktop/N8tiveFlow/backend/config/facebook-chrome-profile/SingletonLock: File exists (17)\u001b[22m\n\u001b[2m  - [pid=83154][err] [83154:26252438:0421/132703.774472:ERROR:chrome/app/chrome_main_delegate.cc:515] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.\u001b[22m\n"
+      }
+    ],
+    "processedAt": "2026-04-21T18:27:02.715Z"
+  },
+  {
+    "id": "p_20260420_devto_01",
+    "title": "The Creator Block Debugger: Still Fixing It But It Works",
+    "body": "Creator block is usually not a talent problem. It is a starting problem.\n\nI built a system that works when motivation is zero. Here is how:\n\n1. Have a queue of 30 ready-to-post pieces\n2. Use prompts instead of waiting for ideas\n3. Batch create when feeling creative\n4. Schedule and forget\n\nThe goal is to never face a blank page.",
+    "platforms": [
+      "devto"
+    ],
+    "targets": [
+      {
+        "platform": "devto",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#creators",
+      "#productivity",
+      "#buildinpublic"
+    ],
+    "mediaPath": null,
+    "mediaType": null,
+    "image": null,
+    "metadata": {
+      "approvalSource": "manual",
+      "requiresReview": false,
+      "distributionTags": [
+        "post:devto"
+      ]
+    },
+    "results": [
+      {
+        "platform": "devto",
+        "accountId": null,
+        "status": "error",
+        "error": "Failed to post to Dev.to"
+      }
+    ],
+    "processedAt": "2026-04-21T18:27:04.091Z"
+  },
+  {
+    "id": "p_20260416_kawaiifb_03",
+    "title": "Scary Kawaii Halloween Coloring Book",
+    "body": "Kawaii + Halloween is such a good combo when you want spooky without full horror. These are sample pages from my Scary Kawaii Halloween coloring book. https://www.amazon.com/dp/B0DHDNTW87",
+    "platforms": [
+      "facebook"
+    ],
+    "targets": [
+      {
+        "platform": "facebook",
+        "accountId": null
+      }
+    ],
+    "hashtags": [],
+    "mediaPath": "frontend/assets/kawaiiHalloween/Gargoyle.webp",
+    "mediaType": null,
+    "image": null,
+    "metadata": {
+      "productProfileId": "kawaii-coloring-series",
+      "productProfileLabel": "Kawaii Coloring Series",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/dp/B0DHDNTW87",
+        "primary": "https://www.amazon.com/dp/B0DHDNTW87"
+      },
+      "imageStatus": "ready",
+      "contentTags": [
+        "kawaii",
+        "halloween",
+        "sample-pages"
+      ],
+      "distributionTags": [
+        "post:facebook"
+      ],
+      "approvalSource": "manual-json",
+      "requiresReview": false,
+      "note": "Uses sample pages from the Scary Kawaii Halloween coloring book."
+    },
+    "results": [
+      {
+        "platform": "facebook",
+        "accountId": null,
+        "status": "error",
+        "error": "Facebook browser fallback did not detect a publish confirmation signal."
+      }
+    ],
+    "processedAt": "2026-04-21T18:40:13.117Z"
   }
 ]

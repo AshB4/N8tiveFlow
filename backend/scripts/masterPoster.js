@@ -3,6 +3,20 @@
 // The SEO helper lives in this same folder, not ../utils
 const { runSeoCheck } = require("./seoCheckRunner.js");
 
+// Load queued posts
+const posts = require("../queue/postQueue.json");
+
+// Load global configuration
+const config = require("../config/settings.json");
+
+// Determine today's platform using round-robin across active platforms
+const dayIndex = new Date().getDay();
+const todayPlatform =
+        config.active_platforms[dayIndex % config.active_platforms.length];
+
+// Track number of posts successfully sent today
+let postedCount = 0;
+
 posts.forEach((post) => {
 	if (
 		post.status === "approved" &&

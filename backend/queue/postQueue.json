@@ -208,7 +208,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-04-27T15:00:00.000Z",
+    "scheduledAt": "2026-06-03T15:20:00.000Z",
     "status": "approved",
     "hashtags": [
       "automation",
@@ -267,7 +267,7 @@
     ],
     "mediaPath": "frontend/assets/goblinaffs/DisappearHotMess.png",
     "mediaType": "image",
-    "scheduledAt": "2026-04-22T15:00:00.000Z",
+    "scheduledAt": "2026-05-28T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -308,7 +308,7 @@
       "mindful",
       "beeart"
     ],
-    "scheduledAt": "2026-04-25T15:00:00.000Z",
+    "scheduledAt": "2026-05-31T15:40:00.000Z",
     "platforms": [
       "facebook"
     ],
@@ -514,7 +514,7 @@
     ],
     "mediaPath": "frontend/assets/goblinaffs/ProdStandards.png",
     "mediaType": "image",
-    "scheduledAt": "2026-04-27T15:00:00.000Z",
+    "scheduledAt": "2026-06-02T16:00:00.000Z",
     "attemptCount": 1,
     "nextAttemptAt": "2026-04-03T15:31:47.204Z",
     "lastErrorAt": "2026-04-03T15:01:47.212Z",
@@ -763,7 +763,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-04-24T15:00:00.000Z",
+    "scheduledAt": "2026-05-30T15:20:00.000Z",
     "status": "approved",
     "mediaPath": "frontend/assets/kawaiiHalloween/AshTxWitch.webp",
     "hashtags": [],
@@ -1171,7 +1171,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-04-27T15:00:00.000Z",
+    "scheduledAt": "2026-06-03T15:00:00.000Z",
     "status": "approved",
     "hashtags": [
       "#promptstorm",
@@ -1394,7 +1394,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-22T15:00:00.000Z",
+    "scheduledAt": "2026-05-28T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -1456,7 +1456,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-22T15:20:00.000Z",
+    "scheduledAt": "2026-05-28T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -1518,7 +1518,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-23T15:00:00.000Z",
+    "scheduledAt": "2026-05-29T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -1580,7 +1580,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-23T15:20:00.000Z",
+    "scheduledAt": "2026-05-29T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -1642,7 +1642,7 @@
     "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-22T16:00:00.000Z",
+    "scheduledAt": "2026-05-29T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -1704,7 +1704,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-23T16:00:00.000Z",
+    "scheduledAt": "2026-05-30T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -1766,7 +1766,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-24T15:00:00.000Z",
+    "scheduledAt": "2026-05-30T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -1828,7 +1828,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-24T15:20:00.000Z",
+    "scheduledAt": "2026-05-30T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -1890,7 +1890,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-25T15:00:00.000Z",
+    "scheduledAt": "2026-05-31T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -1952,7 +1952,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-25T15:20:00.000Z",
+    "scheduledAt": "2026-06-01T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -2014,7 +2014,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-26T15:00:00.000Z",
+    "scheduledAt": "2026-06-01T16:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -2076,7 +2076,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-24T16:00:00.000Z",
+    "scheduledAt": "2026-05-31T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -2138,7 +2138,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-25T16:00:00.000Z",
+    "scheduledAt": "2026-06-01T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -2200,7 +2200,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-26T15:40:00.000Z",
+    "scheduledAt": "2026-06-02T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -2262,7 +2262,7 @@
     "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-26T16:00:00.000Z",
+    "scheduledAt": "2026-06-02T15:40:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -2325,7 +2325,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-26T15:20:00.000Z",
+    "scheduledAt": "2026-06-02T15:00:00.000Z",
     "attemptCount": 0,
     "lastErrorAt": null,
     "platforms": [
@@ -2387,7 +2387,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-27T15:00:00.000Z",
+    "scheduledAt": "2026-06-03T15:40:00.000Z",
     "attemptCount": 0,
     "lastErrorAt": null,
     "platforms": [
@@ -2449,7 +2449,7 @@
     "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-27T15:40:00.000Z",
+    "scheduledAt": "2026-06-04T15:00:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -2641,7 +2641,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-27T16:00:00.000Z",
+    "scheduledAt": "2026-06-04T15:20:00.000Z",
     "attemptCount": 0,
     "nextAttemptAt": null,
     "lastErrorAt": null,
@@ -2827,7 +2827,7 @@
     "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
     "mediaType": "image",
     "status": "approved",
-    "scheduledAt": "2026-04-27T15:20:00.000Z",
+    "scheduledAt": "2026-06-03T16:00:00.000Z",
     "attemptCount": 0,
     "lastErrorAt": null,
     "platforms": [
@@ -6362,7 +6362,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-04-22T15:40:00.000Z",
+    "scheduledAt": "2026-05-28T16:00:00.000Z",
     "status": "approved",
     "hashtags": [
       "#hoodie",
@@ -6429,7 +6429,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-04-23T15:40:00.000Z",
+    "scheduledAt": "2026-05-29T16:00:00.000Z",
     "status": "approved",
     "hashtags": [
       "#funny",
@@ -6493,7 +6493,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-04-24T15:40:00.000Z",
+    "scheduledAt": "2026-05-31T15:00:00.000Z",
     "status": "approved",
     "hashtags": [
       "#minimal",
@@ -6559,7 +6559,7 @@
         "accountId": null
       }
     ],
-    "scheduledAt": "2026-04-25T15:40:00.000Z",
+    "scheduledAt": "2026-06-01T15:20:00.000Z",
     "status": "approved",
     "hashtags": [
       "#procrastination",
@@ -7019,5 +7019,127 @@
     "updatedAt": "2026-04-19T22:13:41.434Z",
     "mediaType": "image",
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png"
+  },
+  {
+    "id": "p_20260428_test_01",
+    "title": "Slow Progress Still Counts",
+    "body": "A gentle test pin for the server queue. Tiny steps still count, even on a messy day.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-04-28T16:20:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#slowprogress",
+      "#validation",
+      "#pinterest",
+      "#selfacceptance"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "goblin-core-coloring-affirmations",
+      "productProfileLabel": "Goblin Core Affirmations",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Art & quotes",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "Funny Stuff"
+      ],
+      "pinterestTags": [
+        "slow progress",
+        "validation",
+        "self acceptance",
+        "pinterest"
+      ],
+      "keyword": "slow progress affirmation",
+      "angle": "validation",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "manual-json",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "createdAt": "2026-04-28T06:20:00.000Z",
+    "updatedAt": "2026-04-28T06:20:00.000Z",
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png"
+  },
+  {
+    "id": "p_20260428_test_02",
+    "title": "You Do Not Need A Perfect Day",
+    "body": "Second server test pin. If this posts cleanly, the pull and queue are both working.",
+    "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-04-28T16:40:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#perfectday",
+      "#servertest",
+      "#pinterest",
+      "#keepgoing"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "goblin-core-coloring-affirmations",
+      "productProfileLabel": "Goblin Core Affirmations",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "Art & quotes"
+      ],
+      "pinterestTags": [
+        "perfect day",
+        "server test",
+        "self acceptance",
+        "pinterest"
+      ],
+      "keyword": "perfect day affirmation",
+      "angle": "validation",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "manual-json",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "createdAt": "2026-04-28T06:20:00.000Z",
+    "updatedAt": "2026-04-28T06:20:00.000Z",
+    "image": "frontend/assets/goblinaffs/ExploringSideQuests.png"
   }
 ]

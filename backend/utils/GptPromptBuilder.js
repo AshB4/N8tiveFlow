@@ -185,6 +185,13 @@ export function buildOutputSchema(productName, productType, audience, options = 
   "slug": "kebab-case-slug",
   "product_type": "${productType}",
   "audience": "${audience}",
+  "product": "",
+  "psychological_trigger": "",
+  "hook": "",
+  "visual_style": "",
+  "category": "",
+  "destination_url": "",
+  "confidence_score": 0,
   "post_intent": "${postIntent}",
   "campaign_phase": "${campaignPhase}",
   "campaign_angle": "",
@@ -232,6 +239,61 @@ export function buildOutputSchema(productName, productType, audience, options = 
     "Pinterest": "1000x1500",
     "LinkedIn": "1200x627",
     "Default": "1200x630"
+  },
+  "asset_expansion": {
+    "recommended_image_count": 3,
+    "max_image_count": 4,
+    "adjacent_products": [
+      {
+        "product": "",
+        "hook": "",
+        "image_prompt": "",
+        "visual_style": ""
+      }
+    ],
+    "same_product_variants": [
+      {
+        "hook": "",
+        "image_prompt": "",
+        "visual_style": ""
+      }
+    ],
+    "stop_generation_threshold": {
+      "same_hook_limit": 3,
+      "same_visual_limit": 3,
+      "same_product_limit": 4
+    }
+  },
+  "winner_expansion": {
+    "adjacent_variations": [],
+    "hook_variations": [],
+    "experimental_variation": ""
+  },
+  "lane_priority": {
+    "seasonal_affiliate": 40,
+    "home_garden_affiliate": 25,
+    "goblin_ip": 20,
+    "dev_products": 10,
+    "experimental": 5
+  },
+  "seasonality": {
+    "holiday_name": "",
+    "days_until_holiday": "",
+    "urgency_level": "",
+    "recommended_post_volume": ""
+  },
+  "image_prompt_variants": {
+    "lifestyle": "",
+    "collage": "",
+    "before_after": "",
+    "ugc_style": "",
+    "product_spotlight": ""
+  },
+  "ip_repurposing": {
+    "meme_pin": "",
+    "line_art_prompt": "",
+    "printable_pack": "",
+    "amazon_book_bucket": ""
   },
   "platform_variants": {
     "LinkedIn": {
@@ -317,7 +379,32 @@ export function buildRequirementsLayer() {
 - visual_hook: one short visual sentence useful for thumbnails, pins, or asset planning
 - image_concept: plain-language creative direction
 - image_prompt: generator-ready prompt with composition, mood, and style direction
+- product / psychological_trigger / hook / visual_style / category / destination_url / confidence_score: fill these for Pinterest-ready generation
+- asset_expansion: expand the winning trigger into adjacent products and 2-4 visual variations
+- lane_priority: prioritize seasonal affiliate, home/garden affiliate, goblin IP, and dev products over lower-value lanes
+- seasonality: capture holiday urgency when the pin is seasonal
+- image_prompt_variants: create multiple composition types so visuals do not clone each other
+- ip_repurposing: turn goblin concepts into meme pins, line art, printable packs, and books
+- winner_expansion: add adjacent variations that keep the same emotional trigger
 - platform_variants: adapt voice and CTA per platform instead of repeating the same copy`;
+}
+
+export function buildPinterestCreativeLayer(context = {}) {
+	if (!context || !context.enabled) {
+		return "Pinterest creative guidance: repeat the emotional trigger, not the visual or hook wording. Rotate product, format, and angle before reusing a creative lane.";
+	}
+
+	const recentHooks = Array.isArray(context.recentHooks) ? context.recentHooks.slice(0, 5) : [];
+	const recentVisuals = Array.isArray(context.recentVisuals) ? context.recentVisuals.slice(0, 5) : [];
+	const lanes = Array.isArray(context.priorityLanes) ? context.priorityLanes.join(", ") : "";
+	return `Pinterest creative safeguards:
+- Trigger lane: ${context.trigger || "not specified"}
+- Category lane: ${context.category || "not specified"}
+- Category throttle: ${context.categoryThrottleCount || 0} recent pin(s)
+- Priority lanes: ${lanes || "seasonal affiliate, home/garden affiliate, dev products, goblin printables, coloring books"}
+- Recent hooks to avoid: ${recentHooks.join(" | ") || "none"}
+- Recent visual styles to avoid: ${recentVisuals.join(" | ") || "none"}
+- Rule: keep the emotion, but change product, composition, and hook framing when similarity climbs.`;
 }
 
 function buildCompactContext(productName, productType, audience, options = {}) {
@@ -334,6 +421,8 @@ function buildCompactContext(productName, productType, audience, options = {}) {
 		buildProductGuidance(options.productProfile),
 		"Platform guidance:",
 		buildPlatformGuidance(options.selectedPlatforms),
+		"Pinterest creative guidance:",
+		buildPinterestCreativeLayer(options.pinterestCreativeContext),
 		"Content mix guidance:",
 		buildContentMixLayer(),
 	].join("\n");
@@ -536,6 +625,8 @@ export const buildSeoPrompt = (productName, productType, audience, options = {})
 		"",
 		"Product-specific guidance:",
 		productGuidance,
+		"Pinterest creative guidance:",
+		buildPinterestCreativeLayer(options.pinterestCreativeContext),
 		"",
 		buildGuardrailsLayer(options),
 		"",

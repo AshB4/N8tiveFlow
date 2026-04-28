@@ -16,6 +16,10 @@ import { getAccounts } from "./utils/accountStore.mjs";
 import { findDuplicatePost } from "./utils/queueGuard.mjs";
 import { generateSeoPayload, getDryRunPayload } from "./utils/seoGeneration.mjs";
 import { generateCampaignPosts, getCampaignDryRunPayload } from "./utils/campaignGeneration.mjs";
+import {
+  buildPinterestCreativeContext,
+  findPinterestCreativeConflict,
+} from "./utils/pinterestCreative.mjs";
 import { buildAnalyticsSummary } from "./utils/analyticsSummary.mjs";
 import { runPlatformHealthChecks } from "./utils/platformHealth.mjs";
 import { normalizePostStatus } from "./utils/postStatus.mjs";
@@ -237,11 +241,12 @@ app.get("/api/pinterest-boards", async (_req, res) => {
 
 app.get("/api/analytics/summary", async (_req, res) => {
 	try {
-		const [events, storedSummary] = await Promise.all([
+		const [events, storedSummary, pinterestSnapshots] = await Promise.all([
 			readJson(STATS_FUNNEL).catch(() => []),
 			readJson(STATS_SUMMARY).catch(() => ({})),
+			listPinterestMetricsSnapshots({ limit: 200 }).catch(() => []),
 		]);
-		res.json(buildAnalyticsSummary(events, storedSummary));
+		res.json(buildAnalyticsSummary(events, storedSummary, pinterestSnapshots));
 	} catch (error) {
 		res.status(500).json({
 			error: "Failed to load analytics summary",
@@ -360,7 +365,8 @@ app.post("/api/ai/seo-generate", async (req, res) => {
 			campaignAngle,
 			visualHook,
 		};
-		const options = { provider, model };
+		const pinterestCreativeContext = await buildPinterestCreativeContext(input);
+		const options = { provider, model, pinterestCreativeContext };
 		const result = dryRun
 			? getDryRunPayload(input, options)
 			: await generateSeoPayload(input, options);
@@ -406,7 +412,8 @@ app.post("/api/ai/campaign-generate", async (req, res) => {
 			postIntent,
 			maxPosts,
 		};
-		const options = { provider, model };
+		const pinterestCreativeContext = await buildPinterestCreativeContext(input);
+		const options = { provider, model, pinterestCreativeContext };
 		const result = dryRun
 			? getCampaignDryRunPayload(input, options)
 			: await generateCampaignPosts(input, options);
@@ -513,6 +520,14 @@ app.post("/api/posts", async (req, res) => {
 				detail: `Matches existing post ${duplicate.id}`,
 			});
 		}
+		const pinterestConflict = await findPinterestCreativeConflict(posts, post);
+		if (pinterestConflict) {
+			return res.status(409).json({
+				error: "Pinterest creative conflict",
+				detail: `Too similar to recent pin ${pinterestConflict.matchedPostId || "unknown"}`,
+				conflict: pinterestConflict,
+			});
+		}
 		await createPost(post);
 		res.status(201).json(post);
 	} catch (e) {
@@ -581,6 +596,17 @@ app.put("/api/posts/:id", async (req, res) => {
 			return res.status(409).json({
 				error: "Duplicate queue entry",
 				detail: `Matches existing post ${duplicate.id}`,
+			});
+		}
+		const pinterestConflict = await findPinterestCreativeConflict(
+			posts.filter((post) => post.id !== posts[i].id),
+			posts[i],
+		);
+		if (pinterestConflict) {
+			return res.status(409).json({
+				error: "Pinterest creative conflict",
+				detail: `Too similar to recent pin ${pinterestConflict.matchedPostId || "unknown"}`,
+				conflict: pinterestConflict,
 			});
 		}
 		await updatePostInDb(posts[i].id, posts[i]);

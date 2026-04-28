@@ -9,7 +9,6 @@ import { Toaster } from "@/Components/ui/toaster";
 import CalendarPage from "./UXUI/Pages/PostCalendar";
 import PostComposer from "./UXUI/Pages/postComposer";
 import PostLab from "./UXUI/Pages/PostLab";
-import PostLib from "./UXUI/Pages/PostLib";
 import TodayQueue from "./UXUI/Pages/TodayQueue";
 import ChartsPage from "./UXUI/Pages/ChartsPage";
 import ArchivePage from "./UXUI/Pages/ArchivePage";
@@ -37,11 +36,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/lib",
-    element: <PostLib />,
-    errorElement: <ErrorPage />,
-  },
-  {
     path: "/batch",
     element: <BatchPage />,
     errorElement: <ErrorPage />,
@@ -62,12 +56,27 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
+    path: "/today-ops",
+    element: <TodayQueue />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/ops",
+    element: <TodayQueue />,
+    errorElement: <ErrorPage />,
+  },
+  {
     path: "/today/*",
     element: <TodayQueue />,
     errorElement: <ErrorPage />,
   },
   {
     path: "/charts",
+    element: <ChartsPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/pinterest-analytics",
     element: <ChartsPage />,
     errorElement: <ErrorPage />,
   },

@@ -25,6 +25,14 @@ async function readJson(file, fallback) {
   }
 }
 
+function parseJsonSafely(value, fallback = null) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+}
+
 async function writeJson(file, value) {
   await writeFile(file, JSON.stringify(value, null, 2));
 }
@@ -68,7 +76,9 @@ function getDb() {
 }
 
 function parsePayloadRows(rows) {
-  return rows.map((row) => JSON.parse(row.payload));
+  return rows
+    .map((row) => parseJsonSafely(row.payload, null))
+    .filter((value) => value !== null);
 }
 
 async function syncJsonMirror() {
@@ -240,7 +250,8 @@ export async function clearPostedPostsFromQueue() {
   const rows = conn
     .prepare("SELECT id, payload FROM posts")
     .all()
-    .map((row) => ({ id: row.id, payload: JSON.parse(row.payload) }));
+    .map((row) => ({ id: row.id, payload: parseJsonSafely(row.payload, null) }))
+    .filter((row) => row.payload !== null);
   const idsToRemove = rows
     .filter((row) => String(row.payload?.status || "").toLowerCase() === "posted")
     .map((row) => row.id);

@@ -7,6 +7,10 @@ import {
   buildVisualStagePrompt,
 } from "./GptPromptBuilder.js";
 import { generateStructuredText, resolveAiConfig } from "./aiClient.mjs";
+import {
+  buildPinterestCreativeContext,
+  enrichPinterestCreativeResult,
+} from "./pinterestCreative.mjs";
 import { getPlatformPromptProfiles } from "./platformProfiles.mjs";
 import { getProductProfile } from "./productProfiles.mjs";
 
@@ -28,7 +32,7 @@ export function extractJsonObject(text) {
   }
 }
 
-export function normalizeSeoResult(raw, input) {
+export function normalizeSeoResult(raw, input, context = null) {
   const hashtags =
     raw.hashtags && typeof raw.hashtags === "object" ? raw.hashtags : {};
   const imageRequirements =
@@ -45,11 +49,18 @@ export function normalizeSeoResult(raw, input) {
   const angleOptions =
     raw.angle_options && typeof raw.angle_options === "object" ? raw.angle_options : {};
 
-  return {
+  const normalized = {
     product_name: raw.product_name || input.productName,
     slug: raw.slug || input.productName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
     product_type: raw.product_type || input.productType,
     audience: raw.audience || input.audience,
+    product: raw.product || input.productName,
+    psychological_trigger: raw.psychological_trigger || "",
+    hook: raw.hook || raw.hook_options?.[0] || "",
+    visual_style: raw.visual_style || raw.image_concept || raw.visual_hook || "",
+    category: raw.category || "",
+    destination_url: raw.destination_url || "",
+    confidence_score: Number.isFinite(Number(raw.confidence_score)) ? Number(raw.confidence_score) : 0,
     post_intent: raw.post_intent || "",
     campaign_phase: raw.campaign_phase || input.campaignPhase || "",
     campaign_angle: raw.campaign_angle || "",
@@ -90,6 +101,12 @@ export function normalizeSeoResult(raw, input) {
     image_concept: raw.image_concept || "",
     image_prompt: raw.image_prompt || "",
     image_requirements: imageRequirements,
+    asset_expansion: raw.asset_expansion || null,
+    winner_expansion: raw.winner_expansion || null,
+    lane_priority: raw.lane_priority || null,
+    seasonality: raw.seasonality || null,
+    image_prompt_variants: raw.image_prompt_variants || null,
+    ip_repurposing: raw.ip_repurposing || null,
     platform_variants:
       raw.platform_variants && typeof raw.platform_variants === "object"
         ? raw.platform_variants
@@ -104,9 +121,11 @@ export function normalizeSeoResult(raw, input) {
     },
     campaigns: Array.isArray(raw.campaigns) ? raw.campaigns : [],
   };
+
+  return enrichPinterestCreativeResult(normalized, input, context);
 }
 
-function buildPromptContext(input) {
+function buildPromptContext(input, options = {}) {
   const platformIds = Array.isArray(input.platformIds) ? input.platformIds : [];
   const selectedPlatforms = getPlatformPromptProfiles(platformIds);
   const productProfile = getProductProfile(input.productProfileId);
@@ -118,6 +137,7 @@ function buildPromptContext(input) {
     campaignPhase: input.campaignPhase,
     campaignAngle: input.campaignAngle,
     visualHook: input.visualHook,
+    pinterestCreativeContext: options.pinterestCreativeContext || null,
   };
 }
 
@@ -172,7 +192,9 @@ async function runChunkedSeoGeneration(input, options = {}, context = {}) {
 }
 
 export async function generateSeoPayload(input, options = {}) {
-  const context = buildPromptContext(input);
+  const pinterestCreativeContext =
+    options.pinterestCreativeContext || (await buildPinterestCreativeContext(input));
+  const context = buildPromptContext(input, { ...options, pinterestCreativeContext });
   const config = resolveAiConfig(options);
   const parsed =
     config.provider === "ollama"
@@ -183,12 +205,12 @@ export async function generateSeoPayload(input, options = {}) {
             options,
           ),
         );
-  return normalizeSeoResult(parsed, input);
+  return normalizeSeoResult(parsed, input, pinterestCreativeContext);
 }
 
 export function getDryRunPayload(input, options = {}) {
   const config = resolveAiConfig(options);
-  const context = buildPromptContext(input);
+  const context = buildPromptContext(input, options);
   if (config.provider === "ollama") {
     const stages = buildChunkedPromptStages(
       input.productName,

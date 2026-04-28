@@ -87,6 +87,9 @@ npm run worker
 3. Set `scheduledAt`.
 4. Keep post `status` as `approved` when ready to autopost.
 5. Worker picks it up at scheduled window if the machine is awake, the queue is intact, and the target lane is healthy.
+6. Use `/today` for due-today ops and manual retry work.
+7. Use `/archive` for posted history.
+8. Use `/charts` for Pinterest CSV/snapshot analytics.
 
 ## Useful backend commands
 ```bash
@@ -188,6 +191,11 @@ tail -f /opt/postpunk/backend/backup.log
   - `backend/media/gifs`
   - `backend/media/videos`
   - `backend/media/other`
+
+## Frontend pages
+- `/today` or `/today-ops`: due-today queue and retry actions
+- `/archive`: posted history
+- `/charts`: Pinterest performance dashboard built from CSV/snapshot metrics
 
 ## Reliability notes
 - Always-on machine required for consistent posting windows.

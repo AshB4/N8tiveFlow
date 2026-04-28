@@ -28,6 +28,7 @@ test("buildSeoPrompt asks for strict JSON output", () => {
   assert.match(prompt, /Target platforms: linkedin/);
   assert.match(prompt, /LinkedIn/);
   assert.match(prompt, /Lead with the insight or problem/);
+  assert.match(prompt, /Pinterest creative guidance/);
   assert.match(prompt, /Suggested post intent:/);
   assert.match(prompt, /Campaign phase:/);
   assert.match(prompt, /"hook_options": \[/);
@@ -108,6 +109,10 @@ test("normalizeSeoResult fills defaults", () => {
   assert.equal(normalized.slug, "postpunk");
   assert.equal(normalized.product_type, "Automation Tool");
   assert.equal(normalized.audience, "Indie devs");
+  assert.equal(normalized.product, "PostPunk");
+  assert.equal(normalized.confidence_score, 0);
+  assert.equal(normalized.asset_expansion.recommended_image_count, 3);
+  assert.equal(normalized.lane_priority.seasonal_affiliate, 40);
   assert.equal(normalized.primary_cta, "");
   assert.equal(normalized.campaign_phase, "");
   assert.equal(normalized.campaign_angle, "");

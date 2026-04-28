@@ -196,147 +196,6 @@
     "lastErrorAt": "2026-03-31T19:30:13.993Z"
   },
   {
-    "id": "p_20260427_01",
-    "title": "I Built a Social Posting Pipeline That Survives Bad Brain Days",
-    "body": "Most days, I don't lose to complexity.\n\nI lose to... doing nothing.\n\nStaring at the screen.\nScrolling.\nOpening GPT 50 times hoping something sticks.\n\nSo I stopped trying to \"be motivated\" and built a system that works even when I'm not.\n\n## The Problem\n\nMy workflow used to be:\n\n- have idea\n- overthink idea\n- maybe write post\n- forget to publish\n- repeat in 3 days\n\nZero consistency.\nZero reliability.\nLots of \"I'll get to it later.\"\n\n## The System (What Actually Runs)\n\nRight now my setup is not fancy. It's just... layered correctly.\n\n- **SQLite = source of truth**\n- **JSON = mirror / fallback**\n- **Worker = handles posting**\n- **Playwright = fakes being me on platforms**\n- **UI = manual override when things break**\n\nThat's it.\n\nNo magic. Just separation of responsibilities.\n\n### Core flow\n\n1. I dump content into a queue\n2. It gets stored in SQLite\n3. Worker runs every ~30 minutes\n4. It tries to post\n5. If it fails -> it stays in the system\n6. I retry or reschedule later\n\nNo disappearing posts. No guessing.\n\n## Why This Changed Everything\n\nBefore this, every post required:\n\n- remembering to post\n- deciding what to post\n- actually posting\n\nNow?\n\nI just:\n\n> throw ideas into the system and let it deal with timing\n\nThe biggest shift wasn't AI.\nIt was this:\n\n> **I separated creation from execution.**\n\nOnce that clicked, everything got easier.\n\n## The \"Bad Brain Day\" Design\n\nI didn't build this for productivity.\n\nI built it for the days where I'm useless.\n\nSo the system assumes:\n\n- I will forget\n- I will avoid work\n- I will break things\n- platforms will randomly fail\n\nAnd it handles that.\n\n## Failure Is Expected (Not Exceptional)\n\nStuff breaks constantly.\n\n- platform UI changes\n- tokens die\n- Playwright gets weird\n- I push something dumb and break my own app\n\nSo instead of trying to prevent failure, I designed for it:\n\n- failed posts don't disappear\n- they stay in the queue\n- they get marked `failed`\n- I retry or move them\n\nNothing is wasted.\n\n## The \"Oh Shit\" Fallback\n\nWhen something fails:\n\n- it gets marked failed automatically\n- I either:\n  - retry it\n  - or bump it to another day\n\nThat's it.\n\nNo panic. No rebuilding.\n\nJust... try again later.\n\n## The Unexpected Benefit\n\nThe biggest win wasn't automation.\n\nIt was **mental load reduction**.\n\nBefore:\n\n- every post was a decision\n\nNow:\n\n- posting is a background process\n\nThat frees me up to actually build things again.\n\n## The Honest State of This System\n\nThis isn't some perfect SaaS.\n\n- it works\n- I break it sometimes\n- then I fix it\n\nThat's the loop.\n\nBut it's still better than relying on motivation.\n\n## If You Want to Steal This Idea\n\nYou don't need my exact stack.\n\nYou need this structure:\n\n- one place to store content (DB)\n- one process to execute (worker)\n- one way to recover (retry system)\n\nThat's it.\n\nEverything else is optional.\n\n## Final Thought\n\nMotivation didn't fix my consistency.\n\nA queue did.",
-    "platforms": [
-      "devto"
-    ],
-    "targets": [
-      {
-        "platform": "devto",
-        "accountId": null
-      }
-    ],
-    "scheduledAt": "2026-06-03T15:20:00.000Z",
-    "status": "approved",
-    "hashtags": [
-      "automation",
-      "sideprojects",
-      "webdev",
-      "productivity",
-      "buildinpublic"
-    ],
-    "tags": [
-      "automation",
-      "pipeline",
-      "reliability"
-    ],
-    "altText": "Network-style workflow diagram showing idea queue, worker execution, and retry loop",
-    "metadata": {
-      "productProfileId": "prompt-storm",
-      "productProfileLabel": "100 Prompt Storm",
-      "productCategory": "Digital products",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
-      },
-      "includeProductLink": true,
-      "imageStatus": "ready",
-      "contentTags": [
-        "automation",
-        "workflow",
-        "build in public"
-      ],
-      "distributionTags": [
-        "post:devto"
-      ],
-      "approvalSource": "devto-weekly",
-      "requiresReview": false
-    },
-    "createdAt": "2026-04-01T04:51:38.361Z",
-    "updatedAt": "2026-04-01T04:51:38.362Z",
-    "mediaPath": "frontend/assets/devto/IDeasPostsPins.png",
-    "mediaType": "image",
-    "image": "https://raw.githubusercontent.com/AshB4/N8tiveFlow/main/frontend/assets/devto/IDeasPostsPins.png"
-  },
-  {
-    "id": "p_20260417_goblinfb_10",
-    "title": "A Little Too Accurate",
-    "body": "Yeah… this one is a little too accurate.",
-    "status": "approved",
-    "platforms": [
-      "facebook"
-    ],
-    "targets": [
-      {
-        "platform": "facebook",
-        "accountId": null
-      }
-    ],
-    "mediaPath": "frontend/assets/goblinaffs/DisappearHotMess.png",
-    "mediaType": "image",
-    "scheduledAt": "2026-05-28T15:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "metadata": {
-      "contentTags": [
-        "goblin",
-        "meme"
-      ],
-      "distributionTags": [
-        "post:facebook"
-      ],
-      "approvalSource": "manual-json",
-      "requiresReview": false,
-      "productProfileId": "goblin-coloring-affirmations",
-      "productProfileLabel": "Goblin Core Affirmations",
-      "productCategory": "Digital products",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      }
-    },
-    "createdAt": "2026-04-01T01:36:18.164Z",
-    "updatedAt": "2026-04-01T05:36:10.424Z"
-  },
-  {
-    "id": "p_20260419_buzzfb_02",
-    "title": "A quiet hobby that doesn’t ask much from you.",
-    "body": "If your brain feels noisy, this helps.\n\nBuzzing Adventures is simple, cozy, and actually easy to start.",
-    "mediaPath": "frontend/assets/buzzingbees/AdultsColoringAgainBigBee.png",
-    "tags": [
-      "quiet",
-      "hobby",
-      "nature"
-    ],
-    "hashtags": [
-      "adultcoloring",
-      "mindful",
-      "beeart"
-    ],
-    "scheduledAt": "2026-05-31T15:40:00.000Z",
-    "platforms": [
-      "facebook"
-    ],
-    "targets": [
-      {
-        "platform": "facebook",
-        "accountId": null
-      }
-    ],
-    "status": "approved",
-    "mediaType": "image",
-    "metadata": {
-      "productProfileId": "buzzing-adventures-coloring-book",
-      "productProfileLabel": "Buzzing Adventures Coloring Book",
-      "productCategory": "Physical products",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX",
-        "primary": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX"
-      },
-      "includeProductLink": true,
-      "approvalSource": "manual-buzzing-fb",
-      "requiresReview": false
-    },
-    "createdAt": "2026-04-01T05:37:44.005Z",
-    "updatedAt": "2026-04-01T05:37:44.005Z"
-  },
-  {
     "id": "p_20260420_buzzfb_03",
     "title": "Sometimes soft activities work better than forcing focus.",
     "body": "Coloring sounds small, but it can pull you out of mental static fast.\n\nThis bee-themed one has been weirdly great for that.",
@@ -496,48 +355,6 @@
     "mediaPath": "frontend/assets/devto/INputChooseAct.png",
     "mediaType": "image",
     "image": "https://raw.githubusercontent.com/AshB4/N8tiveFlow/main/frontend/assets/devto/INputChooseAct.png",
-    "updatedAt": "2026-04-05T19:46:35.439Z"
-  },
-  {
-    "id": "p_20260403_goblinfb_02",
-    "title": "Choosing This Logic Now",
-    "body": "This is the kind of logic I’m choosing to live by now.",
-    "status": "approved",
-    "platforms": [
-      "facebook"
-    ],
-    "targets": [
-      {
-        "platform": "facebook",
-        "accountId": null
-      }
-    ],
-    "mediaPath": "frontend/assets/goblinaffs/ProdStandards.png",
-    "mediaType": "image",
-    "scheduledAt": "2026-06-02T16:00:00.000Z",
-    "attemptCount": 1,
-    "nextAttemptAt": "2026-04-03T15:31:47.204Z",
-    "lastErrorAt": "2026-04-03T15:01:47.212Z",
-    "metadata": {
-      "contentTags": [
-        "goblin",
-        "meme"
-      ],
-      "distributionTags": [
-        "post:facebook"
-      ],
-      "approvalSource": "manual-json",
-      "requiresReview": false,
-      "productProfileId": "goblin-coloring-affirmations",
-      "productProfileLabel": "Goblin Core Affirmations",
-      "productCategory": "Digital products",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      }
-    },
-    "createdAt": "2026-04-01T01:36:18.164Z",
     "updatedAt": "2026-04-05T19:46:35.439Z"
   },
   {
@@ -749,58 +566,6 @@
     },
     "createdAt": "2026-04-01T01:36:18.164Z",
     "updatedAt": "2026-04-05T19:46:35.439Z"
-  },
-  {
-    "id": "p_20260421_kawaiifb_04",
-    "title": "Scary Kawaii Halloween Coloring Book",
-    "body": "Cute ghosts, bats, pumpkins, and cozy spooky vibes. These are sample pages from my Scary Kawaii Halloween coloring book. https://www.amazon.com/dp/B0DHDNTW87",
-    "platforms": [
-      "facebook"
-    ],
-    "targets": [
-      {
-        "platform": "facebook",
-        "accountId": null
-      }
-    ],
-    "scheduledAt": "2026-05-30T15:20:00.000Z",
-    "status": "approved",
-    "mediaPath": "frontend/assets/kawaiiHalloween/AshTxWitch.webp",
-    "hashtags": [],
-    "tags": [
-      "kawaii",
-      "halloween",
-      "coloring",
-      "facebook"
-    ],
-    "metadata": {
-      "productProfileId": "kawaii-coloring-series",
-      "productProfileLabel": "Kawaii Coloring Series",
-      "productCategory": "Physical products",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/dp/B0DHDNTW87",
-        "primary": "https://www.amazon.com/dp/B0DHDNTW87"
-      },
-      "imageStatus": "ready",
-      "contentTags": [
-        "kawaii",
-        "halloween",
-        "sample-pages"
-      ],
-      "distributionTags": [
-        "post:facebook"
-      ],
-      "approvalSource": "manual-json",
-      "requiresReview": false,
-      "note": "Uses sample pages from the Scary Kawaii Halloween coloring book."
-    },
-    "createdAt": "2026-04-06T20:35:02.939Z",
-    "updatedAt": "2026-04-06T20:36:26.106Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "lastError": null
   },
   {
     "id": "p_20260423_kawaiifb_05",
@@ -1159,41 +924,6 @@
     "lastError": null
   },
   {
-    "id": "p_20260421_devto_01",
-    "title": "100 Prompts in 30 Days - Here is What Happened",
-    "body": "I used the same prompt pack for 30 days straight. Results:\n\n- Posted every day without fail\n- 3x my normal output\n- Actually started enjoying creating again\n\nThe prompts were not magic. They were starting points. That is the whole point.",
-    "platforms": [
-      "devto"
-    ],
-    "targets": [
-      {
-        "platform": "devto",
-        "accountId": null
-      }
-    ],
-    "scheduledAt": "2026-06-03T15:00:00.000Z",
-    "status": "approved",
-    "hashtags": [
-      "#promptstorm",
-      "#contentcreation",
-      "#creative"
-    ],
-    "tags": [
-      "promptstorm",
-      "contentcreation",
-      "creative"
-    ],
-    "metadata": {
-      "approvalSource": "manual",
-      "requiresReview": false,
-      "distributionTags": [
-        "post:devto"
-      ]
-    },
-    "createdAt": "2026-04-14T01:28:35.717Z",
-    "updatedAt": "2026-04-14T01:28:35.717Z"
-  },
-  {
     "id": "p_20260422_devto_01",
     "title": "One Prompt Can Unblock An Entire Content Week",
     "body": "Most creators wait for inspiration. The ones who succeed have systems.\n\nA single well-crafted prompt can give you 10 angles, 10 titles, 10 post ideas.\n\nStop waiting. Start prompting.",
@@ -1388,1123 +1118,6 @@
     "nextAttemptAt": null
   },
   {
-    "id": "p_2026R_0075",
-    "title": "Instant Nail Glow Up",
-    "body": "Fresh nails = instant confidence.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-28T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#confidence",
-      "#beauty",
-      "#nails",
-      "#glowup",
-      "#selflove"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Beautiful me.",
-      "pinterestBoards": [
-        "The Queen in me.",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "confidence",
-        "beauty",
-        "nails",
-        "glow up",
-        "self love"
-      ],
-      "keyword": "nail glow up",
-      "angle": "confidence",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T22:19:36.599Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
-  },
-  {
-    "id": "p_2026R_0076",
-    "title": "DIY Nails That Look Salon Done",
-    "body": "Yes, you can do this at home.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-28T15:40:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#diy",
-      "#results",
-      "#nails",
-      "#beauty",
-      "#home"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Home spa",
-      "pinterestBoards": [
-        "Beautiful me.",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "diy",
-        "results",
-        "nails",
-        "beauty",
-        "home"
-      ],
-      "keyword": "diy nail results",
-      "angle": "results",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "updatedAt": "2026-04-18T22:19:36.600Z"
-  },
-  {
-    "id": "p_2026R_0077",
-    "title": "Fix Your Nails Without a Salon",
-    "body": "You don't need appointments anymore.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-29T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#fix",
-      "#nails",
-      "#beauty",
-      "#diy",
-      "#routine"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Home spa",
-        "Beautiful me."
-      ],
-      "pinterestTags": [
-        "fix",
-        "nails",
-        "beauty",
-        "diy",
-        "routine"
-      ],
-      "keyword": "nail improvement",
-      "angle": "fix bad nails",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T22:19:36.600Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
-  },
-  {
-    "id": "p_2026R_0078",
-    "title": "The Most Satisfying Nail Transformation",
-    "body": "You know you love these.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-29T15:40:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#satisfying",
-      "#transformation",
-      "#nails",
-      "#beauty",
-      "#beforeafter"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Freaking Weird or mild...",
-      "pinterestBoards": [
-        "Fun Ideas",
-        "Beautiful me."
-      ],
-      "pinterestTags": [
-        "satisfying",
-        "transformation",
-        "nails",
-        "beauty",
-        "before after"
-      ],
-      "keyword": "nail transformation",
-      "angle": "satisfying",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "updatedAt": "2026-04-18T22:19:36.600Z"
-  },
-  {
-    "id": "p_2026R_0139",
-    "title": "Hot Mess And Still Here",
-    "body": "You don’t have to be perfect to be unstoppable.",
-    "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-29T15:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#hotmess",
-      "#confidence",
-      "#selfworth",
-      "#relatable",
-      "#mentalhealth"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-disappear-hot-mess-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "Funny Stuff",
-      "pinterestBoards": [
-        "Funny Stuff",
-        "Beautiful me."
-      ],
-      "pinterestTags": [
-        "hot mess",
-        "confidence",
-        "self worth",
-        "relatable",
-        "mental health"
-      ],
-      "keyword": "hot mess affirmation",
-      "angle": "defiant self worth",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
-    "updatedAt": "2026-04-18T22:19:36.600Z"
-  },
-  {
-    "id": "p_2026R_0104",
-    "title": "Lazy Day Coloring Page (No Productivity Required)",
-    "body": "For the days when doing less is the plan. Funny goblin-style printable coloring page for low-energy days and zero guilt.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-30T15:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#lazyday",
-      "#coloringpage",
-      "#printable",
-      "#relatablehumor",
-      "#goblinenergy"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-do-less-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "coloring pages",
-      "pinterestBoards": [
-        "coloring pages",
-        "Funny Stuff"
-      ],
-      "pinterestTags": [
-        "lazy day",
-        "coloring page",
-        "printable",
-        "relatable humor",
-        "goblin energy"
-      ],
-      "keyword": "lazy day coloring page printable",
-      "angle": "low energy humor",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T22:19:36.600Z"
-  },
-  {
-    "id": "p_2026R_0079",
-    "title": "Doing My Nails at Home Just Hits Different",
-    "body": "Cozy setup, better results.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-30T15:40:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#cozy",
-      "#homenails",
-      "#routine",
-      "#selfcare",
-      "#beauty"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Home spa",
-      "pinterestBoards": [
-        "Beautiful me.",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "cozy",
-        "home nails",
-        "routine",
-        "self care",
-        "beauty"
-      ],
-      "keyword": "doing nails at home",
-      "angle": "cozy",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "updatedAt": "2026-04-18T22:19:36.601Z"
-  },
-  {
-    "id": "p_2026R_0080",
-    "title": "My At Home Nail Routine Setup",
-    "body": "Simple, repeatable, works every time.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-30T16:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#routine",
-      "#nails",
-      "#beauty",
-      "#setup",
-      "#selfcare"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Beautiful me.",
-      "pinterestBoards": [
-        "Home spa",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "routine",
-        "nails",
-        "beauty",
-        "setup",
-        "self care"
-      ],
-      "keyword": "nail routine",
-      "angle": "routine",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T22:19:36.601Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
-  },
-  {
-    "id": "p_2026R_0081",
-    "title": "Perfect Home Manicure Setup",
-    "body": "This setup makes it easy.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-31T16:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#setup",
-      "#workspace",
-      "#nails",
-      "#beauty",
-      "#diy"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Home spa",
-        "Beautiful me."
-      ],
-      "pinterestTags": [
-        "setup",
-        "workspace",
-        "nails",
-        "beauty",
-        "diy"
-      ],
-      "keyword": "manicure setup",
-      "angle": "workspace",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "updatedAt": "2026-04-18T22:19:36.601Z"
-  },
-  {
-    "id": "p_2026R_0082",
-    "title": "Self Care Night Nail Routine",
-    "body": "Add this to your weekly reset.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-06-01T15:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#selfcare",
-      "#routine",
-      "#night",
-      "#nails",
-      "#beauty"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Beautiful me.",
-      "pinterestBoards": [
-        "Home spa",
-        "I Want, I dream."
-      ],
-      "pinterestTags": [
-        "self care",
-        "routine",
-        "night",
-        "nails",
-        "beauty"
-      ],
-      "keyword": "self care night",
-      "angle": "night routine",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T22:19:36.601Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
-  },
-  {
-    "id": "p_2026R_0083",
-    "title": "Home Beauty Setup That Actually Works",
-    "body": "No fluff, just results.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-06-01T16:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#beauty",
-      "#home",
-      "#setup",
-      "#nails",
-      "#lifestyle"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "I Want, I dream.",
-      "pinterestBoards": [
-        "Beautiful me.",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "beauty",
-        "home",
-        "setup",
-        "nails",
-        "lifestyle"
-      ],
-      "keyword": "home beauty setup",
-      "angle": "lifestyle",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "updatedAt": "2026-04-18T22:19:36.601Z"
-  },
-  {
-    "id": "p_2026R_0094",
-    "title": "Funny Goblin Coloring Page (This Is Too Real 😂)",
-    "body": "If you’ve ever side-eyed someone for drinking plain water… this one hits. Printable goblin coloring page with chaotic relatable humor.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-05-31T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#funnycoloringpage",
-      "#adultcoloring",
-      "#goblincore",
-      "#relatablehumor",
-      "#printable"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-drinkwater-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "coloring pages",
-      "pinterestBoards": [
-        "coloring pages",
-        "Funny Stuff"
-      ],
-      "pinterestTags": [
-        "funny coloring page",
-        "adult coloring",
-        "goblin core",
-        "relatable humor",
-        "printable"
-      ],
-      "keyword": "funny coloring page adult humor",
-      "angle": "relatable humor",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T22:19:36.601Z"
-  },
-  {
-    "id": "p_2026R_0099",
-    "title": "Mental Health Coloring Page (Some Days This Is Enough)",
-    "body": "If all you did today was exist… that counts. Printable goblin-style coloring page for hard days, burnout, and quiet survival wins.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-06-01T15:40:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#mentalhealth",
-      "#selfcareprintable",
-      "#coloringpage",
-      "#burnoutrecovery",
-      "#healing"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-existing-stubbornly-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "Beautiful me.",
-      "pinterestBoards": [
-        "Beautiful me.",
-        "coloring pages"
-      ],
-      "pinterestTags": [
-        "mental health",
-        "self care printable",
-        "coloring page",
-        "burnout recovery",
-        "healing"
-      ],
-      "keyword": "mental health coloring page printable",
-      "angle": "validation / survival",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T22:19:36.601Z"
-  },
-  {
-    "id": "p_2026R_0134",
-    "title": "You’re Not Behind — You’re On A Side Quest",
-    "body": "Not everything has to be the main path to matter.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-06-02T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#lifepath",
-      "#exploration",
-      "#growth",
-      "#mindset",
-      "#journey"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-exploring-side-quests-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "Random thoughts",
-      "pinterestBoards": [
-        "Random thoughts",
-        "Art & quotes"
-      ],
-      "pinterestTags": [
-        "life path",
-        "exploration",
-        "growth",
-        "mindset",
-        "journey"
-      ],
-      "keyword": "life path not linear",
-      "angle": "reframing direction",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T22:19:36.601Z"
-  },
-  {
-    "id": "p_2026R_0119",
-    "title": "You Are Allowed To Move Slowly (And Still Be Winning)",
-    "body": "Slow progress is still progress. This goblin reminder hits different when you're tired of hustle culture.",
-    "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-06-02T15:40:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#slowprogress",
-      "#antihustle",
-      "#mentalhealth",
-      "#selfcare",
-      "#burnout"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-moveslow-not-fail-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "Art & quotes",
-      "pinterestBoards": [
-        "Art & quotes",
-        "Beautiful me.",
-        "Random thoughts"
-      ],
-      "pinterestTags": [
-        "slow progress",
-        "anti hustle",
-        "mental health",
-        "self care",
-        "burnout"
-      ],
-      "keyword": "slow progress affirmation",
-      "angle": "anti hustle validation",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
-    "updatedAt": "2026-04-18T22:19:36.601Z"
-  },
-  {
-    "id": "p_2026R_0059",
-    "title": "At Home Gel Nail Kit Setup (Beginner Friendly)",
-    "body": "Everything you need to start doing gel nails at home with salon-level results.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-06-02T15:00:00.000Z",
-    "attemptCount": 0,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#gelnails",
-      "#homespa",
-      "#nailkit",
-      "#diynails",
-      "#beauty"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Home spa",
-      "pinterestBoards": [
-        "Beautiful me.",
-        "Fun Ideas"
-      ],
-      "pinterestTags": [
-        "gel nails",
-        "home spa",
-        "nail kit",
-        "diy nails",
-        "beauty"
-      ],
-      "keyword": "gel nail kit at home",
-      "angle": "beginner setup",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "nextAttemptAt": null,
-    "updatedAt": "2026-04-18T22:19:36.601Z"
-  },
-  {
-    "id": "p_2026R_0060",
-    "title": "Minimal Nail Kit Setup Aesthetic",
-    "body": "Clean, minimal, and actually useful. The perfect nail setup.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-06-03T15:40:00.000Z",
-    "attemptCount": 0,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#aesthetic",
-      "#minimal",
-      "#beautysetup",
-      "#cleangirl",
-      "#nails"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Beautiful me.",
-      "pinterestBoards": [
-        "Home spa",
-        "I Want, I dream."
-      ],
-      "pinterestTags": [
-        "aesthetic",
-        "minimal",
-        "beauty setup",
-        "clean girl",
-        "nails"
-      ],
-      "keyword": "nail kit aesthetic",
-      "angle": "minimal aesthetic",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T22:19:36.601Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "nextAttemptAt": null
-  },
-  {
-    "id": "p_2026R_0124",
-    "title": "I Don’t Trust Productivity Standards Either",
-    "body": "Made-up rules by people who don’t live in your brain? Hard pass.",
-    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-06-04T15:00:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#antiproductivity",
-      "#relatable",
-      "#burnout",
-      "#mindset",
-      "#humor"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "goblin-prod-standards-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
-      },
-      "pinterestBoard": "Funny Stuff",
-      "pinterestBoards": [
-        "Funny Stuff",
-        "Random thoughts"
-      ],
-      "pinterestTags": [
-        "anti productivity",
-        "relatable",
-        "burnout",
-        "mindset",
-        "humor"
-      ],
-      "keyword": "anti productivity quote",
-      "angle": "defiance",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
-    "updatedAt": "2026-04-18T22:19:36.602Z"
-  },
-  {
     "id": "p_2026R_0110",
     "title": "Self Care Meme Coloring Page (Questionable Choices 😂)",
     "body": "Not all self care is productive… and that’s fine. Printable goblin meme for people doing their best in weird ways.",
@@ -2635,69 +1248,6 @@
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/apparel"
   },
   {
-    "id": "p_2026R_0089",
-    "title": "When Your Brain Is Empty, Prompts Beat Motivation",
-    "body": "Creator block is usually a starting problem, not a talent problem. Use 100 Prompt Storm to get moving fast.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-06-04T15:20:00.000Z",
-    "attemptCount": 0,
-    "nextAttemptAt": null,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#contentprompts",
-      "#creatortools",
-      "#creativeblock",
-      "#productivity",
-      "#digitalproducts"
-    ],
-    "canonicalUrl": "https://fleurdevie.gumroad.com/l/100prompt-storm",
-    "affiliateUrl": "https://fleurdevie.gumroad.com/l/100prompt-storm",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "prompt-storm-pinterest",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
-        "amazon": "",
-        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
-      },
-      "pinterestBoard": "Learn computer coding",
-      "pinterestBoards": [
-        "Learn computer coding",
-        "Ui ux design",
-        "Random thoughts"
-      ],
-      "pinterestTags": [
-        "content prompts",
-        "creator tools",
-        "creative block",
-        "productivity",
-        "digital products"
-      ],
-      "keyword": "content prompts for creators",
-      "angle": "beat blank page",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T22:19:36.602Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
-  },
-  {
     "id": "p_2026R_0130",
     "title": "You Survived Things No One Saw",
     "body": "That alone deserves kindness — even if no one else noticed.",
@@ -2819,68 +1369,6 @@
     },
     "updatedAt": "2026-04-18T22:19:36.602Z",
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png"
-  },
-  {
-    "id": "p_2026R_0061",
-    "title": "Perfectly Organized Nail Kit Setup",
-    "body": "Everything laid out clean and ready for the perfect manicure.",
-    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "mediaType": "image",
-    "status": "approved",
-    "scheduledAt": "2026-06-03T16:00:00.000Z",
-    "attemptCount": 0,
-    "lastErrorAt": null,
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "hashtags": [
-      "#organized",
-      "#setup",
-      "#nailtools",
-      "#beauty",
-      "#flatlay"
-    ],
-    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-    "metadata": {
-      "productProfileId": "restored-batch",
-      "productProfileLabel": "gel-nails-april",
-      "productCategory": "Seasonal",
-      "productLinks": {
-        "gumroad": "",
-        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
-        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
-      },
-      "pinterestBoard": "Fun Ideas",
-      "pinterestBoards": [
-        "Home spa",
-        "Beautiful me."
-      ],
-      "pinterestTags": [
-        "organized",
-        "setup",
-        "nail tools",
-        "beauty",
-        "flatlay"
-      ],
-      "keyword": "nail tools layout",
-      "angle": "organization",
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "approvalSource": "restore-to-db",
-      "requiresReview": false,
-      "allowConsecutivePinterestMedia": true
-    },
-    "updatedAt": "2026-04-18T22:19:36.602Z",
-    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
-    "nextAttemptAt": null
   },
   {
     "id": "p_2026R_0062",
@@ -6348,268 +4836,6 @@
     "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt"
   },
   {
-    "id": "p_startanyway_004",
-    "title": "Quiet Chaos Energy Hoodie",
-    "body": "For people who are a little chaotic... but still trying. Subtle goblin-core energy.",
-    "mediaPath": "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
-    "mediaType": "image",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "scheduledAt": "2026-05-28T16:00:00.000Z",
-    "status": "approved",
-    "hashtags": [
-      "#hoodie",
-      "#aesthetic",
-      "#goblin",
-      "#core",
-      "#cozy",
-      "#outfit"
-    ],
-    "tags": [
-      "hoodie aesthetic",
-      "goblin core",
-      "cozy outfit"
-    ],
-    "metadata": {
-      "productProfileId": "start-anyway-frog",
-      "productProfileLabel": "Start Anyway Frog",
-      "productLink": "https://my-store-10fedc5.creator-spring.com/apparel",
-      "pinterestBoard": "Home spa",
-      "pinterestTags": [
-        "hoodie aesthetic",
-        "goblin core",
-        "cozy outfit"
-      ],
-      "approvalSource": "manual",
-      "requiresReview": false,
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "productCategory": "Creator Spring products",
-      "productLinks": {
-        "primary": "https://my-store-10fedc5.creator-spring.com/apparel",
-        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
-        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
-        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
-      },
-      "imagePool": [
-        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
-        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
-      ]
-    },
-    "createdAt": "2026-04-17T18:38:45.777Z",
-    "updatedAt": "2026-04-19T22:13:41.433Z",
-    "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/apparel",
-    "image": "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
-    "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/apparel"
-  },
-  {
-    "id": "p_startanyway_005",
-    "title": "I will Start Tomorrow (Probably)",
-    "body": "Or... start anyway. Small reminder for big overthinking energy.",
-    "mediaPath": "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
-    "mediaType": "image",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "scheduledAt": "2026-05-29T16:00:00.000Z",
-    "status": "approved",
-    "hashtags": [
-      "#funny",
-      "#sticker",
-      "#relatable"
-    ],
-    "tags": [
-      "funny",
-      "sticker",
-      "relatable"
-    ],
-    "metadata": {
-      "productProfileId": "start-anyway-frog",
-      "productProfileLabel": "Start Anyway Frog",
-      "productLink": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
-      "pinterestBoard": "Funny Stuff",
-      "pinterestTags": [
-        "funny",
-        "sticker",
-        "relatable"
-      ],
-      "approvalSource": "manual",
-      "requiresReview": false,
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "productCategory": "Creator Spring products",
-      "productLinks": {
-        "primary": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
-        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
-        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
-        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
-      },
-      "imagePool": [
-        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
-        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
-      ]
-    },
-    "createdAt": "2026-04-17T18:38:45.777Z",
-    "updatedAt": "2026-04-19T22:13:41.433Z",
-    "image": "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg",
-    "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
-    "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt"
-  },
-  {
-    "id": "p_startanyway_006",
-    "title": "Minimal Graphic Tee - Start Anyway",
-    "body": "Clean, wearable, slightly weird. A shirt that says just enough.",
-    "mediaPath": "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg",
-    "mediaType": "image",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "scheduledAt": "2026-05-31T15:00:00.000Z",
-    "status": "approved",
-    "hashtags": [
-      "#minimal",
-      "#style",
-      "#graphic",
-      "#tee",
-      "#fashion"
-    ],
-    "tags": [
-      "minimal style",
-      "graphic tee",
-      "fashion"
-    ],
-    "metadata": {
-      "productProfileId": "start-anyway-frog",
-      "productProfileLabel": "Start Anyway Frog",
-      "productLink": "https://my-store-10fedc5.creator-spring.com/apparel",
-      "pinterestBoard": "Art & quotes",
-      "pinterestTags": [
-        "minimal style",
-        "graphic tee",
-        "fashion"
-      ],
-      "approvalSource": "manual",
-      "requiresReview": false,
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "productCategory": "Creator Spring products",
-      "productLinks": {
-        "primary": "https://my-store-10fedc5.creator-spring.com/apparel",
-        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
-        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
-        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
-      },
-      "imagePool": [
-        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
-        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
-      ]
-    },
-    "createdAt": "2026-04-17T18:38:45.777Z",
-    "updatedAt": "2026-04-19T22:13:41.433Z",
-    "image": "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
-    "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/apparel",
-    "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/apparel"
-  },
-  {
-    "id": "p_startanyway_007",
-    "title": "Stop Waiting for the Right Time",
-    "body": "There is not one. Just start anyway.",
-    "mediaPath": "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
-    "mediaType": "image",
-    "platforms": [
-      "pinterest"
-    ],
-    "targets": [
-      {
-        "platform": "pinterest",
-        "accountId": null
-      }
-    ],
-    "scheduledAt": "2026-06-01T15:20:00.000Z",
-    "status": "approved",
-    "hashtags": [
-      "#procrastination",
-      "#mindset",
-      "#start",
-      "#now"
-    ],
-    "tags": [
-      "procrastination",
-      "mindset",
-      "start now"
-    ],
-    "metadata": {
-      "productProfileId": "start-anyway-frog",
-      "productProfileLabel": "Start Anyway Frog",
-      "productLink": "https://my-store-10fedc5.creator-spring.com/",
-      "pinterestBoard": "Random thoughts",
-      "pinterestTags": [
-        "procrastination",
-        "mindset",
-        "start now"
-      ],
-      "approvalSource": "manual",
-      "requiresReview": false,
-      "distributionTags": [
-        "post:pinterest"
-      ],
-      "productCategory": "Creator Spring products",
-      "productLinks": {
-        "primary": "https://my-store-10fedc5.creator-spring.com/",
-        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
-        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
-        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
-      },
-      "imagePool": [
-        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
-        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
-        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
-      ]
-    },
-    "createdAt": "2026-04-17T18:38:45.777Z",
-    "updatedAt": "2026-04-19T22:13:41.433Z",
-    "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/",
-    "image": "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
-    "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/"
-  },
-  {
     "id": "p_startanyway_009",
     "title": "Soft Motivation > Hustle Culture",
     "body": "No pressure. No grind. Just... start anyway.",
@@ -7019,6 +5245,1780 @@
     "updatedAt": "2026-04-19T22:13:41.434Z",
     "mediaType": "image",
     "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png"
+  },
+  {
+    "id": "p_20260427_01",
+    "title": "I Built a Social Posting Pipeline That Survives Bad Brain Days",
+    "body": "Most days, I don't lose to complexity.\n\nI lose to... doing nothing.\n\nStaring at the screen.\nScrolling.\nOpening GPT 50 times hoping something sticks.\n\nSo I stopped trying to \"be motivated\" and built a system that works even when I'm not.\n\n## The Problem\n\nMy workflow used to be:\n\n- have idea\n- overthink idea\n- maybe write post\n- forget to publish\n- repeat in 3 days\n\nZero consistency.\nZero reliability.\nLots of \"I'll get to it later.\"\n\n## The System (What Actually Runs)\n\nRight now my setup is not fancy. It's just... layered correctly.\n\n- **SQLite = source of truth**\n- **JSON = mirror / fallback**\n- **Worker = handles posting**\n- **Playwright = fakes being me on platforms**\n- **UI = manual override when things break**\n\nThat's it.\n\nNo magic. Just separation of responsibilities.\n\n### Core flow\n\n1. I dump content into a queue\n2. It gets stored in SQLite\n3. Worker runs every ~30 minutes\n4. It tries to post\n5. If it fails -> it stays in the system\n6. I retry or reschedule later\n\nNo disappearing posts. No guessing.\n\n## Why This Changed Everything\n\nBefore this, every post required:\n\n- remembering to post\n- deciding what to post\n- actually posting\n\nNow?\n\nI just:\n\n> throw ideas into the system and let it deal with timing\n\nThe biggest shift wasn't AI.\nIt was this:\n\n> **I separated creation from execution.**\n\nOnce that clicked, everything got easier.\n\n## The \"Bad Brain Day\" Design\n\nI didn't build this for productivity.\n\nI built it for the days where I'm useless.\n\nSo the system assumes:\n\n- I will forget\n- I will avoid work\n- I will break things\n- platforms will randomly fail\n\nAnd it handles that.\n\n## Failure Is Expected (Not Exceptional)\n\nStuff breaks constantly.\n\n- platform UI changes\n- tokens die\n- Playwright gets weird\n- I push something dumb and break my own app\n\nSo instead of trying to prevent failure, I designed for it:\n\n- failed posts don't disappear\n- they stay in the queue\n- they get marked `failed`\n- I retry or move them\n\nNothing is wasted.\n\n## The \"Oh Shit\" Fallback\n\nWhen something fails:\n\n- it gets marked failed automatically\n- I either:\n  - retry it\n  - or bump it to another day\n\nThat's it.\n\nNo panic. No rebuilding.\n\nJust... try again later.\n\n## The Unexpected Benefit\n\nThe biggest win wasn't automation.\n\nIt was **mental load reduction**.\n\nBefore:\n\n- every post was a decision\n\nNow:\n\n- posting is a background process\n\nThat frees me up to actually build things again.\n\n## The Honest State of This System\n\nThis isn't some perfect SaaS.\n\n- it works\n- I break it sometimes\n- then I fix it\n\nThat's the loop.\n\nBut it's still better than relying on motivation.\n\n## If You Want to Steal This Idea\n\nYou don't need my exact stack.\n\nYou need this structure:\n\n- one place to store content (DB)\n- one process to execute (worker)\n- one way to recover (retry system)\n\nThat's it.\n\nEverything else is optional.\n\n## Final Thought\n\nMotivation didn't fix my consistency.\n\nA queue did.",
+    "platforms": [
+      "devto"
+    ],
+    "targets": [
+      {
+        "platform": "devto",
+        "accountId": null
+      }
+    ],
+    "scheduledAt": "2026-06-03T15:20:00.000Z",
+    "status": "approved",
+    "hashtags": [
+      "automation",
+      "sideprojects",
+      "webdev",
+      "productivity",
+      "buildinpublic"
+    ],
+    "tags": [
+      "automation",
+      "pipeline",
+      "reliability"
+    ],
+    "altText": "Network-style workflow diagram showing idea queue, worker execution, and retry loop",
+    "metadata": {
+      "productProfileId": "prompt-storm",
+      "productProfileLabel": "100 Prompt Storm",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
+      },
+      "includeProductLink": true,
+      "imageStatus": "ready",
+      "contentTags": [
+        "automation",
+        "workflow",
+        "build in public"
+      ],
+      "distributionTags": [
+        "post:devto"
+      ],
+      "approvalSource": "devto-weekly",
+      "requiresReview": false
+    },
+    "createdAt": "2026-04-01T04:51:38.361Z",
+    "updatedAt": "2026-04-01T04:51:38.362Z",
+    "mediaPath": "frontend/assets/devto/IDeasPostsPins.png",
+    "mediaType": "image",
+    "image": "https://raw.githubusercontent.com/AshB4/N8tiveFlow/main/frontend/assets/devto/IDeasPostsPins.png"
+  },
+  {
+    "id": "p_20260417_goblinfb_10",
+    "title": "A Little Too Accurate",
+    "body": "Yeah… this one is a little too accurate.",
+    "status": "approved",
+    "platforms": [
+      "facebook"
+    ],
+    "targets": [
+      {
+        "platform": "facebook",
+        "accountId": null
+      }
+    ],
+    "mediaPath": "frontend/assets/goblinaffs/DisappearHotMess.png",
+    "mediaType": "image",
+    "scheduledAt": "2026-05-28T15:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "metadata": {
+      "contentTags": [
+        "goblin",
+        "meme"
+      ],
+      "distributionTags": [
+        "post:facebook"
+      ],
+      "approvalSource": "manual-json",
+      "requiresReview": false,
+      "productProfileId": "goblin-coloring-affirmations",
+      "productProfileLabel": "Goblin Core Affirmations",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      }
+    },
+    "createdAt": "2026-04-01T01:36:18.164Z",
+    "updatedAt": "2026-04-01T05:36:10.424Z"
+  },
+  {
+    "id": "p_20260419_buzzfb_02",
+    "title": "A quiet hobby that doesn’t ask much from you.",
+    "body": "If your brain feels noisy, this helps.\n\nBuzzing Adventures is simple, cozy, and actually easy to start.",
+    "mediaPath": "frontend/assets/buzzingbees/AdultsColoringAgainBigBee.png",
+    "tags": [
+      "quiet",
+      "hobby",
+      "nature"
+    ],
+    "hashtags": [
+      "adultcoloring",
+      "mindful",
+      "beeart"
+    ],
+    "scheduledAt": "2026-05-31T15:40:00.000Z",
+    "platforms": [
+      "facebook"
+    ],
+    "targets": [
+      {
+        "platform": "facebook",
+        "accountId": null
+      }
+    ],
+    "status": "approved",
+    "mediaType": "image",
+    "metadata": {
+      "productProfileId": "buzzing-adventures-coloring-book",
+      "productProfileLabel": "Buzzing Adventures Coloring Book",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX",
+        "primary": "https://www.amazon.com/Buzzing-Adventures-Coloring-Explore-Beehives/dp/B0D9R6ZMPX"
+      },
+      "includeProductLink": true,
+      "approvalSource": "manual-buzzing-fb",
+      "requiresReview": false
+    },
+    "createdAt": "2026-04-01T05:37:44.005Z",
+    "updatedAt": "2026-04-01T05:37:44.005Z"
+  },
+  {
+    "id": "p_20260403_goblinfb_02",
+    "title": "Choosing This Logic Now",
+    "body": "This is the kind of logic I’m choosing to live by now.",
+    "status": "approved",
+    "platforms": [
+      "facebook"
+    ],
+    "targets": [
+      {
+        "platform": "facebook",
+        "accountId": null
+      }
+    ],
+    "mediaPath": "frontend/assets/goblinaffs/ProdStandards.png",
+    "mediaType": "image",
+    "scheduledAt": "2026-06-02T16:00:00.000Z",
+    "attemptCount": 1,
+    "nextAttemptAt": "2026-04-03T15:31:47.204Z",
+    "lastErrorAt": "2026-04-03T15:01:47.212Z",
+    "metadata": {
+      "contentTags": [
+        "goblin",
+        "meme"
+      ],
+      "distributionTags": [
+        "post:facebook"
+      ],
+      "approvalSource": "manual-json",
+      "requiresReview": false,
+      "productProfileId": "goblin-coloring-affirmations",
+      "productProfileLabel": "Goblin Core Affirmations",
+      "productCategory": "Digital products",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      }
+    },
+    "createdAt": "2026-04-01T01:36:18.164Z",
+    "updatedAt": "2026-04-05T19:46:35.439Z"
+  },
+  {
+    "id": "p_20260421_kawaiifb_04",
+    "title": "Scary Kawaii Halloween Coloring Book",
+    "body": "Cute ghosts, bats, pumpkins, and cozy spooky vibes. These are sample pages from my Scary Kawaii Halloween coloring book. https://www.amazon.com/dp/B0DHDNTW87",
+    "platforms": [
+      "facebook"
+    ],
+    "targets": [
+      {
+        "platform": "facebook",
+        "accountId": null
+      }
+    ],
+    "scheduledAt": "2026-05-30T15:20:00.000Z",
+    "status": "approved",
+    "mediaPath": "frontend/assets/kawaiiHalloween/AshTxWitch.webp",
+    "hashtags": [],
+    "tags": [
+      "kawaii",
+      "halloween",
+      "coloring",
+      "facebook"
+    ],
+    "metadata": {
+      "productProfileId": "kawaii-coloring-series",
+      "productProfileLabel": "Kawaii Coloring Series",
+      "productCategory": "Physical products",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/dp/B0DHDNTW87",
+        "primary": "https://www.amazon.com/dp/B0DHDNTW87"
+      },
+      "imageStatus": "ready",
+      "contentTags": [
+        "kawaii",
+        "halloween",
+        "sample-pages"
+      ],
+      "distributionTags": [
+        "post:facebook"
+      ],
+      "approvalSource": "manual-json",
+      "requiresReview": false,
+      "note": "Uses sample pages from the Scary Kawaii Halloween coloring book."
+    },
+    "createdAt": "2026-04-06T20:35:02.939Z",
+    "updatedAt": "2026-04-06T20:36:26.106Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "lastError": null
+  },
+  {
+    "id": "p_20260421_devto_01",
+    "title": "100 Prompts in 30 Days - Here is What Happened",
+    "body": "I used the same prompt pack for 30 days straight. Results:\n\n- Posted every day without fail\n- 3x my normal output\n- Actually started enjoying creating again\n\nThe prompts were not magic. They were starting points. That is the whole point.",
+    "platforms": [
+      "devto"
+    ],
+    "targets": [
+      {
+        "platform": "devto",
+        "accountId": null
+      }
+    ],
+    "scheduledAt": "2026-06-03T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": [
+      "#promptstorm",
+      "#contentcreation",
+      "#creative"
+    ],
+    "tags": [
+      "promptstorm",
+      "contentcreation",
+      "creative"
+    ],
+    "metadata": {
+      "approvalSource": "manual",
+      "requiresReview": false,
+      "distributionTags": [
+        "post:devto"
+      ]
+    },
+    "createdAt": "2026-04-14T01:28:35.717Z",
+    "updatedAt": "2026-04-14T01:28:35.717Z"
+  },
+  {
+    "id": "p_2026R_0075",
+    "title": "Instant Nail Glow Up",
+    "body": "Fresh nails = instant confidence.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-28T15:20:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#confidence",
+      "#beauty",
+      "#nails",
+      "#glowup",
+      "#selflove"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "The Queen in me.",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "confidence",
+        "beauty",
+        "nails",
+        "glow up",
+        "self love"
+      ],
+      "keyword": "nail glow up",
+      "angle": "confidence",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:19:36.599Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+  },
+  {
+    "id": "p_2026R_0076",
+    "title": "DIY Nails That Look Salon Done",
+    "body": "Yes, you can do this at home.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-28T15:40:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#diy",
+      "#results",
+      "#nails",
+      "#beauty",
+      "#home"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Home spa",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "diy",
+        "results",
+        "nails",
+        "beauty",
+        "home"
+      ],
+      "keyword": "diy nail results",
+      "angle": "results",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "updatedAt": "2026-04-18T22:19:36.600Z"
+  },
+  {
+    "id": "p_2026R_0077",
+    "title": "Fix Your Nails Without a Salon",
+    "body": "You don't need appointments anymore.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-29T15:20:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#fix",
+      "#nails",
+      "#beauty",
+      "#diy",
+      "#routine"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Home spa",
+        "Beautiful me."
+      ],
+      "pinterestTags": [
+        "fix",
+        "nails",
+        "beauty",
+        "diy",
+        "routine"
+      ],
+      "keyword": "nail improvement",
+      "angle": "fix bad nails",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:19:36.600Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+  },
+  {
+    "id": "p_2026R_0078",
+    "title": "The Most Satisfying Nail Transformation",
+    "body": "You know you love these.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-29T15:40:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#satisfying",
+      "#transformation",
+      "#nails",
+      "#beauty",
+      "#beforeafter"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Freaking Weird or mild...",
+      "pinterestBoards": [
+        "Fun Ideas",
+        "Beautiful me."
+      ],
+      "pinterestTags": [
+        "satisfying",
+        "transformation",
+        "nails",
+        "beauty",
+        "before after"
+      ],
+      "keyword": "nail transformation",
+      "angle": "satisfying",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "updatedAt": "2026-04-18T22:19:36.600Z"
+  },
+  {
+    "id": "p_2026R_0139",
+    "title": "Hot Mess And Still Here",
+    "body": "You don’t have to be perfect to be unstoppable.",
+    "mediaPath": "frontend/assets/goblinaffs/ExploringSideQuests.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-29T15:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#hotmess",
+      "#confidence",
+      "#selfworth",
+      "#relatable",
+      "#mentalhealth"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-disappear-hot-mess-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Funny Stuff",
+      "pinterestBoards": [
+        "Funny Stuff",
+        "Beautiful me."
+      ],
+      "pinterestTags": [
+        "hot mess",
+        "confidence",
+        "self worth",
+        "relatable",
+        "mental health"
+      ],
+      "keyword": "hot mess affirmation",
+      "angle": "defiant self worth",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/goblinaffs/ExploringSideQuests.png",
+    "updatedAt": "2026-04-18T22:19:36.600Z"
+  },
+  {
+    "id": "p_2026R_0104",
+    "title": "Lazy Day Coloring Page (No Productivity Required)",
+    "body": "For the days when doing less is the plan. Funny goblin-style printable coloring page for low-energy days and zero guilt.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-30T15:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#lazyday",
+      "#coloringpage",
+      "#printable",
+      "#relatablehumor",
+      "#goblinenergy"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-do-less-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "coloring pages",
+      "pinterestBoards": [
+        "coloring pages",
+        "Funny Stuff"
+      ],
+      "pinterestTags": [
+        "lazy day",
+        "coloring page",
+        "printable",
+        "relatable humor",
+        "goblin energy"
+      ],
+      "keyword": "lazy day coloring page printable",
+      "angle": "low energy humor",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "updatedAt": "2026-04-18T22:19:36.600Z"
+  },
+  {
+    "id": "p_2026R_0079",
+    "title": "Doing My Nails at Home Just Hits Different",
+    "body": "Cozy setup, better results.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-30T15:40:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#cozy",
+      "#homenails",
+      "#routine",
+      "#selfcare",
+      "#beauty"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Home spa",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "cozy",
+        "home nails",
+        "routine",
+        "self care",
+        "beauty"
+      ],
+      "keyword": "doing nails at home",
+      "angle": "cozy",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "updatedAt": "2026-04-18T22:19:36.601Z"
+  },
+  {
+    "id": "p_2026R_0080",
+    "title": "My At Home Nail Routine Setup",
+    "body": "Simple, repeatable, works every time.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-30T16:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#routine",
+      "#nails",
+      "#beauty",
+      "#setup",
+      "#selfcare"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Home spa",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "routine",
+        "nails",
+        "beauty",
+        "setup",
+        "self care"
+      ],
+      "keyword": "nail routine",
+      "angle": "routine",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:19:36.601Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+  },
+  {
+    "id": "p_2026R_0081",
+    "title": "Perfect Home Manicure Setup",
+    "body": "This setup makes it easy.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-31T16:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#setup",
+      "#workspace",
+      "#nails",
+      "#beauty",
+      "#diy"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Home spa",
+        "Beautiful me."
+      ],
+      "pinterestTags": [
+        "setup",
+        "workspace",
+        "nails",
+        "beauty",
+        "diy"
+      ],
+      "keyword": "manicure setup",
+      "angle": "workspace",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "updatedAt": "2026-04-18T22:19:36.601Z"
+  },
+  {
+    "id": "p_2026R_0082",
+    "title": "Self Care Night Nail Routine",
+    "body": "Add this to your weekly reset.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-06-01T15:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#selfcare",
+      "#routine",
+      "#night",
+      "#nails",
+      "#beauty"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Home spa",
+        "I Want, I dream."
+      ],
+      "pinterestTags": [
+        "self care",
+        "routine",
+        "night",
+        "nails",
+        "beauty"
+      ],
+      "keyword": "self care night",
+      "angle": "night routine",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:19:36.601Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+  },
+  {
+    "id": "p_2026R_0083",
+    "title": "Home Beauty Setup That Actually Works",
+    "body": "No fluff, just results.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-06-01T16:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#beauty",
+      "#home",
+      "#setup",
+      "#nails",
+      "#lifestyle"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "I Want, I dream.",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "beauty",
+        "home",
+        "setup",
+        "nails",
+        "lifestyle"
+      ],
+      "keyword": "home beauty setup",
+      "angle": "lifestyle",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "updatedAt": "2026-04-18T22:19:36.601Z"
+  },
+  {
+    "id": "p_2026R_0094",
+    "title": "Funny Goblin Coloring Page (This Is Too Real 😂)",
+    "body": "If you’ve ever side-eyed someone for drinking plain water… this one hits. Printable goblin coloring page with chaotic relatable humor.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-05-31T15:20:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#funnycoloringpage",
+      "#adultcoloring",
+      "#goblincore",
+      "#relatablehumor",
+      "#printable"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-drinkwater-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "coloring pages",
+      "pinterestBoards": [
+        "coloring pages",
+        "Funny Stuff"
+      ],
+      "pinterestTags": [
+        "funny coloring page",
+        "adult coloring",
+        "goblin core",
+        "relatable humor",
+        "printable"
+      ],
+      "keyword": "funny coloring page adult humor",
+      "angle": "relatable humor",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "updatedAt": "2026-04-18T22:19:36.601Z"
+  },
+  {
+    "id": "p_2026R_0099",
+    "title": "Mental Health Coloring Page (Some Days This Is Enough)",
+    "body": "If all you did today was exist… that counts. Printable goblin-style coloring page for hard days, burnout, and quiet survival wins.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-06-01T15:40:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#mentalhealth",
+      "#selfcareprintable",
+      "#coloringpage",
+      "#burnoutrecovery",
+      "#healing"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-existing-stubbornly-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "coloring pages"
+      ],
+      "pinterestTags": [
+        "mental health",
+        "self care printable",
+        "coloring page",
+        "burnout recovery",
+        "healing"
+      ],
+      "keyword": "mental health coloring page printable",
+      "angle": "validation / survival",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "updatedAt": "2026-04-18T22:19:36.601Z"
+  },
+  {
+    "id": "p_2026R_0134",
+    "title": "You’re Not Behind — You’re On A Side Quest",
+    "body": "Not everything has to be the main path to matter.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-06-02T15:20:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#lifepath",
+      "#exploration",
+      "#growth",
+      "#mindset",
+      "#journey"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-exploring-side-quests-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Random thoughts",
+      "pinterestBoards": [
+        "Random thoughts",
+        "Art & quotes"
+      ],
+      "pinterestTags": [
+        "life path",
+        "exploration",
+        "growth",
+        "mindset",
+        "journey"
+      ],
+      "keyword": "life path not linear",
+      "angle": "reframing direction",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "updatedAt": "2026-04-18T22:19:36.601Z"
+  },
+  {
+    "id": "p_2026R_0119",
+    "title": "You Are Allowed To Move Slowly (And Still Be Winning)",
+    "body": "Slow progress is still progress. This goblin reminder hits different when you're tired of hustle culture.",
+    "mediaPath": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-06-02T15:40:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#slowprogress",
+      "#antihustle",
+      "#mentalhealth",
+      "#selfcare",
+      "#burnout"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-moveslow-not-fail-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Art & quotes",
+      "pinterestBoards": [
+        "Art & quotes",
+        "Beautiful me.",
+        "Random thoughts"
+      ],
+      "pinterestTags": [
+        "slow progress",
+        "anti hustle",
+        "mental health",
+        "self care",
+        "burnout"
+      ],
+      "keyword": "slow progress affirmation",
+      "angle": "anti hustle validation",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/goblinaffs/DoingLessStillSomething.png",
+    "updatedAt": "2026-04-18T22:19:36.601Z"
+  },
+  {
+    "id": "p_2026R_0059",
+    "title": "At Home Gel Nail Kit Setup (Beginner Friendly)",
+    "body": "Everything you need to start doing gel nails at home with salon-level results.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-06-02T15:00:00.000Z",
+    "attemptCount": 0,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#gelnails",
+      "#homespa",
+      "#nailkit",
+      "#diynails",
+      "#beauty"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Home spa",
+      "pinterestBoards": [
+        "Beautiful me.",
+        "Fun Ideas"
+      ],
+      "pinterestTags": [
+        "gel nails",
+        "home spa",
+        "nail kit",
+        "diy nails",
+        "beauty"
+      ],
+      "keyword": "gel nail kit at home",
+      "angle": "beginner setup",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null,
+    "updatedAt": "2026-04-18T22:19:36.601Z"
+  },
+  {
+    "id": "p_2026R_0060",
+    "title": "Minimal Nail Kit Setup Aesthetic",
+    "body": "Clean, minimal, and actually useful. The perfect nail setup.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-06-03T15:40:00.000Z",
+    "attemptCount": 0,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#aesthetic",
+      "#minimal",
+      "#beautysetup",
+      "#cleangirl",
+      "#nails"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Beautiful me.",
+      "pinterestBoards": [
+        "Home spa",
+        "I Want, I dream."
+      ],
+      "pinterestTags": [
+        "aesthetic",
+        "minimal",
+        "beauty setup",
+        "clean girl",
+        "nails"
+      ],
+      "keyword": "nail kit aesthetic",
+      "angle": "minimal aesthetic",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:19:36.601Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null
+  },
+  {
+    "id": "p_2026R_0124",
+    "title": "I Don’t Trust Productivity Standards Either",
+    "body": "Made-up rules by people who don’t live in your brain? Hard pass.",
+    "mediaPath": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-06-04T15:00:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#antiproductivity",
+      "#relatable",
+      "#burnout",
+      "#mindset",
+      "#humor"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "goblin-prod-standards-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/goblin-core-coloring-affirmations"
+      },
+      "pinterestBoard": "Funny Stuff",
+      "pinterestBoards": [
+        "Funny Stuff",
+        "Random thoughts"
+      ],
+      "pinterestTags": [
+        "anti productivity",
+        "relatable",
+        "burnout",
+        "mindset",
+        "humor"
+      ],
+      "keyword": "anti productivity quote",
+      "angle": "defiance",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "image": "frontend/assets/goblinaffs/MoveslowNotFail.png",
+    "updatedAt": "2026-04-18T22:19:36.602Z"
+  },
+  {
+    "id": "p_2026R_0089",
+    "title": "When Your Brain Is Empty, Prompts Beat Motivation",
+    "body": "Creator block is usually a starting problem, not a talent problem. Use 100 Prompt Storm to get moving fast.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-06-04T15:20:00.000Z",
+    "attemptCount": 0,
+    "nextAttemptAt": null,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#contentprompts",
+      "#creatortools",
+      "#creativeblock",
+      "#productivity",
+      "#digitalproducts"
+    ],
+    "canonicalUrl": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+    "affiliateUrl": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "prompt-storm-pinterest",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "https://fleurdevie.gumroad.com/l/100prompt-storm",
+        "amazon": "",
+        "primary": "https://fleurdevie.gumroad.com/l/100prompt-storm"
+      },
+      "pinterestBoard": "Learn computer coding",
+      "pinterestBoards": [
+        "Learn computer coding",
+        "Ui ux design",
+        "Random thoughts"
+      ],
+      "pinterestTags": [
+        "content prompts",
+        "creator tools",
+        "creative block",
+        "productivity",
+        "digital products"
+      ],
+      "keyword": "content prompts for creators",
+      "angle": "beat blank page",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:19:36.602Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png"
+  },
+  {
+    "id": "p_2026R_0061",
+    "title": "Perfectly Organized Nail Kit Setup",
+    "body": "Everything laid out clean and ready for the perfect manicure.",
+    "mediaPath": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "mediaType": "image",
+    "status": "approved",
+    "scheduledAt": "2026-06-03T16:00:00.000Z",
+    "attemptCount": 0,
+    "lastErrorAt": null,
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "hashtags": [
+      "#organized",
+      "#setup",
+      "#nailtools",
+      "#beauty",
+      "#flatlay"
+    ],
+    "canonicalUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "affiliateUrl": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+    "metadata": {
+      "productProfileId": "restored-batch",
+      "productProfileLabel": "gel-nails-april",
+      "productCategory": "Seasonal",
+      "productLinks": {
+        "gumroad": "",
+        "amazon": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1",
+        "primary": "https://www.amazon.com/Beetles-Gel-Nail-Polish-Kit/dp/B0CL4QS55M?th=1"
+      },
+      "pinterestBoard": "Fun Ideas",
+      "pinterestBoards": [
+        "Home spa",
+        "Beautiful me."
+      ],
+      "pinterestTags": [
+        "organized",
+        "setup",
+        "nail tools",
+        "beauty",
+        "flatlay"
+      ],
+      "keyword": "nail tools layout",
+      "angle": "organization",
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "approvalSource": "restore-to-db",
+      "requiresReview": false,
+      "allowConsecutivePinterestMedia": true
+    },
+    "updatedAt": "2026-04-18T22:19:36.602Z",
+    "image": "frontend/assets/spring2026/GelNailsRandomnailcolors.png",
+    "nextAttemptAt": null
+  },
+  {
+    "id": "p_startanyway_004",
+    "title": "Quiet Chaos Energy Hoodie",
+    "body": "For people who are a little chaotic... but still trying. Subtle goblin-core energy.",
+    "mediaPath": "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+    "mediaType": "image",
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "scheduledAt": "2026-05-28T16:00:00.000Z",
+    "status": "approved",
+    "hashtags": [
+      "#hoodie",
+      "#aesthetic",
+      "#goblin",
+      "#core",
+      "#cozy",
+      "#outfit"
+    ],
+    "tags": [
+      "hoodie aesthetic",
+      "goblin core",
+      "cozy outfit"
+    ],
+    "metadata": {
+      "productProfileId": "start-anyway-frog",
+      "productProfileLabel": "Start Anyway Frog",
+      "productLink": "https://my-store-10fedc5.creator-spring.com/apparel",
+      "pinterestBoard": "Home spa",
+      "pinterestTags": [
+        "hoodie aesthetic",
+        "goblin core",
+        "cozy outfit"
+      ],
+      "approvalSource": "manual",
+      "requiresReview": false,
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "productCategory": "Creator Spring products",
+      "productLinks": {
+        "primary": "https://my-store-10fedc5.creator-spring.com/apparel",
+        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
+        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
+        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
+      },
+      "imagePool": [
+        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
+        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
+      ]
+    },
+    "createdAt": "2026-04-17T18:38:45.777Z",
+    "updatedAt": "2026-04-19T22:13:41.433Z",
+    "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/apparel",
+    "image": "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
+    "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/apparel"
+  },
+  {
+    "id": "p_startanyway_005",
+    "title": "I will Start Tomorrow (Probably)",
+    "body": "Or... start anyway. Small reminder for big overthinking energy.",
+    "mediaPath": "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
+    "mediaType": "image",
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "scheduledAt": "2026-05-29T16:00:00.000Z",
+    "status": "approved",
+    "hashtags": [
+      "#funny",
+      "#sticker",
+      "#relatable"
+    ],
+    "tags": [
+      "funny",
+      "sticker",
+      "relatable"
+    ],
+    "metadata": {
+      "productProfileId": "start-anyway-frog",
+      "productProfileLabel": "Start Anyway Frog",
+      "productLink": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
+      "pinterestBoard": "Funny Stuff",
+      "pinterestTags": [
+        "funny",
+        "sticker",
+        "relatable"
+      ],
+      "approvalSource": "manual",
+      "requiresReview": false,
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "productCategory": "Creator Spring products",
+      "productLinks": {
+        "primary": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
+        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
+        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
+        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
+      },
+      "imagePool": [
+        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
+        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
+      ]
+    },
+    "createdAt": "2026-04-17T18:38:45.777Z",
+    "updatedAt": "2026-04-19T22:13:41.433Z",
+    "image": "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg",
+    "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
+    "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt"
+  },
+  {
+    "id": "p_startanyway_006",
+    "title": "Minimal Graphic Tee - Start Anyway",
+    "body": "Clean, wearable, slightly weird. A shirt that says just enough.",
+    "mediaPath": "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg",
+    "mediaType": "image",
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "scheduledAt": "2026-05-31T15:00:00.000Z",
+    "status": "approved",
+    "hashtags": [
+      "#minimal",
+      "#style",
+      "#graphic",
+      "#tee",
+      "#fashion"
+    ],
+    "tags": [
+      "minimal style",
+      "graphic tee",
+      "fashion"
+    ],
+    "metadata": {
+      "productProfileId": "start-anyway-frog",
+      "productProfileLabel": "Start Anyway Frog",
+      "productLink": "https://my-store-10fedc5.creator-spring.com/apparel",
+      "pinterestBoard": "Art & quotes",
+      "pinterestTags": [
+        "minimal style",
+        "graphic tee",
+        "fashion"
+      ],
+      "approvalSource": "manual",
+      "requiresReview": false,
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "productCategory": "Creator Spring products",
+      "productLinks": {
+        "primary": "https://my-store-10fedc5.creator-spring.com/apparel",
+        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
+        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
+        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
+      },
+      "imagePool": [
+        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
+        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
+      ]
+    },
+    "createdAt": "2026-04-17T18:38:45.777Z",
+    "updatedAt": "2026-04-19T22:13:41.433Z",
+    "image": "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
+    "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/apparel",
+    "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/apparel"
+  },
+  {
+    "id": "p_startanyway_007",
+    "title": "Stop Waiting for the Right Time",
+    "body": "There is not one. Just start anyway.",
+    "mediaPath": "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
+    "mediaType": "image",
+    "platforms": [
+      "pinterest"
+    ],
+    "targets": [
+      {
+        "platform": "pinterest",
+        "accountId": null
+      }
+    ],
+    "scheduledAt": "2026-06-01T15:20:00.000Z",
+    "status": "approved",
+    "hashtags": [
+      "#procrastination",
+      "#mindset",
+      "#start",
+      "#now"
+    ],
+    "tags": [
+      "procrastination",
+      "mindset",
+      "start now"
+    ],
+    "metadata": {
+      "productProfileId": "start-anyway-frog",
+      "productProfileLabel": "Start Anyway Frog",
+      "productLink": "https://my-store-10fedc5.creator-spring.com/",
+      "pinterestBoard": "Random thoughts",
+      "pinterestTags": [
+        "procrastination",
+        "mindset",
+        "start now"
+      ],
+      "approvalSource": "manual",
+      "requiresReview": false,
+      "distributionTags": [
+        "post:pinterest"
+      ],
+      "productCategory": "Creator Spring products",
+      "productLinks": {
+        "primary": "https://my-store-10fedc5.creator-spring.com/",
+        "apparel": "https://my-store-10fedc5.creator-spring.com/apparel",
+        "listing": "https://my-store-10fedc5.creator-spring.com/listing/start-anyway-frog-circle-shirt",
+        "allVersions": "https://my-store-10fedc5.creator-spring.com/"
+      },
+      "imagePool": [
+        "https://mockup-api.teespring.com/v3/image/eP9RBmDTCYgu0wggLjJgLnb_wUw/1200/1200.jpg",
+        "https://mockup-api.teespring.com/v3/image/GXfJVeChaHOg-63J97kKPhecBvY/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/UWUti4EvEV2soRmBJ6eGmBcziDk/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/yQusVt_iZQA712hOKxKlX9DxJas/800/800.jpg",
+        "https://mockup-api.teespring.com/v3/image/fEaLBX6CWYMipUEzreinLgq6sK8/1200/1200.jpg"
+      ]
+    },
+    "createdAt": "2026-04-17T18:38:45.777Z",
+    "updatedAt": "2026-04-19T22:13:41.433Z",
+    "canonicalUrl": "https://my-store-10fedc5.creator-spring.com/",
+    "image": "https://mockup-api.teespring.com/v3/image/hdkE-Y7DfD6OE9-4yGl0A8YCwBU/800/800.jpg",
+    "affiliateUrl": "https://my-store-10fedc5.creator-spring.com/"
   },
   {
     "id": "p_20260428_test_01",

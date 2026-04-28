@@ -491,7 +491,7 @@ export default function PostCalendar() {
       <div className="grid grid-cols-1 md:grid-cols-[320px_1fr_260px] gap-4">
         <aside
           className="bg-black text-teal-300 p-4 border-2 border-pink-600 shadow-lg rounded cursor-pointer hover:border-teal-400 transition-colors"
-          onClick={() => navigate('/lib')}
+          onClick={() => navigate('/archive')}
         >
           <h2 className="text-pink-500 text-2xl mb-4 border-b border-pink-500 pb-1">QUEUE</h2>
           {upcomingScheduled.length === 0 ? (

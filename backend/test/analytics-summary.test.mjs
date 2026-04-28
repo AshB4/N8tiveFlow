@@ -39,3 +39,22 @@ test("buildAnalyticsSummary aggregates totals and leaders", () => {
   assert.equal(summary.topCampaign.campaign, "Pins");
   assert.equal(summary.posting.totalSuccessful, 8);
 });
+
+test("buildAnalyticsSummary includes Pinterest snapshot totals", () => {
+  const summary = buildAnalyticsSummary([], {}, [
+    {
+      titleSeen: "Backyard Lighting Before & After",
+      capturedAt: "2026-04-01T10:00:00Z",
+      metrics: {
+        impressions: 537,
+        saves: 10,
+        pinClicks: 7,
+        outboundClicks: 2,
+      },
+    },
+  ]);
+
+  assert.equal(summary.pinterest.count, 1);
+  assert.equal(summary.pinterest.totals.impressions, 537);
+  assert.equal(summary.pinterest.topPins[0].title, "Backyard Lighting Before & After");
+});

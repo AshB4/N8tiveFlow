@@ -17,8 +17,8 @@ const navItems = [
     activeClass: "border-pink-400 bg-pink-500 text-black",
   },
   {
-    to: "/lib",
-    label: "Open Library Vault",
+    to: "/archive",
+    label: "Posted Archive",
     baseClass:
       "border-cyan-500 text-cyan-300 hover:bg-cyan-500 hover:text-black",
     activeClass: "border-cyan-400 bg-cyan-500 text-black",

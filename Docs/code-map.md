@@ -45,12 +45,12 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
 
 - Calendar and home view: `frontend/UXUI/Pages/PostCalendar.jsx`
 - Composer: `frontend/UXUI/Pages/postComposer.jsx`
-- Library and bulk scheduling: `frontend/UXUI/Pages/PostLib.jsx`
+- Posted archive and bulk scheduling: `frontend/UXUI/Pages/PostLib.jsx`
 - Batch import and batch queue actions: `frontend/UXUI/Pages/BatchPage.jsx`
 - Affiliate rules, planning kernel, and reusable GPT prompts: `frontend/UXUI/Pages/AffiliateEnginePage.jsx`
 - Affiliate row builder, bulk JSON import, and affiliate queue scheduling: `frontend/UXUI/Pages/AffiliateBuilderPage.jsx`
 - Today Ops and manual assist: `frontend/UXUI/Pages/TodayQueue.jsx`
-- Analytics: `frontend/UXUI/Pages/ChartsPage.jsx`
+- Pinterest analytics dashboard: `frontend/UXUI/Pages/ChartsPage.jsx`
 - Posted archive: `frontend/UXUI/Pages/ArchivePage.jsx`
 - Rotation/setup: `frontend/UXUI/Pages/SetupPage.jsx`
 - pSEO pages: `frontend/UXUI/Pages/SeoPages.jsx`
@@ -65,6 +65,11 @@ Use it before adding features so we do not recreate logic, duplicate helpers, or
   - owns the `Remix Pinterest` button, which calls `/api/queue/rebalance-pinterest` and reloads posts
   - shows affiliate day markers in the month grid with a small status-colored `🛒` badge beside the date number
   - orders day-level posts so `facebook`/`instagram` social posts appear before affiliate Amazon/Pinterest pins
+- `frontend/UXUI/Pages/PostLib.jsx`
+  - posted archive and bulk scheduling surface
+  - `/lib` navigation was removed in favor of `/archive`
+- `frontend/UXUI/Pages/ChartsPage.jsx`
+  - shows Pinterest CSV/snapshot analytics and funnel summary data
 - `frontend/UXUI/Pages/SetupPage.jsx`
   - owns rotation defaults
   - now also surfaces token/platform health from `/api/platform-health`

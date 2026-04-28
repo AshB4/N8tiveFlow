@@ -84,6 +84,11 @@ function isBrowserLaunchAbortError(error) {
 	);
 }
 
+function isProfileSingletonLockError(error) {
+	const message = String(error?.message || error || "");
+	return /singletonlock|processsingleton/i.test(message);
+}
+
 async function launchFacebookContextWithFallback(profile, config) {
 	try {
 		return await chromium.launchPersistentContext(profile.launchUserDataDir, {
@@ -94,6 +99,22 @@ async function launchFacebookContextWithFallback(profile, config) {
 			viewport: { width: 1440, height: 960 },
 		});
 	} catch (error) {
+		if (isProfileSingletonLockError(error)) {
+			const fallbackProfile = await prepareChromeProfile({
+				...config,
+				cloneEnabled: true,
+			});
+			profile.launchUserDataDir = fallbackProfile.launchUserDataDir;
+			profile.cleanup = fallbackProfile.cleanup;
+			logStep("browser:launch:fallback", "singleton-lock-clone");
+			return await chromium.launchPersistentContext(profile.launchUserDataDir, {
+				channel: config.channel,
+				executablePath: config.executablePath,
+				headless: config.headless,
+				args: [`--profile-directory=${profile.profileDirectory}`],
+				viewport: { width: 1440, height: 960 },
+			});
+		}
 		if (
 			!shouldFallbackToChromium() ||
 			String(config.channel || "").toLowerCase() !== "chrome" ||

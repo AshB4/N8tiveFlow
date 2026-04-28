@@ -16,6 +16,13 @@ const DEFAULT_STATS = {
 	posts: [],
 };
 
+const DEFAULT_PINTEREST_STATS = {
+	totals: { impressions: 0, saves: 0, pinClicks: 0, outboundClicks: 0, score: 0 },
+	topPins: [],
+	recentSnapshots: [],
+	count: 0,
+};
+
 const focusSections = {
 	overview: "Overview",
 	platforms: "Platform Mix",
@@ -172,6 +179,8 @@ export default function ChartsPage() {
 		return computeStatsFromPosts(posts);
 	}, [location.state?.stats, posts]);
 
+	const pinterestStats = analytics?.pinterest || DEFAULT_PINTEREST_STATS;
+
 	const platformList = useMemo(() => {
 		const entries = Object.entries(stats.platformCounts || {});
 		const total = entries.reduce((sum, [, count]) => sum + count, 0) || 1;
@@ -197,17 +206,17 @@ export default function ChartsPage() {
 	return (
 		<div className="min-h-screen bg-black text-teal-200 font-mono px-6 py-10">
 			<header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-pink-600 pb-6 mb-10">
-				<div>
-					<p className="text-sm uppercase tracking-[0.3em] text-pink-500">
-						postpunk analytics
-					</p>
-					<h1 className="text-4xl md:text-5xl text-pink-400 glitchy">
-						Signal Dashboard
-					</h1>
-					<p className="text-sm text-teal-400 mt-2">
-						Queue health plus actual funnel performance from tracked events.
-					</p>
-				</div>
+					<div>
+						<p className="text-sm uppercase tracking-[0.3em] text-pink-500">
+							postpunk pinterest analytics
+						</p>
+						<h1 className="text-4xl md:text-5xl text-pink-400 glitchy">
+							Pinterest Signal Dashboard
+						</h1>
+						<p className="text-sm text-teal-400 mt-2">
+							Pinterest CSV performance plus snapshot metrics from tracked pins.
+						</p>
+					</div>
 				<div className="flex flex-wrap gap-3">
 					<Link
 						to="/"
@@ -266,21 +275,21 @@ export default function ChartsPage() {
 									{stats.scheduledPercent}% scheduled
 								</p>
 							</div>
-							<div className="border border-teal-600 rounded p-3">
-								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">
-									Conversions
-								</p>
-								<p className="text-2xl text-teal-200 font-semibold">
-									{analytics?.totals?.conversions ?? 0}
-								</p>
-								<p className="text-xs text-teal-500">tracked funnel events</p>
-							</div>
+						<div className="border border-teal-600 rounded p-3">
+							<p className="text-xs uppercase tracking-[0.3em] text-teal-400">
+								Pinterest Score
+							</p>
+							<p className="text-2xl text-teal-200 font-semibold">
+								{pinterestStats.totals?.score ?? 0}
+							</p>
+							<p className="text-xs text-teal-500">from Pinterest snapshots</p>
+						</div>
 						</div>
 					</div>
 
 					<div className="border rounded-lg p-5 bg-black/60 border-teal-700">
 						<h2 className="text-pink-300 text-lg uppercase tracking-[0.3em] mb-3">
-							Funnel Totals
+							Pinterest Totals
 						</h2>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
 							<div className="border border-teal-600 rounded p-3">
@@ -306,6 +315,42 @@ export default function ChartsPage() {
 							<div className="border border-teal-600 rounded p-3">
 								<p className="text-xs uppercase tracking-[0.3em] text-teal-400">Success Rate</p>
 								<p className="text-2xl text-pink-300 font-semibold">{analytics?.posting?.successRate ?? 0}%</p>
+							</div>
+							<div className="border border-pink-600 rounded p-3 md:col-span-3">
+								<p className="text-xs uppercase tracking-[0.3em] text-pink-400">Pinterest Snapshot Feed</p>
+								<p className="mt-2 text-teal-300">
+									{pinterestStats.count > 0
+										? `${pinterestStats.count} snapshots loaded. Showing top pins below.`
+										: "No Pinterest snapshots loaded yet. Capture or import metrics to see this panel populate."}
+								</p>
+								<div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+									<TopPostCard
+										label="Top Pinterest Pin"
+										title={pinterestStats.topPins?.[0]?.title}
+										detail={
+											pinterestStats.topPins?.[0]
+												? `${pinterestStats.topPins[0].impressions} impressions · ${pinterestStats.topPins[0].pinClicks} pin clicks · ${pinterestStats.topPins[0].outboundClicks} outbound clicks`
+												: "No Pinterest pin data loaded."
+										}
+									/>
+									<div className="border border-teal-800 rounded p-3">
+										<p className="uppercase text-xs tracking-[0.3em] text-teal-500">Recent Pinterest Metrics</p>
+										<div className="mt-3 space-y-2 max-h-56 overflow-auto pr-1">
+											{pinterestStats.recentSnapshots?.length ? (
+												pinterestStats.recentSnapshots.slice(0, 5).map((item) => (
+													<div key={`${item.pinId || item.title}-${item.capturedAt || ""}`} className="border border-teal-900 rounded p-2">
+														<p className="text-pink-300 text-sm">{item.title}</p>
+														<p className="text-teal-400 text-xs">
+															{item.impressions} impr · {item.saves} saves · {item.pinClicks} clicks · {item.outboundClicks} out
+														</p>
+													</div>
+												))
+											) : (
+												<p className="text-teal-500">Nothing loaded yet.</p>
+											)}
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

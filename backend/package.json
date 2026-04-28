@@ -12,6 +12,7 @@
     "x:capture-session": "node scripts/capture-x-session.mjs",
     "pinterest:metrics": "node scripts/pinterest/capture-pin-analytics.mjs",
     "pinterest:metrics:batch": "node scripts/pinterest/capture-pin-analytics-batch.mjs",
+    "pinterest:analyze": "node scripts/pinterest/analyze-pin-performance.mjs",
     "queue:dry-run": "node scripts/queue/dry-run-next24h.mjs",
     "queue:rebalance-pinterest": "node scripts/queue/rebalance-pinterest-mix.mjs",
     "summary:daily": "node scripts/health/daily-summary.mjs",

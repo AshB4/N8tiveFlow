@@ -1,5 +1,6 @@
 import { generateStructuredText, resolveAiConfig } from "./aiClient.mjs";
 import { generateSeoPayload, extractJsonObject } from "./seoGeneration.mjs";
+import { buildPinterestCreativeContext } from "./pinterestCreative.mjs";
 import { getProductProfile } from "./productProfiles.mjs";
 
 const ALLOWED_PHASES = new Set(["teaser", "launch", "follow_up", "evergreen"]);
@@ -37,6 +38,9 @@ function inferPhases(input, productProfile) {
 }
 
 function buildCampaignPlannerPrompt(input, productProfile, platforms, phases, maxPosts) {
+  const pinterestAware = platforms.includes("pinterest")
+    ? "Pinterest rule: avoid repeated hooks, repeated visuals, and repeated products. Rotate emotional trigger, format, and product category instead."
+    : "";
   return [
     "You are a marketing campaign planner.",
     "Return valid JSON only. Do not wrap it in markdown fences.",
@@ -48,6 +52,7 @@ function buildCampaignPlannerPrompt(input, productProfile, platforms, phases, ma
     `Platforms: ${platforms.join(", ")}`,
     `Allowed campaign phases: ${phases.join(", ")}`,
     `Maximum posts to plan: ${maxPosts}`,
+    pinterestAware,
     "Task: plan a compact multi-platform campaign. Choose the most useful combinations only.",
     `Use this exact JSON shape:
 {
@@ -117,14 +122,27 @@ function buildCampaignDraft(planItem, generated, input) {
     phase: planItem.phase,
     post_intent: generated.post_intent || planItem.post_intent || input.postIntent || "",
     campaign_angle: generated.campaign_angle || planItem.angle,
+    product: generated.product || input.productName,
+    psychological_trigger: generated.psychological_trigger || "",
     title,
     body,
+    hook: generated.hook || title,
+    visual_style: generated.visual_style || "",
+    category: generated.category || "",
+    destination_url: generated.destination_url || generated.link?.gumroad || generated.link?.amazon || generated.link?.utm_base || "",
+    confidence_score: generated.confidence_score || 0,
     cta: variant?.cta || generated.primary_cta || "",
     hashtags,
     visual_hook: generated.visual_hook || "",
     image_concept: generated.image_concept || "",
     image_prompt: generated.image_prompt || "",
     alt_text: generated.alt_text_examples?.[0] || "",
+    asset_expansion: generated.asset_expansion || null,
+    lane_priority: generated.lane_priority || null,
+    seasonality: generated.seasonality || null,
+    image_prompt_variants: generated.image_prompt_variants || null,
+    ip_repurposing: generated.ip_repurposing || null,
+    winner_expansion: generated.winner_expansion || null,
     generated,
   };
 }
@@ -147,6 +165,8 @@ export async function generateCampaignPlan(input, options = {}) {
 export async function generateCampaignPosts(input, options = {}) {
   const config = resolveAiConfig(options);
   const plan = await generateCampaignPlan(input, options);
+  const pinterestCreativeContext =
+    options.pinterestCreativeContext || (await buildPinterestCreativeContext(input));
   const posts = [];
 
   for (const item of plan.campaign_posts) {
@@ -163,6 +183,7 @@ export async function generateCampaignPosts(input, options = {}) {
       },
       {
         ...options,
+        pinterestCreativeContext,
         provider: config.provider,
       },
     );

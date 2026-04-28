@@ -3,7 +3,64 @@ export function toNumber(value) {
   return Number.isFinite(num) ? num : 0;
 }
 
-export function buildAnalyticsSummary(events = [], storedSummary = {}) {
+function normalizePinterestMetrics(snapshot = {}) {
+  const metrics = snapshot.metrics && typeof snapshot.metrics === "object" ? snapshot.metrics : {};
+  return {
+    impressions: toNumber(metrics.impressions),
+    saves: toNumber(metrics.saves),
+    pinClicks: toNumber(metrics.pinClicks ?? metrics.pin_clicks),
+    outboundClicks: toNumber(metrics.outboundClicks ?? metrics.outbound_clicks),
+  };
+}
+
+function scorePinterestSnapshot(snapshot = {}) {
+  const metrics = normalizePinterestMetrics(snapshot);
+  return (metrics.outboundClicks * 5) + (metrics.pinClicks * 3) + (metrics.saves * 2) + (metrics.impressions * 0.5);
+}
+
+export function buildPinterestSnapshotSummary(snapshots = []) {
+  const safeSnapshots = Array.isArray(snapshots) ? snapshots : [];
+  const normalized = safeSnapshots.map((snapshot) => {
+    const metrics = normalizePinterestMetrics(snapshot);
+    return {
+      pinId: snapshot.pinId || null,
+      pinUrl: snapshot.pinUrl || null,
+      title: snapshot.titleSeen || snapshot.title || snapshot.pinId || "Untitled pin",
+      capturedAt: snapshot.capturedAt || null,
+      captureMethod: snapshot.captureMethod || null,
+      confidence: snapshot.confidence ?? null,
+      ...metrics,
+      score: scorePinterestSnapshot(snapshot),
+    };
+  });
+
+  const totals = normalized.reduce(
+    (acc, item) => {
+      acc.impressions += item.impressions;
+      acc.saves += item.saves;
+      acc.pinClicks += item.pinClicks;
+      acc.outboundClicks += item.outboundClicks;
+      acc.score += item.score;
+      return acc;
+    },
+    { impressions: 0, saves: 0, pinClicks: 0, outboundClicks: 0, score: 0 },
+  );
+
+  const topPins = [...normalized]
+    .sort((a, b) => b.score - a.score || b.outboundClicks - a.outboundClicks || b.pinClicks - a.pinClicks)
+    .slice(0, 5);
+
+  return {
+    totals,
+    topPins,
+    recentSnapshots: [...normalized]
+      .sort((a, b) => String(b.capturedAt || "").localeCompare(String(a.capturedAt || "")))
+      .slice(0, 10),
+    count: normalized.length,
+  };
+}
+
+export function buildAnalyticsSummary(events = [], storedSummary = {}, pinterestSnapshots = []) {
   const safeEvents = Array.isArray(events) ? events : [];
 
   const totals = safeEvents.reduce(
@@ -73,6 +130,7 @@ export function buildAnalyticsSummary(events = [], storedSummary = {}) {
     recentEvents: [...safeEvents]
       .sort((a, b) => String(b.timestamp || "").localeCompare(String(a.timestamp || "")))
       .slice(0, 10),
+    pinterest: buildPinterestSnapshotSummary(pinterestSnapshots),
     posting: {
       totalAttempted: toNumber(storedSummary.total_posts_attempted),
       totalSuccessful: toNumber(storedSummary.total_posts_successful),

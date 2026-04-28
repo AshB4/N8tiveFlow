@@ -84,11 +84,43 @@ function isBrowserLaunchAbortError(error) {
 	);
 }
 
-async function launchPinterestContext(preparedProfile, options) {
+function isProfileSingletonLockError(error) {
+	const message = String(error?.message || error || "");
+	return /singletonlock|processsingleton/i.test(message);
+}
+
+async function clonePinterestProfileLaunch(options) {
+	const sourceRoot = options.profileDir;
+	const sourceProfileDir = path.join(sourceRoot, options.profileName);
+	const sourceLocalState = path.join(sourceRoot, "Local State");
+	if (!fs.existsSync(sourceProfileDir)) {
+		throw new Error(`Pinterest Chrome source profile not found: ${sourceProfileDir}`);
+	}
+
+	const cloneRootParent = path.dirname(options.clonedUserDataDir);
+	const cloneRootPrefix = `${path.basename(options.clonedUserDataDir)}-`;
+	await mkdir(cloneRootParent, { recursive: true });
+	const clonedRoot = await fs.promises.mkdtemp(path.join(cloneRootParent, cloneRootPrefix));
+	const clonedProfileDir = path.join(clonedRoot, options.profileName);
+	await copyDirectory(sourceProfileDir, clonedProfileDir);
+	if (fs.existsSync(sourceLocalState)) {
+		await fs.promises.copyFile(sourceLocalState, path.join(clonedRoot, "Local State"));
+	}
+
+	return {
+		launchUserDataDir: clonedRoot,
+		profileName: options.profileName,
+		cleanup: async () => {
+			await fs.promises.rm(clonedRoot, { recursive: true, force: true });
+		},
+	};
+}
+
+async function launchPinterestContext(preparedProfile, browserOptions, launchOptions) {
 	const launchArgs = {
-		headless: options.headless,
-		channel: options.channel,
-		executablePath: options.executablePath,
+		headless: launchOptions.headless,
+		channel: launchOptions.channel,
+		executablePath: launchOptions.executablePath,
 		args: [
 			"--disable-crashpad",
 			`--profile-directory=${preparedProfile.profileName}`,
@@ -100,9 +132,18 @@ async function launchPinterestContext(preparedProfile, options) {
 			launchArgs,
 		);
 	} catch (error) {
+		if (isProfileSingletonLockError(error)) {
+			const fallbackProfile = await clonePinterestProfileLaunch(browserOptions);
+			preparedProfile.launchUserDataDir = fallbackProfile.launchUserDataDir;
+			preparedProfile.cleanup = fallbackProfile.cleanup;
+			return await chromium.launchPersistentContext(
+				preparedProfile.launchUserDataDir,
+				launchArgs,
+			);
+		}
 		if (
 			!shouldFallbackToChromium() ||
-			String(options.channel || "").toLowerCase() !== "chrome" ||
+			String(launchOptions.channel || "").toLowerCase() !== "chrome" ||
 			!isBrowserLaunchAbortError(error)
 		) {
 			throw error;
@@ -110,7 +151,7 @@ async function launchPinterestContext(preparedProfile, options) {
 		return await chromium.launchPersistentContext(
 			preparedProfile.launchUserDataDir,
 			{
-				headless: options.headless,
+				headless: launchOptions.headless,
 				args: [
 					"--disable-crashpad",
 					`--profile-directory=${preparedProfile.profileName}`,
@@ -1026,7 +1067,7 @@ export default async function postToPinterest(post, _context = {}) {
 		);
 	}
 
-	const context = await launchPinterestContext(preparedProfile, {
+	const context = await launchPinterestContext(preparedProfile, browserOptions, {
 		headless,
 		channel,
 		executablePath,

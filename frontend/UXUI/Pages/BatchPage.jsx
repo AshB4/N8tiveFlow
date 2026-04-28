@@ -560,7 +560,7 @@ export default function BatchPage() {
   };
 
   const openLibrary = () => {
-    navigate("/lib");
+    navigate("/archive");
   };
 
   const approveSavedBatch = async () => {

@@ -34,6 +34,7 @@ These pieces are built and in active use:
 - Today Ops page at `/today`
 - Batch import page at `/batch`
 - Posted archive page at `/archive`
+- Pinterest analytics dashboard at `/charts`
 - Rotation/settings page at `/setup`
 - Affiliate strategy page at `/affiliate`
 - Affiliate batch builder at `/affiliate/builder`
@@ -95,14 +96,14 @@ Use the system like this:
 
 1. Generate content externally or in-app, then bring batches into `/batch`.
 2. Save selected items into the queue.
-3. Approve and schedule from `/batch` or `/lib`.
+3. Approve and schedule from `/batch`.
 4. Let `Dev.to` auto-post when due.
 5. Let `Facebook` auto-post when due through the browser-only lane.
 6. Use `/today` for manual posting or manual confirmation on the other platforms.
 7. Use the Pinterest Playwright lane for single-pin posting when needed.
 8. Use `/affiliate` to keep the affiliate rules and research prompts visible while planning.
 9. Use `/affiliate/builder` to import/build affiliate rows, mix them, and queue them into the main schedule.
-10. Review posted items in `/archive` and log metrics from `/lib`.
+10. Review posted items in `/archive` and log metrics from `/charts`.
 11. Mark posts `posted` or `failed` as needed.
 
 ## Current System Notes
@@ -112,9 +113,7 @@ Use the system like this:
 - Pinterest queue remixing is now available from the calendar. It calls the backend rebalance route and refreshes the queue after it runs.
 - The active Pinterest rebalance plan is `amazon-a`, `amazon-b`, `digital`, `wildcard`. The two Amazon slots are flexible labels and can pull from any `amazon-*` category, not only beauty/kids.
 - The Montessori egg / Easter-stuffer product was removed from the future approved Pinterest queue. Future approved Easter/stuffer/Montessori egg matches were verified at `0` after cleanup.
-- `/lib` now separates "approved" from "scheduled" more clearly:
-  - `approved` means ready
-  - `scheduledAt` means it will appear on the calendar
+- `/archive` is the single posted-history surface now; `/lib` was removed to avoid duplicate navigation.
 - Scheduled items are not selectable in the library bulk-select flow.
 - Batch imports can be saved, approved, and chained after the current last scheduled date.
 - Archive entries now store full post bodies going forward.

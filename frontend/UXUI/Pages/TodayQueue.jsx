@@ -288,10 +288,10 @@ export default function TodayQueue() {
               Calendar
             </Link>
             <Link
-              to="/lib"
+              to="/archive"
               className="px-4 py-2 border border-teal-500 text-teal-300 rounded hover:bg-teal-500 hover:text-black transition-colors"
             >
-              Library
+              Archive
             </Link>
             <button
               onClick={loadPosts}
